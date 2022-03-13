@@ -3,7 +3,7 @@ import Page from "./Page";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
-import { FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, InputHTMLAttributes, useState } from "react";
 import AppointmentRequest from "../models/AppointmentRequest";
 
 function RequestAppointment() {
@@ -19,7 +19,7 @@ function RequestAppointment() {
   const [age, setAge] = useState<number>(18);
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [tattooStyle, setTattooStyle] = useState("");
+  const [tattooStyle, setTattooStyle] = useState("select");
   const [tattooPlacement, setTattooPlacement] = useState("");
   const [referencePhotoPath, setReferencePhotoPath] = useState("");
   const [placementPhotoPath, setPlacementPhotoPath] = useState("");
@@ -28,12 +28,16 @@ function RequestAppointment() {
 
   const [emailError, setEmailError] = useState(false);
   console.log(emailError);
+  console.log(email);
 
   // FUNCTIONS
+
+  // DIABLE OFF-DAYS OF SUNDAY & MONDAYS ON CALENDAR
   function disableSundayMonday(date: Date) {
     return date.getDay() !== 0 && date.getDay() !== 1;
   }
 
+  // E-MAIL VALIDATION
   function emailValidation() {
     const regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
     if (!email || regexp.test(email) === false) {
@@ -44,43 +48,62 @@ function RequestAppointment() {
     return true;
   }
 
+  // PHONE # VALIDATION
+  function formatPhoneNumber(value: string) {
+    if (!value) return value;
+    const phoneNumberInput = value.replace(/[^\d]/g, "");
+    const phoneNumberInputLength = phoneNumberInput.length;
+    if (phoneNumberInputLength < 4) return phoneNumberInput;
+    if (phoneNumberInputLength < 7) {
+      return `(${phoneNumberInput.slice(0, 3)}) ${phoneNumberInput.slice(3)}`;
+    }
+    return `(${phoneNumberInput.slice(0, 3)}) ${phoneNumberInput.slice(3, 6)}-${phoneNumberInput.slice(6, 10)}`;
+  }
+
+  function handlePhoneNumberInput(e: ChangeEvent<HTMLInputElement>) {
+    const formattedPhoneNumber = formatPhoneNumber(e.target.value);
+    setPhoneNumber(formattedPhoneNumber);
+  }
+
+  // HANDLE SUBMIT W/ E-MAIL VALIDATION
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (emailValidation() === false) {
-      console.log("ERROR");
+      console.error("E-MAIL NOT VALID");
       return;
+    } else {
+      let newRequest: AppointmentRequest = {
+        requestSubmittedDate: new Date(),
+        requestDateTime: appointmentTime!,
+        firstName: firstName,
+        lastName: lastName,
+        age: age,
+        email: email.toLowerCase(),
+        phoneNumber: phoneNumber,
+        tattooStyle: tattooStyle,
+        tattooPlacement: tattooPlacement,
+        referencePhotoPath: referencePhotoPath,
+        placementPhotoPath: placementPhotoPath,
+        tattooDescription: tattooDescription,
+        isRequestApproved: false,
+        isRequestDenied: false,
+      };
+      console.log(newRequest);
+      setStartDate(undefined);
+      setAppointmentTime(undefined);
+      setFirstName("");
+      setLastName("");
+      setAge(18);
+      setEmail("");
+      setPhoneNumber("");
+      setTattooStyle("select");
+      setTattooPlacement("");
+      setReferencePhotoPath("");
+      setPlacementPhotoPath("");
+      setTattooDescription("");
+      setOfAgeConfirm(false);
+      setEmailError(false);
     }
-    let newRequest: AppointmentRequest = {
-      requestSubmittedDate: new Date(),
-      requestDateTime: appointmentTime!,
-      firstName: firstName,
-      lastName: lastName,
-      age: age,
-      email: email.toLowerCase(),
-      phoneNumber: phoneNumber,
-      tattooStyle: tattooStyle,
-      tattooPlacement: tattooPlacement,
-      referencePhotoPath: referencePhotoPath,
-      placementPhotoPath: placementPhotoPath,
-      tattooDescription: tattooDescription,
-      isRequestApproved: false,
-      isRequestDenied: false,
-    };
-    console.log(newRequest);
-    setStartDate(undefined);
-    setAppointmentTime(undefined);
-    setFirstName("");
-    setLastName("");
-    setAge(18);
-    setEmail("");
-    setPhoneNumber("");
-    setTattooStyle("");
-    setTattooPlacement("");
-    setReferencePhotoPath("");
-    setPlacementPhotoPath("");
-    setTattooDescription("");
-    setOfAgeConfirm(false);
-    setEmailError(false);
   }
 
   // RENDER
@@ -117,32 +140,32 @@ function RequestAppointment() {
           <span className="label">
             <label htmlFor="firstName">First Name:</label>
           </span>
-          <input type="text" name="firstName" id="firstName" onChange={(e) => setFirstName(e.target.value)} />
+          <input type="text" name="firstName" id="firstName" onChange={(e) => setFirstName(e.target.value)} value={firstName} required />
 
           <span className="label">
             <label htmlFor="lastName">Last Name:</label>
           </span>
-          <input type="text" name="lastName" id="lastName" onChange={(e) => setLastName(e.target.value)} />
+          <input type="text" name="lastName" id="lastName" onChange={(e) => setLastName(e.target.value)} value={lastName} required />
 
           <span className="label">
             <label htmlFor="age">Age:</label>
           </span>
-          <input type="number" name="age" id="age" min={18} max={100} onChange={(e) => setAge(Number(e.target.value))} />
+          <input type="number" name="age" id="age" min={18} max={100} onChange={(e) => setAge(Number(e.target.value))} value={age} required />
 
           <span className="label">
             <label htmlFor="email">Email:</label>
           </span>
-          <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)} required />
+          <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)} value={email} required />
 
           <span className="label">
             <label htmlFor="tel">Phone:</label>
           </span>
-          <input type="tel" name="tel" id="tel" onChange={(e) => setPhoneNumber(e.target.value)} required />
+          <input type="tel" name="tel" id="tel" onChange={(e) => handlePhoneNumberInput(e)} value={phoneNumber} required />
 
           <span className="label">
             <label htmlFor="tattooStyle">Tattoo Style:</label>
           </span>
-          <select name="tattooStyle" id="tattooStyle" defaultValue={"select"} onChange={(e) => setTattooStyle(e.target.value)} required>
+          <select name="tattooStyle" id="tattooStyle" onChange={(e) => setTattooStyle(e.target.value)} value={tattooStyle} required>
             <option value="select" disabled>
               --- Select Style ---
             </option>
@@ -155,7 +178,15 @@ function RequestAppointment() {
           <span className="label">
             <label htmlFor="tattooPlacement">Tattoo Placement:</label>
           </span>
-          <input type="text" name="tattooPlacement" id="tattooPlacement" maxLength={30} onChange={(e) => setTattooPlacement(e.target.value)} />
+          <input
+            type="text"
+            name="tattooPlacement"
+            id="tattooPlacement"
+            maxLength={30}
+            onChange={(e) => setTattooPlacement(e.target.value)}
+            value={tattooPlacement}
+            required
+          />
 
           <div className="photo-upload">REFERENCE PHOTO UPLOAD HERE</div>
           <div className="photo-upload">PLACEMENT PHOTO UPLOAD HERE</div>
@@ -163,7 +194,7 @@ function RequestAppointment() {
           <span className="label">
             <label htmlFor="tattooDescription">Tattoo Description:</label>
           </span>
-          <textarea name="tattooDescription" id="tattooDescription" onChange={(e) => setTattooDescription(e.target.value)} />
+          <textarea name="tattooDescription" id="tattooDescription" onChange={(e) => setTattooDescription(e.target.value)} value={tattooDescription} required />
           <div className="of-age-confirm">
             <input type="checkbox" name="ofAgeConfirm" id="ofAgeConfirm" onChange={() => setOfAgeConfirm(!ofAgeConfirm)} />
             <label htmlFor="ofAgeConfirm">I confirm that I am or will be 18 years of age by the date of this requested appointment.</label>
