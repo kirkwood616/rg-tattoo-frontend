@@ -1,0 +1,35 @@
+.ErrorMessage {
+  background-color: red;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  margin-top: 25px;
+  padding: 0.5rem;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.ErrorMessage:after,
+.ErrorMessage:before {
+  bottom: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.ErrorMessage:after {
+  border-color: rgba(238, 238, 238, 0);
+  border-bottom-color: red;
+  border-width: 15px;
+  margin-left: -15px;
+}
+.ErrorMessage:before {
+  border-color: rgba(204, 204, 204, 0);
+  border-bottom-color: red;
+  border-width: 16px;
+  margin-left: -16px;
+}
