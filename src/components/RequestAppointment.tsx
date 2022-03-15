@@ -2,10 +2,11 @@ import "./RequestAppointment.css";
 import Page from "./Page";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { format } from "date-fns";
-import { ChangeEvent, FormEvent, InputHTMLAttributes, TextareaHTMLAttributes, useEffect, useState } from "react";
+// import { format } from "date-fns";
+import { FormEvent, useEffect, useState } from "react";
 import AppointmentRequest from "../models/AppointmentRequest";
 import ErrorMessage from "./ErrorMessage";
+import { validateEmail, validateAge, validateName, validatePhone, validateTattooPlacement, validateTattooDescription } from "../functions/Validation";
 
 function RequestAppointment() {
   // STATES FOR DATES
@@ -38,60 +39,28 @@ function RequestAppointment() {
   const [tattooPlacementError, setTattooPlacementError] = useState(false);
   const [tattooDescriptionError, setTattooDescriptionError] = useState(false);
 
+  // console.log(firstName);
+  // console.log(firstNameError);
   console.log(errors);
 
-  function validateFirstName(e: ChangeEvent<HTMLInputElement>) {
-    setFirstName(e.target.value);
-    if (e.target.value.length < 1) setFirstNameError(true);
-    if (e.target.value.length >= 1) setFirstNameError(false);
-  }
-
-  function validateLastName(e: ChangeEvent<HTMLInputElement>) {
-    setLastName(e.target.value);
-    if (e.target.value.length < 1) setLastNameError(true);
-    if (e.target.value.length > 1) setLastNameError(false);
-  }
-
-  function validateAge(e: ChangeEvent<HTMLInputElement>) {
-    setAge(Number(e.target.value));
-    if (Number(e.target.value) < 18) setAgeError(true);
-    if (Number(e.target.value) >= 18) setAgeError(false);
-  }
-
-  // E-MAIL VALIDATION
-  function emailValidation() {
-    const regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
-    if (!email || regexp.test(email) === false) {
-      setEmailError(true);
-      return false;
+  // ERRORS
+  useEffect(() => {
+    if (firstNameError || lastNameError || ageError || emailError || phoneError || tattooStyleError || tattooPlacementError || tattooDescriptionError) {
+      setErrors(true);
     } else {
-      setEmailError(false);
-      return true;
+      setErrors(false);
     }
-  }
+  }, [ageError, emailError, firstNameError, lastNameError, phoneError, tattooDescriptionError, tattooPlacementError, tattooStyleError]);
 
+  // E-MAIL ERRORS
   useEffect(() => {
     if (email) {
-      const delay = setTimeout(() => emailValidation(), 800);
+      const delay = setTimeout(() => validateEmail(email, setEmailError), 800);
       return () => clearTimeout(delay);
     }
   }, [email]);
 
-  // PHONE # VALIDATION
-  function formatPhoneNumber(value: string) {
-    if (!value) return value;
-    const phoneNumberInput = value.replace(/[^\d]/g, "");
-    const phoneNumberInputLength = phoneNumberInput.length;
-    if (phoneNumberInputLength < 4) return phoneNumberInput;
-    if (phoneNumberInputLength < 7) return `(${phoneNumberInput.slice(0, 3)}) ${phoneNumberInput.slice(3)}`;
-    return `(${phoneNumberInput.slice(0, 3)}) ${phoneNumberInput.slice(3, 6)}-${phoneNumberInput.slice(6, 10)}`;
-  }
-
-  function handlePhoneNumberInput(e: ChangeEvent<HTMLInputElement>) {
-    const formattedPhoneNumber = formatPhoneNumber(e.target.value);
-    setPhoneNumber(formattedPhoneNumber);
-  }
-
+  // PHONE # ERRORS
   useEffect(() => {
     if (phoneNumber) {
       const delay = setTimeout(() => {
@@ -106,24 +75,10 @@ function RequestAppointment() {
     }
   }, [phoneNumber]);
 
-  // TATTOO STYLE VALIDATION
+  // TATTOO STYLE ERRORS
   useEffect(() => {
     if (tattooStyle !== "select") setTattooStyleError(false);
   }, [tattooStyle]);
-
-  // TATTOO PLACEMENT VALIDATION
-  function validateTattooPlacement(e: ChangeEvent<HTMLInputElement>) {
-    setTattooPlacement(e.target.value);
-    if (e.target.value.length < 2) setTattooPlacementError(true);
-    if (e.target.value.length > 2) setTattooPlacementError(false);
-  }
-
-  // TATTOO DESCRIPTION VALIDATION
-  function validateTattooDescription(e: ChangeEvent<HTMLTextAreaElement>) {
-    setTattooDescription(e.target.value);
-    if (e.target.value.length < 7) setTattooDescriptionError(true);
-    if (e.target.value.length >= 7) setTattooDescriptionError(false);
-  }
 
   // HANDLE SUBMIT W/ E-MAIL VALIDATION
   function handleSubmit(e: FormEvent) {
@@ -207,19 +162,19 @@ function RequestAppointment() {
           <span className="label">
             <label htmlFor="firstName">First Name:</label>
           </span>
-          <input type="text" name="firstName" id="firstName" onChange={(e) => validateFirstName(e)} value={firstName} />
+          <input type="text" name="firstName" id="firstName" onChange={(e) => validateName(e, setFirstName, setFirstNameError)} value={firstName} />
           {firstNameError ? <ErrorMessage message={"FIRST NAME REQUIRED"} /> : ""}
 
           <span className="label">
             <label htmlFor="lastName">Last Name:</label>
           </span>
-          <input type="text" name="lastName" id="lastName" onChange={(e) => validateLastName(e)} value={lastName} required />
+          <input type="text" name="lastName" id="lastName" onChange={(e) => validateName(e, setLastName, setLastNameError)} value={lastName} required />
           {lastNameError ? <ErrorMessage message={"LAST NAME REQUIRED"} /> : ""}
 
           <span className="label">
             <label htmlFor="age">Age:</label>
           </span>
-          <input type="number" name="age" id="age" min={18} max={100} onChange={(e) => validateAge(e)} value={age} required />
+          <input type="number" name="age" id="age" min={18} max={100} onChange={(e) => validateAge(e, setAge, setAgeError)} value={age} required />
           {ageError ? <ErrorMessage message={"MUST BE 18 OR OLDER"} /> : ""}
 
           <span className="label">
@@ -231,7 +186,7 @@ function RequestAppointment() {
           <span className="label">
             <label htmlFor="tel">Phone:</label>
           </span>
-          <input type="tel" name="tel" id="tel" onChange={(e) => handlePhoneNumberInput(e)} value={phoneNumber} required />
+          <input type="tel" name="tel" id="tel" onChange={(e) => validatePhone(e, setPhoneNumber)} value={phoneNumber} required />
           {phoneError ? <ErrorMessage message={"PHONE NUMBER IS NOT VALID"} /> : ""}
 
           <span className="label">
@@ -251,7 +206,15 @@ function RequestAppointment() {
           <span className="label">
             <label htmlFor="tattooPlacement">Tattoo Placement:</label>
           </span>
-          <input type="text" name="tattooPlacement" id="tattooPlacement" maxLength={30} onChange={(e) => validateTattooPlacement(e)} value={tattooPlacement} required />
+          <input
+            type="text"
+            name="tattooPlacement"
+            id="tattooPlacement"
+            maxLength={30}
+            onChange={(e) => validateTattooPlacement(e, setTattooPlacement, setTattooPlacementError)}
+            value={tattooPlacement}
+            required
+          />
           {tattooPlacementError ? <ErrorMessage message={"PLEASE ENTER A TATTOO PLACEMENT"} /> : ""}
 
           <div className="photo-upload">REFERENCE PHOTO UPLOAD HERE</div>
@@ -260,7 +223,14 @@ function RequestAppointment() {
           <span className="label">
             <label htmlFor="tattooDescription">Tattoo Description:</label>
           </span>
-          <textarea name="tattooDescription" id="tattooDescription" onChange={(e) => validateTattooDescription(e)} value={tattooDescription} minLength={7} required />
+          <textarea
+            name="tattooDescription"
+            id="tattooDescription"
+            onChange={(e) => validateTattooDescription(e, setTattooDescription, setTattooDescriptionError)}
+            value={tattooDescription}
+            minLength={7}
+            required
+          />
           {tattooDescriptionError ? <ErrorMessage message={"DESCRIPTION MUST BE AT LEAST 7 CHARACHTERS"} /> : ""}
 
           <div className="of-age-confirm">
