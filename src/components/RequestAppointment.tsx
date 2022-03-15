@@ -29,7 +29,9 @@ function RequestAppointment() {
   const [ofAgeConfirm, setOfAgeConfirm] = useState(false);
 
   // STATES FOR ERRORS
+  const [submitCount, setSubmitCount] = useState(0);
   const [errors, setErrors] = useState(false);
+  const [startDateError, setStartDateError] = useState(false);
   const [firstNameError, setFirstNameError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
   const [ageError, setAgeError] = useState(false);
@@ -42,15 +44,31 @@ function RequestAppointment() {
   // console.log(firstName);
   // console.log(firstNameError);
   console.log(errors);
+  console.log(submitCount);
+  console.log(startDate);
 
   // ERRORS
   useEffect(() => {
-    if (firstNameError || lastNameError || ageError || emailError || phoneError || tattooStyleError || tattooPlacementError || tattooDescriptionError) {
+    if (startDateError || firstNameError || lastNameError || ageError || emailError || phoneError || tattooStyleError || tattooPlacementError || tattooDescriptionError) {
       setErrors(true);
     } else {
       setErrors(false);
     }
-  }, [ageError, emailError, firstNameError, lastNameError, phoneError, tattooDescriptionError, tattooPlacementError, tattooStyleError]);
+  }, [ageError, emailError, firstNameError, lastNameError, phoneError, startDateError, tattooDescriptionError, tattooPlacementError, tattooStyleError]);
+
+  useEffect(() => {
+    if (submitCount > 0) {
+      if (!startDate) setStartDateError(true);
+      if (startDate) setStartDateError(false);
+      if (!firstName) setFirstNameError(true);
+      if (!lastName) setLastNameError(true);
+      if (!email) setEmailError(true);
+      if (!phoneNumber) setPhoneError(true);
+      if (tattooStyle === "select") setTattooStyleError(true);
+      if (!tattooPlacement) setTattooPlacementError(true);
+      if (!tattooDescription) setTattooDescriptionError(true);
+    }
+  }, [submitCount, firstName, lastName, email, phoneNumber, tattooStyle, tattooPlacement, tattooDescription, startDate]);
 
   // E-MAIL ERRORS
   useEffect(() => {
@@ -119,6 +137,7 @@ function RequestAppointment() {
       setReferencePhotoPath("");
       setPlacementPhotoPath("");
       setTattooDescription("");
+      setSubmitCount(0);
     }
   }
 
@@ -150,6 +169,7 @@ function RequestAppointment() {
               withPortal
               required
             />
+            {startDateError ? <ErrorMessage message={"Date Required"} /> : ""}
           </div>
 
           <div className="apt-times-container">
@@ -238,7 +258,9 @@ function RequestAppointment() {
             <label htmlFor="ofAgeConfirm">I confirm that I am or will be 18 years of age by the date of this requested appointment.</label>
           </div>
 
-          <button type="submit">Submit Request</button>
+          <button type="submit" onClick={() => setSubmitCount(submitCount + 1)}>
+            Submit Request
+          </button>
         </form>
       </div>
     </Page>
