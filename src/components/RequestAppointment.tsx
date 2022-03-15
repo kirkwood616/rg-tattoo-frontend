@@ -2,7 +2,7 @@ import "./RequestAppointment.css";
 import Page from "./Page";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-// import { format } from "date-fns";
+import { format } from "date-fns";
 import { FormEvent, useEffect, useState } from "react";
 import AppointmentRequest from "../models/AppointmentRequest";
 import ErrorMessage from "./ErrorMessage";
@@ -15,7 +15,7 @@ function RequestAppointment() {
 
   // STATES FOR FORM
   const [startDate, setStartDate] = useState<Date | undefined>();
-  const [appointmentTime, setAppointmentTime] = useState();
+  const [appointmentTime, setAppointmentTime] = useState("selectAptTime");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState<number>(18);
@@ -41,11 +41,10 @@ function RequestAppointment() {
   const [tattooPlacementError, setTattooPlacementError] = useState(false);
   const [tattooDescriptionError, setTattooDescriptionError] = useState(false);
 
-  // console.log(firstName);
-  // console.log(firstNameError);
-  console.log(errors);
-  console.log(submitCount);
-  console.log(startDate);
+  let availableAppointmentTimes = [new Date("March 16 2022 12:30"), new Date("March 16 2022 14:00"), new Date("March 16 2022 16:00")];
+  // console.log(availableAppointmentTimes);
+  console.log(appointmentTime);
+  // console.log(new Date(appointmentTime));
 
   // ERRORS
   useEffect(() => {
@@ -110,7 +109,7 @@ function RequestAppointment() {
     } else {
       let newRequest: AppointmentRequest = {
         requestSubmittedDate: new Date(),
-        requestDateTime: appointmentTime!,
+        requestDateTime: new Date(appointmentTime),
         firstName: firstName,
         lastName: lastName,
         age: age,
@@ -126,7 +125,7 @@ function RequestAppointment() {
       };
       console.log(newRequest);
       setStartDate(undefined);
-      setAppointmentTime(undefined);
+      setAppointmentTime("selectAptTime");
       setFirstName("");
       setLastName("");
       setAge(18);
@@ -173,10 +172,19 @@ function RequestAppointment() {
           </div>
 
           <div className="apt-times-container">
-            AVAILABLE TIMES
-            <div className="apt-time">
-              <button className="apt-time_button">TIME</button>
-            </div>
+            <span className="label">
+              <label htmlFor="aptTimes">AVAILABLE TIMES</label>
+            </span>
+            <select name="aptTimes" id="aptTimes" onChange={(e) => setAppointmentTime(e.target.value)} value={appointmentTime} required>
+              <option value="selectAptTime" disabled>
+                --- Select Time ---
+              </option>
+              {availableAppointmentTimes!.map((time, i) => (
+                <option key={i} value={String(time)}>
+                  {format(time, "h:mm a")}
+                </option>
+              ))}
+            </select>
           </div>
 
           <span className="label">
