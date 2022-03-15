@@ -80,7 +80,7 @@ function RequestAppointment() {
     if (tattooStyle !== "select") setTattooStyleError(false);
   }, [tattooStyle]);
 
-  // HANDLE SUBMIT W/ E-MAIL VALIDATION
+  // HANDLE SUBMIT
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (tattooStyle === "select") {
@@ -162,7 +162,7 @@ function RequestAppointment() {
           <span className="label">
             <label htmlFor="firstName">First Name:</label>
           </span>
-          <input type="text" name="firstName" id="firstName" onChange={(e) => validateName(e, setFirstName, setFirstNameError)} value={firstName} />
+          <input type="text" name="firstName" id="firstName" onChange={(e) => validateName(e, setFirstName, setFirstNameError)} value={firstName} required />
           {firstNameError ? <ErrorMessage message={"FIRST NAME REQUIRED"} /> : ""}
 
           <span className="label">
@@ -231,7 +231,7 @@ function RequestAppointment() {
             minLength={7}
             required
           />
-          {tattooDescriptionError ? <ErrorMessage message={"DESCRIPTION MUST BE AT LEAST 7 CHARACHTERS"} /> : ""}
+          {tattooDescriptionError ? <ErrorMessage message={"DESCRIPTION MUST BE AT LEAST 7 CHARACTERS"} /> : ""}
 
           <div className="of-age-confirm">
             <input type="checkbox" name="ofAgeConfirm" id="ofAgeConfirm" onChange={() => setOfAgeConfirm(!ofAgeConfirm)} />
