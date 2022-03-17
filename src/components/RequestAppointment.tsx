@@ -7,6 +7,7 @@ import { FormEvent, useEffect, useState } from "react";
 import AppointmentRequest from "../models/AppointmentRequest";
 import ErrorMessage from "./ErrorMessage";
 import { validateEmail, validateAge, validateName, validatePhone, validateTattooPlacement, validateTattooDescription } from "../functions/Validation";
+import { postAppointmentRequest } from "../services/ApiService";
 
 function RequestAppointment() {
   // STATES FOR DATES
@@ -32,6 +33,7 @@ function RequestAppointment() {
   const [submitCount, setSubmitCount] = useState(0);
   const [errors, setErrors] = useState(false);
   const [startDateError, setStartDateError] = useState(false);
+  const [appointmentTimeError, setAppointmentTimeError] = useState(false);
   const [firstNameError, setFirstNameError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
   const [ageError, setAgeError] = useState(false);
@@ -57,8 +59,9 @@ function RequestAppointment() {
 
   useEffect(() => {
     if (submitCount > 0) {
-      if (!startDate) setStartDateError(true);
       if (startDate) setStartDateError(false);
+      if (!startDate) setStartDateError(true);
+      if (appointmentTime !== "selectAptTime") setAppointmentTimeError(false);
       if (!firstName) setFirstNameError(true);
       if (!lastName) setLastNameError(true);
       if (!email) setEmailError(true);
@@ -67,7 +70,7 @@ function RequestAppointment() {
       if (!tattooPlacement) setTattooPlacementError(true);
       if (!tattooDescription) setTattooDescriptionError(true);
     }
-  }, [submitCount, firstName, lastName, email, phoneNumber, tattooStyle, tattooPlacement, tattooDescription, startDate]);
+  }, [submitCount, firstName, lastName, email, phoneNumber, tattooStyle, tattooPlacement, tattooDescription, startDate, appointmentTime]);
 
   // E-MAIL ERRORS
   useEffect(() => {
@@ -104,6 +107,10 @@ function RequestAppointment() {
       setTattooStyleError(true);
       return;
     }
+    if (appointmentTime === "selectAptTime") {
+      setAppointmentTimeError(true);
+      return;
+    }
     if (errors) {
       return;
     } else {
@@ -124,6 +131,7 @@ function RequestAppointment() {
         isRequestDenied: false,
       };
       console.log(newRequest);
+      postAppointmentRequest(newRequest);
       setStartDate(undefined);
       setAppointmentTime("selectAptTime");
       setFirstName("");
@@ -173,7 +181,7 @@ function RequestAppointment() {
 
           <div className="apt-times-container">
             <span className="label">
-              <label htmlFor="aptTimes">AVAILABLE TIMES</label>
+              <label htmlFor="aptTimes">Available Times:</label>
             </span>
             <select name="aptTimes" id="aptTimes" onChange={(e) => setAppointmentTime(e.target.value)} value={appointmentTime} required>
               <option value="selectAptTime" disabled>
@@ -185,6 +193,7 @@ function RequestAppointment() {
                 </option>
               ))}
             </select>
+            {appointmentTimeError ? <ErrorMessage message={"SELECT A TIME"} /> : ""}
           </div>
 
           <span className="label">
