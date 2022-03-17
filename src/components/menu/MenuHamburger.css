@@ -1,0 +1,7 @@
+.MenuHamburger .icon {
+  fill: white;
+}
+
+.MenuHamburger .icon.active {
+  fill: black;
+}
