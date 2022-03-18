@@ -8,6 +8,8 @@ import AppointmentRequest from "../models/AppointmentRequest";
 import ErrorMessage from "./ErrorMessage";
 import { validateEmail, validateAge, validateName, validatePhone, validateTattooPlacement, validateTattooDescription } from "../functions/Validation";
 import { postAppointmentRequest } from "../services/ApiService";
+import { useNavigate } from "react-router-dom";
+import GoButton from "./buttons/GoButton";
 
 function RequestAppointment() {
   // STATES FOR DATES
@@ -43,6 +45,8 @@ function RequestAppointment() {
   const [tattooPlacementError, setTattooPlacementError] = useState(false);
   const [tattooDescriptionError, setTattooDescriptionError] = useState(false);
 
+  let navigate = useNavigate();
+
   let availableAppointmentTimes = [new Date("March 16 2022 12:30"), new Date("March 16 2022 14:00"), new Date("March 16 2022 16:00")];
   // console.log(availableAppointmentTimes);
   console.log(appointmentTime);
@@ -61,6 +65,7 @@ function RequestAppointment() {
     if (submitCount > 0) {
       if (startDate) setStartDateError(false);
       if (!startDate) setStartDateError(true);
+      if (appointmentTime === "selectAptTime") setAppointmentTimeError(true);
       if (appointmentTime !== "selectAptTime") setAppointmentTimeError(false);
       if (!firstName) setFirstNameError(true);
       if (!lastName) setLastNameError(true);
@@ -145,6 +150,7 @@ function RequestAppointment() {
       setPlacementPhotoPath("");
       setTattooDescription("");
       setSubmitCount(0);
+      navigate("/request-submitted");
     }
   }
 
@@ -157,6 +163,7 @@ function RequestAppointment() {
   return (
     <Page title="Request Appointment">
       <div className="RequestAppointment">
+        <h1>Request Appointment</h1>
         <form onSubmit={handleSubmit}>
           <span className="label">
             <label htmlFor="datePicker">Select Date:</label>
@@ -174,6 +181,7 @@ function RequestAppointment() {
               excludeDates={excludedDates}
               isClearable
               withPortal
+              autoComplete="off"
               required
             />
             {startDateError ? <ErrorMessage message={"Date Required"} /> : ""}
@@ -274,10 +282,7 @@ function RequestAppointment() {
             <input type="checkbox" name="ofAgeConfirm" id="ofAgeConfirm" onChange={() => setOfAgeConfirm(!ofAgeConfirm)} />
             <label htmlFor="ofAgeConfirm">I confirm that I am or will be 18 years of age by the date of this requested appointment.</label>
           </div>
-
-          <button type="submit" onClick={() => setSubmitCount(submitCount + 1)}>
-            Submit Request
-          </button>
+          <GoButton type="submit" text="Submit Request" onClick={() => setSubmitCount(submitCount + 1)} />
         </form>
       </div>
     </Page>
