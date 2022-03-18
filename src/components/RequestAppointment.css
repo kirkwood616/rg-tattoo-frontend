@@ -7,7 +7,6 @@
   flex-direction: column;
   align-items: center;
   padding: 1rem;
-  background-color: black;
   color: white;
 }
 
@@ -41,6 +40,7 @@ select,
 textarea {
   border: 1px solid black;
   border-radius: 0.5rem;
+  box-shadow: 0 3px 7px var(--black);
   font-size: 1rem;
   padding: 0.5rem;
   text-align: center;
@@ -54,7 +54,7 @@ input[type="tel"]:focus,
 select:focus,
 textarea:focus {
   transition: all 0.1s ease-in-out;
-  box-shadow: 0 0 10px white;
+  box-shadow: 0 0 7px white;
 }
 
 .RequestAppointment input[type="checkbox"] {
