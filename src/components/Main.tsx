@@ -1,11 +1,14 @@
-// import "./Main.css";
-import { Link } from "react-router-dom";
+import "./Main.css";
+import Page from "./Page";
 
 function Main() {
   return (
-    <div className="Main">
-      <Link to={"/request-appointment"}>Request</Link>
-    </div>
+    <Page title="Home">
+      <div className="Main">
+        <h1>LANDING PAGE</h1>
+        <h2>CONTENT HERE</h2>
+      </div>
+    </Page>
   );
 }
 
