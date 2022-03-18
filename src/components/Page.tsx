@@ -1,7 +1,12 @@
 import { useEffect } from "react";
 import "./Page.css";
 
-function Page({ children, title }: any) {
+interface Props {
+  title: string;
+  children: JSX.Element;
+}
+
+function Page({ children, title }: Props) {
   useEffect(() => {
     document.title = `${title} | Rack Ruin`;
     window.scrollTo(0, 0);
