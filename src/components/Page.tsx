@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import "./Page.css";
 
 interface Props {
   title: string;
-  children: JSX.Element;
+  children: ReactNode;
 }
 
 function Page({ children, title }: Props) {
