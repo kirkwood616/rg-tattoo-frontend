@@ -1,0 +1,8 @@
+.remove-button {
+  background-color: red;
+  border: none;
+  border-radius: 50%;
+  font-weight: bold;
+  height: 1.75rem;
+  width: 1.75rem;
+}
