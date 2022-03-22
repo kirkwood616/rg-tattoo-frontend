@@ -3,54 +3,73 @@ import Page from "./Page";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import AppointmentRequest from "../models/AppointmentRequest";
 import ErrorMessage from "./ErrorMessage";
 import { validateEmail, validateAge, validateName, validatePhone, validateTattooPlacement, validateTattooDescription } from "../functions/Validation";
 import { postAppointmentRequest } from "../services/ApiService";
 import { useNavigate } from "react-router-dom";
 import GoButton from "./buttons/GoButton";
+import AppContext from "../context/AppContext";
+import AvailableAppointments from "../models/AvailableAppointments";
 
 function RequestAppointment() {
+  // CONTEXT
+  let { availableAppointments } = useContext(AppContext);
+
   // STATES FOR DATES
   const [maxAppointmentDate, setMaxAppointmentDate] = useState<Date>();
   const [excludedDates, setExcludedDates] = useState<Date[]>([]);
 
   // STATES FOR FORM
   const [startDate, setStartDate] = useState<Date | undefined>();
-  const [appointmentTime, setAppointmentTime] = useState("selectAptTime");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [availableAppointmentTimes, setAvailableAppointmentsTimes] = useState<string[]>([]);
+  const [appointmentTime, setAppointmentTime] = useState<string>("select");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
   const [age, setAge] = useState<number>(18);
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [tattooStyle, setTattooStyle] = useState("select");
-  const [tattooPlacement, setTattooPlacement] = useState("");
-  const [referencePhotoPath, setReferencePhotoPath] = useState("");
-  const [placementPhotoPath, setPlacementPhotoPath] = useState("");
-  const [tattooDescription, setTattooDescription] = useState("");
-  const [ofAgeConfirm, setOfAgeConfirm] = useState(false);
+  const [email, setEmail] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [tattooStyle, setTattooStyle] = useState<string>("select");
+  const [tattooPlacement, setTattooPlacement] = useState<string>("");
+  const [referencePhotoPath, setReferencePhotoPath] = useState<string>("");
+  const [placementPhotoPath, setPlacementPhotoPath] = useState<string>("");
+  const [tattooDescription, setTattooDescription] = useState<string>("");
+  const [ofAgeConfirm, setOfAgeConfirm] = useState<boolean>(false);
 
   // STATES FOR ERRORS
-  const [submitCount, setSubmitCount] = useState(0);
-  const [errors, setErrors] = useState(false);
-  const [startDateError, setStartDateError] = useState(false);
-  const [appointmentTimeError, setAppointmentTimeError] = useState(false);
-  const [firstNameError, setFirstNameError] = useState(false);
-  const [lastNameError, setLastNameError] = useState(false);
-  const [ageError, setAgeError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-  const [phoneError, setPhoneError] = useState(false);
-  const [tattooStyleError, setTattooStyleError] = useState(false);
-  const [tattooPlacementError, setTattooPlacementError] = useState(false);
-  const [tattooDescriptionError, setTattooDescriptionError] = useState(false);
+  const [submitCount, setSubmitCount] = useState<number>(0);
+  const [errors, setErrors] = useState<boolean>(false);
+  const [startDateError, setStartDateError] = useState<boolean>(false);
+  const [appointmentTimeError, setAppointmentTimeError] = useState<boolean>(false);
+  const [firstNameError, setFirstNameError] = useState<boolean>(false);
+  const [lastNameError, setLastNameError] = useState<boolean>(false);
+  const [ageError, setAgeError] = useState<boolean>(false);
+  const [emailError, setEmailError] = useState<boolean>(false);
+  const [phoneError, setPhoneError] = useState<boolean>(false);
+  const [tattooStyleError, setTattooStyleError] = useState<boolean>(false);
+  const [tattooPlacementError, setTattooPlacementError] = useState<boolean>(false);
+  const [tattooDescriptionError, setTattooDescriptionError] = useState<boolean>(false);
 
+  // NAVIGATE
   let navigate = useNavigate();
 
-  let availableAppointmentTimes = [new Date("March 16 2022 12:30"), new Date("March 16 2022 14:00"), new Date("March 16 2022 16:00")];
-  // console.log(availableAppointmentTimes);
-  console.log(appointmentTime);
-  // console.log(new Date(appointmentTime));
+  console.log(availableAppointmentTimes);
+
+  // CHECK FOR DATE IN DATABASE
+  useEffect(() => {
+    if (!startDate) return;
+
+    let dateInDatabase: AvailableAppointments | undefined = availableAppointments.find((date) => date.date === format(startDate!, "MM-dd-yyyy"));
+
+    if (dateInDatabase) {
+      setAppointmentTime("select");
+      setAvailableAppointmentsTimes(dateInDatabase.availableTimes);
+    } else {
+      setAvailableAppointmentsTimes([]);
+      setAppointmentTime("select");
+    }
+  }, [availableAppointments, startDate]);
 
   // ERRORS
   useEffect(() => {
@@ -65,8 +84,8 @@ function RequestAppointment() {
     if (submitCount > 0) {
       if (startDate) setStartDateError(false);
       if (!startDate) setStartDateError(true);
-      if (appointmentTime === "selectAptTime") setAppointmentTimeError(true);
-      if (appointmentTime !== "selectAptTime") setAppointmentTimeError(false);
+      if (appointmentTime === "select" || null) setAppointmentTimeError(true);
+      if (appointmentTime !== "select") setAppointmentTimeError(false);
       if (!firstName) setFirstNameError(true);
       if (!lastName) setLastNameError(true);
       if (!email) setEmailError(true);
@@ -112,7 +131,7 @@ function RequestAppointment() {
       setTattooStyleError(true);
       return;
     }
-    if (appointmentTime === "selectAptTime") {
+    if (appointmentTime === "select") {
       setAppointmentTimeError(true);
       return;
     }
@@ -138,7 +157,7 @@ function RequestAppointment() {
       console.log(newRequest);
       postAppointmentRequest(newRequest);
       setStartDate(undefined);
-      setAppointmentTime("selectAptTime");
+      setAppointmentTime("select");
       setFirstName("");
       setLastName("");
       setAge(18);
@@ -187,22 +206,30 @@ function RequestAppointment() {
             {startDateError ? <ErrorMessage message={"Date Required"} /> : ""}
           </div>
 
-          <div className="apt-times-container">
-            <span className="label">
-              <label htmlFor="aptTimes">Available Times:</label>
-            </span>
-            <select name="aptTimes" id="aptTimes" onChange={(e) => setAppointmentTime(e.target.value)} value={appointmentTime} required>
-              <option value="selectAptTime" disabled>
-                --- Select Time ---
-              </option>
-              {availableAppointmentTimes!.map((time, i) => (
-                <option key={i} value={String(time)}>
-                  {format(time, "h:mm a")}
-                </option>
-              ))}
-            </select>
-            {appointmentTimeError ? <ErrorMessage message={"SELECT A TIME"} /> : ""}
-          </div>
+          {startDate ? (
+            <div className="apt-times-container">
+              <span className="label">
+                <label htmlFor="aptTimes">Available Times:</label>
+              </span>
+              {availableAppointmentTimes.length ? (
+                <select name="aptTimes" id="aptTimes" onChange={(e) => setAppointmentTime(e.target.value)} value={appointmentTime} required>
+                  <option value="select" disabled>
+                    --- Select Time ---
+                  </option>
+                  {availableAppointmentTimes!.map((time, i) => (
+                    <option key={i} value={String(time)}>
+                      {format(new Date(time), "h:mm a")}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <div className="no-available-appointments">No Available Appointments</div>
+              )}
+              {appointmentTimeError ? <ErrorMessage message={"SELECT A TIME"} /> : ""}
+            </div>
+          ) : (
+            ""
+          )}
 
           <span className="label">
             <label htmlFor="firstName">First Name:</label>
