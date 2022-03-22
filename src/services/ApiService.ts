@@ -23,8 +23,3 @@ export function postAppointmentRequest(request: AppointmentRequest): Promise<App
 export function fetchAvailableAppointments(): Promise<AvailableAppointments[]> {
   return axios.get(apiAvailableAppointments).then((res) => res.data);
 }
-
-// POST
-export function updateAvailableAppointment(id: string, appointmentDateTimes: AvailableAppointments): Promise<AvailableAppointments> {
-  return axios.put(`${apiAvailableAppointments}/${id}`, appointmentDateTimes).then((res) => res.data);
-}

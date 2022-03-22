@@ -9,3 +9,8 @@ const apiAvailableAppointments = process.env.REACT_APP_API_AVAILABLE_ROUTE_LOCAL
 export function postAvailableAppointment(appointment: AvailableAppointments): Promise<AvailableAppointments> {
   return axios.post(apiAvailableAppointments, appointment).then((res) => res.data);
 }
+
+// PUT
+export function updateAvailableAppointment(id: string, appointmentDateTimes: AvailableAppointments): Promise<AvailableAppointments> {
+  return axios.put(`${apiAvailableAppointments}/${id}`, appointmentDateTimes).then((res) => res.data);
+}
