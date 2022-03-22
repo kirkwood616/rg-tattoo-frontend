@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import AppContext from "../../context/AppContext";
 import AvailableAppointments from "../../models/AvailableAppointments";
 import { postAvailableAppointment } from "../../services/AdminApiService";
-import { updateAvailableAppointment } from "../../services/ApiService";
+import { updateAvailableAppointment } from "../../services/AdminApiService";
 import GoButton from "../buttons/GoButton";
 import RemoveButton from "../buttons/RemoveButton";
 import SaveButton from "../buttons/SaveButton";
