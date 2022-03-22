@@ -1,0 +1,76 @@
+.SetAvailableAppointments {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+  text-align: center;
+}
+
+.date-picker_container,
+.time-picker_container {
+  width: 85%;
+}
+
+.SetAvailableAppointments .label {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.SetAvailableAppointments input[type="text"] {
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  box-shadow: 0 3px 7px var(--black);
+  font-size: 1rem;
+  padding: 0.5rem;
+  text-align: center;
+  width: 100%;
+}
+
+.available-times_container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+.no-times-set {
+  background-color: var(--light-gray-1);
+  border-radius: 0.5rem;
+  color: var(--black);
+  font-weight: bold;
+  padding: 1rem;
+  width: 200px;
+}
+
+.available-time_container {
+  background-color: #007bff;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 130px;
+}
+
+.available-time {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.save-changes {
+  background-color: var(--black);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-top: 1rem;
+  padding: 1rem;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+  z-index: 1;
+}
