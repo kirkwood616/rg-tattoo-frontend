@@ -10,11 +10,15 @@ interface Props {
 export default function AppContextProvider({ children }: Props) {
   const [availableAppointments, setAvailableAppointments] = useState<AvailableAppointments[]>([]);
 
+  function handleAvailableAppointments(): void {
+    fetchAvailableAppointments().then((data) => setAvailableAppointments(data));
+  }
+
   useEffect(() => {
     if (!availableAppointments.length) {
-      fetchAvailableAppointments().then((data) => setAvailableAppointments(data));
+      handleAvailableAppointments();
     }
   }, [availableAppointments]);
 
-  return <AppContext.Provider value={{ availableAppointments }}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={{ availableAppointments, handleAvailableAppointments }}>{children}</AppContext.Provider>;
 }
