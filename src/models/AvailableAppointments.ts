@@ -1,7 +1,7 @@
 interface AvailableAppointments {
   _id?: string;
-  date: Date;
-  availableTimes: Date[];
+  date: string;
+  availableTimes: string[];
 }
 
 export default AvailableAppointments;
