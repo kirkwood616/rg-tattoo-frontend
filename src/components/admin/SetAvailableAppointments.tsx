@@ -8,9 +8,9 @@ import { updateAvailableAppointment } from "../../services/AdminApiService";
 import GoButton from "../buttons/GoButton";
 import RemoveButton from "../buttons/RemoveButton";
 import SaveButton from "../buttons/SaveButton";
-import Page from "../Page";
 import "react-datepicker/dist/react-datepicker.css";
 import "./SetAvailableAppointments.css";
+import AdminPage from "./AdminPage";
 
 function SetAvailableAppointments() {
   // CONTEXT
@@ -77,7 +77,7 @@ function SetAvailableAppointments() {
   }
 
   return (
-    <Page title="Set Available Appointments">
+    <AdminPage title="Set Available Appointments">
       <div className="SetAvailableAppointments">
         <h1>Set Available Appointments</h1>
         <div className="date-picker_container">
@@ -121,7 +121,7 @@ function SetAvailableAppointments() {
       <div className="save-changes">
         <SaveButton type="button" text="SAVE CHANGES" onClick={() => saveChanges()} />
       </div>
-    </Page>
+    </AdminPage>
   );
 }
 
