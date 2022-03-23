@@ -6,6 +6,8 @@ import Main from "./components/Main";
 import RequestAppointment from "./components/RequestAppointment";
 import RequestSubmitted from "./components/RequestSubmitted";
 import SetAvailableAppointments from "./components/admin/SetAvailableAppointments";
+import LogIn from "./components/admin/LogIn";
+import AdminHome from "./components/admin/AdminHome";
 
 function App() {
   return (
@@ -16,7 +18,9 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/request-appointment" element={<RequestAppointment />} />
           <Route path="/request-submitted" element={<RequestSubmitted />} />
-          <Route path="/set-available-appointments" element={<SetAvailableAppointments />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/admin/home" element={<AdminHome />} />
+          <Route path="/admin/set-available-appointments" element={<SetAvailableAppointments />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>
