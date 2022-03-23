@@ -3,7 +3,7 @@ import "./GoButton.css";
 interface Props {
   type: "submit" | "reset" | "button";
   text: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 function GoButton({ type, text, onClick }: Props): JSX.Element {
