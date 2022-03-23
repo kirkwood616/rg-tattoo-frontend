@@ -1,4 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
+import { User } from "firebase/auth";
+
 import AvailableAppointments from "../models/AvailableAppointments";
 import { fetchAvailableAppointments } from "../services/ApiService";
 import AppContext from "./AppContext";
@@ -9,6 +11,7 @@ interface Props {
 
 export default function AppContextProvider({ children }: Props) {
   const [availableAppointments, setAvailableAppointments] = useState<AvailableAppointments[]>([]);
+  const [user, setUser] = useState<User | null>(null);
 
   function handleAvailableAppointments(): void {
     fetchAvailableAppointments().then((data) => setAvailableAppointments(data));
@@ -20,5 +23,5 @@ export default function AppContextProvider({ children }: Props) {
     }
   }, [availableAppointments]);
 
-  return <AppContext.Provider value={{ availableAppointments, handleAvailableAppointments }}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={{ availableAppointments, handleAvailableAppointments, user, setUser }}>{children}</AppContext.Provider>;
 }
