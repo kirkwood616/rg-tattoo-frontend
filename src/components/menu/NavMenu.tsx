@@ -1,13 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import AppContext from "../../context/AppContext";
+import AdminMenu from "../admin/menu/AdminMenu";
 import MenuHamburger from "./MenuHamburger";
 import "./NavMenu.css";
 import UserMenu from "./UserMenu";
 
 function NavMenu() {
+  // CONTEXT
+  let { user } = useContext(AppContext);
+
   const dropdownRef = useRef(null);
   const [isActive, setIsActive] = useState(false);
   const onClick = () => setIsActive(!isActive);
-  let isAdminLoggedIn = false;
 
   useEffect(() => {
     const pageClickEvent = (): void => {
@@ -26,7 +30,7 @@ function NavMenu() {
           <MenuHamburger isActive={isActive} />
         </button>
         <nav ref={dropdownRef} className={`menu ${isActive ? "active" : "inactive"}`}>
-          {isAdminLoggedIn ? "" : <UserMenu />}
+          {user ? <AdminMenu /> : <UserMenu />}
         </nav>
       </div>
     </div>
