@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import GoButton from "./buttons/GoButton";
 import AppContext from "../context/AppContext";
 import AvailableAppointments from "../models/AvailableAppointments";
+import { ref, uploadBytesResumable } from "firebase/storage";
+import { storage } from "../firebaseConfig";
 
 function RequestAppointment() {
   // CONTEXT
@@ -37,6 +39,9 @@ function RequestAppointment() {
   const [tattooDescription, setTattooDescription] = useState<string>("");
   const [ofAgeConfirm, setOfAgeConfirm] = useState<boolean>(false);
 
+  // STATES FOR FILES
+  const [referenceImage, setReferenceImage] = useState<File | null>(null);
+
   // STATES FOR ERRORS
   const [submitCount, setSubmitCount] = useState<number>(0);
   const [errors, setErrors] = useState<boolean>(false);
@@ -54,7 +59,19 @@ function RequestAppointment() {
   // NAVIGATE
   let navigate = useNavigate();
 
-  console.log(availableAppointmentTimes);
+  // FILE UPLOAD
+  function handleReferencePhotoChange(e: any): void {
+    if (e.target.files[0]) {
+      setReferenceImage(e.target.files[0]);
+      setReferencePhotoPath(`${firstName}-${lastName}-${referenceImage?.name}`);
+    }
+  }
+
+  function handleReferencePhotoUpload(): void {
+    if (!referenceImage) return;
+    const storageRef = ref(storage, `/images/${firstName}-${lastName}-${referenceImage.name}`);
+    uploadBytesResumable(storageRef, referenceImage);
+  }
 
   // CHECK FOR DATE IN DATABASE
   useEffect(() => {
@@ -155,6 +172,7 @@ function RequestAppointment() {
         isRequestDenied: false,
       };
       console.log(newRequest);
+      handleReferencePhotoUpload(); // reference photo upload
       postAppointmentRequest(newRequest);
       setStartDate(undefined);
       setAppointmentTime("select");
@@ -289,7 +307,9 @@ function RequestAppointment() {
           />
           {tattooPlacementError ? <ErrorMessage message={"PLEASE ENTER A TATTOO PLACEMENT"} /> : ""}
 
-          <div className="photo-upload">REFERENCE PHOTO UPLOAD HERE</div>
+          <div className="photo-upload">
+            <input type="file" name="referencePhoto" id="referencePhoto" accept="image/*" onChange={handleReferencePhotoChange} />
+          </div>
           <div className="photo-upload">PLACEMENT PHOTO UPLOAD HERE</div>
 
           <span className="label">
