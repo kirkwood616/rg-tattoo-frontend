@@ -19,6 +19,9 @@ function RequestAppointment() {
   // CONTEXT
   let { availableAppointments } = useContext(AppContext);
 
+  // NAVIGATE
+  let navigate = useNavigate();
+
   // STATES FOR DATES
   const [maxAppointmentDate, setMaxAppointmentDate] = useState<Date>();
   const [excludedDates, setExcludedDates] = useState<Date[]>([]);
@@ -34,8 +37,6 @@ function RequestAppointment() {
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [tattooStyle, setTattooStyle] = useState<string>("select");
   const [tattooPlacement, setTattooPlacement] = useState<string>("");
-  const [referencePhotoPath, setReferencePhotoPath] = useState<string>("");
-  const [placementPhotoPath, setPlacementPhotoPath] = useState<string>("");
   const [tattooDescription, setTattooDescription] = useState<string>("");
   const [ofAgeConfirm, setOfAgeConfirm] = useState<boolean>(false);
 
@@ -56,14 +57,10 @@ function RequestAppointment() {
   const [tattooPlacementError, setTattooPlacementError] = useState<boolean>(false);
   const [tattooDescriptionError, setTattooDescriptionError] = useState<boolean>(false);
 
-  // NAVIGATE
-  let navigate = useNavigate();
-
   // FILE UPLOAD
   function handleReferencePhotoChange(e: any): void {
     if (e.target.files[0]) {
       setReferenceImage(e.target.files[0]);
-      setReferencePhotoPath(`${firstName}-${lastName}-${referenceImage?.name}`);
     }
   }
 
@@ -142,7 +139,7 @@ function RequestAppointment() {
   }, [tattooStyle]);
 
   // HANDLE SUBMIT
-  function handleSubmit(e: FormEvent) {
+  function handleSubmit(e: FormEvent): void {
     e.preventDefault();
     if (tattooStyle === "select") {
       setTattooStyleError(true);
@@ -165,34 +162,20 @@ function RequestAppointment() {
         phoneNumber: phoneNumber,
         tattooStyle: tattooStyle,
         tattooPlacement: tattooPlacement,
-        referencePhotoPath: referencePhotoPath,
-        placementPhotoPath: placementPhotoPath,
+        referencePhotoPath: referenceImage ? `${firstName!}-${lastName!}-${referenceImage!.name}` : "",
+        placementPhotoPath: "",
         tattooDescription: tattooDescription,
         isRequestApproved: false,
         isRequestDenied: false,
       };
-      console.log(newRequest);
       handleReferencePhotoUpload(); // reference photo upload
       postAppointmentRequest(newRequest);
-      setStartDate(undefined);
-      setAppointmentTime("select");
-      setFirstName("");
-      setLastName("");
-      setAge(18);
-      setEmail("");
-      setPhoneNumber("");
-      setTattooStyle("select");
-      setTattooPlacement("");
-      setReferencePhotoPath("");
-      setPlacementPhotoPath("");
-      setTattooDescription("");
-      setSubmitCount(0);
       navigate("/request-submitted");
     }
   }
 
   // DIABLE OFF-DAYS OF SUNDAY & MONDAYS ON CALENDAR
-  function disableSundayMonday(date: Date) {
+  function disableSundayMonday(date: Date): boolean {
     return date.getDay() !== 0 && date.getDay() !== 1;
   }
 
