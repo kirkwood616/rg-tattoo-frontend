@@ -1,0 +1,31 @@
+.AppointmentRequests {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.AppointmentRequests .request_container {
+  border-radius: 0.5rem;
+  box-shadow: 0 3px 7px var(--black);
+  font-weight: bold;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  text-align: center;
+  width: 95%;
+}
+
+.request_container > a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.request_container .request-date-time_container {
+  background-color: red;
+  padding: 0.5rem 0;
+}
+
+.request_container .request-submitted_container {
+  background-color: white;
+  color: black;
+  padding: 0.5rem;
+}
