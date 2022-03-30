@@ -72,7 +72,23 @@ textarea:focus {
 .RequestAppointment .photo-upload {
   background-color: grey;
   font-weight: bold;
-  margin: 1rem;
+}
+
+.RequestAppointment input[type="file"] {
+  font-weight: bold;
+  margin: 0;
+  padding: 0.25rem;
+}
+
+.RequestAppointment input[type="file"]::file-selector-button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 1px 1px 3px var(--black);
+  color: white;
+  font-weight: bold;
+  margin-right: 1rem;
+  padding: 0.5rem;
 }
 
 .RequestAppointment textarea {
