@@ -335,7 +335,7 @@ function RequestAppointment() {
             <input type="checkbox" name="ofAgeConfirm" id="ofAgeConfirm" onChange={() => setOfAgeConfirm(!ofAgeConfirm)} />
             <label htmlFor="ofAgeConfirm">I confirm that I am or will be 18 years of age by the date of this requested appointment.</label>
           </div>
-          <GoButton type="submit" text="Submit Request" onClick={() => setSubmitCount(submitCount + 1)} />
+          <GoButton type="submit" text="Submit Request" backgroundColor="green" onClick={() => setSubmitCount(submitCount + 1)} />
         </form>
       </div>
     </Page>
