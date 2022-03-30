@@ -1,0 +1,36 @@
+.AppointmentRequestById {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 5rem;
+  text-align: center;
+}
+
+.AppointmentRequestById a {
+  color: blue;
+}
+
+.AppointmentRequestById .request-table {
+  border-radius: 0.5rem;
+  color: black;
+  font-weight: bold;
+  overflow: hidden;
+  width: 95%;
+  overflow-wrap: break-word;
+}
+
+.request-table .request-table-title {
+  background-color: var(--light-gray-1);
+}
+
+.request-table .request-table-info {
+  background-color: white;
+}
+.request-table .request-table-title,
+.request-table-info {
+  padding: 0.5rem 0;
+}
+
+.AppointmentRequestById > button {
+  width: 95%;
+}
