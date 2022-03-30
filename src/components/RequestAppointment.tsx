@@ -42,6 +42,7 @@ function RequestAppointment() {
 
   // STATES FOR FILES
   const [referenceImage, setReferenceImage] = useState<File | null>(null);
+  const [placementImage, setPlacementImage] = useState<File | null>(null);
 
   // STATES FOR ERRORS
   const [submitCount, setSubmitCount] = useState<number>(0);
@@ -66,8 +67,20 @@ function RequestAppointment() {
 
   function handleReferencePhotoUpload(): void {
     if (!referenceImage) return;
-    const storageRef = ref(storage, `/images/${firstName}-${lastName}-${referenceImage.name}`);
+    const storageRef = ref(storage, `/images/${firstName}-${lastName}-ref-${referenceImage.name}`);
     uploadBytesResumable(storageRef, referenceImage);
+  }
+
+  function handlePlacementPhotoChange(e: any): void {
+    if (e.target.files[0]) {
+      setPlacementImage(e.target.files[0]);
+    }
+  }
+
+  function handlePlacementPhotoUpload(): void {
+    if (!placementImage) return;
+    const storageRef = ref(storage, `/images/${firstName}-${lastName}-place-${placementImage.name}`);
+    uploadBytesResumable(storageRef, placementImage);
   }
 
   // CHECK FOR DATE IN DATABASE
@@ -162,13 +175,14 @@ function RequestAppointment() {
         phoneNumber: phoneNumber,
         tattooStyle: tattooStyle,
         tattooPlacement: tattooPlacement,
-        referencePhotoPath: referenceImage ? `${firstName!}-${lastName!}-${referenceImage!.name}` : "",
-        placementPhotoPath: "",
+        referencePhotoPath: referenceImage ? `${firstName!}-${lastName!}-ref-${referenceImage!.name}` : "",
+        placementPhotoPath: placementImage ? `${firstName!}-${lastName!}-place-${placementImage!.name}` : "",
         tattooDescription: tattooDescription,
         isRequestApproved: false,
         isRequestDenied: false,
       };
       handleReferencePhotoUpload(); // reference photo upload
+      handlePlacementPhotoUpload(); // placement photo upload
       postAppointmentRequest(newRequest);
       navigate("/request-submitted");
     }
@@ -290,10 +304,19 @@ function RequestAppointment() {
           />
           {tattooPlacementError ? <ErrorMessage message={"PLEASE ENTER A TATTOO PLACEMENT"} /> : ""}
 
+          <span className="label">
+            <label htmlFor="referencePhoto">Reference Photo:</label>
+          </span>
           <div className="photo-upload">
             <input type="file" name="referencePhoto" id="referencePhoto" accept="image/*" onChange={handleReferencePhotoChange} />
           </div>
-          <div className="photo-upload">PLACEMENT PHOTO UPLOAD HERE</div>
+
+          <span className="label">
+            <label htmlFor="placementPhoto">Placement Photo:</label>
+          </span>
+          <div className="photo-upload">
+            <input type="file" name="placementPhoto" id="placementPhoto" accept="image/*" onChange={handlePlacementPhotoChange} />
+          </div>
 
           <span className="label">
             <label htmlFor="tattooDescription">Tattoo Description:</label>
