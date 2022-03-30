@@ -7,11 +7,6 @@ const apiAvailableAppointments = process.env.REACT_APP_API_AVAILABLE_ROUTE_LOCAL
 
 //// APPOINTMENT REQUESTS
 
-// GET ALL
-export function fetchAppointmentRequests(): Promise<AppointmentRequest[]> {
-  return axios.get(apiRequestAppointment).then((res) => res.data);
-}
-
 // POST
 export function postAppointmentRequest(request: AppointmentRequest): Promise<AppointmentRequest> {
   return axios.post<AppointmentRequest>(apiRequestAppointment, request).then((res) => res.data);
