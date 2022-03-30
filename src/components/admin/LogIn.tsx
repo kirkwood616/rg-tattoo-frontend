@@ -84,7 +84,7 @@ function LogIn() {
             />
             {errorMessage.includes("wrong-password") ? <ErrorMessage message={"INCORRECT PASSWORD"} /> : ""}
           </div>
-          <GoButton type="submit" text="LOG IN" />
+          <GoButton type="submit" text="LOG IN" backgroundColor="green" />
         </form>
       </div>
     </Page>

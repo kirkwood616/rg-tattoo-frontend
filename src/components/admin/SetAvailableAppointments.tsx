@@ -116,7 +116,7 @@ function SetAvailableAppointments() {
             withPortal
           />
         </div>
-        <GoButton type="button" text="ADD TIME" onClick={() => addTime(startTime!)} />
+        <GoButton type="button" text="ADD TIME" backgroundColor="green" onClick={() => addTime(startTime!)} />
       </div>
       <div className="save-changes">
         <SaveButton type="button" text="SAVE CHANGES" onClick={() => saveChanges()} />
