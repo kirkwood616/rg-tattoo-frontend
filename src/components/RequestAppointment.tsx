@@ -324,6 +324,7 @@ function RequestAppointment() {
           <textarea
             name="tattooDescription"
             id="tattooDescription"
+            className="request_textarea"
             onChange={(e) => validateTattooDescription(e, setTattooDescription, setTattooDescriptionError)}
             value={tattooDescription}
             minLength={7}
