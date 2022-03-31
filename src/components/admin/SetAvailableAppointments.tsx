@@ -3,24 +3,24 @@ import { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import AppContext from "../../context/AppContext";
 import AvailableAppointments from "../../models/AvailableAppointments";
-import { postAvailableAppointment } from "../../services/AdminApiService";
-import { updateAvailableAppointment } from "../../services/AdminApiService";
 import GoButton from "../buttons/GoButton";
 import RemoveButton from "../buttons/RemoveButton";
 import SaveButton from "../buttons/SaveButton";
 import "react-datepicker/dist/react-datepicker.css";
 import "./SetAvailableAppointments.css";
 import AdminPage from "./AdminPage";
+import SaveChangesModal from "./SaveChangesModal";
 
 function SetAvailableAppointments() {
   // CONTEXT
-  let { availableAppointments, handleAvailableAppointments } = useContext(AppContext);
+  let { availableAppointments } = useContext(AppContext);
 
   // STATES
   const [appointmentTimes, setAppointmentTimes] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<Date | undefined>(new Date());
   const [startTime, setStartTime] = useState<Date | null>();
   const [dateId, setDateId] = useState<string>("");
+  const [isSaveActive, setIsSaveActive] = useState<boolean>(false);
 
   // CHECK FOR DATE IN DATABASE
   useEffect(() => {
@@ -35,8 +35,8 @@ function SetAvailableAppointments() {
     }
   }, [availableAppointments, startDate]);
 
-  // FUNCTIONS
-  function addTime(time: Date) {
+  // ADD TIME
+  function addTime(time: Date): void {
     if (!time) return;
     let isoTime = time.toISOString();
     if (appointmentTimes.includes(isoTime)) return;
@@ -44,36 +44,15 @@ function SetAvailableAppointments() {
     setAppointmentTimes(newTimes);
   }
 
-  function removeTime(index: number) {
+  // REMOVE TIME
+  function removeTime(index: number): void {
     setAppointmentTimes((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
   }
 
-  function saveChanges() {
+  // SAVE CHANGES
+  function saveChanges(): void {
     if (!startDate) return;
-    if (window.confirm("Are You Sure?")) {
-      let appointmentDateTimes: AvailableAppointments = {
-        date: format(startDate!, "MM-dd-yyyy"),
-        availableTimes: appointmentTimes!,
-      };
-      if (dateId) {
-        updateAvailableAppointment(dateId, appointmentDateTimes)
-          .then(() => handleAvailableAppointments())
-          .then(() => {
-            setAppointmentTimes([]);
-            setStartDate(new Date());
-            setStartTime(null);
-            setDateId("");
-          });
-      } else {
-        postAvailableAppointment(appointmentDateTimes)
-          .then(() => handleAvailableAppointments())
-          .then(() => {
-            setAppointmentTimes([]);
-            setStartDate(new Date());
-            setStartTime(null);
-          });
-      }
-    }
+    setIsSaveActive(true);
   }
 
   return (
@@ -121,6 +100,7 @@ function SetAvailableAppointments() {
       <div className="save-changes">
         <SaveButton type="button" text="SAVE CHANGES" onClick={() => saveChanges()} />
       </div>
+      <SaveChangesModal isSaveActive={isSaveActive} setIsSaveActive={setIsSaveActive} dateId={dateId} startDate={startDate!} appointmentTimes={appointmentTimes} />
     </AdminPage>
   );
 }
