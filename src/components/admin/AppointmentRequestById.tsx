@@ -8,6 +8,8 @@ import { storage } from "../../firebaseConfig";
 import { StorageReference, getDownloadURL, ref } from "firebase/storage";
 import "./AppointmentRequestById.css";
 import GoButton from "../buttons/GoButton";
+import RejectModal from "./RejectModal";
+import ApproveModal from "./ApproveModal";
 
 function AppointmentRequestById() {
   // CONTEXT
@@ -18,6 +20,10 @@ function AppointmentRequestById() {
 
   // FIND REQUEST FROM STATE
   let request: AppointmentRequest | undefined = appointmentRequests.find((request) => request._id === id);
+
+  // APPROVE & REJECT STATES
+  const [isRejectActive, setIsRejectActive] = useState<boolean>(false);
+  const [isApproveActive, setIsApproveActive] = useState<boolean>(false);
 
   // PHOTOS
   const referencePhotoRef: StorageReference = ref(storage, `images/${request?.referencePhotoPath}`);
@@ -93,8 +99,10 @@ function AppointmentRequestById() {
           <div className="request-table-title">Request Submitted</div>
           <div className="request-table-info">{format(new Date(request!.requestSubmittedDate), "M-dd-yyyy @ H:mm a")}</div>
         </div>
-        <GoButton type="button" text="APPROVE" backgroundColor="green" />
-        <GoButton type="button" text="REJECT" backgroundColor="red" />
+        <GoButton type="button" text="APPROVE" backgroundColor="green" onClick={() => setIsApproveActive(true)} />
+        <GoButton type="button" text="REJECT" backgroundColor="red" onClick={() => setIsRejectActive(true)} />
+        <ApproveModal isApproveActive={isApproveActive} setIsApproveActive={setIsApproveActive} request={request!} />
+        <RejectModal isRejectActive={isRejectActive} setIsRejectActive={setIsRejectActive} request={request!} />
       </div>
     </AdminPage>
   );
