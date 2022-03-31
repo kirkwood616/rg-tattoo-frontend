@@ -37,5 +37,9 @@ export default function AppContextProvider({ children }: Props) {
     }
   }, [availableAppointments]);
 
-  return <AppContext.Provider value={{ appointmentRequests, availableAppointments, handleAvailableAppointments, user, setUser }}>{children}</AppContext.Provider>;
+  return (
+    <AppContext.Provider value={{ user, appointmentRequests, availableAppointments, setUser, handleAppointmentRequests, handleAvailableAppointments }}>
+      {children}
+    </AppContext.Provider>
+  );
 }

@@ -4,19 +4,21 @@ import AvailableAppointments from "../models/AvailableAppointments";
 import AppointmentRequest from "../models/AppointmentRequest";
 
 interface ContextModel {
+  user: User | null;
   appointmentRequests: AppointmentRequest[];
   availableAppointments: AvailableAppointments[];
-  handleAvailableAppointments: () => void;
-  user: User | null;
   setUser: Dispatch<SetStateAction<User | null>>;
+  handleAppointmentRequests: () => void;
+  handleAvailableAppointments: () => void;
 }
 
 const defaultValue: ContextModel = {
+  user: null,
   appointmentRequests: [],
   availableAppointments: [],
-  handleAvailableAppointments: () => {},
-  user: null,
   setUser: () => {},
+  handleAppointmentRequests: () => {},
+  handleAvailableAppointments: () => {},
 };
 
 const AppContext = createContext(defaultValue);
