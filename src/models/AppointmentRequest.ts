@@ -14,6 +14,7 @@ interface AppointmentRequest {
   tattooDescription: string;
   isRequestApproved: Boolean;
   isRequestDenied: Boolean;
+  deniedMessage?: string;
 }
 
 export default AppointmentRequest;
