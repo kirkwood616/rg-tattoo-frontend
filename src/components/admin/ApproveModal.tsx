@@ -1,5 +1,7 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
+import AppContext from "../../context/AppContext";
 import AppointmentRequest from "../../models/AppointmentRequest";
+import { updateAppointmentRequest } from "../../services/AdminApiService";
 import GoButton from "../buttons/GoButton";
 import "./ApproveModal.css";
 
@@ -10,14 +12,19 @@ interface Props {
 }
 
 function ApproveModal({ isApproveActive, setIsApproveActive, request }: Props) {
+  // CONTEXT
+  let { handleAppointmentRequests } = useContext(AppContext);
+
   // APPROVE
   function onApprove(): void {
     let approvedRequest: AppointmentRequest = {
       ...request,
       isRequestApproved: true,
     };
-    console.log(approvedRequest);
-    setIsApproveActive(false);
+    if (!approvedRequest._id) return;
+    updateAppointmentRequest(approvedRequest._id, approvedRequest)
+      .then(() => handleAppointmentRequests())
+      .then(() => setIsApproveActive(false));
   }
 
   return (

@@ -1,5 +1,7 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
+import AppContext from "../../context/AppContext";
 import AppointmentRequest from "../../models/AppointmentRequest";
+import { updateAppointmentRequest } from "../../services/AdminApiService";
 import GoButton from "../buttons/GoButton";
 import "./RejectModal.css";
 
@@ -10,6 +12,9 @@ interface Props {
 }
 
 function RejectModal({ isRejectActive, setIsRejectActive, request }: Props) {
+  // CONTEXT
+  let { handleAppointmentRequests } = useContext(AppContext);
+
   // STATE
   const [rejectionReason, setRejectionReason] = useState<string>("");
 
@@ -20,9 +25,13 @@ function RejectModal({ isRejectActive, setIsRejectActive, request }: Props) {
       isRequestDenied: true,
       deniedMessage: rejectionReason,
     };
-    console.log(rejectedRequest);
-    setRejectionReason("");
-    setIsRejectActive(false);
+    if (!rejectedRequest._id) return;
+    updateAppointmentRequest(rejectedRequest._id, rejectedRequest)
+      .then(() => handleAppointmentRequests())
+      .then(() => {
+        setRejectionReason("");
+        setIsRejectActive(false);
+      });
   }
 
   // CANCEL
