@@ -12,6 +12,11 @@ export function fetchAppointmentRequests(): Promise<AppointmentRequest[]> {
   return axios.get(apiRequestAppointment).then((res) => res.data);
 }
 
+// PUT
+export function updateAppointmentRequest(id: string, appointmentRequest: AppointmentRequest): Promise<AvailableAppointments> {
+  return axios.put(`${apiRequestAppointment}/${id}`, appointmentRequest).then((res) => res.data);
+}
+
 //// AVAILABLE APPOINTMENTS
 
 // POST
