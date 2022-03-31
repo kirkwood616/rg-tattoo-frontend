@@ -1,0 +1,42 @@
+.RejectModal {
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.RejectModal .reject-info {
+  background-color: var(--light-gray-1);
+  border-radius: 0.5rem;
+  box-shadow: 0 5px 7px black;
+  color: black;
+  font-weight: bold;
+  margin: auto;
+  padding: 1rem 0;
+  position: relative;
+  width: 95%;
+}
+
+.RejectModal .reject-info .reject-textarea {
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  box-shadow: 2px 2px 5px var(--black);
+  font-family: inherit;
+  font-size: 1rem;
+  max-height: 350px;
+  min-height: 300px;
+  padding: 0.5rem;
+  width: 95%;
+  resize: vertical;
+}
+
+.reject-info > button {
+  width: 95%;
+}
+
+.hide {
+  display: none;
+}
