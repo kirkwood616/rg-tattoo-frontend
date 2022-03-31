@@ -3,6 +3,7 @@ import AppContext from "../../context/AppContext";
 import AppointmentRequest from "../../models/AppointmentRequest";
 import { updateAppointmentRequest } from "../../services/AdminApiService";
 import GoButton from "../buttons/GoButton";
+import LoadingDotsIcon from "../loading/LoadingDotsIcon";
 import "./RejectModal.css";
 
 interface Props {
@@ -17,6 +18,7 @@ function RejectModal({ isRejectActive, setIsRejectActive, request }: Props) {
 
   // STATE
   const [rejectionReason, setRejectionReason] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // REJECT
   function onReject(): void {
@@ -26,10 +28,12 @@ function RejectModal({ isRejectActive, setIsRejectActive, request }: Props) {
       deniedMessage: rejectionReason,
     };
     if (!rejectedRequest._id) return;
+    setIsLoading(true);
     updateAppointmentRequest(rejectedRequest._id, rejectedRequest)
       .then(() => handleAppointmentRequests())
       .then(() => {
         setRejectionReason("");
+        setIsLoading(false);
         setIsRejectActive(false);
       });
   }
@@ -47,6 +51,7 @@ function RejectModal({ isRejectActive, setIsRejectActive, request }: Props) {
         <textarea id="rejectReason" name="rejectReason" className="reject-textarea" value={rejectionReason} onChange={(e) => setRejectionReason(e.target.value)} />
         <GoButton type="button" text="REJECT" backgroundColor="green" onClick={onReject} />
         <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={onCancel} />
+        {isLoading ? <LoadingDotsIcon /> : ""}
       </div>
     </div>
   );
