@@ -1,0 +1,29 @@
+.ApproveModal {
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.ApproveModal .approve-confirm {
+  background-color: var(--light-gray-1);
+  border-radius: 0.5rem;
+  box-shadow: 0 5px 7px black;
+  color: black;
+  font-weight: bold;
+  margin: auto;
+  padding: 1rem 0;
+  position: relative;
+  width: 95%;
+}
+
+.approve-confirm > button {
+  width: 95%;
+}
+
+.hide {
+  display: none;
+}
