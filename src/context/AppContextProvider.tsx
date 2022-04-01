@@ -23,8 +23,8 @@ export default function AppContextProvider({ children }: Props) {
   }
 
   useEffect(() => {
-    if (user && !appointmentRequests.length) handleAppointmentRequests();
-  }, [user, appointmentRequests]);
+    handleAppointmentRequests();
+  }, []);
 
   // AVAILABLE APPOINTMENTS
   function handleAvailableAppointments(): void {
@@ -32,10 +32,8 @@ export default function AppContextProvider({ children }: Props) {
   }
 
   useEffect(() => {
-    if (!availableAppointments.length) {
-      handleAvailableAppointments();
-    }
-  }, [availableAppointments]);
+    handleAvailableAppointments();
+  }, []);
 
   return (
     <AppContext.Provider value={{ user, appointmentRequests, availableAppointments, setUser, handleAppointmentRequests, handleAvailableAppointments }}>
