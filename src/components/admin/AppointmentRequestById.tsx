@@ -1,15 +1,15 @@
-import { format } from "date-fns";
 import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
+import { format } from "date-fns";
+import { storage } from "../../firebaseConfig";
+import { StorageReference, getDownloadURL, ref } from "firebase/storage";
 import AppContext from "../../context/AppContext";
 import AppointmentRequest from "../../models/AppointmentRequest";
 import AdminPage from "./AdminPage";
-import { storage } from "../../firebaseConfig";
-import { StorageReference, getDownloadURL, ref } from "firebase/storage";
-import "./AppointmentRequestById.css";
 import GoButton from "../buttons/GoButton";
 import RejectModal from "./RejectModal";
 import ApproveModal from "./ApproveModal";
+import "./AppointmentRequestById.css";
 
 function AppointmentRequestById() {
   // CONTEXT
@@ -22,8 +22,8 @@ function AppointmentRequestById() {
   let request: AppointmentRequest | undefined = appointmentRequests.find((request) => request._id === id);
 
   // APPROVE & REJECT STATES
-  const [isRejectActive, setIsRejectActive] = useState<boolean>(false);
   const [isApproveActive, setIsApproveActive] = useState<boolean>(false);
+  const [isRejectActive, setIsRejectActive] = useState<boolean>(false);
 
   // PHOTOS
   const referencePhotoRef: StorageReference = ref(storage, `images/${request?.referencePhotoPath}`);
@@ -59,7 +59,7 @@ function AppointmentRequestById() {
           <div className="request-table-title">Requested Date</div>
           <div className="request-table-info">{format(new Date(request!.requestDateTime), "M-dd-yyyy")}</div>
           <div className="request-table-title">Requested Time</div>
-          <div className="request-table-info">{format(new Date(request!.requestDateTime), "H:mm a")}</div>
+          <div className="request-table-info">{format(new Date(request!.requestDateTime), "h:mm a")}</div>
           <div className="request-table-title">Name</div>
           <div className="request-table-info">{`${request?.firstName} ${request?.lastName}`}</div>
           <div className="request-table-title">Email</div>
