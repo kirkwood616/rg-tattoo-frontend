@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import AppContext from "../../context/AppContext";
 import AppointmentRequest from "../../models/AppointmentRequest";
 import { updateAppointmentRequest } from "../../services/AdminApiService";
@@ -16,6 +17,9 @@ function ApproveModal({ isApproveActive, setIsApproveActive, request }: Props) {
   // CONTEXT
   let { handleAppointmentRequests } = useContext(AppContext);
 
+  // NAVIGATE
+  const navigate: NavigateFunction = useNavigate();
+
   // STATE
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -32,6 +36,7 @@ function ApproveModal({ isApproveActive, setIsApproveActive, request }: Props) {
       .then(() => {
         setIsLoading(false);
         setIsApproveActive(false);
+        navigate("/admin/appointment-requests");
       });
   }
 
