@@ -10,6 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./SetAvailableAppointments.css";
 import AdminPage from "./AdminPage";
 import SaveChangesModal from "./SaveChangesModal";
+import { formatTime } from "../../functions/Formatting";
 
 function SetAvailableAppointments() {
   // CONTEXT
@@ -18,7 +19,7 @@ function SetAvailableAppointments() {
   // STATES
   const [appointmentTimes, setAppointmentTimes] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<Date | undefined>(new Date());
-  const [startTime, setStartTime] = useState<Date | null>();
+  const [startTime, setStartTime] = useState<string>("");
   const [dateId, setDateId] = useState<string>("");
   const [isSaveActive, setIsSaveActive] = useState<boolean>(false);
 
@@ -36,11 +37,15 @@ function SetAvailableAppointments() {
   }, [availableAppointments, startDate]);
 
   // ADD TIME
-  function addTime(time: Date): void {
+  function addTime(time: string): void {
     if (!time) return;
-    let isoTime = time.toISOString();
-    if (appointmentTimes.includes(isoTime)) return;
-    let newTimes = [...appointmentTimes, isoTime].sort();
+    if (appointmentTimes.includes(time)) return;
+    let newTimes = [...appointmentTimes, time];
+    newTimes.sort(function compare(a, b) {
+      let dateA: number = Number(new Date("1970/01/01 " + a));
+      let dateB: number = Number(new Date("1970/01/01 " + b));
+      return dateA - dateB;
+    });
     setAppointmentTimes(newTimes);
   }
 
@@ -69,7 +74,7 @@ function SetAvailableAppointments() {
           {appointmentTimes.length ? (
             appointmentTimes.map((time, index) => (
               <div className="available-time_container" key={index}>
-                <span className="available-time">{format(new Date(time), "h:mm a")}</span>
+                <span className="available-time">{formatTime(time)}</span>
                 <RemoveButton index={index} onClick={removeTime} />
               </div>
             ))
@@ -83,17 +88,12 @@ function SetAvailableAppointments() {
           <span className="label">
             <label htmlFor="time-picker">Times:</label>
           </span>
-          <DatePicker
-            name="time-picker"
-            id="time-picker"
-            selected={startTime}
-            showTimeSelect
-            showTimeSelectOnly
-            timeIntervals={15}
-            onChange={(date) => setStartTime(date)}
-            dateFormat="h:mm a"
-            withPortal
-          />
+          <select name="time-picker" id="time-picker" onChange={(e) => setStartTime(e.target.value)}>
+            <option value="11:00 AM">11:00 AM</option>
+            <option value="04:00 PM">4:00 PM</option>
+            <option value="05:00 PM">5:00 PM</option>
+            <option value="06:00 PM">6:00 PM</option>
+          </select>
         </div>
         <GoButton type="button" text="ADD TIME" backgroundColor="green" onClick={() => addTime(startTime!)} />
       </div>
