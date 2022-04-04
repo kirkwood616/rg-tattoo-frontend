@@ -14,6 +14,7 @@ import AppContext from "../context/AppContext";
 import AvailableAppointments from "../models/AvailableAppointments";
 import { ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../firebaseConfig";
+import { formatTime } from "../functions/Formatting";
 
 function RequestAppointment() {
   // CONTEXT
@@ -167,7 +168,8 @@ function RequestAppointment() {
     } else {
       let newRequest: AppointmentRequest = {
         requestSubmittedDate: new Date(),
-        requestDateTime: new Date(appointmentTime),
+        requestDate: format(startDate!, "MM-dd-yyyy"),
+        requestTime: appointmentTime,
         firstName: firstName,
         lastName: lastName,
         age: age,
@@ -232,8 +234,8 @@ function RequestAppointment() {
                     --- Select Time ---
                   </option>
                   {availableAppointmentTimes!.map((time, i) => (
-                    <option key={i} value={String(time)}>
-                      {format(new Date(time), "h:mm a")}
+                    <option key={i} value={time}>
+                      {formatTime(time)}
                     </option>
                   ))}
                 </select>
