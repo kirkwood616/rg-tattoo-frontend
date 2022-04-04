@@ -1,7 +1,8 @@
 interface AppointmentRequest {
   _id?: string;
   requestSubmittedDate: Date;
-  requestDateTime: Date;
+  requestDate: string;
+  requestTime: string;
   firstName: string;
   lastName: string;
   age: number;
