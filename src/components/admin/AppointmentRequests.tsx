@@ -19,7 +19,9 @@ function AppointmentRequests() {
             <div className="request_container" key={index}>
               <Link to={`/admin/appointment-requests/${request._id}`}>
                 <div className="request-info_container">
-                  <div className="request-date-time_container">{format(new Date(request.requestDateTime), "M-dd-yyyy @ h:mm a")}</div>
+                  <div className="request-date-time_container">
+                    {request.requestDate} @ {request.requestTime}
+                  </div>
                   <div className="request-submitted_container">
                     <div className="request-info_container">
                       {request.firstName} {request.lastName}
