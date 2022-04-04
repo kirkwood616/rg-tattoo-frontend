@@ -10,6 +10,7 @@ import GoButton from "../buttons/GoButton";
 import RejectModal from "./RejectModal";
 import ApproveModal from "./ApproveModal";
 import "./AppointmentRequestById.css";
+import { formatTime } from "../../functions/Formatting";
 
 function AppointmentRequestById() {
   // CONTEXT
@@ -57,9 +58,9 @@ function AppointmentRequestById() {
         <h1>Appointment Request</h1>
         <div className="request-table">
           <div className="request-table-title">Requested Date</div>
-          <div className="request-table-info">{format(new Date(request!.requestDateTime), "M-dd-yyyy")}</div>
+          <div className="request-table-info">{request?.requestDate}</div>
           <div className="request-table-title">Requested Time</div>
-          <div className="request-table-info">{format(new Date(request!.requestDateTime), "h:mm a")}</div>
+          <div className="request-table-info">{formatTime(request!.requestTime)}</div>
           <div className="request-table-title">Name</div>
           <div className="request-table-info">{`${request?.firstName} ${request?.lastName}`}</div>
           <div className="request-table-title">Email</div>
