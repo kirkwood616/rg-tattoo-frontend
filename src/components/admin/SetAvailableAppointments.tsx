@@ -11,6 +11,7 @@ import "./SetAvailableAppointments.css";
 import AdminPage from "./AdminPage";
 import SaveChangesModal from "./SaveChangesModal";
 import { formatTime } from "../../functions/Formatting";
+import { timePickerValues } from "../../admin/AdminSettings";
 
 function SetAvailableAppointments() {
   // CONTEXT
@@ -42,8 +43,8 @@ function SetAvailableAppointments() {
     if (appointmentTimes.includes(time)) return;
     let newTimes = [...appointmentTimes, time];
     newTimes.sort(function compare(a, b) {
-      let dateA: number = Number(new Date("1970/01/01 " + a));
-      let dateB: number = Number(new Date("1970/01/01 " + b));
+      let dateA: number = Number(new Date("03/27/2022 " + a));
+      let dateB: number = Number(new Date("03/27/2022 " + b));
       return dateA - dateB;
     });
     setAppointmentTimes(newTimes);
@@ -89,10 +90,11 @@ function SetAvailableAppointments() {
             <label htmlFor="time-picker">Times:</label>
           </span>
           <select name="time-picker" id="time-picker" onChange={(e) => setStartTime(e.target.value)}>
-            <option value="11:00 AM">11:00 AM</option>
-            <option value="04:00 PM">4:00 PM</option>
-            <option value="05:00 PM">5:00 PM</option>
-            <option value="06:00 PM">6:00 PM</option>
+            {timePickerValues!.map((time, index) => (
+              <option value={time} key={index}>
+                {formatTime(time)}
+              </option>
+            ))}
           </select>
         </div>
         <GoButton type="button" text="ADD TIME" backgroundColor="green" onClick={() => addTime(startTime!)} />
