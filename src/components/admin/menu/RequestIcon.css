@@ -1,0 +1,14 @@
+.RequestIcon {
+  display: inline-block;
+}
+
+.RequestIcon .request-number_container {
+  align-items: center;
+  background-color: red;
+  border-radius: 50%;
+  display: flex;
+  font-weight: bold;
+  height: 1.5rem;
+  justify-content: center;
+  width: 1.5rem;
+}

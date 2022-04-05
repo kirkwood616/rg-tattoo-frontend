@@ -7,9 +7,11 @@
 }
 
 .NavMenu .menu-trigger {
+  align-items: center;
   background: linear-gradient(var(--black), var(--black) 50%, white 50%, white);
   background-size: 100% 0%;
   background-repeat: no-repeat;
+  display: flex;
   transition: background 0.5s;
   border: 2px solid white;
   border-radius: 0.5rem;
