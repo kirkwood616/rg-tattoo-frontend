@@ -1,10 +1,9 @@
 import { format } from "date-fns";
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import AppContext from "../../context/AppContext";
 import AvailableAppointments from "../../models/AvailableAppointments";
 import { postAvailableAppointment, updateAvailableAppointment } from "../../services/AdminApiService";
 import GoButton from "../buttons/GoButton";
-import LoadingDotsIcon from "../loading/LoadingDotsIcon";
 import "./SaveChangesModal.css";
 
 interface Props {
@@ -17,10 +16,7 @@ interface Props {
 
 function SaveChangesModal({ isSaveActive, setIsSaveActive, dateId, startDate, appointmentTimes }: Props) {
   // CONTEXT
-  let { handleAvailableAppointments } = useContext(AppContext);
-
-  // STATE
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  let { handleAvailableAppointments, setIsLoading } = useContext(AppContext);
 
   // SAVE CHANGES
   function handleOnSave(): void {
@@ -52,7 +48,6 @@ function SaveChangesModal({ isSaveActive, setIsSaveActive, dateId, startDate, ap
         <h2>Are You Sure?</h2>
         <GoButton type="button" text="SAVE" backgroundColor="green" onClick={handleOnSave} />
         <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={() => setIsSaveActive(false)} />
-        {isLoading ? <LoadingDotsIcon /> : ""}
       </div>
     </div>
   );

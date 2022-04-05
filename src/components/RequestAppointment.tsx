@@ -15,10 +15,11 @@ import AvailableAppointments from "../models/AvailableAppointments";
 import { ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../firebaseConfig";
 import { formatTime } from "../functions/Formatting";
+import LoadingDotsIcon from "./loading/LoadingDotsIcon";
 
 function RequestAppointment() {
   // CONTEXT
-  let { availableAppointments } = useContext(AppContext);
+  let { availableAppointments, isLoading, setIsLoading } = useContext(AppContext);
 
   // NAVIGATE
   let navigate = useNavigate();
@@ -183,10 +184,17 @@ function RequestAppointment() {
         isRequestApproved: false,
         isRequestDenied: false,
       };
-      handleReferencePhotoUpload(); // reference photo upload
-      handlePlacementPhotoUpload(); // placement photo upload
-      postAppointmentRequest(newRequest);
-      navigate("/request-submitted");
+      setIsLoading(true);
+      postAppointmentRequest(newRequest)
+        .then(() => {
+          handleReferencePhotoUpload();
+          handlePlacementPhotoUpload();
+        })
+        .catch((error) => console.error(error))
+        .finally(() => {
+          setIsLoading(false);
+          navigate("/request-submitted");
+        });
     }
   }
 
@@ -341,6 +349,7 @@ function RequestAppointment() {
           <GoButton type="submit" text="Submit Request" backgroundColor="green" onClick={() => setSubmitCount(submitCount + 1)} />
         </form>
       </div>
+      {isLoading ? <LoadingDotsIcon /> : ""}
     </Page>
   );
 }

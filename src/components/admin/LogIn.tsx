@@ -11,7 +11,7 @@ import "./LogIn.css";
 
 function LogIn() {
   // CONTEXT
-  let { user, setUser } = useContext(AppContext);
+  let { user, setUser, setIsLoading } = useContext(AppContext);
 
   // STATES
   const [email, setEmail] = useState<string>("");
@@ -46,10 +46,12 @@ function LogIn() {
   });
 
   async function logIn() {
+    setIsLoading(true);
     try {
-      const user = await signInWithEmailAndPassword(auth, email, password);
+      const user = await signInWithEmailAndPassword(auth, email, password).then(() => setIsLoading(false));
       console.log(user);
     } catch (error: unknown) {
+      setIsLoading(false);
       if (error instanceof Error) {
         console.log(error.message);
         setErrorMessage(error.message);

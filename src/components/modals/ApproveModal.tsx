@@ -4,7 +4,6 @@ import AppContext from "../../context/AppContext";
 import AppointmentRequest from "../../models/AppointmentRequest";
 import { updateAppointmentRequest } from "../../services/AdminApiService";
 import GoButton from "../buttons/GoButton";
-import LoadingDotsIcon from "../loading/LoadingDotsIcon";
 import "./ApproveModal.css";
 
 interface Props {
@@ -15,13 +14,10 @@ interface Props {
 
 function ApproveModal({ isApproveActive, setIsApproveActive, request }: Props) {
   // CONTEXT
-  let { handleAppointmentRequests } = useContext(AppContext);
+  let { handleAppointmentRequests, setIsLoading } = useContext(AppContext);
 
   // NAVIGATE
   const navigate: NavigateFunction = useNavigate();
-
-  // STATE
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // APPROVE
   function onApprove(): void {
@@ -46,7 +42,6 @@ function ApproveModal({ isApproveActive, setIsApproveActive, request }: Props) {
         <h2>Are You Sure?</h2>
         <GoButton type="button" text="APPROVE REQUEST" backgroundColor="green" onClick={onApprove} />
         <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={() => setIsApproveActive(false)} />
-        {isLoading ? <LoadingDotsIcon /> : ""}
       </div>
     </div>
   );

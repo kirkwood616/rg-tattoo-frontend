@@ -1,9 +1,9 @@
 import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import AppContext from "../../context/AppContext";
 import AppointmentRequest from "../../models/AppointmentRequest";
 import { updateAppointmentRequest } from "../../services/AdminApiService";
 import GoButton from "../buttons/GoButton";
-import LoadingDotsIcon from "../loading/LoadingDotsIcon";
 import "./RejectModal.css";
 
 interface Props {
@@ -14,11 +14,13 @@ interface Props {
 
 function RejectModal({ isRejectActive, setIsRejectActive, request }: Props) {
   // CONTEXT
-  let { handleAppointmentRequests } = useContext(AppContext);
+  let { handleAppointmentRequests, setIsLoading } = useContext(AppContext);
+
+  // NAVIGATE
+  const navigate: NavigateFunction = useNavigate();
 
   // STATE
   const [rejectionReason, setRejectionReason] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // REJECT
   function onReject(): void {
@@ -35,6 +37,7 @@ function RejectModal({ isRejectActive, setIsRejectActive, request }: Props) {
         setRejectionReason("");
         setIsLoading(false);
         setIsRejectActive(false);
+        navigate("/admin/appointment-requests");
       });
   }
 
@@ -51,7 +54,6 @@ function RejectModal({ isRejectActive, setIsRejectActive, request }: Props) {
         <textarea id="rejectReason" name="rejectReason" className="reject-textarea" value={rejectionReason} onChange={(e) => setRejectionReason(e.target.value)} />
         <GoButton type="button" text="REJECT" backgroundColor="green" onClick={onReject} />
         <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={onCancel} />
-        {isLoading ? <LoadingDotsIcon /> : ""}
       </div>
     </div>
   );
