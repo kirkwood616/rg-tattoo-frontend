@@ -9,9 +9,9 @@ import SaveButton from "../buttons/SaveButton";
 import "react-datepicker/dist/react-datepicker.css";
 import "./SetAvailableAppointments.css";
 import AdminPage from "./AdminPage";
-import SaveChangesModal from "./SaveChangesModal";
+import SaveChangesModal from "../modals/SaveChangesModal";
 import { formatTime } from "../../functions/Formatting";
-import SelectTimesModal from "./SelectTimesModal";
+import SelectTimesModal from "../modals/SelectTimesModal";
 
 function SetAvailableAppointments() {
   // CONTEXT

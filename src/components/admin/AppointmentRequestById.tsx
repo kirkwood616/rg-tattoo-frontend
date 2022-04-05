@@ -7,8 +7,8 @@ import AppContext from "../../context/AppContext";
 import AppointmentRequest from "../../models/AppointmentRequest";
 import AdminPage from "./AdminPage";
 import GoButton from "../buttons/GoButton";
-import RejectModal from "./RejectModal";
-import ApproveModal from "./ApproveModal";
+import RejectModal from "../modals/RejectModal";
+import ApproveModal from "../modals/ApproveModal";
 import "./AppointmentRequestById.css";
 import { formatTime } from "../../functions/Formatting";
 
