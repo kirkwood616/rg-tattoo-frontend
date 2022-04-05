@@ -11,7 +11,7 @@ import "./SetAvailableAppointments.css";
 import AdminPage from "./AdminPage";
 import SaveChangesModal from "./SaveChangesModal";
 import { formatTime } from "../../functions/Formatting";
-import { timePickerValues } from "../../admin/AdminSettings";
+import SelectTimesModal from "./SelectTimesModal";
 
 function SetAvailableAppointments() {
   // CONTEXT
@@ -22,6 +22,7 @@ function SetAvailableAppointments() {
   const [startDate, setStartDate] = useState<Date | undefined>(new Date());
   const [startTime, setStartTime] = useState<string>("");
   const [dateId, setDateId] = useState<string>("");
+  const [isTimesActive, setIsTimesActive] = useState<boolean>(false);
   const [isSaveActive, setIsSaveActive] = useState<boolean>(false);
 
   // CHECK FOR DATE IN DATABASE
@@ -89,19 +90,14 @@ function SetAvailableAppointments() {
           <span className="label">
             <label htmlFor="time-picker">Times:</label>
           </span>
-          <select name="time-picker" id="time-picker" onChange={(e) => setStartTime(e.target.value)}>
-            {timePickerValues!.map((time, index) => (
-              <option value={time} key={index}>
-                {formatTime(time)}
-              </option>
-            ))}
-          </select>
+          <input type="text" name="time-picker" id="time-picker" placeholder="Select Time" value={formatTime(startTime)} onClick={() => setIsTimesActive(true)} readOnly />
         </div>
         <GoButton type="button" text="ADD TIME" backgroundColor="green" onClick={() => addTime(startTime!)} />
       </div>
       <div className="save-changes">
         <SaveButton type="button" text="SAVE CHANGES" onClick={() => saveChanges()} />
       </div>
+      {isTimesActive ? <SelectTimesModal isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} setStartTime={setStartTime} /> : ""}
       <SaveChangesModal isSaveActive={isSaveActive} setIsSaveActive={setIsSaveActive} dateId={dateId} startDate={startDate!} appointmentTimes={appointmentTimes} />
     </AdminPage>
   );
