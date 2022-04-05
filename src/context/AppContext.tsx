@@ -7,18 +7,22 @@ interface ContextModel {
   user: User | null;
   appointmentRequests: AppointmentRequest[];
   availableAppointments: AvailableAppointments[];
+  isLoading: boolean;
   setUser: Dispatch<SetStateAction<User | null>>;
   handleAppointmentRequests: () => void;
   handleAvailableAppointments: () => void;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 const defaultValue: ContextModel = {
   user: null,
   appointmentRequests: [],
   availableAppointments: [],
+  isLoading: false,
   setUser: () => {},
   handleAppointmentRequests: () => {},
   handleAvailableAppointments: () => {},
+  setIsLoading: () => {},
 };
 
 const AppContext = createContext(defaultValue);

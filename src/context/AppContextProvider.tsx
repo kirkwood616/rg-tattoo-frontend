@@ -16,6 +16,7 @@ export default function AppContextProvider({ children }: Props) {
   const [user, setUser] = useState<User | null>(null);
   const [appointmentRequests, setAppointmentRequests] = useState<AppointmentRequest[]>([]);
   const [availableAppointments, setAvailableAppointments] = useState<AvailableAppointments[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // APPOINTMENT REQUESTS
   function handleAppointmentRequests(): void {
@@ -36,7 +37,9 @@ export default function AppContextProvider({ children }: Props) {
   }, []);
 
   return (
-    <AppContext.Provider value={{ user, appointmentRequests, availableAppointments, setUser, handleAppointmentRequests, handleAvailableAppointments }}>
+    <AppContext.Provider
+      value={{ user, appointmentRequests, availableAppointments, isLoading, setUser, handleAppointmentRequests, handleAvailableAppointments, setIsLoading }}
+    >
       {children}
     </AppContext.Provider>
   );

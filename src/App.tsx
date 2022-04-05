@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
@@ -10,11 +10,17 @@ import LogIn from "./components/admin/LogIn";
 import AdminHome from "./components/admin/AdminHome";
 import AppointmentRequests from "./components/admin/AppointmentRequests";
 import AppointmentRequestById from "./components/admin/AppointmentRequestById";
+import LoadingDotsIcon from "./components/loading/LoadingDotsIcon";
+import AppContext from "./context/AppContext";
 
 function App() {
+  // CONTEXT
+  let { isLoading } = useContext(AppContext);
+
   return (
     <div className="App">
       <Router>
+        {isLoading ? <LoadingDotsIcon /> : ""}
         <Header />
         <Routes>
           <Route path="/" element={<Main />} />
