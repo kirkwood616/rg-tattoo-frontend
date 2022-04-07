@@ -25,7 +25,7 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/request-appointment" element={<RequestAppointment />} />
           <Route path="/request-submitted" element={<RequestSubmitted />} />
-          <Route path="/login" element={<LogIn />} />
+          <Route path="/admin/login" element={<LogIn />} />
           <Route path="/admin/home" element={<AdminHome />} />
           <Route path="/admin/appointment-requests" element={<AppointmentRequests />} />
           <Route path="/admin/appointment-requests/:id" element={<AppointmentRequestById />} />

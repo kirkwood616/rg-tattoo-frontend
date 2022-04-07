@@ -17,7 +17,7 @@ function AdminPage({ children, title }: Props) {
 
   useEffect(() => {
     document.title = `${title} | Rack Ruin`;
-    if (!user) navigate("/login");
+    if (!user) navigate("/admin/login");
     const delay = setTimeout(() => window.scrollTo(0, 0), 700);
     return () => clearTimeout(delay);
   }, [navigate, title, user]);
