@@ -11,16 +11,16 @@ interface Props {
 }
 
 function SelectTimesModal({ isTimesActive, setIsTimesActive, setStartTime }: Props) {
-  function onTimeClick(e: React.MouseEvent<HTMLOptionElement, MouseEvent>) {
+  function onTimeClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     setStartTime(e.currentTarget.value);
     setIsTimesActive(false);
   }
   return (
     <ModalWindow isActive={isTimesActive} setIsActive={setIsTimesActive} className="time-select_container">
       {timePickerValues!.map((time, index) => (
-        <option value={time} key={index} className="time-option" onClick={(e) => onTimeClick(e)}>
+        <button value={time} key={index} className="time-option" onClick={(e) => onTimeClick(e)}>
           {formatTime(time)}
-        </option>
+        </button>
       ))}
     </ModalWindow>
   );
