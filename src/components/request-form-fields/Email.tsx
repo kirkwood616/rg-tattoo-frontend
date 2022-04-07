@@ -1,15 +1,17 @@
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect } from "react";
+import RequestContext from "../../context/RequestContext";
 import { validateEmail } from "../../functions/Validation";
 import ErrorMessage from "../ErrorMessage";
 
 interface Props {
-  email: string;
-  setEmail: Dispatch<SetStateAction<string>>;
   emailError: boolean;
   setEmailError: Dispatch<SetStateAction<boolean>>;
 }
 
-function Email({ email, setEmail, emailError, setEmailError }: Props) {
+function Email({ emailError, setEmailError }: Props) {
+  // CONTEXT
+  let { email, setEmail } = useContext(RequestContext);
+
   useEffect(() => {
     if (email) {
       const delay = setTimeout(() => validateEmail(email, setEmailError), 800);

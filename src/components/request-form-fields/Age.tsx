@@ -1,15 +1,17 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
+import RequestContext from "../../context/RequestContext";
 import { validateAge } from "../../functions/Validation";
 import ErrorMessage from "../ErrorMessage";
 
 interface Props {
-  age: number;
-  setAge: Dispatch<SetStateAction<number>>;
   ageError: boolean;
   setAgeError: Dispatch<SetStateAction<boolean>>;
 }
 
-function Age({ age, setAge, ageError, setAgeError }: Props) {
+function Age({ ageError, setAgeError }: Props) {
+  // CONTEXT
+  let { age, setAge } = useContext(RequestContext);
+
   return (
     <>
       <span className="label">

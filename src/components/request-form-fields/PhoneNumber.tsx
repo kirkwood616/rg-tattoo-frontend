@@ -1,15 +1,17 @@
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect } from "react";
+import RequestContext from "../../context/RequestContext";
 import { validatePhone } from "../../functions/Validation";
 import ErrorMessage from "../ErrorMessage";
 
 interface Props {
-  phoneNumber: string;
-  setPhoneNumber: Dispatch<SetStateAction<string>>;
   phoneError: boolean;
   setPhoneError: Dispatch<SetStateAction<boolean>>;
 }
 
-function PhoneNumber({ phoneNumber, setPhoneNumber, phoneError, setPhoneError }: Props) {
+function PhoneNumber({ phoneError, setPhoneError }: Props) {
+  // CONTEXT
+  let { phoneNumber, setPhoneNumber } = useContext(RequestContext);
+
   useEffect(() => {
     if (phoneNumber) {
       const delay = setTimeout(() => {

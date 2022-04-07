@@ -1,16 +1,18 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useContext, useState } from "react";
+import RequestContext from "../../context/RequestContext";
 import { formatTime } from "../../functions/Formatting";
 import SelectTimesModal from "../admin/modals/SelectTimesModal";
 import ErrorMessage from "../ErrorMessage";
 
 interface Props {
-  availableAppointmentTimes: string[];
-  appointmentTime: string;
-  setAppointmentTime: Dispatch<SetStateAction<string>>;
   appointmentTimeError: boolean;
 }
 
-function AppointmentTimes({ availableAppointmentTimes, appointmentTime, setAppointmentTime, appointmentTimeError }: Props) {
+function AppointmentTimes({ appointmentTimeError }: Props) {
+  // CONTEXT
+  let { availableAppointmentTimes, appointmentTime, setAppointmentTime } = useContext(RequestContext);
+
+  // STATE
   const [isTimesActive, setIsTimesActive] = useState<boolean>(false);
 
   return (

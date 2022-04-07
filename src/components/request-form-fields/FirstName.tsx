@@ -1,15 +1,17 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
+import RequestContext from "../../context/RequestContext";
 import { validateName } from "../../functions/Validation";
 import ErrorMessage from "../ErrorMessage";
 
 interface Props {
-  firstName: string;
-  setFirstName: Dispatch<SetStateAction<string>>;
   firstNameError: boolean;
   setFirstNameError: Dispatch<SetStateAction<boolean>>;
 }
 
-function FirstName({ firstName, setFirstName, firstNameError, setFirstNameError }: Props) {
+function FirstName({ firstNameError, setFirstNameError }: Props) {
+  // CONTEXT
+  let { firstName, setFirstName } = useContext(RequestContext);
+
   return (
     <>
       <span className="label">

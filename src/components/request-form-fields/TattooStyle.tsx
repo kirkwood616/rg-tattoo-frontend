@@ -1,14 +1,16 @@
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect } from "react";
+import RequestContext from "../../context/RequestContext";
 import ErrorMessage from "../ErrorMessage";
 
 interface Props {
-  tattooStyle: string;
-  setTattooStyle: Dispatch<SetStateAction<string>>;
   tattooStyleError: boolean;
   setTattooStyleError: Dispatch<SetStateAction<boolean>>;
 }
 
-function TattooStyle({ tattooStyle, setTattooStyle, tattooStyleError, setTattooStyleError }: Props) {
+function TattooStyle({ tattooStyleError, setTattooStyleError }: Props) {
+  // CONTEXT
+  let { tattooStyle, setTattooStyle } = useContext(RequestContext);
+
   useEffect(() => {
     if (tattooStyle !== "select") setTattooStyleError(false);
   }, [tattooStyle, setTattooStyleError]);

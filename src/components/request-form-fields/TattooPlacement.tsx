@@ -1,15 +1,17 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
+import RequestContext from "../../context/RequestContext";
 import { validateTattooPlacement } from "../../functions/Validation";
 import ErrorMessage from "../ErrorMessage";
 
 interface Props {
-  tattooPlacement: string;
-  setTattooPlacement: Dispatch<SetStateAction<string>>;
   tattooPlacementError: boolean;
   setTattooPlacementError: Dispatch<SetStateAction<boolean>>;
 }
 
-function TattooPlacement({ tattooPlacement, setTattooPlacement, tattooPlacementError, setTattooPlacementError }: Props) {
+function TattooPlacement({ tattooPlacementError, setTattooPlacementError }: Props) {
+  // CONTEXT
+  let { tattooPlacement, setTattooPlacement } = useContext(RequestContext);
+
   return (
     <>
       <span className="label">
