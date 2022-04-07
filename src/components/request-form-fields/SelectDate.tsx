@@ -6,9 +6,10 @@ interface Props {
   startDate: Date | undefined;
   setStartDate: Dispatch<SetStateAction<Date | undefined>>;
   startDateError: boolean;
+  setAppointmentTime: Dispatch<SetStateAction<string>>;
 }
 
-function PlacementImage({ startDate, setStartDate, startDateError }: Props) {
+function PlacementImage({ startDate, setStartDate, startDateError, setAppointmentTime }: Props) {
   // STATES
   const [maxAppointmentDate, setMaxAppointmentDate] = useState<Date>();
   const [excludedDates, setExcludedDates] = useState<Date[]>([]);
@@ -29,7 +30,10 @@ function PlacementImage({ startDate, setStartDate, startDateError }: Props) {
           id="datePicker"
           placeholderText="Select Date"
           selected={startDate}
-          onChange={(date: Date) => setStartDate(date)}
+          onChange={(date: Date) => {
+            setStartDate(date);
+            setAppointmentTime("");
+          }}
           minDate={new Date()}
           maxDate={maxAppointmentDate}
           filterDate={disableSundayMonday}

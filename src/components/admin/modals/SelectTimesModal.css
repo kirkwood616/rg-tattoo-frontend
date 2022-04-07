@@ -4,7 +4,7 @@
   box-shadow: 0 5px 7px black;
   color: black;
   font-weight: bold;
-  height: 60%;
+  max-height: 60%;
   margin: auto;
   overflow-y: scroll;
   position: relative;

@@ -1,5 +1,6 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { formatTime } from "../../functions/Formatting";
+import SelectTimesModal from "../admin/modals/SelectTimesModal";
 import ErrorMessage from "../ErrorMessage";
 
 interface Props {
@@ -10,6 +11,8 @@ interface Props {
 }
 
 function AppointmentTimes({ availableAppointmentTimes, appointmentTime, setAppointmentTime, appointmentTimeError }: Props) {
+  const [isTimesActive, setIsTimesActive] = useState<boolean>(false);
+
   return (
     <>
       <div className="apt-times-container">
@@ -17,20 +20,24 @@ function AppointmentTimes({ availableAppointmentTimes, appointmentTime, setAppoi
           <label htmlFor="aptTimes">Available Times:</label>
         </span>
         {availableAppointmentTimes.length ? (
-          <select name="aptTimes" id="aptTimes" onChange={(e) => setAppointmentTime(e.target.value)} value={appointmentTime} required>
-            <option value="select" disabled>
-              --- Select Time ---
-            </option>
-            {availableAppointmentTimes!.map((time, i) => (
-              <option key={i} value={time}>
-                {formatTime(time)}
-              </option>
-            ))}
-          </select>
+          <input
+            type="text"
+            name="time-picker"
+            id="time-picker"
+            placeholder="--- Select Time ---"
+            value={formatTime(appointmentTime)}
+            onClick={() => setIsTimesActive(true)}
+            readOnly
+          ></input>
         ) : (
           <div className="no-available-appointments">No Available Appointments</div>
         )}
         {appointmentTimeError ? <ErrorMessage message={"SELECT A TIME"} /> : ""}
+        {isTimesActive ? (
+          <SelectTimesModal timeValues={availableAppointmentTimes} isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} setStartTime={setAppointmentTime} />
+        ) : (
+          ""
+        )}
       </div>
     </>
   );

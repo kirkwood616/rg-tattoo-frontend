@@ -36,7 +36,7 @@ function RequestAppointment() {
   // STATES FOR FORM
   const [startDate, setStartDate] = useState<Date | undefined>();
   const [availableAppointmentTimes, setAvailableAppointmentsTimes] = useState<string[]>([]);
-  const [appointmentTime, setAppointmentTime] = useState<string>("select");
+  const [appointmentTime, setAppointmentTime] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [age, setAge] = useState<number>(18);
@@ -72,11 +72,9 @@ function RequestAppointment() {
     let dateInDatabase: AvailableAppointments | undefined = availableAppointments.find((date) => date.date === format(startDate!, "MM-dd-yyyy"));
 
     if (dateInDatabase) {
-      setAppointmentTime("select");
       setAvailableAppointmentsTimes(dateInDatabase.availableTimes);
     } else {
       setAvailableAppointmentsTimes([]);
-      setAppointmentTime("select");
     }
   }, [availableAppointments, startDate]);
 
@@ -106,8 +104,8 @@ function RequestAppointment() {
     if (submitCount > 0) {
       if (startDate) setStartDateError(false);
       if (!startDate) setStartDateError(true);
-      if (appointmentTime === "select" || null) setAppointmentTimeError(true);
-      if (appointmentTime !== "select") setAppointmentTimeError(false);
+      if (appointmentTime === "" || null) setAppointmentTimeError(true);
+      if (appointmentTime !== "") setAppointmentTimeError(false);
       if (!firstName) setFirstNameError(true);
       if (!lastName) setLastNameError(true);
       if (!email) setEmailError(true);
@@ -123,10 +121,6 @@ function RequestAppointment() {
     e.preventDefault();
     if (tattooStyle === "select") {
       setTattooStyleError(true);
-      return;
-    }
-    if (appointmentTime === "select") {
-      setAppointmentTimeError(true);
       return;
     }
     if (errors) {
@@ -169,7 +163,7 @@ function RequestAppointment() {
       <div className="RequestAppointment">
         <h1>Request Appointment</h1>
         <form onSubmit={handleSubmit}>
-          <SelectDate startDate={startDate} setStartDate={setStartDate} startDateError={startDateError} />
+          <SelectDate startDate={startDate} setStartDate={setStartDate} startDateError={startDateError} setAppointmentTime={setAppointmentTime} />
 
           {startDate ? (
             <AppointmentTimes

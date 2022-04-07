@@ -12,6 +12,7 @@ import AdminPage from "./AdminPage";
 import SaveChangesModal from "./modals/SaveChangesModal";
 import { formatTime } from "../../functions/Formatting";
 import SelectTimesModal from "./modals/SelectTimesModal";
+import { timePickerValues } from "../../admin/AdminSettings";
 
 function SetAvailableAppointments() {
   // CONTEXT
@@ -66,12 +67,14 @@ function SetAvailableAppointments() {
     <AdminPage title="Set Available Appointments">
       <div className="SetAvailableAppointments">
         <h1>Set Available Appointments</h1>
+
         <div className="date-picker_container">
           <span className="label">
             <label htmlFor="date-picker">Date:</label>
           </span>
           <DatePicker name="date-picker" id="date-picker" withPortal selected={startDate} minDate={new Date()} onChange={(date: Date) => setStartDate(date)} />
         </div>
+
         <div className="available-times_container">
           {appointmentTimes.length ? (
             appointmentTimes.map((time, index) => (
@@ -86,18 +89,23 @@ function SetAvailableAppointments() {
             </label>
           )}
         </div>
+
         <div className="time-picker_container">
           <span className="label">
             <label htmlFor="time-picker">Times:</label>
           </span>
           <input type="text" name="time-picker" id="time-picker" placeholder="Select Time" value={formatTime(startTime)} onClick={() => setIsTimesActive(true)} readOnly />
         </div>
+
         <GoButton type="button" text="ADD TIME" backgroundColor="green" onClick={() => addTime(startTime!)} />
       </div>
+
       <div className="save-changes">
         <SaveButton type="button" text="SAVE CHANGES" onClick={() => saveChanges()} />
       </div>
-      {isTimesActive ? <SelectTimesModal isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} setStartTime={setStartTime} /> : ""}
+
+      {isTimesActive ? <SelectTimesModal timeValues={timePickerValues} isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} setStartTime={setStartTime} /> : ""}
+
       <SaveChangesModal isSaveActive={isSaveActive} setIsSaveActive={setIsSaveActive} dateId={dateId} startDate={startDate!} appointmentTimes={appointmentTimes} />
     </AdminPage>
   );
