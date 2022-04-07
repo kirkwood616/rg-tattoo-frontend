@@ -9,7 +9,8 @@ interface Props {
 function Page({ children, title }: Props) {
   useEffect(() => {
     document.title = `${title} | Rack Ruin`;
-    window.scrollTo(0, 0);
+    const delay = setTimeout(() => window.scrollTo(0, 0), 600);
+    return () => clearTimeout(delay);
   }, [title]);
   return <section className="section">{children}</section>;
 }
