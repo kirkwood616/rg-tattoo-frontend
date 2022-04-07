@@ -1,21 +1,30 @@
-import "./RequestAppointment.css";
-import Page from "./Page";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { format } from "date-fns";
 import { FormEvent, useContext, useEffect, useState } from "react";
-import AppointmentRequest from "../models/AppointmentRequest";
-import ErrorMessage from "./ErrorMessage";
-import { validateEmail, validateAge, validateName, validatePhone, validateTattooPlacement, validateTattooDescription } from "../functions/Validation";
-import { postAppointmentRequest } from "../services/ApiService";
-import { useNavigate } from "react-router-dom";
-import GoButton from "./buttons/GoButton";
 import AppContext from "../context/AppContext";
-import AvailableAppointments from "../models/AvailableAppointments";
-import { ref, uploadBytesResumable } from "firebase/storage";
+import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 import { storage } from "../firebaseConfig";
-import { formatTime } from "../functions/Formatting";
+import { ref, uploadBytesResumable } from "firebase/storage";
+import { postAppointmentRequest } from "../services/ApiService";
+import AppointmentRequest from "../models/AppointmentRequest";
+import AvailableAppointments from "../models/AvailableAppointments";
+import Page from "./Page";
+import SelectDate from "./request-form-fields/SelectDate";
+import AppointmentTimes from "./request-form-fields/AppointmentTimes";
+import FirstName from "./request-form-fields/FirstName";
+import LastName from "./request-form-fields/LastName";
+import Age from "./request-form-fields/Age";
+import Email from "./request-form-fields/Email";
+import PhoneNumber from "./request-form-fields/PhoneNumber";
+import TattooStyle from "./request-form-fields/TattooStyle";
+import TattooPlacement from "./request-form-fields/TattooPlacement";
+import ReferenceImage from "./request-form-fields/ReferenceImage";
+import PlacementImage from "./request-form-fields/PlacementImage";
+import TattooDescription from "./request-form-fields/TattooDescription";
+import AgeConfirm from "./request-form-fields/AgeConfirm";
+import GoButton from "./buttons/GoButton";
 import LoadingDotsIcon from "./loading/LoadingDotsIcon";
+import "react-datepicker/dist/react-datepicker.css";
+import "./RequestAppointment.css";
 
 function RequestAppointment() {
   // CONTEXT
@@ -23,10 +32,6 @@ function RequestAppointment() {
 
   // NAVIGATE
   let navigate = useNavigate();
-
-  // STATES FOR DATES
-  const [maxAppointmentDate, setMaxAppointmentDate] = useState<Date>();
-  const [excludedDates, setExcludedDates] = useState<Date[]>([]);
 
   // STATES FOR FORM
   const [startDate, setStartDate] = useState<Date | undefined>();
@@ -60,31 +65,6 @@ function RequestAppointment() {
   const [tattooPlacementError, setTattooPlacementError] = useState<boolean>(false);
   const [tattooDescriptionError, setTattooDescriptionError] = useState<boolean>(false);
 
-  // FILE UPLOAD
-  function handleReferencePhotoChange(e: any): void {
-    if (e.target.files[0]) {
-      setReferenceImage(e.target.files[0]);
-    }
-  }
-
-  function handleReferencePhotoUpload(): void {
-    if (!referenceImage) return;
-    const storageRef = ref(storage, `/images/${firstName}-${lastName}-ref-${referenceImage.name}`);
-    uploadBytesResumable(storageRef, referenceImage);
-  }
-
-  function handlePlacementPhotoChange(e: any): void {
-    if (e.target.files[0]) {
-      setPlacementImage(e.target.files[0]);
-    }
-  }
-
-  function handlePlacementPhotoUpload(): void {
-    if (!placementImage) return;
-    const storageRef = ref(storage, `/images/${firstName}-${lastName}-place-${placementImage.name}`);
-    uploadBytesResumable(storageRef, placementImage);
-  }
-
   // CHECK FOR DATE IN DATABASE
   useEffect(() => {
     if (!startDate) return;
@@ -99,6 +79,19 @@ function RequestAppointment() {
       setAppointmentTime("select");
     }
   }, [availableAppointments, startDate]);
+
+  // FILE UPLOAD
+  function handleReferencePhotoUpload(): void {
+    if (!referenceImage) return;
+    const storageRef = ref(storage, `/images/${firstName}-${lastName}-ref-${referenceImage.name}`);
+    uploadBytesResumable(storageRef, referenceImage);
+  }
+
+  function handlePlacementPhotoUpload(): void {
+    if (!placementImage) return;
+    const storageRef = ref(storage, `/images/${firstName}-${lastName}-place-${placementImage.name}`);
+    uploadBytesResumable(storageRef, placementImage);
+  }
 
   // ERRORS
   useEffect(() => {
@@ -124,34 +117,6 @@ function RequestAppointment() {
       if (!tattooDescription) setTattooDescriptionError(true);
     }
   }, [submitCount, firstName, lastName, email, phoneNumber, tattooStyle, tattooPlacement, tattooDescription, startDate, appointmentTime]);
-
-  // E-MAIL ERRORS
-  useEffect(() => {
-    if (email) {
-      const delay = setTimeout(() => validateEmail(email, setEmailError), 800);
-      return () => clearTimeout(delay);
-    }
-  }, [email]);
-
-  // PHONE # ERRORS
-  useEffect(() => {
-    if (phoneNumber) {
-      const delay = setTimeout(() => {
-        if (phoneNumber && phoneNumber.length < 14) {
-          setPhoneError(true);
-        }
-        if (phoneNumber.length === 14) {
-          setPhoneError(false);
-        }
-      }, 800);
-      return () => clearTimeout(delay);
-    }
-  }, [phoneNumber]);
-
-  // TATTOO STYLE ERRORS
-  useEffect(() => {
-    if (tattooStyle !== "select") setTattooStyleError(false);
-  }, [tattooStyle]);
 
   // HANDLE SUBMIT
   function handleSubmit(e: FormEvent): void {
@@ -198,154 +163,57 @@ function RequestAppointment() {
     }
   }
 
-  // DIABLE OFF-DAYS OF SUNDAY & MONDAYS ON CALENDAR
-  function disableSundayMonday(date: Date): boolean {
-    return date.getDay() !== 0 && date.getDay() !== 1;
-  }
-
   // RENDER
   return (
     <Page title="Request Appointment">
       <div className="RequestAppointment">
         <h1>Request Appointment</h1>
         <form onSubmit={handleSubmit}>
-          <span className="label">
-            <label htmlFor="datePicker">Select Date:</label>
-          </span>
-          <div className="calendarContainer">
-            <DatePicker
-              name="datePicker"
-              id="datePicker"
-              placeholderText="Select Date"
-              selected={startDate}
-              onChange={(date: Date) => setStartDate(date)}
-              minDate={new Date()}
-              maxDate={maxAppointmentDate}
-              filterDate={disableSundayMonday}
-              excludeDates={excludedDates}
-              isClearable
-              withPortal
-              autoComplete="off"
-              required
-            />
-            {startDateError ? <ErrorMessage message={"Date Required"} /> : ""}
-          </div>
+          <SelectDate startDate={startDate} setStartDate={setStartDate} startDateError={startDateError} />
 
           {startDate ? (
-            <div className="apt-times-container">
-              <span className="label">
-                <label htmlFor="aptTimes">Available Times:</label>
-              </span>
-              {availableAppointmentTimes.length ? (
-                <select name="aptTimes" id="aptTimes" onChange={(e) => setAppointmentTime(e.target.value)} value={appointmentTime} required>
-                  <option value="select" disabled>
-                    --- Select Time ---
-                  </option>
-                  {availableAppointmentTimes!.map((time, i) => (
-                    <option key={i} value={time}>
-                      {formatTime(time)}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <div className="no-available-appointments">No Available Appointments</div>
-              )}
-              {appointmentTimeError ? <ErrorMessage message={"SELECT A TIME"} /> : ""}
-            </div>
+            <AppointmentTimes
+              availableAppointmentTimes={availableAppointmentTimes}
+              appointmentTime={appointmentTime}
+              setAppointmentTime={setAppointmentTime}
+              appointmentTimeError={appointmentTimeError}
+            />
           ) : (
             ""
           )}
 
-          <span className="label">
-            <label htmlFor="firstName">First Name:</label>
-          </span>
-          <input type="text" name="firstName" id="firstName" onChange={(e) => validateName(e, setFirstName, setFirstNameError)} value={firstName} required />
-          {firstNameError ? <ErrorMessage message={"FIRST NAME REQUIRED"} /> : ""}
+          <FirstName firstName={firstName} setFirstName={setFirstName} firstNameError={firstNameError} setFirstNameError={setFirstNameError} />
 
-          <span className="label">
-            <label htmlFor="lastName">Last Name:</label>
-          </span>
-          <input type="text" name="lastName" id="lastName" onChange={(e) => validateName(e, setLastName, setLastNameError)} value={lastName} required />
-          {lastNameError ? <ErrorMessage message={"LAST NAME REQUIRED"} /> : ""}
+          <LastName lastName={lastName} setLastName={setLastName} lastNameError={lastNameError} setLastNameError={setLastNameError} />
 
-          <span className="label">
-            <label htmlFor="age">Age:</label>
-          </span>
-          <input type="number" name="age" id="age" min={18} max={100} onChange={(e) => validateAge(e, setAge, setAgeError)} value={age} required />
-          {ageError ? <ErrorMessage message={"MUST BE 18 OR OLDER"} /> : ""}
+          <Age age={age} setAge={setAge} ageError={ageError} setAgeError={setAgeError} />
 
-          <span className="label">
-            <label htmlFor="email">Email:</label>
-          </span>
-          <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)} value={email} required />
-          {emailError ? <ErrorMessage message={"E-MAIL IS NOT VALID"} /> : ""}
+          <Email email={email} setEmail={setEmail} emailError={emailError} setEmailError={setEmailError} />
 
-          <span className="label">
-            <label htmlFor="tel">Phone:</label>
-          </span>
-          <input type="tel" name="tel" id="tel" onChange={(e) => validatePhone(e, setPhoneNumber)} value={phoneNumber} required />
-          {phoneError ? <ErrorMessage message={"PHONE NUMBER IS NOT VALID"} /> : ""}
+          <PhoneNumber phoneNumber={phoneNumber} setPhoneNumber={setPhoneNumber} phoneError={phoneError} setPhoneError={setPhoneError} />
 
-          <span className="label">
-            <label htmlFor="tattooStyle">Tattoo Style:</label>
-          </span>
-          <select name="tattooStyle" id="tattooStyle" onChange={(e) => setTattooStyle(e.target.value)} value={tattooStyle} required>
-            <option value="select" disabled>
-              --- Select Style ---
-            </option>
-            <option value="Linework">Linework</option>
-            <option value="Black & White">Black & White</option>
-            <option value="Full Color">Full Color</option>
-            <option value="Lettering">Lettering</option>
-          </select>
-          {tattooStyleError ? <ErrorMessage message={"PLEASE SELECT A TATTOO STYLE"} /> : ""}
+          <TattooStyle tattooStyle={tattooStyle} setTattooStyle={setTattooStyle} tattooStyleError={tattooStyleError} setTattooStyleError={setTattooStyleError} />
 
-          <span className="label">
-            <label htmlFor="tattooPlacement">Tattoo Placement:</label>
-          </span>
-          <input
-            type="text"
-            name="tattooPlacement"
-            id="tattooPlacement"
-            maxLength={30}
-            onChange={(e) => validateTattooPlacement(e, setTattooPlacement, setTattooPlacementError)}
-            value={tattooPlacement}
-            required
+          <TattooPlacement
+            tattooPlacement={tattooPlacement}
+            setTattooPlacement={setTattooPlacement}
+            tattooPlacementError={tattooPlacementError}
+            setTattooPlacementError={setTattooPlacementError}
           />
-          {tattooPlacementError ? <ErrorMessage message={"PLEASE ENTER A TATTOO PLACEMENT"} /> : ""}
 
-          <span className="label">
-            <label htmlFor="referencePhoto">Reference Photo:</label>
-          </span>
-          <div className="photo-upload">
-            <input type="file" name="referencePhoto" id="referencePhoto" accept="image/*" onChange={handleReferencePhotoChange} />
-          </div>
+          <ReferenceImage setReferenceImage={setReferenceImage} />
 
-          <span className="label">
-            <label htmlFor="placementPhoto">Placement Photo:</label>
-          </span>
-          <div className="photo-upload">
-            <input type="file" name="placementPhoto" id="placementPhoto" accept="image/*" onChange={handlePlacementPhotoChange} />
-          </div>
+          <PlacementImage setPlacementImage={setPlacementImage} />
 
-          <span className="label">
-            <label htmlFor="tattooDescription">Tattoo Description:</label>
-          </span>
-          <textarea
-            name="tattooDescription"
-            id="tattooDescription"
-            className="request_textarea"
-            onChange={(e) => validateTattooDescription(e, setTattooDescription, setTattooDescriptionError)}
-            value={tattooDescription}
-            minLength={7}
-            required
+          <TattooDescription
+            tattooDescription={tattooDescription}
+            setTattooDescription={setTattooDescription}
+            tattooDescriptionError={tattooDescriptionError}
+            setTattooDescriptionError={setTattooDescriptionError}
           />
-          {tattooDescriptionError ? <ErrorMessage message={"DESCRIPTION MUST BE AT LEAST 7 CHARACTERS"} /> : ""}
 
-          <div className="of-age-confirm">
-            <input type="checkbox" name="ofAgeConfirm" id="ofAgeConfirm" onChange={() => setOfAgeConfirm(!ofAgeConfirm)} />
-            <label htmlFor="ofAgeConfirm">I confirm that I am or will be 18 years of age by the date of this requested appointment.</label>
-          </div>
+          <AgeConfirm ofAgeConfirm={ofAgeConfirm} setOfAgeConfirm={setOfAgeConfirm} />
+
           <GoButton type="submit" text="Submit Request" backgroundColor="green" onClick={() => setSubmitCount(submitCount + 1)} />
         </form>
       </div>
