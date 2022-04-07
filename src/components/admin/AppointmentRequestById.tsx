@@ -98,7 +98,7 @@ function AppointmentRequestById() {
             )}
           </div>
           <div className="request-table-title">Request Submitted</div>
-          <div className="request-table-info">{format(new Date(request!.requestSubmittedDate), "M-dd-yyyy @ H:mm a")}</div>
+          <div className="request-table-info">{format(new Date(request!.requestSubmittedDate), "M/dd/yyyy @ h:mm a")}</div>
         </div>
         <GoButton type="button" text="APPROVE" backgroundColor="green" onClick={() => setIsApproveActive(true)} />
         <GoButton type="button" text="REJECT" backgroundColor="red" onClick={() => setIsRejectActive(true)} />
