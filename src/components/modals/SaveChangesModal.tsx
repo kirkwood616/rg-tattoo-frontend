@@ -4,6 +4,7 @@ import AppContext from "../../context/AppContext";
 import AvailableAppointments from "../../models/AvailableAppointments";
 import { postAvailableAppointment, updateAvailableAppointment } from "../../services/AdminApiService";
 import GoButton from "../buttons/GoButton";
+import ModalWindow from "./ModalWindow";
 import "./SaveChangesModal.css";
 
 interface Props {
@@ -43,13 +44,11 @@ function SaveChangesModal({ isSaveActive, setIsSaveActive, dateId, startDate, ap
   }
 
   return (
-    <div className={isSaveActive ? "SaveChangesModal" : "SaveChangesModal hide"}>
-      <div className="save-confirm">
-        <h2>Are You Sure?</h2>
-        <GoButton type="button" text="SAVE" backgroundColor="green" onClick={handleOnSave} />
-        <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={() => setIsSaveActive(false)} />
-      </div>
-    </div>
+    <ModalWindow isActive={isSaveActive} setIsActive={setIsSaveActive} className="save-confirm">
+      <h2>Are You Sure?</h2>
+      <GoButton type="button" text="SAVE" backgroundColor="green" onClick={handleOnSave} />
+      <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={() => setIsSaveActive(false)} />
+    </ModalWindow>
   );
 }
 

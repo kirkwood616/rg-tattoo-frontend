@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { timePickerValues } from "../../admin/AdminSettings";
 import { formatTime } from "../../functions/Formatting";
+import ModalWindow from "./ModalWindow";
 import "./SelectTimesModal.css";
 
 interface Props {
@@ -15,15 +16,13 @@ function SelectTimesModal({ isTimesActive, setIsTimesActive, setStartTime }: Pro
     setIsTimesActive(false);
   }
   return (
-    <div className={isTimesActive ? "SelectTimesModal" : "SelectTimesModal hide"} onClick={() => setIsTimesActive(false)}>
-      <div className="time-select_container" onClick={(e) => e.stopPropagation()}>
-        {timePickerValues!.map((time, index) => (
-          <option value={time} key={index} className="time-option" onClick={(e) => onTimeClick(e)}>
-            {formatTime(time)}
-          </option>
-        ))}
-      </div>
-    </div>
+    <ModalWindow isActive={isTimesActive} setIsActive={setIsTimesActive} className="time-select_container">
+      {timePickerValues!.map((time, index) => (
+        <option value={time} key={index} className="time-option" onClick={(e) => onTimeClick(e)}>
+          {formatTime(time)}
+        </option>
+      ))}
+    </ModalWindow>
   );
 }
 

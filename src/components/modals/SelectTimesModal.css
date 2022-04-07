@@ -1,14 +1,4 @@
-.SelectTimesModal {
-  background-color: rgba(0, 0, 0, 0.75);
-  display: flex;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1;
-}
-
-.SelectTimesModal .time-select_container {
+.time-select_container {
   background-color: var(--black);
   border-radius: 0.5rem;
   box-shadow: 0 5px 7px black;
@@ -22,27 +12,23 @@
   width: 95%;
 }
 
-.SelectTimesModal .time-option {
+.time-option {
   font-size: 1.25rem;
   font-weight: bold;
   padding: 0.75rem 0;
   cursor: pointer;
 }
 
-.SelectTimesModal .time-option:nth-child(even) {
+.time-option:nth-child(even) {
   background-color: white;
 }
 
-.SelectTimesModal .time-option:nth-child(odd) {
+.time-option:nth-child(odd) {
   background-color: var(--light-gray-1);
 }
 
-.SelectTimesModal .time-option:nth-child(odd):hover,
+.time-option:nth-child(odd):hover,
 .time-option:nth-child(even):hover {
   background-color: #007bff;
   color: white;
-}
-
-.hide {
-  display: none;
 }

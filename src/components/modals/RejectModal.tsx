@@ -4,6 +4,7 @@ import AppContext from "../../context/AppContext";
 import AppointmentRequest from "../../models/AppointmentRequest";
 import { updateAppointmentRequest } from "../../services/AdminApiService";
 import GoButton from "../buttons/GoButton";
+import ModalWindow from "./ModalWindow";
 import "./RejectModal.css";
 
 interface Props {
@@ -48,14 +49,12 @@ function RejectModal({ isRejectActive, setIsRejectActive, request }: Props) {
   }
 
   return (
-    <div className={isRejectActive ? "RejectModal" : "RejectModal hide"}>
-      <div className="reject-info">
-        Please provide a reason for rejecting this request. <br /> <br />
-        <textarea id="rejectReason" name="rejectReason" className="reject-textarea" value={rejectionReason} onChange={(e) => setRejectionReason(e.target.value)} />
-        <GoButton type="button" text="REJECT" backgroundColor="green" onClick={onReject} />
-        <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={onCancel} />
-      </div>
-    </div>
+    <ModalWindow isActive={isRejectActive} setIsActive={setIsRejectActive} className="reject-info">
+      Please provide a reason for rejecting this request. <br /> <br />
+      <textarea id="rejectReason" name="rejectReason" className="reject-textarea" value={rejectionReason} onChange={(e) => setRejectionReason(e.target.value)} />
+      <GoButton type="button" text="REJECT" backgroundColor="green" onClick={onReject} />
+      <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={onCancel} />
+    </ModalWindow>
   );
 }
 
