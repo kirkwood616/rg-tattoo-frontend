@@ -1,4 +1,6 @@
 import { createContext, Dispatch, SetStateAction } from "react";
+import { Action, RequestErrors } from "../models/Errors";
+import { initialState } from "./ErrorReducer";
 
 interface RequestContextModel {
   startDate: Date | undefined;
@@ -25,6 +27,8 @@ interface RequestContextModel {
   setTattooDescription: Dispatch<SetStateAction<string>>;
   ofAgeConfirm: boolean;
   setOfAgeConfirm: Dispatch<SetStateAction<boolean>>;
+  state: RequestErrors;
+  dispatch: Dispatch<Action>;
 }
 
 const defaultValue: RequestContextModel = {
@@ -52,6 +56,8 @@ const defaultValue: RequestContextModel = {
   setTattooDescription: () => {},
   ofAgeConfirm: false,
   setOfAgeConfirm: () => {},
+  state: initialState,
+  dispatch: () => {},
 };
 
 const RequestContext = createContext(defaultValue);

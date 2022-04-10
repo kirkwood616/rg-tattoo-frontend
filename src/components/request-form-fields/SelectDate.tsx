@@ -3,13 +3,9 @@ import DatePicker from "react-datepicker";
 import RequestContext from "../../context/RequestContext";
 import ErrorMessage from "../ErrorMessage";
 
-interface Props {
-  startDateError: boolean;
-}
-
-function PlacementImage({ startDateError }: Props) {
+function PlacementImage() {
   // CONTEXT
-  let { startDate, setStartDate, setAppointmentTime } = useContext(RequestContext);
+  let { startDate, setStartDate, setAppointmentTime, state } = useContext(RequestContext);
 
   // STATES
   const [maxAppointmentDate, setMaxAppointmentDate] = useState<Date>();
@@ -44,7 +40,7 @@ function PlacementImage({ startDateError }: Props) {
           autoComplete="off"
           required
         />
-        {startDateError ? <ErrorMessage message={"Date Required"} /> : ""}
+        {state.startDateError ? <ErrorMessage message={"Date Required"} /> : ""}
       </div>
     </>
   );

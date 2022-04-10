@@ -1,5 +1,6 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useReducer, useState } from "react";
 import RequestContext from "./RequestContext";
+import { errorReducer, initialState } from "../context/ErrorReducer";
 
 interface Props {
   children: ReactNode;
@@ -20,6 +21,8 @@ export default function RequestContextProvider({ children }: Props) {
   const [tattooDescription, setTattooDescription] = useState<string>("");
   const [ofAgeConfirm, setOfAgeConfirm] = useState<boolean>(false);
 
+  // ERROR REDUCER
+  const [state, dispatch] = useReducer(errorReducer, initialState);
   return (
     <RequestContext.Provider
       value={{
@@ -47,6 +50,8 @@ export default function RequestContextProvider({ children }: Props) {
         setTattooDescription,
         ofAgeConfirm,
         setOfAgeConfirm,
+        state,
+        dispatch,
       }}
     >
       {children}

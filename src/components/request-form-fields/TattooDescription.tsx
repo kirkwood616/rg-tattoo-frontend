@@ -1,16 +1,11 @@
-import { Dispatch, SetStateAction, useContext } from "react";
+import { useContext } from "react";
 import RequestContext from "../../context/RequestContext";
 import { validateTattooDescription } from "../../functions/Validation";
 import ErrorMessage from "../ErrorMessage";
 
-interface Props {
-  tattooDescriptionError: boolean;
-  setTattooDescriptionError: Dispatch<SetStateAction<boolean>>;
-}
-
-function TattooDescription({ tattooDescriptionError, setTattooDescriptionError }: Props) {
+function TattooDescription() {
   // CONTEXT
-  let { tattooDescription, setTattooDescription } = useContext(RequestContext);
+  let { tattooDescription, setTattooDescription, state, dispatch } = useContext(RequestContext);
 
   return (
     <>
@@ -21,12 +16,12 @@ function TattooDescription({ tattooDescriptionError, setTattooDescriptionError }
         name="tattooDescription"
         id="tattooDescription"
         className="request_textarea"
-        onChange={(e) => validateTattooDescription(e, setTattooDescription, setTattooDescriptionError)}
+        onChange={(e) => validateTattooDescription(e, setTattooDescription, dispatch)}
         value={tattooDescription}
         minLength={7}
         required
       />
-      {tattooDescriptionError ? <ErrorMessage message={"DESCRIPTION MUST BE AT LEAST 7 CHARACTERS"} /> : ""}
+      {state.tattooDescriptionError ? <ErrorMessage message={"DESCRIPTION MUST BE AT LEAST 7 CHARACTERS"} /> : ""}
     </>
   );
 }

@@ -3,21 +3,16 @@ import RequestContext from "../../context/RequestContext";
 import { validateEmail } from "../../functions/Validation";
 import ErrorMessage from "../ErrorMessage";
 
-interface Props {
-  emailError: boolean;
-  setEmailError: Dispatch<SetStateAction<boolean>>;
-}
-
-function Email({ emailError, setEmailError }: Props) {
+function Email() {
   // CONTEXT
-  let { email, setEmail } = useContext(RequestContext);
+  let { email, setEmail, state, dispatch } = useContext(RequestContext);
 
   useEffect(() => {
     if (email) {
-      const delay = setTimeout(() => validateEmail(email, setEmailError), 800);
+      const delay = setTimeout(() => validateEmail(email, dispatch), 800);
       return () => clearTimeout(delay);
     }
-  }, [email, setEmailError]);
+  }, [email, dispatch]);
 
   return (
     <>
@@ -25,7 +20,7 @@ function Email({ emailError, setEmailError }: Props) {
         <label htmlFor="email">Email:</label>
       </span>
       <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)} value={email} required />
-      {emailError ? <ErrorMessage message={"E-MAIL IS NOT VALID"} /> : ""}
+      {state.emailError ? <ErrorMessage message={"E-MAIL IS NOT VALID"} /> : ""}
     </>
   );
 }

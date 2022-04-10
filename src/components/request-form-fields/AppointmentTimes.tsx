@@ -4,13 +4,9 @@ import { formatTime } from "../../functions/Formatting";
 import SelectTimesModal from "../admin/modals/SelectTimesModal";
 import ErrorMessage from "../ErrorMessage";
 
-interface Props {
-  appointmentTimeError: boolean;
-}
-
-function AppointmentTimes({ appointmentTimeError }: Props) {
+function AppointmentTimes() {
   // CONTEXT
-  let { availableAppointmentTimes, appointmentTime, setAppointmentTime } = useContext(RequestContext);
+  let { availableAppointmentTimes, appointmentTime, setAppointmentTime, state } = useContext(RequestContext);
 
   // STATE
   const [isTimesActive, setIsTimesActive] = useState<boolean>(false);
@@ -34,7 +30,7 @@ function AppointmentTimes({ appointmentTimeError }: Props) {
         ) : (
           <div className="no-available-appointments">No Available Appointments</div>
         )}
-        {appointmentTimeError ? <ErrorMessage message={"SELECT A TIME"} /> : ""}
+        {state.appointmentTimeError ? <ErrorMessage message={"SELECT A TIME"} /> : ""}
         {isTimesActive ? (
           <SelectTimesModal timeValues={availableAppointmentTimes} isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} setStartTime={setAppointmentTime} />
         ) : (

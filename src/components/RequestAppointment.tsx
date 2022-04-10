@@ -30,7 +30,7 @@ import RequestContext from "../context/RequestContext";
 function RequestAppointment() {
   // CONTEXT
   let { availableAppointments, isLoading, setIsLoading } = useContext(AppContext);
-  let { startDate, setAvailableAppointmentsTimes, appointmentTime, firstName, lastName, age, email, phoneNumber, tattooStyle, tattooPlacement, tattooDescription } =
+  let { startDate, setAvailableAppointmentsTimes, appointmentTime, firstName, lastName, age, email, phoneNumber, tattooStyle, tattooPlacement, tattooDescription, state } =
     useContext(RequestContext);
 
   // NAVIGATE
@@ -42,17 +42,6 @@ function RequestAppointment() {
 
   // STATES FOR ERRORS
   const [submitCount, setSubmitCount] = useState<number>(0);
-  const [errors, setErrors] = useState<boolean>(false);
-  const [startDateError, setStartDateError] = useState<boolean>(false);
-  const [appointmentTimeError, setAppointmentTimeError] = useState<boolean>(false);
-  const [firstNameError, setFirstNameError] = useState<boolean>(false);
-  const [lastNameError, setLastNameError] = useState<boolean>(false);
-  const [ageError, setAgeError] = useState<boolean>(false);
-  const [emailError, setEmailError] = useState<boolean>(false);
-  const [phoneError, setPhoneError] = useState<boolean>(false);
-  const [tattooStyleError, setTattooStyleError] = useState<boolean>(false);
-  const [tattooPlacementError, setTattooPlacementError] = useState<boolean>(false);
-  const [tattooDescriptionError, setTattooDescriptionError] = useState<boolean>(false);
 
   // CHECK FOR DATE IN DATABASE
   useEffect(() => {
@@ -81,38 +70,34 @@ function RequestAppointment() {
   }
 
   // ERRORS
-  useEffect(() => {
-    if (startDateError || firstNameError || lastNameError || ageError || emailError || phoneError || tattooStyleError || tattooPlacementError || tattooDescriptionError) {
-      setErrors(true);
-    } else {
-      setErrors(false);
-    }
-  }, [ageError, emailError, firstNameError, lastNameError, phoneError, startDateError, tattooDescriptionError, tattooPlacementError, tattooStyleError]);
+  // useEffect(() => {
+  //   if (startDateError || firstNameError || lastNameError || ageError || emailError || phoneError || tattooStyleError || tattooPlacementError || tattooDescriptionError) {
+  //     setErrors(true);
+  //   } else {
+  //     setErrors(false);
+  //   }
+  // }, [ageError, emailError, firstNameError, lastNameError, phoneError, startDateError, tattooDescriptionError, tattooPlacementError, tattooStyleError]);
 
-  useEffect(() => {
-    if (submitCount > 0) {
-      if (startDate) setStartDateError(false);
-      if (!startDate) setStartDateError(true);
-      if (appointmentTime === "" || null) setAppointmentTimeError(true);
-      if (appointmentTime !== "") setAppointmentTimeError(false);
-      if (!firstName) setFirstNameError(true);
-      if (!lastName) setLastNameError(true);
-      if (!email) setEmailError(true);
-      if (!phoneNumber) setPhoneError(true);
-      if (tattooStyle === "select") setTattooStyleError(true);
-      if (!tattooPlacement) setTattooPlacementError(true);
-      if (!tattooDescription) setTattooDescriptionError(true);
-    }
-  }, [submitCount, firstName, lastName, email, phoneNumber, tattooStyle, tattooPlacement, tattooDescription, startDate, appointmentTime]);
+  // useEffect(() => {
+  //   if (submitCount > 0) {
+  //     if (startDate) setErrors({ ...errors, startDateError: false });
+  //     if (!startDate) setErrors({ ...errors, startDateError: true });
+  //     if (appointmentTime === "" || null) setErrors({ ...errors, appointmentTimeError: true });
+  //     if (appointmentTime !== "") setErrors({ ...errors, appointmentTimeError: false });
+  //     if (!firstName) setErrors({ ...errors, firstNameError: true });
+  //     if (!lastName) setErrors({ ...errors, lastNameError: true });
+  //     if (!email) setErrors({ ...errors, emailError: true });
+  //     if (!phoneNumber) setErrors({ ...errors, phoneError: true });
+  //     if (tattooStyle === "select") setErrors({ ...errors, tattooStyleError: true });
+  //     if (!tattooPlacement) setErrors({ ...errors, tattooPlacementError: true });
+  //     if (!tattooDescription) setErrors({ ...errors, tattooDescriptionError: true });
+  //   }
+  // }, [submitCount, firstName, lastName, email, phoneNumber, tattooStyle, tattooPlacement, tattooDescription, startDate, appointmentTime, errors]);
 
   // HANDLE SUBMIT
   function handleSubmit(e: FormEvent): void {
     e.preventDefault();
-    if (tattooStyle === "select") {
-      setTattooStyleError(true);
-      return;
-    }
-    if (errors) {
+    if (Object.values(state).includes(true)) {
       return;
     } else {
       let newRequest: AppointmentRequest = {
@@ -145,6 +130,7 @@ function RequestAppointment() {
         });
     }
   }
+  console.log(state);
 
   // RENDER
   return (
@@ -152,18 +138,18 @@ function RequestAppointment() {
       <div className="RequestAppointment">
         <h1>Request Appointment</h1>
         <form onSubmit={handleSubmit}>
-          <SelectDate startDateError={startDateError} />
-          {startDate ? <AppointmentTimes appointmentTimeError={appointmentTimeError} /> : ""}
-          <FirstName firstNameError={firstNameError} setFirstNameError={setFirstNameError} />
-          <LastName lastNameError={lastNameError} setLastNameError={setLastNameError} />
-          <Age ageError={ageError} setAgeError={setAgeError} />
-          <Email emailError={emailError} setEmailError={setEmailError} />
-          <PhoneNumber phoneError={phoneError} setPhoneError={setPhoneError} />
-          <TattooStyle tattooStyleError={tattooStyleError} setTattooStyleError={setTattooStyleError} />
-          <TattooPlacement tattooPlacementError={tattooPlacementError} setTattooPlacementError={setTattooPlacementError} />
+          <SelectDate />
+          {startDate ? <AppointmentTimes /> : ""}
+          <FirstName />
+          <LastName />
+          <Age />
+          <Email />
+          <PhoneNumber />
+          <TattooStyle />
+          <TattooPlacement />
           <ReferenceImage setReferenceImage={setReferenceImage} />
           <PlacementImage setPlacementImage={setPlacementImage} />
-          <TattooDescription tattooDescriptionError={tattooDescriptionError} setTattooDescriptionError={setTattooDescriptionError} />
+          <TattooDescription />
           <AgeConfirm />
           <GoButton type="submit" text="Submit Request" backgroundColor="green" onClick={() => setSubmitCount(submitCount + 1)} />
         </form>
