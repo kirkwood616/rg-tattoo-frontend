@@ -1,16 +1,14 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useContext, useState } from "react";
+import RequestContext from "../../context/RequestContext";
 import { formatTime } from "../../functions/Formatting";
 import SelectTimesModal from "../admin/modals/SelectTimesModal";
 import ErrorMessage from "../ErrorMessage";
 
-interface Props {
-  availableAppointmentTimes: string[];
-  appointmentTime: string;
-  setAppointmentTime: Dispatch<SetStateAction<string>>;
-  appointmentTimeError: boolean;
-}
+function AppointmentTimes() {
+  // CONTEXT
+  let { availableAppointmentTimes, appointmentTime, setAppointmentTime, state } = useContext(RequestContext);
 
-function AppointmentTimes({ availableAppointmentTimes, appointmentTime, setAppointmentTime, appointmentTimeError }: Props) {
+  // STATE
   const [isTimesActive, setIsTimesActive] = useState<boolean>(false);
 
   return (
@@ -32,7 +30,7 @@ function AppointmentTimes({ availableAppointmentTimes, appointmentTime, setAppoi
         ) : (
           <div className="no-available-appointments">No Available Appointments</div>
         )}
-        {appointmentTimeError ? <ErrorMessage message={"SELECT A TIME"} /> : ""}
+        {state.appointmentTimeError ? <ErrorMessage message={"SELECT A TIME"} /> : ""}
         {isTimesActive ? (
           <SelectTimesModal timeValues={availableAppointmentTimes} isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} setStartTime={setAppointmentTime} />
         ) : (
