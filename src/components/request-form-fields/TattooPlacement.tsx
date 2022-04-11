@@ -1,15 +1,12 @@
-import { Dispatch, SetStateAction } from "react";
+import { useContext } from "react";
+import RequestContext from "../../context/RequestContext";
 import { validateTattooPlacement } from "../../functions/Validation";
 import ErrorMessage from "../ErrorMessage";
 
-interface Props {
-  tattooPlacement: string;
-  setTattooPlacement: Dispatch<SetStateAction<string>>;
-  tattooPlacementError: boolean;
-  setTattooPlacementError: Dispatch<SetStateAction<boolean>>;
-}
+function TattooPlacement() {
+  // CONTEXT
+  let { tattooPlacement, setTattooPlacement, state, dispatch } = useContext(RequestContext);
 
-function TattooPlacement({ tattooPlacement, setTattooPlacement, tattooPlacementError, setTattooPlacementError }: Props) {
   return (
     <>
       <span className="label">
@@ -20,11 +17,11 @@ function TattooPlacement({ tattooPlacement, setTattooPlacement, tattooPlacementE
         name="tattooPlacement"
         id="tattooPlacement"
         maxLength={30}
-        onChange={(e) => validateTattooPlacement(e, setTattooPlacement, setTattooPlacementError)}
+        onChange={(e) => validateTattooPlacement(e, setTattooPlacement, dispatch)}
         value={tattooPlacement}
         required
       />
-      {tattooPlacementError ? <ErrorMessage message={"PLEASE ENTER A TATTOO PLACEMENT"} /> : ""}
+      {state.tattooPlacementError ? <ErrorMessage message={"PLEASE ENTER A TATTOO PLACEMENT"} /> : ""}
     </>
   );
 }

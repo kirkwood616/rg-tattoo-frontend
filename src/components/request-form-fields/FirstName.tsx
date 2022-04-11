@@ -1,22 +1,19 @@
-import { Dispatch, SetStateAction } from "react";
+import { useContext } from "react";
+import RequestContext from "../../context/RequestContext";
 import { validateName } from "../../functions/Validation";
 import ErrorMessage from "../ErrorMessage";
 
-interface Props {
-  firstName: string;
-  setFirstName: Dispatch<SetStateAction<string>>;
-  firstNameError: boolean;
-  setFirstNameError: Dispatch<SetStateAction<boolean>>;
-}
+function FirstName() {
+  // CONTEXT
+  let { firstName, setFirstName, state, dispatch } = useContext(RequestContext);
 
-function FirstName({ firstName, setFirstName, firstNameError, setFirstNameError }: Props) {
   return (
     <>
       <span className="label">
         <label htmlFor="firstName">First Name:</label>
       </span>
-      <input type="text" name="firstName" id="firstName" onChange={(e) => validateName(e, setFirstName, setFirstNameError)} value={firstName} required />
-      {firstNameError ? <ErrorMessage message={"FIRST NAME REQUIRED"} /> : ""}
+      <input type="text" name="firstName" id="firstName" onChange={(e) => validateName(e, setFirstName, dispatch, "firstName")} value={firstName} required />
+      {state.firstNameError ? <ErrorMessage message={"FIRST NAME REQUIRED"} /> : ""}
     </>
   );
 }

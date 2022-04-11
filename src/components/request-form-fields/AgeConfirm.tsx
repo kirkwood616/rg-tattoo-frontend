@@ -1,11 +1,10 @@
-import { Dispatch, SetStateAction } from "react";
+import { useContext } from "react";
+import RequestContext from "../../context/RequestContext";
 
-interface Props {
-  ofAgeConfirm: boolean;
-  setOfAgeConfirm: Dispatch<SetStateAction<boolean>>;
-}
+function AgeConfirm() {
+  // CONTEXT
+  let { ofAgeConfirm, setOfAgeConfirm } = useContext(RequestContext);
 
-function AgeConfirm({ ofAgeConfirm, setOfAgeConfirm }: Props) {
   return (
     <>
       <div className="of-age-confirm">

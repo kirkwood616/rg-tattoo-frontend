@@ -11,6 +11,7 @@ import AppointmentRequests from "./components/admin/AppointmentRequests";
 import AppointmentRequestById from "./components/admin/AppointmentRequestById";
 import LoadingDotsIcon from "./components/loading/LoadingDotsIcon";
 import AppContext from "./context/AppContext";
+import RequestPage from "./components/RequestPage";
 
 function App() {
   // CONTEXT
@@ -23,7 +24,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/request-appointment" element={<RequestAppointment />} />
+          <Route path="/request-appointment" element={<RequestPage />} />
           <Route path="/request-submitted" element={<RequestSubmitted />} />
           <Route path="/admin/login" element={<LogIn />} />
           <Route path="/admin/home" element={<AdminHome />} />
@@ -32,7 +33,7 @@ function App() {
           <Route path="/admin/set-available-appointments" element={<SetAvailableAppointments />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-      </Router>
+      </Router>{" "}
     </div>
   );
 }

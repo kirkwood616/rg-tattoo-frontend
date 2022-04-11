@@ -1,15 +1,12 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
+import RequestContext from "../../context/RequestContext";
 import ErrorMessage from "../ErrorMessage";
 
-interface Props {
-  startDate: Date | undefined;
-  setStartDate: Dispatch<SetStateAction<Date | undefined>>;
-  startDateError: boolean;
-  setAppointmentTime: Dispatch<SetStateAction<string>>;
-}
+function PlacementImage() {
+  // CONTEXT
+  let { startDate, setStartDate, setAppointmentTime, state } = useContext(RequestContext);
 
-function PlacementImage({ startDate, setStartDate, startDateError, setAppointmentTime }: Props) {
   // STATES
   const [maxAppointmentDate, setMaxAppointmentDate] = useState<Date>();
   const [excludedDates, setExcludedDates] = useState<Date[]>([]);
@@ -43,7 +40,7 @@ function PlacementImage({ startDate, setStartDate, startDateError, setAppointmen
           autoComplete="off"
           required
         />
-        {startDateError ? <ErrorMessage message={"Date Required"} /> : ""}
+        {state.startDateError ? <ErrorMessage message={"Date Required"} /> : ""}
       </div>
     </>
   );
