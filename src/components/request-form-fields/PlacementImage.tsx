@@ -1,14 +1,27 @@
-import { Dispatch, SetStateAction } from "react";
+import { useContext, useState } from "react";
+import RequestContext from "../../context/RequestContext";
 
-interface Props {
-  setPlacementImage: Dispatch<SetStateAction<File | null>>;
-}
+function PlacementImage() {
+  // CONTEXT
+  let { state, dispatch } = useContext(RequestContext);
 
-function PlacementImage({ setPlacementImage }: Props) {
+  // STATE
+  const [placementRandom, setPlacementRandom] = useState<string>("");
+
+  // FUNCTIONS
   function handlePlacementPhotoChange(e: any): void {
     if (e.target.files[0]) {
-      setPlacementImage(e.target.files[0]);
+      dispatch({ type: "placementPhoto", value: e.target.files[0] });
+    } else {
+      resetPlacement();
     }
+  }
+
+  function resetPlacement(): void {
+    // triggers file input re-render based on key value
+    let randomText = Math.random().toString(36);
+    setPlacementRandom(randomText);
+    dispatch({ type: "placementPhoto", value: null });
   }
 
   return (
@@ -17,7 +30,15 @@ function PlacementImage({ setPlacementImage }: Props) {
         <label htmlFor="placementPhoto">Placement Photo:</label>
       </span>
       <div className="photo-upload">
-        <input type="file" name="placementPhoto" id="placementPhoto" accept="image/*" onChange={handlePlacementPhotoChange} />
+        <input type="file" name="placementPhoto" id="placementPhoto" accept="image/*" onChange={handlePlacementPhotoChange} key={placementRandom} />
+
+        {state.placementPhoto.value ? (
+          <button type="button" onClick={resetPlacement} style={{ display: "block", margin: "auto" }}>
+            REMOVE FILE
+          </button>
+        ) : (
+          ""
+        )}
       </div>
     </>
   );

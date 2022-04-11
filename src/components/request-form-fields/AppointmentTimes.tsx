@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
 import RequestContext from "../../context/RequestContext";
 import { formatTime } from "../../functions/Formatting";
-import SelectTimesModal from "../admin/modals/SelectTimesModal";
 import ErrorMessage from "../ErrorMessage";
+import SelectAppointmentTimes from "../modals/SelectAppointmentTimes";
 
 function AppointmentTimes() {
   // CONTEXT
-  let { availableAppointmentTimes, appointmentTime, setAppointmentTime, state } = useContext(RequestContext);
+  let { availableAppointmentTimes, state, dispatch } = useContext(RequestContext);
 
   // STATE
   const [isTimesActive, setIsTimesActive] = useState<boolean>(false);
@@ -23,19 +23,15 @@ function AppointmentTimes() {
             name="time-picker"
             id="time-picker"
             placeholder="--- Select Time ---"
-            value={formatTime(appointmentTime)}
+            value={formatTime(state.appointmentTime.value)}
             onClick={() => setIsTimesActive(true)}
             readOnly
           ></input>
         ) : (
           <div className="no-available-appointments">No Available Appointments</div>
         )}
-        {state.appointmentTimeError ? <ErrorMessage message={"SELECT A TIME"} /> : ""}
-        {isTimesActive ? (
-          <SelectTimesModal timeValues={availableAppointmentTimes} isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} setStartTime={setAppointmentTime} />
-        ) : (
-          ""
-        )}
+        {state.appointmentTime.hasErrors ? <ErrorMessage message={"SELECT A TIME"} /> : ""}
+        {isTimesActive ? <SelectAppointmentTimes isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} /> : ""}
       </div>
     </>
   );

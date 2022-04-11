@@ -30,70 +30,41 @@ import RequestContext from "../context/RequestContext";
 function RequestAppointment() {
   // CONTEXT
   let { availableAppointments, isLoading, setIsLoading } = useContext(AppContext);
-  let { startDate, setAvailableAppointmentsTimes, appointmentTime, firstName, lastName, age, email, phoneNumber, tattooStyle, tattooPlacement, tattooDescription, state } =
-    useContext(RequestContext);
+  let { setAvailableAppointmentsTimes, state } = useContext(RequestContext);
 
   // NAVIGATE
   let navigate = useNavigate();
-
-  // STATES FOR FILES
-  const [referenceImage, setReferenceImage] = useState<File | null>(null);
-  const [placementImage, setPlacementImage] = useState<File | null>(null);
 
   // STATES FOR ERRORS
   const [submitCount, setSubmitCount] = useState<number>(0);
 
   // CHECK FOR DATE IN DATABASE
   useEffect(() => {
-    if (!startDate) return;
+    if (!state.startDate.value) return;
 
-    let dateInDatabase: AvailableAppointments | undefined = availableAppointments.find((date) => date.date === format(startDate!, "MM-dd-yyyy"));
+    let dateInDatabase: AvailableAppointments | undefined = availableAppointments.find((date) => date.date === format(state.startDate.value!, "MM-dd-yyyy"));
 
     if (dateInDatabase) {
       setAvailableAppointmentsTimes(dateInDatabase.availableTimes);
     } else {
       setAvailableAppointmentsTimes([]);
     }
-  }, [availableAppointments, setAvailableAppointmentsTimes, startDate]);
+  }, [availableAppointments, setAvailableAppointmentsTimes, state.startDate.value]);
 
   // FILE UPLOAD
   function handleReferencePhotoUpload(): void {
-    if (!referenceImage) return;
-    const storageRef = ref(storage, `/images/${firstName}-${lastName}-ref-${referenceImage.name}`);
-    uploadBytesResumable(storageRef, referenceImage);
+    if (!state.referencePhoto.value) return;
+    const storageRef = ref(storage, `/images/${state.firstName.value}-${state.lastName.value}-ref-${state.referencePhoto.value.name}`);
+    uploadBytesResumable(storageRef, state.referencePhoto.value);
   }
 
   function handlePlacementPhotoUpload(): void {
-    if (!placementImage) return;
-    const storageRef = ref(storage, `/images/${firstName}-${lastName}-place-${placementImage.name}`);
-    uploadBytesResumable(storageRef, placementImage);
+    if (!state.placementPhoto.value) return;
+    const storageRef = ref(storage, `/images/${state.firstName.value}-${state.lastName.value}-place-${state.placementPhoto.value.name}`);
+    uploadBytesResumable(storageRef, state.placementPhoto.value);
   }
 
-  // ERRORS
-  // useEffect(() => {
-  //   if (startDateError || firstNameError || lastNameError || ageError || emailError || phoneError || tattooStyleError || tattooPlacementError || tattooDescriptionError) {
-  //     setErrors(true);
-  //   } else {
-  //     setErrors(false);
-  //   }
-  // }, [ageError, emailError, firstNameError, lastNameError, phoneError, startDateError, tattooDescriptionError, tattooPlacementError, tattooStyleError]);
-
-  // useEffect(() => {
-  //   if (submitCount > 0) {
-  //     if (startDate) setErrors({ ...errors, startDateError: false });
-  //     if (!startDate) setErrors({ ...errors, startDateError: true });
-  //     if (appointmentTime === "" || null) setErrors({ ...errors, appointmentTimeError: true });
-  //     if (appointmentTime !== "") setErrors({ ...errors, appointmentTimeError: false });
-  //     if (!firstName) setErrors({ ...errors, firstNameError: true });
-  //     if (!lastName) setErrors({ ...errors, lastNameError: true });
-  //     if (!email) setErrors({ ...errors, emailError: true });
-  //     if (!phoneNumber) setErrors({ ...errors, phoneError: true });
-  //     if (tattooStyle === "select") setErrors({ ...errors, tattooStyleError: true });
-  //     if (!tattooPlacement) setErrors({ ...errors, tattooPlacementError: true });
-  //     if (!tattooDescription) setErrors({ ...errors, tattooDescriptionError: true });
-  //   }
-  // }, [submitCount, firstName, lastName, email, phoneNumber, tattooStyle, tattooPlacement, tattooDescription, startDate, appointmentTime, errors]);
-
+  ///// => !! FIX THIS NEXT !! <= \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   // HANDLE SUBMIT
   function handleSubmit(e: FormEvent): void {
     e.preventDefault();
@@ -102,18 +73,18 @@ function RequestAppointment() {
     } else {
       let newRequest: AppointmentRequest = {
         requestSubmittedDate: new Date(),
-        requestDate: format(startDate!, "MM-dd-yyyy"),
-        requestTime: appointmentTime,
-        firstName: firstName,
-        lastName: lastName,
-        age: age,
-        email: email.toLowerCase(),
-        phoneNumber: phoneNumber,
-        tattooStyle: tattooStyle,
-        tattooPlacement: tattooPlacement,
-        referencePhotoPath: referenceImage ? `${firstName!}-${lastName!}-ref-${referenceImage!.name}` : "",
-        placementPhotoPath: placementImage ? `${firstName!}-${lastName!}-place-${placementImage!.name}` : "",
-        tattooDescription: tattooDescription,
+        requestDate: format(state.startDate.value!, "MM-dd-yyyy"),
+        requestTime: state.appointmentTime.value,
+        firstName: state.firstName.value,
+        lastName: state.lastName.value,
+        age: state.age.value,
+        email: state.email.value.toLowerCase(),
+        phoneNumber: state.phoneNumber.value,
+        tattooStyle: state.tattooStyle.value,
+        tattooPlacement: state.tattooPlacement.value,
+        referencePhotoPath: state.referencePhoto.value ? `${state.firstName!.value}-${state.lastName!.value}-ref-${state.referencePhoto.value.name}` : "",
+        placementPhotoPath: state.placementPhoto.value ? `${state.firstName!.value}-${state.lastName!.value}-place-${state.placementPhoto.value.name}` : "",
+        tattooDescription: state.tattooDescription.value,
         isRequestApproved: false,
         isRequestDenied: false,
       };
@@ -130,7 +101,6 @@ function RequestAppointment() {
         });
     }
   }
-  console.log(state);
 
   // RENDER
   return (
@@ -139,7 +109,7 @@ function RequestAppointment() {
         <h1>Request Appointment</h1>
         <form onSubmit={handleSubmit}>
           <SelectDate />
-          {startDate ? <AppointmentTimes /> : ""}
+          {state.startDate.value ? <AppointmentTimes /> : ""}
           <FirstName />
           <LastName />
           <Age />
@@ -147,8 +117,8 @@ function RequestAppointment() {
           <PhoneNumber />
           <TattooStyle />
           <TattooPlacement />
-          <ReferenceImage setReferenceImage={setReferenceImage} />
-          <PlacementImage setPlacementImage={setPlacementImage} />
+          <ReferenceImage />
+          <PlacementImage />
           <TattooDescription />
           <AgeConfirm />
           <GoButton type="submit" text="Submit Request" backgroundColor="green" onClick={() => setSubmitCount(submitCount + 1)} />
