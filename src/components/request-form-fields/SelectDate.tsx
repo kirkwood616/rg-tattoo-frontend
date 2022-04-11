@@ -5,7 +5,7 @@ import ErrorMessage from "../ErrorMessage";
 
 function PlacementImage() {
   // CONTEXT
-  let { startDate, setStartDate, setAppointmentTime, state } = useContext(RequestContext);
+  let { state, dispatch } = useContext(RequestContext);
 
   // STATES
   const [maxAppointmentDate, setMaxAppointmentDate] = useState<Date>();
@@ -26,10 +26,10 @@ function PlacementImage() {
           name="datePicker"
           id="datePicker"
           placeholderText="Select Date"
-          selected={startDate}
+          selected={state.startDate.value}
           onChange={(date: Date) => {
-            setStartDate(date);
-            setAppointmentTime("");
+            dispatch({ type: "startDate", value: date });
+            dispatch({ type: "appointmentTime", value: "" });
           }}
           minDate={new Date()}
           maxDate={maxAppointmentDate}
@@ -40,7 +40,7 @@ function PlacementImage() {
           autoComplete="off"
           required
         />
-        {state.startDateError ? <ErrorMessage message={"Date Required"} /> : ""}
+        {state.startDate.hasErrors ? <ErrorMessage message={"Date Required"} /> : ""}
       </div>
     </>
   );

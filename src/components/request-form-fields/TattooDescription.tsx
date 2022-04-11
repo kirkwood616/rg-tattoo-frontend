@@ -1,11 +1,10 @@
 import { useContext } from "react";
 import RequestContext from "../../context/RequestContext";
-import { validateTattooDescription } from "../../functions/Validation";
 import ErrorMessage from "../ErrorMessage";
 
 function TattooDescription() {
   // CONTEXT
-  let { tattooDescription, setTattooDescription, state, dispatch } = useContext(RequestContext);
+  let { state, dispatch } = useContext(RequestContext);
 
   return (
     <>
@@ -16,12 +15,12 @@ function TattooDescription() {
         name="tattooDescription"
         id="tattooDescription"
         className="request_textarea"
-        onChange={(e) => validateTattooDescription(e, setTattooDescription, dispatch)}
-        value={tattooDescription}
+        onChange={(e) => dispatch({ type: "tattooDescription", value: e.target.value })}
+        value={state.tattooDescription.value || ""}
         minLength={7}
         required
       />
-      {state.tattooDescriptionError ? <ErrorMessage message={"DESCRIPTION MUST BE AT LEAST 7 CHARACTERS"} /> : ""}
+      {state.tattooDescription.hasErrors ? <ErrorMessage message={"MUST BE AT LEAST 7 CHARACTERS"} /> : ""}
     </>
   );
 }

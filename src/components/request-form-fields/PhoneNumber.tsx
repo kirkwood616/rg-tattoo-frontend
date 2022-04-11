@@ -1,33 +1,25 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import RequestContext from "../../context/RequestContext";
-import { validatePhone } from "../../functions/Validation";
 import ErrorMessage from "../ErrorMessage";
 
 function PhoneNumber() {
   // CONTEXT
-  let { phoneNumber, setPhoneNumber, state, dispatch } = useContext(RequestContext);
-
-  useEffect(() => {
-    if (phoneNumber) {
-      const delay = setTimeout(() => {
-        if (phoneNumber && phoneNumber.length < 14) {
-          dispatch({ type: "phone", value: true });
-        }
-        if (phoneNumber.length === 14) {
-          dispatch({ type: "phone", value: false });
-        }
-      }, 800);
-      return () => clearTimeout(delay);
-    }
-  }, [phoneNumber, dispatch]);
+  let { state, dispatch } = useContext(RequestContext);
 
   return (
     <>
       <span className="label">
-        <label htmlFor="tel">Phone:</label>
+        <label htmlFor="phoneNumber">Phone:</label>
       </span>
-      <input type="tel" name="tel" id="tel" onChange={(e) => validatePhone(e, setPhoneNumber)} value={phoneNumber} required />
-      {state.phoneError ? <ErrorMessage message={"PHONE NUMBER IS NOT VALID"} /> : ""}
+      <input
+        type="tel"
+        name="phoneNumber"
+        id="phoneNumber"
+        onChange={(e) => dispatch({ type: "phoneNumber", value: e.target.value })}
+        value={state.phoneNumber.value || ""}
+        required
+      />
+      {state.phoneNumber.hasErrors ? <ErrorMessage message={"PHONE NUMBER IS NOT VALID"} /> : ""}
     </>
   );
 }
