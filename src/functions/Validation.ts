@@ -12,15 +12,15 @@ export function validateName(e: ChangeEvent<HTMLInputElement>, setState: Dispatc
   return () => clearTimeout(delay);
 }
 
-export function validateNames(e: ChangeEvent<HTMLInputElement>, dispatch: Dispatch<RequestAction>) {
-  dispatch({ type: "checkCount", field: e.target.name, value: 1 });
-  dispatch({ type: "stringInput", field: e.target.name, value: e.target.value });
-  const delay = setTimeout(() => {
-    if (e.target.value === "") dispatch({ type: "error", field: e.target.name, value: true });
-    if (e.target.value !== "") dispatch({ type: "error", field: e.target.name, value: false });
-  }, 1000);
-  return () => clearTimeout(delay);
-}
+// export function validateNames(e: ChangeEvent<HTMLInputElement>, dispatch: Dispatch<RequestAction>) {
+//   dispatch({ type: "checkCount", field: e.target.name, value: 1 });
+//   dispatch({ type: "stringInput", field: e.target.name, value: e.target.value });
+//   const delay = setTimeout(() => {
+//     if (e.target.value === "") dispatch({ type: "error", field: e.target.name, value: true });
+//     if (e.target.value !== "") dispatch({ type: "error", field: e.target.name, value: false });
+//   }, 1000);
+//   return () => clearTimeout(delay);
+// }
 
 // AGE
 export function validateAge(e: ChangeEvent<HTMLInputElement>, setState: Dispatch<SetStateAction<number>>, dispatch: Dispatch<Action>) {

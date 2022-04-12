@@ -20,7 +20,7 @@ function TattooPlacement() {
         value={state.tattooPlacement.value || ""}
         required
       />
-      {state.tattooPlacement.hasErrors ? <ErrorMessage message={"PLEASE ENTER A TATTOO PLACEMENT"} /> : ""}
+      <ErrorMessage message={"PLEASE ENTER A TATTOO PLACEMENT"} name={"tattooPlacement"} />
     </>
   );
 }

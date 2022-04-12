@@ -20,7 +20,7 @@ function TattooDescription() {
         minLength={7}
         required
       />
-      {state.tattooDescription.hasErrors ? <ErrorMessage message={"MUST BE AT LEAST 7 CHARACTERS"} /> : ""}
+      <ErrorMessage message={"MUST BE AT LEAST 7 CHARACTERS"} name={"tattooDescription"} />
     </>
   );
 }

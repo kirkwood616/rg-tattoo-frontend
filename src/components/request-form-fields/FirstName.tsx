@@ -19,7 +19,7 @@ function FirstName() {
         value={state.firstName.value || ""}
         required
       />
-      {state.firstName.hasErrors ? <ErrorMessage message={"FIRST NAME REQUIRED"} /> : ""}
+      <ErrorMessage message="FIRST NAME REQUIRED" name={"firstName"} />
     </>
   );
 }

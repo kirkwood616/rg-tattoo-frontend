@@ -72,9 +72,16 @@ export const initialState: RequestReducer = {
 
 export function reducer(state: RequestReducer, action: RequestAction) {
   switch (action.type) {
+    case "reset":
+      return initialState;
     case "startDate":
       state.startDate.value = action.value;
       state.startDate.checkCount++;
+      if (state.startDate.checkCount > 0 && !state.startDate.value) {
+        state.startDate.hasErrors = true;
+      } else {
+        state.startDate.hasErrors = false;
+      }
       return;
     case "appointmentTime":
       state.appointmentTime.value = action.value;

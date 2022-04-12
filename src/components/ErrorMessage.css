@@ -1,11 +1,50 @@
 .ErrorMessage {
-  background-color: red;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+  /* background-color: black; */
+  box-shadow: inset 0px 0px 5px 1px red;
+  border: 2px solid red;
   border-radius: 0.5rem;
+  color: red;
   font-weight: bold;
+  height: auto;
   margin-top: 25px;
+  opacity: 1;
   padding: 0.5rem;
   position: relative;
   text-align: center;
+  transform: translateY(1);
+  transform-origin: left top;
+  transition: all 0.75s ease-in-out;
+  width: 75%;
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.hidden {
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+  height: 0;
+  opacity: 0;
+  text-align: center;
+  transform: translateY(0);
+  transform-origin: left top;
+  transition: all 0.75s ease-out;
   width: 100%;
 }
 
@@ -26,6 +65,11 @@
   border-bottom-color: red;
   border-width: 15px;
   margin-left: -15px;
+  transform: translateY(0);
+  transform-origin: left top;
+  transition: all 0.5s ease-out;
+  display: none;
+  height: 0;
 }
 .ErrorMessage:before {
   border-color: rgba(204, 204, 204, 0);

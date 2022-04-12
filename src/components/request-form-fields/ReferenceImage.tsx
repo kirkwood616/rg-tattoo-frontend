@@ -41,7 +41,7 @@ function ReferenceImage() {
           ""
         )}
       </div>
-      {state.referencePhoto.hasErrors ? <ErrorMessage message={"REFERENCE PHOTO REQUIRED"} /> : ""}
+      <ErrorMessage message={"REFERENCE PHOTO REQUIRED"} name={"referencePhoto"} />
     </>
   );
 }

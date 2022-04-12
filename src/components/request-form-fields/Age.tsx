@@ -21,7 +21,7 @@ function Age() {
         value={state.age.value || ""}
         required
       />
-      {state.age.hasErrors ? <ErrorMessage message={"MUST BE 18 OR OLDER"} /> : ""}
+      <ErrorMessage message={"MUST BE 18 OR OLDER"} name={"age"} />
     </>
   );
 }
