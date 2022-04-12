@@ -19,7 +19,7 @@ function PhoneNumber() {
         value={state.phoneNumber.value || ""}
         required
       />
-      {state.phoneNumber.hasErrors ? <ErrorMessage message={"PHONE NUMBER IS NOT VALID"} /> : ""}
+      <ErrorMessage message={"PHONE NUMBER IS NOT VALID"} name={"phoneNumber"} />
     </>
   );
 }

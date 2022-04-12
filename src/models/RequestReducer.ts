@@ -1,4 +1,20 @@
-export interface RequestReducer {
+export interface ReducerModel {
+  [key: string]:
+    | {
+        value: Date | undefined | string | boolean | number | File | null;
+        hasErrors: boolean;
+        checkCount: number;
+      }
+    | boolean;
+}
+
+export interface FieldValues {
+  value: Date | undefined | string | boolean | number | File | null;
+  hasErrors: boolean;
+  checkCount: number;
+}
+
+export interface RequestReducer extends ReducerModel {
   startDate: {
     value: Date | undefined;
     hasErrors: boolean;
@@ -68,13 +84,7 @@ export interface RequestReducer {
 }
 
 export type RequestAction =
-  | { type: "dateInput"; field: string; value: Date | undefined }
-  | { type: "stringInput"; field: string; value: string }
-  | { type: "numberInput"; field: string; value: number }
-  | { type: "fileInput"; field: string; value: File | null }
-  | { type: "error"; field: string; value: boolean }
-  | { type: "errors"; field: string; value: boolean }
-  | { type: "checkCount"; field: string; value: number }
+  | { type: "reset"; value: RequestReducer }
   | { type: "startDate"; value: Date | undefined }
   | { type: "appointmentTime"; value: string }
   | { type: "firstName"; value: string }

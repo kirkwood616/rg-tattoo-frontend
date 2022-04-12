@@ -12,7 +12,7 @@ function Email() {
         <label htmlFor="email">Email:</label>
       </span>
       <input type="email" name="email" id="email" onChange={(e) => dispatch({ type: "email", value: e.target.value })} value={state.email.value || ""} required />
-      {state.email.hasErrors ? <ErrorMessage message={"E-MAIL IS NOT VALID"} /> : ""}
+      <ErrorMessage message={"E-MAIL IS NOT VALID"} name={"email"} />
     </>
   );
 }

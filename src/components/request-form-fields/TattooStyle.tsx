@@ -26,7 +26,7 @@ function TattooStyle() {
         <option value="Full Color">Full Color</option>
         <option value="Lettering">Lettering</option>
       </select>
-      {state.tattooStyle.hasErrors ? <ErrorMessage message={"PLEASE SELECT A TATTOO STYLE"} /> : ""}
+      <ErrorMessage message={"PLEASE SELECT A TATTOO STYLE"} name={"tattooStyle"} />
     </>
   );
 }

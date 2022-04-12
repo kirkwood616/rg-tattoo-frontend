@@ -6,7 +6,7 @@ import SelectAppointmentTimes from "../modals/SelectAppointmentTimes";
 
 function AppointmentTimes() {
   // CONTEXT
-  let { availableAppointmentTimes, state, dispatch } = useContext(RequestContext);
+  let { availableAppointmentTimes, state } = useContext(RequestContext);
 
   // STATE
   const [isTimesActive, setIsTimesActive] = useState<boolean>(false);
@@ -30,7 +30,7 @@ function AppointmentTimes() {
         ) : (
           <div className="no-available-appointments">No Available Appointments</div>
         )}
-        {state.appointmentTime.hasErrors ? <ErrorMessage message={"SELECT A TIME"} /> : ""}
+        <ErrorMessage message={"SELECT A TIME"} name={"appointmentTime"} />
         {isTimesActive ? <SelectAppointmentTimes isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} /> : ""}
       </div>
     </>

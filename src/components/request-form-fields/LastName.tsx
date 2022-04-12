@@ -12,7 +12,7 @@ function LastName() {
         <label htmlFor="lastName">Last Name:</label>
       </span>
       <input type="text" name="lastName" id="lastName" onChange={(e) => dispatch({ type: "lastName", value: e.target.value })} value={state.lastName.value || ""} required />
-      {state.lastName.hasErrors ? <ErrorMessage message={"LAST NAME REQUIRED"} /> : ""}
+      <ErrorMessage message={"LAST NAME REQUIRED"} name={"lastName"} />
     </>
   );
 }

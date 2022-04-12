@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import RequestContext from "../../context/RequestContext";
 import ErrorMessage from "../ErrorMessage";
 
-function PlacementImage() {
+function SelectDate() {
   // CONTEXT
   let { state, dispatch } = useContext(RequestContext);
 
@@ -40,10 +40,10 @@ function PlacementImage() {
           autoComplete="off"
           required
         />
-        {state.startDate.hasErrors ? <ErrorMessage message={"Date Required"} /> : ""}
+        <ErrorMessage message={"Date Required"} name={"startDate"} />
       </div>
     </>
   );
 }
 
-export default PlacementImage;
+export default SelectDate;
