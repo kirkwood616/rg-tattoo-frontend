@@ -1,11 +1,10 @@
 import { useContext } from "react";
 import RequestContext from "../../context/RequestContext";
-import { validateTattooPlacement } from "../../functions/Validation";
 import ErrorMessage from "../ErrorMessage";
 
 function TattooPlacement() {
   // CONTEXT
-  let { tattooPlacement, setTattooPlacement, state, dispatch } = useContext(RequestContext);
+  let { state, dispatch } = useContext(RequestContext);
 
   return (
     <>
@@ -17,11 +16,11 @@ function TattooPlacement() {
         name="tattooPlacement"
         id="tattooPlacement"
         maxLength={30}
-        onChange={(e) => validateTattooPlacement(e, setTattooPlacement, dispatch)}
-        value={tattooPlacement}
+        onChange={(e) => dispatch({ type: "tattooPlacement", value: e.target.value })}
+        value={state.tattooPlacement.value || ""}
         required
       />
-      {state.tattooPlacementError ? <ErrorMessage message={"PLEASE ENTER A TATTOO PLACEMENT"} /> : ""}
+      <ErrorMessage message={"PLEASE ENTER A TATTOO PLACEMENT"} name={"tattooPlacement"} />
     </>
   );
 }

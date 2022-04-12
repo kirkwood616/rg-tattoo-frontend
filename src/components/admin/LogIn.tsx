@@ -18,17 +18,7 @@ function LogIn() {
   const [password, setPassword] = useState<string>("");
 
   // STATES FOR ERRORS
-  const [errors, setErrors] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
-  // ERROR CHECK
-  useEffect(() => {
-    if (errorMessage) {
-      setErrors(true);
-    } else {
-      setErrors(false);
-    }
-  }, [errorMessage]);
 
   // NAVIGATE
   let navigate = useNavigate();
@@ -38,18 +28,17 @@ function LogIn() {
     if (user) {
       navigate("/admin/home");
     }
-  }, [user]);
+  }, [navigate, user]);
 
   // AUTH
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
   });
 
-  async function logIn() {
+  async function handleLogIn() {
     setIsLoading(true);
     try {
       const user = await signInWithEmailAndPassword(auth, email, password).then(() => setIsLoading(false));
-      console.log(user);
     } catch (error: unknown) {
       setIsLoading(false);
       if (error instanceof Error) {
@@ -62,8 +51,9 @@ function LogIn() {
   // ON SUBMIT
   function onSubmit(e: FormEvent) {
     e.preventDefault();
-    logIn();
+    handleLogIn();
   }
+  console.log(errorMessage.includes("user-not-found"));
 
   return (
     <Page title="Log In">
@@ -71,7 +61,7 @@ function LogIn() {
         <form onSubmit={onSubmit}>
           <div className="input_container">
             <input type="text" name="email" id="email" placeholder="EMAIL" value={email} required onChange={(e) => setEmail(e.target.value)} />
-            {errorMessage.includes("user-not-found") ? <ErrorMessage message={"INCORRECT EMAIL"} /> : ""}
+            <ErrorMessage message={"INCORRECT EMAIL"} loginError={errorMessage.includes("user-not-found")} />
           </div>
           <div className="input_container">
             <input
@@ -84,7 +74,7 @@ function LogIn() {
               required
               onChange={(e) => setPassword(e.target.value)}
             />
-            {errorMessage.includes("wrong-password") ? <ErrorMessage message={"INCORRECT PASSWORD"} /> : ""}
+            <ErrorMessage message={"INCORRECT PASSWORD"} loginError={errorMessage.includes("wrong-password")} />
           </div>
           <GoButton type="submit" text="LOG IN" backgroundColor="green" />
         </form>

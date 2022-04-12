@@ -1,21 +1,23 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import RequestContext from "../../context/RequestContext";
 import ErrorMessage from "../ErrorMessage";
 
 function TattooStyle() {
   // CONTEXT
-  let { tattooStyle, setTattooStyle, state, dispatch } = useContext(RequestContext);
-
-  useEffect(() => {
-    if (tattooStyle !== "select") dispatch({ type: "tattooStyle", value: false });
-  }, [tattooStyle, dispatch]);
+  let { state, dispatch } = useContext(RequestContext);
 
   return (
     <>
       <span className="label">
         <label htmlFor="tattooStyle">Tattoo Style:</label>
       </span>
-      <select name="tattooStyle" id="tattooStyle" onChange={(e) => setTattooStyle(e.target.value)} value={tattooStyle} required>
+      <select
+        name="tattooStyle"
+        id="tattooStyle"
+        onChange={(e) => dispatch({ type: "tattooStyle", value: e.target.value })}
+        value={state.tattooStyle.value || "select"}
+        required
+      >
         <option value="select" disabled>
           --- Select Style ---
         </option>
@@ -24,7 +26,7 @@ function TattooStyle() {
         <option value="Full Color">Full Color</option>
         <option value="Lettering">Lettering</option>
       </select>
-      {state.tattooStyleError ? <ErrorMessage message={"PLEASE SELECT A TATTOO STYLE"} /> : ""}
+      <ErrorMessage message={"PLEASE SELECT A TATTOO STYLE"} name={"tattooStyle"} />
     </>
   );
 }

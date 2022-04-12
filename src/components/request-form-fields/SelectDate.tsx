@@ -3,9 +3,9 @@ import DatePicker from "react-datepicker";
 import RequestContext from "../../context/RequestContext";
 import ErrorMessage from "../ErrorMessage";
 
-function PlacementImage() {
+function SelectDate() {
   // CONTEXT
-  let { startDate, setStartDate, setAppointmentTime, state } = useContext(RequestContext);
+  let { state, dispatch } = useContext(RequestContext);
 
   // STATES
   const [maxAppointmentDate, setMaxAppointmentDate] = useState<Date>();
@@ -26,10 +26,10 @@ function PlacementImage() {
           name="datePicker"
           id="datePicker"
           placeholderText="Select Date"
-          selected={startDate}
+          selected={state.startDate.value}
           onChange={(date: Date) => {
-            setStartDate(date);
-            setAppointmentTime("");
+            dispatch({ type: "startDate", value: date });
+            dispatch({ type: "appointmentTime", value: "" });
           }}
           minDate={new Date()}
           maxDate={maxAppointmentDate}
@@ -40,10 +40,10 @@ function PlacementImage() {
           autoComplete="off"
           required
         />
-        {state.startDateError ? <ErrorMessage message={"Date Required"} /> : ""}
+        <ErrorMessage message={"Date Required"} name={"startDate"} />
       </div>
     </>
   );
 }
 
-export default PlacementImage;
+export default SelectDate;

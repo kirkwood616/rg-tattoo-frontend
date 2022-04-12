@@ -1,5 +1,6 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { Action } from "../models/Errors";
+import { RequestAction, RequestReducer } from "../models/RequestReducer";
 
 // FIRST & LAST NAME
 export function validateName(e: ChangeEvent<HTMLInputElement>, setState: Dispatch<SetStateAction<string>>, dispatch: Dispatch<Action>, type: string) {
@@ -10,6 +11,16 @@ export function validateName(e: ChangeEvent<HTMLInputElement>, setState: Dispatc
   }, 800);
   return () => clearTimeout(delay);
 }
+
+// export function validateNames(e: ChangeEvent<HTMLInputElement>, dispatch: Dispatch<RequestAction>) {
+//   dispatch({ type: "checkCount", field: e.target.name, value: 1 });
+//   dispatch({ type: "stringInput", field: e.target.name, value: e.target.value });
+//   const delay = setTimeout(() => {
+//     if (e.target.value === "") dispatch({ type: "error", field: e.target.name, value: true });
+//     if (e.target.value !== "") dispatch({ type: "error", field: e.target.name, value: false });
+//   }, 1000);
+//   return () => clearTimeout(delay);
+// }
 
 // AGE
 export function validateAge(e: ChangeEvent<HTMLInputElement>, setState: Dispatch<SetStateAction<number>>, dispatch: Dispatch<Action>) {
@@ -22,19 +33,19 @@ export function validateAge(e: ChangeEvent<HTMLInputElement>, setState: Dispatch
 }
 
 // EMAIL
-export function validateEmail(email: string, dispatch: Dispatch<Action>): boolean {
+export function validateEmail(email: string, state: RequestReducer) {
   const regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
   if (!email || regexp.test(email) === false) {
-    dispatch({ type: "email", value: true });
-    return false;
+    state.email.hasErrors = true;
+    return email;
   } else {
-    dispatch({ type: "email", value: false });
-    return true;
+    state.email.hasErrors = false;
+    return email;
   }
 }
 
 // PHONE # FORMATTER
-export function formatPhoneNumber(value: string) {
+export function formatPhoneNumber(value: string): string {
   if (!value) return value;
   const phoneNumberInput = value.replace(/[^\d]/g, "");
   const phoneNumberInputLength = phoneNumberInput.length;
@@ -44,9 +55,12 @@ export function formatPhoneNumber(value: string) {
 }
 
 // PHONE #
-export function validatePhone(e: ChangeEvent<HTMLInputElement>, setState: Dispatch<SetStateAction<string>>) {
-  const formattedPhoneNumber = formatPhoneNumber(e.target.value);
-  setState(formattedPhoneNumber);
+export function validatePhone(value: string, state: RequestReducer): string {
+  const formattedPhoneNumber = formatPhoneNumber(value);
+  if (state.phoneNumber.value.length < 14) state.phoneNumber.hasErrors = true;
+  if (state.phoneNumber.value.length === 14) state.phoneNumber.hasErrors = false;
+
+  return formattedPhoneNumber;
 }
 
 // TATTOO PLACEMENT

@@ -1,6 +1,8 @@
-import { ReactNode, useReducer, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import RequestContext from "./RequestContext";
-import { errorReducer, initialState } from "../context/ErrorReducer";
+import { reducer, initialState } from "./Reducer";
+import { useImmerReducer } from "use-immer";
+import { RequestReducer } from "../models/RequestReducer";
 
 interface Props {
   children: ReactNode;
@@ -8,48 +10,29 @@ interface Props {
 
 export default function RequestContextProvider({ children }: Props) {
   // STATES FOR FORM
-  const [startDate, setStartDate] = useState<Date | undefined>();
   const [availableAppointmentTimes, setAvailableAppointmentsTimes] = useState<string[]>([]);
-  const [appointmentTime, setAppointmentTime] = useState<string>("");
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
-  const [age, setAge] = useState<number>(18);
-  const [email, setEmail] = useState<string>("");
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
-  const [tattooStyle, setTattooStyle] = useState<string>("select");
-  const [tattooPlacement, setTattooPlacement] = useState<string>("");
-  const [tattooDescription, setTattooDescription] = useState<string>("");
-  const [ofAgeConfirm, setOfAgeConfirm] = useState<boolean>(false);
 
-  // ERROR REDUCER
-  const [state, dispatch] = useReducer(errorReducer, initialState);
+  // REDUCER
+  const [state, dispatch] = useImmerReducer(reducer, initialState);
+
+  // useEffect(() => {
+  //   if (Object.keys(state.hasErrors))
+  // })
+  // let stateArray = [{ ...state }];
+  // stateArray.map((field) => {
+  //   console.log(field.hasErrors);
+  // });
+  // console.log(state);
+
+  // for (const [key, value] of Object.entries(state)) {
+  //   console.log(`${key}: ${value}`);
+  // }
+
   return (
     <RequestContext.Provider
       value={{
-        startDate,
-        setStartDate,
         availableAppointmentTimes,
         setAvailableAppointmentsTimes,
-        appointmentTime,
-        setAppointmentTime,
-        firstName,
-        setFirstName,
-        lastName,
-        setLastName,
-        age,
-        setAge,
-        email,
-        setEmail,
-        phoneNumber,
-        setPhoneNumber,
-        tattooStyle,
-        setTattooStyle,
-        tattooPlacement,
-        setTattooPlacement,
-        tattooDescription,
-        setTattooDescription,
-        ofAgeConfirm,
-        setOfAgeConfirm,
         state,
         dispatch,
       }}
