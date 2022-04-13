@@ -1,7 +1,6 @@
 .ErrorMessage {
   -webkit-animation: fadeIn 1s;
   animation: fadeIn 1s;
-  /* background-color: black; */
   box-shadow: inset 0px 0px 5px 1px red;
   border: 2px solid red;
   border-radius: 0.5rem;
@@ -15,7 +14,7 @@
   text-align: center;
   transform: translateY(1);
   transform-origin: left top;
-  transition: all 0.75s ease-in-out;
+  transition: all 0.65s ease-in-out;
   width: 75%;
 }
 
@@ -39,6 +38,7 @@
 .hidden {
   -webkit-animation: fadeIn 1s;
   animation: fadeIn 1s;
+  font-size: 0;
   height: 0;
   opacity: 0;
   text-align: center;
