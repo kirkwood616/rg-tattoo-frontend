@@ -40,8 +40,8 @@ function SelectDate() {
           autoComplete="off"
           required
         />
-        <ErrorMessage message={"Date Required"} name={"startDate"} />
       </div>
+      <ErrorMessage message={"Date Required"} name={"startDate"} />
     </>
   );
 }
