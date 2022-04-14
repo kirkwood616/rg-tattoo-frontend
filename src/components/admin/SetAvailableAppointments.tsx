@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./SetAvailableAppointments.css";
 import AdminPage from "./AdminPage";
 import SaveChangesModal from "./modals/SaveChangesModal";
-import { formatTime } from "../../functions/Formatting";
+import { formatTime } from "../../utils/Formatting";
 import SelectTimesModal from "./modals/SelectTimesModal";
 import { timePickerValues } from "../../admin/AdminSettings";
 

@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { formatTime } from "../../../functions/Formatting";
+import { formatTime } from "../../../utils/Formatting";
 import ModalWindow from "../../modals/ModalWindow";
 import "./SelectTimesModal.css";
 

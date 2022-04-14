@@ -1,4 +1,4 @@
-import { formatPhoneNumber, validateEmail, validatePhone } from "../functions/Validation";
+import { formatPhoneNumber, validateEmail, validatePhone } from "../utils/Validation";
 import { RequestReducer, RequestAction } from "../models/RequestReducer";
 
 export const initialState: RequestReducer = {
