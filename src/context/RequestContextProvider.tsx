@@ -2,31 +2,33 @@ import { ReactNode, useEffect, useState } from "react";
 import RequestContext from "./RequestContext";
 import { reducer, initialState } from "./Reducer";
 import { useImmerReducer } from "use-immer";
-import { RequestReducer } from "../models/RequestReducer";
+import { FieldValues } from "../models/RequestReducer";
 
 interface Props {
   children: ReactNode;
 }
 
+type FieldValueArray = [FieldValues];
+
 export default function RequestContextProvider({ children }: Props) {
-  // STATES FOR FORM
+  // STATE
   const [availableAppointmentTimes, setAvailableAppointmentsTimes] = useState<string[]>([]);
 
   // REDUCER
   const [state, dispatch] = useImmerReducer(reducer, initialState);
 
-  // useEffect(() => {
-  //   if (Object.keys(state.hasErrors))
-  // })
-  // let stateArray = [{ ...state }];
-  // stateArray.map((field) => {
-  //   console.log(field.hasErrors);
-  // });
-  // console.log(state);
-
-  // for (const [key, value] of Object.entries(state)) {
-  //   console.log(`${key}: ${value}`);
-  // }
+  // CHECK FOR ERRORS & ASSIGN MAIN hasErrors
+  useEffect(() => {
+    let valueArray: FieldValueArray = Object.values(state) as FieldValueArray;
+    let errorsExist: FieldValues | undefined = valueArray.find((item) => {
+      return item.hasErrors;
+    });
+    if (errorsExist) {
+      dispatch({ type: "hasErrors", value: true });
+    } else {
+      dispatch({ type: "hasErrors", value: false });
+    }
+  }, [dispatch, state]);
 
   return (
     <RequestContext.Provider

@@ -10,7 +10,7 @@ import GoButton from "../buttons/GoButton";
 import RejectModal from "./modals/RejectModal";
 import ApproveModal from "./modals/ApproveModal";
 import "./AppointmentRequestById.css";
-import { formatTime } from "../../functions/Formatting";
+import { formatTime } from "../../utils/Formatting";
 
 function AppointmentRequestById() {
   // CONTEXT
