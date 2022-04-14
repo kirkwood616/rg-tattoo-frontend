@@ -1,4 +1,4 @@
-import { formatPhoneNumber, validateEmail, validatePhone } from "../functions/Validation";
+import { formatPhoneNumber, validateEmail, validatePhone } from "../utils/Validation";
 import { RequestReducer, RequestAction } from "../models/RequestReducer";
 
 export const initialState: RequestReducer = {
@@ -70,10 +70,18 @@ export const initialState: RequestReducer = {
   hasErrors: false,
 };
 
+// ADD NEW CASES TO MODEL
 export function reducer(state: RequestReducer, action: RequestAction) {
   switch (action.type) {
     case "reset":
       return initialState;
+    case "hasErrors":
+      if (action.value) {
+        state.hasErrors = true;
+      } else {
+        state.hasErrors = false;
+      }
+      return;
     case "startDate":
       state.startDate.value = action.value;
       state.startDate.checkCount++;

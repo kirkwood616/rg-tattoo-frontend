@@ -1,6 +1,5 @@
 import { createContext, Dispatch, SetStateAction } from "react";
-import { RequestAction } from "../models/RequestReducer";
-import { RequestReducer } from "../models/RequestReducer";
+import { RequestAction, RequestReducer } from "../models/RequestReducer";
 import { initialState } from "./Reducer";
 
 interface RequestContextModel {

@@ -31,8 +31,8 @@ function ErrorMessage({ loginError, name, message }: Props) {
 
   // FUNCTIONS
   function getError(state: RequestReducer, key: keyof RequestReducer): boolean {
-    const keyValues: FieldValues = state[key] as FieldValues;
-    return keyValues.hasErrors;
+    const fieldValues: FieldValues = state[key] as FieldValues;
+    return fieldValues.hasErrors;
   }
 
   return <>{name ? <div className={fieldClassName}>{getError(state, name!) ? message : ""}</div> : <div className={loginClassName}>{loginError ? message : ""}</div>}</>;

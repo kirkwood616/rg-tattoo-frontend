@@ -1,17 +1,11 @@
-export interface ReducerModel {
-  [key: string]:
-    | {
-        value: Date | undefined | string | boolean | number | File | null;
-        hasErrors: boolean;
-        checkCount: number;
-      }
-    | boolean;
-}
-
 export interface FieldValues {
   value: Date | undefined | string | boolean | number | File | null;
   hasErrors: boolean;
   checkCount: number;
+}
+
+export interface ReducerModel {
+  [key: string]: FieldValues | boolean;
 }
 
 export interface RequestReducer extends ReducerModel {
@@ -83,8 +77,10 @@ export interface RequestReducer extends ReducerModel {
   hasErrors: boolean;
 }
 
+// ADD NEW CASES TO UNION
 export type RequestAction =
   | { type: "reset"; value: RequestReducer }
+  | { type: "hasErrors"; value: boolean }
   | { type: "startDate"; value: Date | undefined }
   | { type: "appointmentTime"; value: string }
   | { type: "firstName"; value: string }
