@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useContext } from "react";
 import RequestContext from "../../context/RequestContext";
-import { formatTime } from "../../functions/Formatting";
+import { formatTime } from "../../utils/Formatting";
 import ModalWindow from "./ModalWindow";
 
 interface Props {
