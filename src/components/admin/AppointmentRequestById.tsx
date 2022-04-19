@@ -76,7 +76,9 @@ function AppointmentRequestById() {
           <div className="request-table-title">Tattoo Placement</div>
           <div className="request-table-info">{request?.tattooPlacement}</div>
           <div className="request-table-title">Tattoo Description</div>
-          <div className="request-table-info">{request?.tattooDescription}</div>
+          <div className="request-table-info" style={{ whiteSpace: "pre-line" }}>
+            {request?.tattooDescription}
+          </div>
           <div className="request-table-title">Reference Photo</div>
           <div className="request-table-info">
             {request?.referencePhotoPath.length ? (
