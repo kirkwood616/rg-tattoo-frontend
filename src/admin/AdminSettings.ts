@@ -17,3 +17,6 @@ function adminTimePickerValues(startTime: string, endTime: string, interval: num
 }
 
 export const timePickerValues: string[] | void = adminTimePickerValues("12:00 PM", "8:00 PM", 15);
+
+// TATTOO STYLES
+export const tattooStyles = ["Linework", "Black & White", "Full Color", "Lettering"];
