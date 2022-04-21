@@ -1,32 +1,31 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import RequestContext from "../../context/RequestContext";
 import ErrorMessage from "../ErrorMessage";
+import SelectTattooStyle from "../modals/SelectTattooStyle";
 
 function TattooStyle() {
   // CONTEXT
-  let { state, dispatch } = useContext(RequestContext);
+  let { state } = useContext(RequestContext);
+
+  // STATE
+  const [isStyleActive, setIsStyleActive] = useState<boolean>(false);
 
   return (
     <>
       <span className="label">
         <label htmlFor="tattooStyle">Tattoo Style:</label>
       </span>
-      <select
-        name="tattooStyle"
-        id="tattooStyle"
-        onChange={(e) => dispatch({ type: "tattooStyle", value: e.target.value })}
-        value={state.tattooStyle.value || "select"}
-        required
-      >
-        <option value="select" disabled>
-          --- Select Style ---
-        </option>
-        <option value="Linework">Linework</option>
-        <option value="Black & White">Black & White</option>
-        <option value="Full Color">Full Color</option>
-        <option value="Lettering">Lettering</option>
-      </select>
+      <input
+        type="text"
+        name="style-picker"
+        id="style-picker"
+        placeholder="--- Select Style ---"
+        value={state.tattooStyle.value}
+        onClick={() => setIsStyleActive(true)}
+        readOnly
+      />
       <ErrorMessage message={"PLEASE SELECT A TATTOO STYLE"} name={"tattooStyle"} />
+      {isStyleActive ? <SelectTattooStyle isStyleActive={isStyleActive} setIsStyleActive={setIsStyleActive} /> : ""}
     </>
   );
 }
