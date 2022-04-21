@@ -94,6 +94,11 @@ export function reducer(state: RequestReducer, action: RequestAction) {
     case "appointmentTime":
       state.appointmentTime.value = action.value;
       state.appointmentTime.checkCount++;
+      if (state.appointmentTime.value.length) {
+        state.appointmentTime.hasErrors = false;
+      } else {
+        state.appointmentTime.hasErrors = true;
+      }
       return;
     case "firstName":
       state.firstName.value = action.value;
@@ -174,6 +179,19 @@ export function reducer(state: RequestReducer, action: RequestAction) {
     case "ageConfirm":
       state.ageConfirm.value = action.value;
       state.ageConfirm.checkCount++;
+      return;
+    case "submitErrorCheck":
+      if (!state.startDate.value) state.startDate.hasErrors = true;
+      if (!state.appointmentTime.value.length) state.appointmentTime.hasErrors = true;
+      if (!state.firstName.value.length) state.firstName.hasErrors = true;
+      if (!state.lastName.value.length) state.lastName.hasErrors = true;
+      if (state.age.value < 18) state.age.hasErrors = true;
+      if (!state.email.value) state.email.hasErrors = true;
+      if (!state.phoneNumber.value.length) state.phoneNumber.hasErrors = true;
+      if (!state.tattooStyle.value.length) state.tattooStyle.hasErrors = true;
+      if (!state.tattooPlacement.value.length) state.tattooPlacement.hasErrors = true;
+      if (state.referencePhoto.value === null) state.referencePhoto.hasErrors = true;
+      if (!state.tattooDescription.value.length) state.tattooDescription.hasErrors = true;
       return;
     default:
       return;
