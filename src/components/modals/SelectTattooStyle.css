@@ -1,0 +1,36 @@
+.style-select_container {
+  background-color: var(--black);
+  border-radius: 0.5rem;
+  box-shadow: 0 5px 7px black;
+  color: black;
+  font-weight: bold;
+  max-height: 60%;
+  margin: auto;
+  overflow-y: scroll;
+  position: relative;
+  text-align: center;
+  width: 95%;
+}
+
+.style-option {
+  border: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0;
+  padding: 0.75rem 0;
+  width: 100%;
+}
+
+.style-option:nth-child(even) {
+  background-color: white;
+}
+
+.style-option:nth-child(odd) {
+  background-color: var(--light-gray-1);
+}
+
+.style-option:nth-child(odd):hover,
+.style-option:nth-child(even):hover {
+  background-color: #007bff;
+  color: white;
+}
