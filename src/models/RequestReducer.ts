@@ -93,4 +93,5 @@ export type RequestAction =
   | { type: "referencePhoto"; value: File | null }
   | { type: "placementPhoto"; value: File | null }
   | { type: "tattooDescription"; value: string }
-  | { type: "ageConfirm"; value: boolean };
+  | { type: "ageConfirm"; value: boolean }
+  | { type: "submitErrorCheck" };
