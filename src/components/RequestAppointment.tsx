@@ -1,4 +1,4 @@
-import { FormEvent, useContext, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect } from "react";
 import AppContext from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
@@ -30,13 +30,10 @@ import RequestContext from "../context/RequestContext";
 function RequestAppointment() {
   // CONTEXT
   let { availableAppointments, isLoading, setIsLoading } = useContext(AppContext);
-  let { setAvailableAppointmentsTimes, state } = useContext(RequestContext);
+  let { setAvailableAppointmentsTimes, state, dispatch } = useContext(RequestContext);
 
   // NAVIGATE
   let navigate = useNavigate();
-
-  // STATES FOR ERRORS
-  const [submitCount, setSubmitCount] = useState<number>(0);
 
   // CHECK FOR DATE IN DATABASE
   useEffect(() => {
@@ -64,42 +61,40 @@ function RequestAppointment() {
     uploadBytesResumable(storageRef, state.placementPhoto.value);
   }
 
-  ///// => !! FIX THIS NEXT !! <= \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   // HANDLE SUBMIT
   function handleSubmit(e: FormEvent): void {
     e.preventDefault();
-    if (Object.values(state).includes(true)) {
-      return;
-    } else {
-      let newRequest: AppointmentRequest = {
-        requestSubmittedDate: new Date(),
-        requestDate: format(state.startDate.value!, "MM-dd-yyyy"),
-        requestTime: state.appointmentTime.value,
-        firstName: state.firstName.value,
-        lastName: state.lastName.value,
-        age: state.age.value,
-        email: state.email.value.toLowerCase(),
-        phoneNumber: state.phoneNumber.value,
-        tattooStyle: state.tattooStyle.value,
-        tattooPlacement: state.tattooPlacement.value,
-        referencePhotoPath: state.referencePhoto.value ? `${state.firstName!.value}-${state.lastName!.value}-ref-${state.referencePhoto.value.name}` : "",
-        placementPhotoPath: state.placementPhoto.value ? `${state.firstName!.value}-${state.lastName!.value}-place-${state.placementPhoto.value.name}` : "",
-        tattooDescription: state.tattooDescription.value,
-        isRequestApproved: false,
-        isRequestDenied: false,
-      };
-      setIsLoading(true);
-      postAppointmentRequest(newRequest)
-        .then(() => {
-          handleReferencePhotoUpload();
-          handlePlacementPhotoUpload();
-        })
-        .catch((error) => console.error(error))
-        .finally(() => {
-          setIsLoading(false);
-          navigate("/request-submitted");
-        });
-    }
+    dispatch({ type: "submitErrorCheck" });
+    if (state.hasErrors) return;
+    console.log("SUBMITTED");
+    let newRequest: AppointmentRequest = {
+      requestSubmittedDate: new Date(),
+      requestDate: format(state.startDate.value!, "MM-dd-yyyy"),
+      requestTime: state.appointmentTime.value,
+      firstName: state.firstName.value,
+      lastName: state.lastName.value,
+      age: state.age.value,
+      email: state.email.value.toLowerCase(),
+      phoneNumber: state.phoneNumber.value,
+      tattooStyle: state.tattooStyle.value,
+      tattooPlacement: state.tattooPlacement.value,
+      referencePhotoPath: state.referencePhoto.value ? `${state.firstName!.value}-${state.lastName!.value}-ref-${state.referencePhoto.value.name}` : "",
+      placementPhotoPath: state.placementPhoto.value ? `${state.firstName!.value}-${state.lastName!.value}-place-${state.placementPhoto.value.name}` : "",
+      tattooDescription: state.tattooDescription.value,
+      isRequestApproved: false,
+      isRequestDenied: false,
+    };
+    setIsLoading(true);
+    postAppointmentRequest(newRequest)
+      .then(() => {
+        handleReferencePhotoUpload();
+        handlePlacementPhotoUpload();
+      })
+      .catch((error) => console.error(error))
+      .finally(() => {
+        setIsLoading(false);
+        navigate("/request-submitted");
+      });
   }
 
   // RENDER
@@ -121,7 +116,7 @@ function RequestAppointment() {
           <PlacementImage />
           <TattooDescription />
           <AgeConfirm />
-          <GoButton type="submit" text="Submit Request" backgroundColor="green" onClick={() => setSubmitCount(submitCount + 1)} />
+          <GoButton type="submit" text="Submit Request" backgroundColor="green" />
         </form>
       </div>
       {isLoading ? <LoadingDotsIcon /> : ""}
