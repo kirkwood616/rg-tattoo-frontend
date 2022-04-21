@@ -1,0 +1,12 @@
+.remove-file-button {
+  background-color: red;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 0px 5px var(--black);
+  color: white;
+  display: block;
+  font-weight: bold;
+  margin: 0.75rem auto;
+  padding: 0.5rem;
+  width: 75%;
+}
