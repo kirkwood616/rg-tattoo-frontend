@@ -1,8 +1,8 @@
-.remove-button {
-  background-color: red;
-  border: none;
+.close-svg {
+  background-color: black;
   border-radius: 50%;
-  font-weight: bold;
-  height: 1.75rem;
-  width: 1.75rem;
+  box-shadow: 0 0 0 2px black;
+  cursor: pointer;
+  fill: red;
+  height: 32px;
 }
