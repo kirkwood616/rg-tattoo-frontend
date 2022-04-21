@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import RequestContext from "../../context/RequestContext";
+import RemoveFileButton from "../buttons/RemoveFileButton";
 import ErrorMessage from "../ErrorMessage";
 
 function ReferenceImage() {
@@ -33,13 +34,7 @@ function ReferenceImage() {
       <div className="photo-upload">
         <input type="file" name="referencePhoto" id="referencePhoto" accept="image/*" onChange={handleReferencePhotoChange} key={referenceRandom} />
 
-        {state.referencePhoto.value ? (
-          <button type="button" onClick={resetReference} style={{ display: "block", margin: "auto" }}>
-            REMOVE FILE
-          </button>
-        ) : (
-          ""
-        )}
+        {state.referencePhoto.value ? <RemoveFileButton onClick={resetReference} /> : ""}
       </div>
       <ErrorMessage message={"REFERENCE PHOTO REQUIRED"} name={"referencePhoto"} />
     </>

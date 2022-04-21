@@ -18,19 +18,21 @@ function AppointmentTimes() {
           <label htmlFor="aptTimes">Available Times:</label>
         </span>
         {availableAppointmentTimes.length ? (
-          <input
-            type="text"
-            name="time-picker"
-            id="time-picker"
-            placeholder="--- Select Time ---"
-            value={formatTime(state.appointmentTime.value)}
-            onClick={() => setIsTimesActive(true)}
-            readOnly
-          ></input>
+          <>
+            <input
+              type="text"
+              name="time-picker"
+              id="time-picker"
+              placeholder="--- Select Time ---"
+              value={formatTime(state.appointmentTime.value)}
+              onClick={() => setIsTimesActive(true)}
+              readOnly
+            ></input>
+            <ErrorMessage message={"SELECT A TIME"} name={"appointmentTime"} />
+          </>
         ) : (
           <div className="no-available-appointments">No Available Appointments</div>
         )}
-        <ErrorMessage message={"SELECT A TIME"} name={"appointmentTime"} />
         {isTimesActive ? <SelectAppointmentTimes isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} /> : ""}
       </div>
     </>

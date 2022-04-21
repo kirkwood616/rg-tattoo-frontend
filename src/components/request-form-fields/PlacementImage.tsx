@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import RequestContext from "../../context/RequestContext";
+import RemoveFileButton from "../buttons/RemoveFileButton";
 
 function PlacementImage() {
   // CONTEXT
@@ -32,13 +33,7 @@ function PlacementImage() {
       <div className="photo-upload">
         <input type="file" name="placementPhoto" id="placementPhoto" accept="image/*" onChange={handlePlacementPhotoChange} key={placementRandom} />
 
-        {state.placementPhoto.value ? (
-          <button type="button" onClick={resetPlacement} style={{ display: "block", margin: "auto" }}>
-            REMOVE FILE
-          </button>
-        ) : (
-          ""
-        )}
+        {state.placementPhoto.value ? <RemoveFileButton onClick={resetPlacement} /> : ""}
       </div>
     </>
   );
