@@ -41,7 +41,7 @@ function SelectDate() {
           required
         />
       </div>
-      <ErrorMessage message={"Date Required"} name={"startDate"} />
+      <ErrorMessage message={"DATE REQUIRED"} name={"startDate"} />
     </>
   );
 }
