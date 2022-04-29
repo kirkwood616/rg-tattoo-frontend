@@ -10,7 +10,7 @@ export interface RequestErrors {
   tattooPlacementError: boolean;
   referenceImageError: boolean;
   tattooDescriptionError: boolean;
-  ageConfirmError: boolean;
+  requestConfirmError: boolean;
 }
 
 export interface Action {

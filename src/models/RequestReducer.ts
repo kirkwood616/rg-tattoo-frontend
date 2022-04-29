@@ -69,7 +69,7 @@ export interface RequestReducer extends ReducerModel {
     hasErrors: boolean;
     checkCount: number;
   };
-  ageConfirm: {
+  requestConfirm: {
     value: boolean;
     hasErrors: boolean;
     checkCount: number;
@@ -93,5 +93,5 @@ export type RequestAction =
   | { type: "referencePhoto"; value: File | null }
   | { type: "placementPhoto"; value: File | null }
   | { type: "tattooDescription"; value: string }
-  | { type: "ageConfirm"; value: boolean }
+  | { type: "requestConfirm"; value: boolean }
   | { type: "submitErrorCheck" };

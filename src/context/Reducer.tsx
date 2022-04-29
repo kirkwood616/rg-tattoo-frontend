@@ -62,7 +62,7 @@ export const initialState: RequestReducer = {
     hasErrors: false,
     checkCount: 0,
   },
-  ageConfirm: {
+  requestConfirm: {
     value: false,
     hasErrors: false,
     checkCount: 0,
@@ -176,9 +176,14 @@ export function reducer(state: RequestReducer, action: RequestAction) {
         state.tattooDescription.hasErrors = false;
       }
       return;
-    case "ageConfirm":
-      state.ageConfirm.value = action.value;
-      state.ageConfirm.checkCount++;
+    case "requestConfirm":
+      state.requestConfirm.value = action.value;
+      state.requestConfirm.checkCount++;
+      if (!state.requestConfirm.value) {
+        state.requestConfirm.hasErrors = true;
+      } else {
+        state.requestConfirm.hasErrors = false;
+      }
       return;
     case "submitErrorCheck":
       if (!state.startDate.value) state.startDate.hasErrors = true;
@@ -192,6 +197,7 @@ export function reducer(state: RequestReducer, action: RequestAction) {
       if (!state.tattooPlacement.value.length) state.tattooPlacement.hasErrors = true;
       if (state.referencePhoto.value === null) state.referencePhoto.hasErrors = true;
       if (!state.tattooDescription.value.length) state.tattooDescription.hasErrors = true;
+      if (!state.requestConfirm.value) state.requestConfirm.hasErrors = true;
       return;
     default:
       return;

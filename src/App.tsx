@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Main from "./components/Main";
-import RequestAppointment from "./components/RequestAppointment";
 import RequestSubmitted from "./components/RequestSubmitted";
 import SetAvailableAppointments from "./components/admin/SetAvailableAppointments";
 import LogIn from "./components/admin/LogIn";

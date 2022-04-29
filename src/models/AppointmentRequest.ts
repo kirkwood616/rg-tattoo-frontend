@@ -13,8 +13,9 @@ interface AppointmentRequest {
   referencePhotoPath: string;
   placementPhotoPath: string;
   tattooDescription: string;
-  isRequestApproved: Boolean;
-  isRequestDenied: Boolean;
+  requestConfirm: boolean;
+  isRequestApproved: boolean;
+  isRequestDenied: boolean;
   deniedMessage?: string;
 }
 

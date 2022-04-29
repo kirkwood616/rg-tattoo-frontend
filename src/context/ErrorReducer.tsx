@@ -12,7 +12,7 @@ export const initialState: RequestErrors = {
   tattooPlacementError: false,
   referenceImageError: false,
   tattooDescriptionError: false,
-  ageConfirmError: false,
+  requestConfirmError: false,
 };
 
 export function errorReducer(state: RequestErrors, action: Action) {
@@ -39,8 +39,8 @@ export function errorReducer(state: RequestErrors, action: Action) {
       return { ...state, referenceImageError: action.value };
     case "tattooDescription":
       return { ...state, tattooDescriptionError: action.value };
-    case "ageConfirm":
-      return { ...state, ageConfirmError: action.value };
+    case "requestConfirm":
+      return { ...state, requestConfirmError: action.value };
     default:
       throw new Error();
   }
