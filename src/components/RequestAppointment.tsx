@@ -1,10 +1,11 @@
 import { FormEvent, useContext, useEffect } from "react";
-import AppContext from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { storage } from "../firebaseConfig";
 import { ref, uploadBytesResumable } from "firebase/storage";
 import { postAppointmentRequest } from "../services/ApiService";
+import AppContext from "../context/AppContext";
+import RequestContext from "../context/RequestContext";
 import AppointmentRequest from "../models/AppointmentRequest";
 import AvailableAppointments from "../models/AvailableAppointments";
 import Page from "./Page";
@@ -20,12 +21,11 @@ import TattooPlacement from "./request-form-fields/TattooPlacement";
 import ReferenceImage from "./request-form-fields/ReferenceImage";
 import PlacementImage from "./request-form-fields/PlacementImage";
 import TattooDescription from "./request-form-fields/TattooDescription";
-import AgeConfirm from "./request-form-fields/AgeConfirm";
+import RequestConfirm from "./request-form-fields/RequestConfirm";
 import GoButton from "./buttons/GoButton";
 import LoadingDotsIcon from "./loading/LoadingDotsIcon";
 import "react-datepicker/dist/react-datepicker.css";
 import "./RequestAppointment.css";
-import RequestContext from "../context/RequestContext";
 
 function RequestAppointment() {
   // CONTEXT
@@ -38,9 +38,7 @@ function RequestAppointment() {
   // CHECK FOR DATE IN DATABASE
   useEffect(() => {
     if (!state.startDate.value) return;
-
     let dateInDatabase: AvailableAppointments | undefined = availableAppointments.find((date) => date.date === format(state.startDate.value!, "MM-dd-yyyy"));
-
     if (dateInDatabase) {
       setAvailableAppointmentsTimes(dateInDatabase.availableTimes);
     } else {
@@ -64,7 +62,7 @@ function RequestAppointment() {
   // HANDLE SUBMIT
   function handleSubmit(e: FormEvent): void {
     e.preventDefault();
-    dispatch({ type: "submitErrorCheck" });
+    dispatch({ type: "submitErrorCheck" }); // NOT CATCHING ERRORS & SUBMITTING
     if (state.hasErrors) return;
     console.log("SUBMITTED");
     let newRequest: AppointmentRequest = {
@@ -81,6 +79,7 @@ function RequestAppointment() {
       referencePhotoPath: state.referencePhoto.value ? `${state.firstName!.value}-${state.lastName!.value}-ref-${state.referencePhoto.value.name}` : "",
       placementPhotoPath: state.placementPhoto.value ? `${state.firstName!.value}-${state.lastName!.value}-place-${state.placementPhoto.value.name}` : "",
       tattooDescription: state.tattooDescription.value,
+      requestConfirm: state.requestConfirm.value,
       isRequestApproved: false,
       isRequestDenied: false,
     };
@@ -96,6 +95,7 @@ function RequestAppointment() {
         navigate("/request-submitted");
       });
   }
+  console.log(state);
 
   // RENDER
   return (
@@ -115,7 +115,7 @@ function RequestAppointment() {
           <ReferenceImage />
           <PlacementImage />
           <TattooDescription />
-          <AgeConfirm />
+          <RequestConfirm />
           <GoButton type="submit" text="Submit Request" backgroundColor="green" />
         </form>
       </div>

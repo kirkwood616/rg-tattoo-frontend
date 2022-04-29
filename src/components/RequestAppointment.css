@@ -11,9 +11,9 @@
 }
 
 .RequestAppointment form {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .RequestAppointment .label {
@@ -65,8 +65,8 @@ select:focus,
 }
 
 .RequestAppointment input[type="checkbox"] {
-  height: 1rem;
-  width: 1rem;
+  height: 1.5rem;
+  width: 1.5rem;
 }
 
 .RequestAppointment .photo-upload {
@@ -98,10 +98,16 @@ select:focus,
   resize: vertical;
 }
 
-.RequestAppointment .of-age-confirm {
+.RequestAppointment .request-confirm {
+  display: flex;
   font-size: 0.75rem;
   margin: 0.5rem 0 0.5rem;
   text-align: center;
+}
+
+.RequestAppointment .request-confirm-text {
+  margin-left: 0.5rem;
+  text-align: left;
 }
 
 .RequestAppointment button[type="submit"] {
