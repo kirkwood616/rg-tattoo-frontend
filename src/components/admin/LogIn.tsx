@@ -53,7 +53,6 @@ function LogIn() {
     e.preventDefault();
     handleLogIn();
   }
-  console.log(errorMessage.includes("user-not-found"));
 
   return (
     <Page title="Log In">

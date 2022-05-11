@@ -62,7 +62,7 @@ function RequestAppointment() {
   // HANDLE SUBMIT
   function handleSubmit(e: FormEvent): void {
     e.preventDefault();
-    dispatch({ type: "submitErrorCheck" }); // NOT CATCHING ERRORS & SUBMITTING
+    dispatch({ type: "submitErrorCheck" });
     if (state.hasErrors) return;
     console.log("SUBMITTED");
     let newRequest: AppointmentRequest = {
@@ -95,7 +95,6 @@ function RequestAppointment() {
         navigate("/request-submitted");
       });
   }
-  console.log(state);
 
   // RENDER
   return (
