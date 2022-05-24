@@ -7,7 +7,7 @@ interface Props {
 function RemoveFileButton({ onClick }: Props) {
   return (
     <button type="button" onClick={onClick} className="remove-file-button">
-      REMOVE FILE
+      Remove File
     </button>
   );
 }
