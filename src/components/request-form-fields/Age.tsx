@@ -11,16 +11,7 @@ function Age() {
       <span className="label">
         <label htmlFor="age">Age:</label>
       </span>
-      <input
-        type="number"
-        name="age"
-        id="age"
-        min={18}
-        max={100}
-        onChange={(e) => dispatch({ type: "age", value: Number(e.target.value) })}
-        value={state.age.value || ""}
-        required
-      />
+      <input type="number" name="age" id="age" min={18} max={100} onChange={(e) => dispatch({ type: "age", value: Number(e.target.value) })} value={state.age.value || ""} />
       <ErrorMessage message={"MUST BE 18 OR OLDER"} name={"age"} />
     </>
   );

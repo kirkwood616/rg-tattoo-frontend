@@ -16,7 +16,6 @@ function RequestConfirm() {
             id="requestConfirmBox"
             className="request-confirm-box"
             onChange={() => dispatch({ type: "requestConfirm", value: !state.requestConfirm.value })}
-            required
           />
         </div>
         <div className="request-confirm-text">

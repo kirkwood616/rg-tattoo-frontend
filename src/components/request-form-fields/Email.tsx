@@ -11,7 +11,7 @@ function Email() {
       <span className="label">
         <label htmlFor="email">Email:</label>
       </span>
-      <input type="email" name="email" id="email" onChange={(e) => dispatch({ type: "email", value: e.target.value })} value={state.email.value || ""} required />
+      <input type="email" name="email" id="email" onChange={(e) => dispatch({ type: "email", value: e.target.value })} value={state.email.value || ""} />
       <ErrorMessage message={"E-MAIL IS NOT VALID"} name={"email"} />
     </>
   );

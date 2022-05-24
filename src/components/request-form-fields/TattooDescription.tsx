@@ -18,7 +18,6 @@ function TattooDescription() {
         onChange={(e) => dispatch({ type: "tattooDescription", value: e.target.value })}
         value={state.tattooDescription.value || ""}
         minLength={7}
-        required
       />
       <ErrorMessage message={"MUST BE AT LEAST 7 CHARACTERS"} name={"tattooDescription"} />
     </>

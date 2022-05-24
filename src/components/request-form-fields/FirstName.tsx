@@ -11,14 +11,7 @@ function FirstName() {
       <span className="label">
         <label htmlFor="firstName">First Name:</label>
       </span>
-      <input
-        type="text"
-        name="firstName"
-        id="firstName"
-        onChange={(e) => dispatch({ type: "firstName", value: e.target.value })}
-        value={state.firstName.value || ""}
-        required
-      />
+      <input type="text" name="firstName" id="firstName" onChange={(e) => dispatch({ type: "firstName", value: e.target.value })} value={state.firstName.value || ""} />
       <ErrorMessage message="FIRST NAME REQUIRED" name={"firstName"} />
     </>
   );

@@ -18,7 +18,6 @@ function TattooPlacement() {
         maxLength={30}
         onChange={(e) => dispatch({ type: "tattooPlacement", value: e.target.value })}
         value={state.tattooPlacement.value || ""}
-        required
       />
       <ErrorMessage message={"PLEASE ENTER A TATTOO PLACEMENT"} name={"tattooPlacement"} />
     </>
