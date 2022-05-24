@@ -118,7 +118,8 @@ function RequestAppointment() {
           <PhotoUpload name="placementPhoto" />
           <TattooDescription />
           <RequestConfirm />
-          <GoButton type="submit" text="Submit Request" backgroundColor="green" />
+          {state.appointmentTime.value && <GoButton type="submit" text="Submit Request" backgroundColor="green" isDisabled={false} />}
+          {!state.appointmentTime.value && <GoButton type="submit" text="Submit Request" backgroundColor="rgba(0,0,0,0.5)" isDisabled={true} />}
         </form>
       </div>
       {isLoading ? <LoadingDotsIcon /> : ""}
