@@ -61,12 +61,11 @@ function RequestAppointment() {
   // HANDLE SUBMIT
   function handleSubmit(e: FormEvent): void {
     e.preventDefault();
-    if (state.referencePhoto.value === null) {
-      dispatch({ type: "submitErrorCheck" });
+    dispatch({ type: "submitCount" });
+    if (state.hasErrors) {
+      console.log("ERRORS");
       return;
     } else {
-      dispatch({ type: "submitErrorCheck" });
-      if (state.hasErrors) return;
       console.log("SUBMITTED");
       let newRequest: AppointmentRequest = {
         requestSubmittedDate: new Date(),
@@ -119,7 +118,8 @@ function RequestAppointment() {
           <PhotoUpload name="placementPhoto" />
           <TattooDescription />
           <RequestConfirm />
-          <GoButton type="submit" text="Submit Request" backgroundColor="green" />
+          {state.appointmentTime.value && <GoButton type="submit" text="Submit Request" backgroundColor="green" isDisabled={false} />}
+          {!state.appointmentTime.value && <GoButton type="submit" text="Submit Request" backgroundColor="rgba(0,0,0,0.5)" isDisabled={true} />}
         </form>
       </div>
       {isLoading ? <LoadingDotsIcon /> : ""}

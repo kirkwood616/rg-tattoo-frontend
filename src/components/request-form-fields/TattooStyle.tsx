@@ -1,7 +1,9 @@
 import { useContext, useState } from "react";
 import RequestContext from "../../context/RequestContext";
+import { isTextDisabled } from "../../utils/DisabledField";
 import ErrorMessage from "../ErrorMessage";
 import SelectTattooStyle from "../modals/SelectTattooStyle";
+import FormErrorMessage from "./FormErrorMessage";
 
 function TattooStyle() {
   // CONTEXT
@@ -12,9 +14,10 @@ function TattooStyle() {
 
   return (
     <>
-      <span className="label">
-        <label htmlFor="tattooStyle">Tattoo Style:</label>
-      </span>
+      <label htmlFor="tattooStyle" className={state.appointmentTime.value ? "label" : "label disabled"}>
+        Tattoo Style:
+      </label>
+
       <input
         type="text"
         name="style-picker"
@@ -22,9 +25,10 @@ function TattooStyle() {
         placeholder="--- Select Style ---"
         value={state.tattooStyle.value}
         onClick={() => setIsStyleActive(true)}
+        disabled={isTextDisabled(state, "tattooStyle")}
         readOnly
       />
-      <ErrorMessage message={"PLEASE SELECT A TATTOO STYLE"} name={"tattooStyle"} />
+      <FormErrorMessage message={"PLEASE SELECT A TATTOO STYLE"} name={"tattooStyle"} />
       {isStyleActive ? <SelectTattooStyle isStyleActive={isStyleActive} setIsStyleActive={setIsStyleActive} /> : ""}
     </>
   );

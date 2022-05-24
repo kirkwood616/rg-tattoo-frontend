@@ -35,7 +35,7 @@ function ErrorMessage({ loginError, name, message }: Props) {
     return fieldValues.hasErrors;
   }
 
-  return <>{name ? <div className={fieldClassName}>{getError(state, name!) ? message : ""}</div> : <div className={loginClassName}>{loginError ? message : ""}</div>}</>;
+  return <>{name ? <div className={fieldClassName}>{getError(state, name!) && message}</div> : <div className={loginClassName}>{loginError ? message : ""}</div>}</>;
 }
 
 export default ErrorMessage;
