@@ -138,6 +138,13 @@ select:focus,
   padding: 1rem;
 }
 
+input[disabled],
+textarea[disabled] {
+  background-color: black;
+  color: gray;
+  opacity: 0.5;
+}
+
 @media only screen and (min-width: 600px) {
   .RequestAppointment form {
     width: 500px;

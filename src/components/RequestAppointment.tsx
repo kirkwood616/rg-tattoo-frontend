@@ -61,12 +61,11 @@ function RequestAppointment() {
   // HANDLE SUBMIT
   function handleSubmit(e: FormEvent): void {
     e.preventDefault();
-    if (state.referencePhoto.value === null) {
-      dispatch({ type: "submitErrorCheck" });
+    dispatch({ type: "submitCount" });
+    if (state.hasErrors) {
+      console.log("ERRORS");
       return;
     } else {
-      dispatch({ type: "submitErrorCheck" });
-      if (state.hasErrors) return;
       console.log("SUBMITTED");
       let newRequest: AppointmentRequest = {
         requestSubmittedDate: new Date(),
