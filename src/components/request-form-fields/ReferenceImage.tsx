@@ -32,8 +32,11 @@ function ReferenceImage() {
         <label htmlFor="referencePhoto">Reference Photo:</label>
       </span>
       <div className="photo-upload">
-        <input type="file" name="referencePhoto" id="referencePhoto" accept="image/*" onChange={handleReferencePhotoChange} key={referenceRandom} />
-
+        <label>
+          <input type="file" name="referencePhoto" id="referencePhoto" accept="image/*" onChange={handleReferencePhotoChange} key={referenceRandom} />
+          <div className="chooseFile">Choose File</div>
+        </label>
+        {state.referencePhoto.value && <div className="photoFileName">{state.referencePhoto.value?.name}</div>}
         {state.referencePhoto.value ? <RemoveFileButton onClick={resetReference} /> : ""}
       </div>
       <ErrorMessage message={"REFERENCE PHOTO REQUIRED"} name={"referencePhoto"} />
