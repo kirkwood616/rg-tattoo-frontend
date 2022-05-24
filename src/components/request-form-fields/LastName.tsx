@@ -11,7 +11,7 @@ function LastName() {
       <span className="label" style={{ marginBottom: ".5rem" }}>
         <label htmlFor="lastName">Last Name:</label>
       </span>
-      <input type="text" name="lastName" id="lastName" onChange={(e) => dispatch({ type: "lastName", value: e.target.value })} value={state.lastName.value || ""} required />
+      <input type="text" name="lastName" id="lastName" onChange={(e) => dispatch({ type: "lastName", value: e.target.value })} value={state.lastName.value || ""} />
       <ErrorMessage message={"LAST NAME REQUIRED"} name={"lastName"} />
     </>
   );
