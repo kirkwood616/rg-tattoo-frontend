@@ -6,6 +6,10 @@
   --light-gray-1: #b3b3b3;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 html {
   scroll-behavior: smooth;
 }
