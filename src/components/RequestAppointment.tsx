@@ -18,14 +18,13 @@ import Email from "./request-form-fields/Email";
 import PhoneNumber from "./request-form-fields/PhoneNumber";
 import TattooStyle from "./request-form-fields/TattooStyle";
 import TattooPlacement from "./request-form-fields/TattooPlacement";
-import ReferenceImage from "./request-form-fields/ReferenceImage";
-import PlacementImage from "./request-form-fields/PlacementImage";
 import TattooDescription from "./request-form-fields/TattooDescription";
 import RequestConfirm from "./request-form-fields/RequestConfirm";
 import GoButton from "./buttons/GoButton";
 import LoadingDotsIcon from "./loading/LoadingDotsIcon";
 import "react-datepicker/dist/react-datepicker.css";
 import "./RequestAppointment.css";
+import PhotoUpload from "./request-form-fields/PhotoUpload";
 
 function RequestAppointment() {
   // CONTEXT
@@ -62,38 +61,43 @@ function RequestAppointment() {
   // HANDLE SUBMIT
   function handleSubmit(e: FormEvent): void {
     e.preventDefault();
-    dispatch({ type: "submitErrorCheck" });
-    if (state.hasErrors) return;
-    console.log("SUBMITTED");
-    let newRequest: AppointmentRequest = {
-      requestSubmittedDate: new Date(),
-      requestDate: format(state.startDate.value!, "MM-dd-yyyy"),
-      requestTime: state.appointmentTime.value,
-      firstName: state.firstName.value,
-      lastName: state.lastName.value,
-      age: state.age.value,
-      email: state.email.value.toLowerCase(),
-      phoneNumber: state.phoneNumber.value,
-      tattooStyle: state.tattooStyle.value,
-      tattooPlacement: state.tattooPlacement.value,
-      referencePhotoPath: state.referencePhoto.value ? `${state.firstName!.value}-${state.lastName!.value}-ref-${state.referencePhoto.value.name}` : "",
-      placementPhotoPath: state.placementPhoto.value ? `${state.firstName!.value}-${state.lastName!.value}-place-${state.placementPhoto.value.name}` : "",
-      tattooDescription: state.tattooDescription.value,
-      requestConfirm: state.requestConfirm.value,
-      isRequestApproved: false,
-      isRequestDenied: false,
-    };
-    setIsLoading(true);
-    postAppointmentRequest(newRequest)
-      .then(() => {
-        handleReferencePhotoUpload();
-        handlePlacementPhotoUpload();
-      })
-      .catch((error) => console.error(error))
-      .finally(() => {
-        setIsLoading(false);
-        navigate("/request-submitted");
-      });
+    if (state.referencePhoto.value === null) {
+      dispatch({ type: "submitErrorCheck" });
+      return;
+    } else {
+      dispatch({ type: "submitErrorCheck" });
+      if (state.hasErrors) return;
+      console.log("SUBMITTED");
+      let newRequest: AppointmentRequest = {
+        requestSubmittedDate: new Date(),
+        requestDate: format(state.startDate.value!, "MM-dd-yyyy"),
+        requestTime: state.appointmentTime.value,
+        firstName: state.firstName.value,
+        lastName: state.lastName.value,
+        age: state.age.value,
+        email: state.email.value.toLowerCase(),
+        phoneNumber: state.phoneNumber.value,
+        tattooStyle: state.tattooStyle.value,
+        tattooPlacement: state.tattooPlacement.value,
+        referencePhotoPath: state.referencePhoto.value ? `${state.firstName.value}-${state.lastName!.value}-ref-${state.referencePhoto.value.name}` : "",
+        placementPhotoPath: state.placementPhoto.value ? `${state.firstName.value}-${state.lastName!.value}-place-${state.placementPhoto.value.name}` : "",
+        tattooDescription: state.tattooDescription.value,
+        requestConfirm: state.requestConfirm.value,
+        isRequestApproved: false,
+        isRequestDenied: false,
+      };
+      setIsLoading(true);
+      postAppointmentRequest(newRequest)
+        .then(() => {
+          handleReferencePhotoUpload();
+          handlePlacementPhotoUpload();
+        })
+        .catch((error) => console.error(error))
+        .finally(() => {
+          setIsLoading(false);
+          navigate("/request-submitted");
+        });
+    }
   }
 
   // RENDER
@@ -111,8 +115,8 @@ function RequestAppointment() {
           <PhoneNumber />
           <TattooStyle />
           <TattooPlacement />
-          <ReferenceImage />
-          <PlacementImage />
+          <PhotoUpload name="referencePhoto" />
+          <PhotoUpload name="placementPhoto" />
           <TattooDescription />
           <RequestConfirm />
           <GoButton type="submit" text="Submit Request" backgroundColor="green" />
