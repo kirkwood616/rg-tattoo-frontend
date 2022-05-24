@@ -14,6 +14,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .RequestAppointment .label {
@@ -70,25 +71,40 @@ select:focus,
 }
 
 .RequestAppointment .photo-upload {
+  align-items: center;
   background-color: grey;
+  display: flex;
+  flex-direction: column;
   font-weight: bold;
+}
+
+.RequestAppointment .photo-upload > label {
+  width: 50%;
 }
 
 .RequestAppointment input[type="file"] {
-  font-weight: bold;
-  margin: 0;
-  padding: 0.25rem;
+  display: none;
+  overflow: hidden;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
-.RequestAppointment input[type="file"]::file-selector-button {
+.RequestAppointment .choose-file {
   background-color: #007bff;
   border: none;
   border-radius: 0.5rem;
   box-shadow: 1px 1px 3px var(--black);
   color: white;
+  cursor: pointer;
   font-weight: bold;
-  margin-right: 1rem;
   padding: 0.5rem;
+  width: 100%;
+}
+
+.RequestAppointment .photo-file-name {
+  font-weight: 500;
+  margin: 0.75rem 0;
 }
 
 .RequestAppointment textarea {
@@ -96,6 +112,7 @@ select:focus,
   max-width: 100%;
   min-height: 150px;
   resize: vertical;
+  text-align: left;
 }
 
 .RequestAppointment .request-confirm {
@@ -119,4 +136,10 @@ select:focus,
   font-weight: bold;
   margin-top: 0.5rem;
   padding: 1rem;
+}
+
+@media only screen and (min-width: 600px) {
+  .RequestAppointment form {
+    width: 500px;
+  }
 }
