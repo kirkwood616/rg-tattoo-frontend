@@ -14,9 +14,10 @@ function TattooStyle() {
 
   return (
     <>
-      <span className="label">
-        <label htmlFor="tattooStyle">Tattoo Style:</label>
-      </span>
+      <label htmlFor="tattooStyle" className={state.appointmentTime.value ? "label" : "label disabled"}>
+        Tattoo Style:
+      </label>
+
       <input
         type="text"
         name="style-picker"

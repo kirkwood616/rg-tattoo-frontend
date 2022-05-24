@@ -10,9 +10,9 @@ function Email() {
 
   return (
     <>
-      <span className="label">
-        <label htmlFor="email">Email:</label>
-      </span>
+      <label htmlFor="email" className={state.appointmentTime.value ? "label" : "label disabled"}>
+        Email:
+      </label>
       <input
         type="email"
         name="email"

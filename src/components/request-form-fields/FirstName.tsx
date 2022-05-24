@@ -13,9 +13,9 @@ function FirstName() {
 
   return (
     <>
-      <span className="label">
-        <label htmlFor="firstName">First Name:</label>
-      </span>
+      <label htmlFor="firstName" className={state.appointmentTime.value ? "label" : "label disabled"}>
+        First Name:
+      </label>
       <input
         type="text"
         name="firstName"

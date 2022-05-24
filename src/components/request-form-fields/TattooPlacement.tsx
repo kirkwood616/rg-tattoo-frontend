@@ -10,9 +10,9 @@ function TattooPlacement() {
 
   return (
     <>
-      <span className="label">
-        <label htmlFor="tattooPlacement">Tattoo Placement:</label>
-      </span>
+      <label htmlFor="tattooPlacement" className={state.appointmentTime.value ? "label" : "label disabled"}>
+        Tattoo Placement:
+      </label>
       <input
         type="text"
         name="tattooPlacement"

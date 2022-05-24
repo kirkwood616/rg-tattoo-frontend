@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import RequestContext from "../../context/RequestContext";
 import { isTextDisabled } from "../../utils/DisabledField";
-import ErrorMessage from "../ErrorMessage";
 import FormErrorMessage from "./FormErrorMessage";
 
 function RequestConfirm() {
@@ -22,7 +21,7 @@ function RequestConfirm() {
           />
         </div>
         <div className="request-confirm-text">
-          <label htmlFor="requestConfirmBox">
+          <label htmlFor="requestConfirmBox" className={state.appointmentTime.value ? "label" : "label disabled"}>
             I acknowledge that this submission is a request for an appointment and not confirmation of an actual appointment. I understand that the artist will either confirm
             or deny this request, the result of which will be made available to me through the email address I provided in this form.
           </label>

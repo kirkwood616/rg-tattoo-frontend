@@ -10,9 +10,9 @@ function Age() {
 
   return (
     <>
-      <span className="label">
-        <label htmlFor="age">Age:</label>
-      </span>
+      <label htmlFor="age" className={state.appointmentTime.value ? "label" : "label disabled"}>
+        Age:
+      </label>
       <input
         type="number"
         name="age"
