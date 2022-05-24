@@ -10,9 +10,9 @@ function PhoneNumber() {
 
   return (
     <>
-      <span className="label">
-        <label htmlFor="phoneNumber">Phone:</label>
-      </span>
+      <label htmlFor="phoneNumber" className={state.appointmentTime.value ? "label" : "label disabled"}>
+        Phone:
+      </label>
       <input
         type="tel"
         name="phoneNumber"

@@ -10,9 +10,9 @@ function TattooDescription() {
 
   return (
     <>
-      <span className="label">
-        <label htmlFor="tattooDescription">Tattoo Description:</label>
-      </span>
+      <label htmlFor="tattooDescription" className={state.appointmentTime.value ? "label" : "label disabled"}>
+        Tattoo Description:
+      </label>
       <textarea
         name="tattooDescription"
         id="tattooDescription"

@@ -36,13 +36,21 @@ function PhotoUpload({ name }: Props) {
     }
   }
 
+  function isFieldDisabled() {
+    if (!state.appointmentTime.value) {
+      return "photo-upload_disabled";
+    } else {
+      return "photo-upload";
+    }
+  }
+
   return (
     <>
-      <span className="label">
-        <label htmlFor={name}>{labelTitle()}</label>
-      </span>
-      <div className="photo-upload">
-        <label>
+      <label htmlFor={name} className={state.appointmentTime.value ? "label" : "label disabled"}>
+        {labelTitle()}
+      </label>
+      <div className={isFieldDisabled()}>
+        <label className="file-label">
           <input
             type="file"
             name={name}

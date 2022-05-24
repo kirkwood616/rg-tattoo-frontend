@@ -10,9 +10,9 @@ function LastName() {
 
   return (
     <>
-      <span className="label" style={{ marginBottom: ".5rem" }}>
-        <label htmlFor="lastName">Last Name:</label>
-      </span>
+      <label htmlFor="lastName" className={state.appointmentTime.value ? "label" : "label disabled"}>
+        Last Name:
+      </label>
       <input
         type="text"
         name="lastName"
