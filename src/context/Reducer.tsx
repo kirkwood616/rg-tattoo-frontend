@@ -4,22 +4,22 @@ import { RequestReducer, RequestAction } from "../models/RequestReducer";
 export const initialState: RequestReducer = {
   startDate: {
     value: undefined,
-    hasErrors: false,
+    hasErrors: true,
     checkCount: 0,
   },
   appointmentTime: {
     value: "",
-    hasErrors: false,
+    hasErrors: true,
     checkCount: 0,
   },
   firstName: {
     value: "",
-    hasErrors: false,
+    hasErrors: true,
     checkCount: 0,
   },
   lastName: {
     value: "",
-    hasErrors: false,
+    hasErrors: true,
     checkCount: 0,
   },
   age: {
@@ -29,27 +29,27 @@ export const initialState: RequestReducer = {
   },
   email: {
     value: "",
-    hasErrors: false,
+    hasErrors: true,
     checkCount: 0,
   },
   phoneNumber: {
     value: "",
-    hasErrors: false,
+    hasErrors: true,
     checkCount: 0,
   },
   tattooStyle: {
     value: "",
-    hasErrors: false,
+    hasErrors: true,
     checkCount: 0,
   },
   tattooPlacement: {
     value: "",
-    hasErrors: false,
+    hasErrors: true,
     checkCount: 0,
   },
   referencePhoto: {
     value: null,
-    hasErrors: false,
+    hasErrors: true,
     checkCount: 0,
   },
   placementPhoto: {
@@ -59,15 +59,16 @@ export const initialState: RequestReducer = {
   },
   tattooDescription: {
     value: "",
-    hasErrors: false,
+    hasErrors: true,
     checkCount: 0,
   },
   requestConfirm: {
     value: false,
-    hasErrors: false,
+    hasErrors: true,
     checkCount: 0,
   },
-  hasErrors: false,
+  hasErrors: true,
+  submitCount: 0,
 };
 
 // ADD NEW CASES TO MODEL
@@ -184,6 +185,9 @@ export function reducer(state: RequestReducer, action: RequestAction) {
       } else {
         state.requestConfirm.hasErrors = false;
       }
+      return;
+    case "submitCount":
+      state.submitCount++;
       return;
     case "submitErrorCheck":
       if (!state.startDate.value) state.startDate.hasErrors = true;

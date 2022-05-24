@@ -3,6 +3,7 @@ import RequestContext from "../../context/RequestContext";
 import { formatTime } from "../../utils/Formatting";
 import ErrorMessage from "../ErrorMessage";
 import SelectAppointmentTimes from "../modals/SelectAppointmentTimes";
+import FormErrorMessage from "./FormErrorMessage";
 
 function AppointmentTimes() {
   // CONTEXT
@@ -28,7 +29,7 @@ function AppointmentTimes() {
               onClick={() => setIsTimesActive(true)}
               readOnly
             ></input>
-            <ErrorMessage message={"SELECT A TIME"} name={"appointmentTime"} />
+            <FormErrorMessage message={"SELECT A TIME"} name={"appointmentTime"} />
           </>
         ) : (
           <div className="no-available-appointments">No Available Appointments</div>
