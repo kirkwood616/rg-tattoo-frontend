@@ -5,8 +5,9 @@
   box-shadow: 0 0px 5px var(--black);
   color: white;
   display: block;
+  font-size: 1rem;
   font-weight: bold;
-  margin: 0.75rem auto;
+  margin: auto;
   padding: 0.5rem;
-  width: 75%;
+  width: 50%;
 }
