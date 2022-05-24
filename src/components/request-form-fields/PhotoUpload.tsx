@@ -1,7 +1,9 @@
 import { ChangeEvent, useContext } from "react";
 import RequestContext from "../../context/RequestContext";
+import { isTextDisabled } from "../../utils/DisabledField";
 import RemoveFileButton from "../buttons/RemoveFileButton";
 import ErrorMessage from "../ErrorMessage";
+import FormErrorMessage from "./FormErrorMessage";
 
 type PhotoName = "referencePhoto" | "placementPhoto";
 
@@ -34,20 +36,37 @@ function PhotoUpload({ name }: Props) {
     }
   }
 
+  function isFieldDisabled() {
+    if (!state.appointmentTime.value) {
+      return "photo-upload_disabled";
+    } else {
+      return "photo-upload";
+    }
+  }
+
   return (
     <>
-      <span className="label">
-        <label htmlFor={name}>{labelTitle()}</label>
-      </span>
-      <div className="photo-upload">
-        <label>
-          <input type="file" name={name} id={name} accept="image/*" onChange={(e) => handlePhotoChange(e)} key={Math.random().toString(36)} />
+      <label htmlFor={name} className={state.appointmentTime.value ? "label" : "label disabled"}>
+        {labelTitle()}
+      </label>
+      <div className={isFieldDisabled()}>
+        <label className="file-label">
+          <input
+            type="file"
+            name={name}
+            id={name}
+            accept="image/*"
+            onChange={(e) => handlePhotoChange(e)}
+            disabled={isTextDisabled(state, name)}
+            // trigger re-render based on unique key
+            key={Math.random().toString(36)}
+          />
           <div className="choose-file">Choose File</div>
         </label>
         {state[name].value && <div className="photo-file-name">{state[name].value?.name}</div>}
         {state[name].value && <RemoveFileButton onClick={() => resetPhoto()} />}
       </div>
-      <ErrorMessage message={"REFERENCE PHOTO REQUIRED"} name={name} />
+      <FormErrorMessage message={"REFERENCE PHOTO REQUIRED"} name={name} />
     </>
   );
 }

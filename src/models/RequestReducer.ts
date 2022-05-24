@@ -5,7 +5,7 @@ export interface FieldValues {
 }
 
 export interface ReducerModel {
-  [key: string]: FieldValues | boolean;
+  [key: string]: FieldValues | boolean | number;
 }
 
 export interface RequestReducer extends ReducerModel {
@@ -75,6 +75,7 @@ export interface RequestReducer extends ReducerModel {
     checkCount: number;
   };
   hasErrors: boolean;
+  submitCount: number;
 }
 
 // ADD NEW CASES TO UNION
@@ -94,4 +95,5 @@ export type RequestAction =
   | { type: "placementPhoto"; value: File | null }
   | { type: "tattooDescription"; value: string }
   | { type: "requestConfirm"; value: boolean }
+  | { type: "submitCount" }
   | { type: "submitErrorCheck" };

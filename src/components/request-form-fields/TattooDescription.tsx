@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import RequestContext from "../../context/RequestContext";
+import { isTextDisabled } from "../../utils/DisabledField";
 import ErrorMessage from "../ErrorMessage";
+import FormErrorMessage from "./FormErrorMessage";
 
 function TattooDescription() {
   // CONTEXT
@@ -8,18 +10,19 @@ function TattooDescription() {
 
   return (
     <>
-      <span className="label">
-        <label htmlFor="tattooDescription">Tattoo Description:</label>
-      </span>
+      <label htmlFor="tattooDescription" className={state.appointmentTime.value ? "label" : "label disabled"}>
+        Tattoo Description:
+      </label>
       <textarea
         name="tattooDescription"
         id="tattooDescription"
         className="request_textarea"
         onChange={(e) => dispatch({ type: "tattooDescription", value: e.target.value })}
-        value={state.tattooDescription.value || ""}
+        value={state.tattooDescription.value}
         minLength={7}
+        disabled={isTextDisabled(state, "tattooDescription")}
       />
-      <ErrorMessage message={"MUST BE AT LEAST 7 CHARACTERS"} name={"tattooDescription"} />
+      <FormErrorMessage message={"MUST BE AT LEAST 7 CHARACTERS"} name={"tattooDescription"} />
     </>
   );
 }
