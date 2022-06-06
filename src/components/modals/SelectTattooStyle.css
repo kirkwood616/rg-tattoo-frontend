@@ -6,7 +6,7 @@
   font-weight: bold;
   max-height: 60%;
   margin: auto;
-  overflow-y: scroll;
+  overflow: auto;
   position: relative;
   text-align: center;
   width: 95%;
@@ -33,4 +33,16 @@
 .style-option:nth-child(even):hover {
   background-color: #007bff;
   color: white;
+}
+
+@media only screen and (min-width: 768px) {
+  .style-select_container {
+    width: 75%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .style-select_container {
+    width: 50%;
+  }
 }

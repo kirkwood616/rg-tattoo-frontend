@@ -13,3 +13,9 @@
 .approve-confirm > button {
   width: 95%;
 }
+
+@media only screen and (min-width: 600px) {
+  .approve-confirm {
+    width: 600px;
+  }
+}

@@ -39,6 +39,7 @@
   justify-content: center;
   flex-wrap: wrap;
   margin: 1rem 0;
+  width: 90%;
 }
 
 .no-times-set {
@@ -51,14 +52,14 @@
 }
 
 .available-time_container {
+  align-items: center;
   background-color: #007bff;
   border-radius: 0.5rem;
   box-shadow: 0 3px 7px var(--black);
-  margin: 0.5rem;
-  padding: 0.5rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  margin: 0.5rem;
+  padding: 0.5rem;
   width: 130px;
 }
 
@@ -83,4 +84,11 @@
   text-align: center;
   width: 100%;
   z-index: 1;
+}
+
+@media only screen and (min-width: 600px) {
+  .SetAvailableAppointments {
+    margin: 0 auto 50px auto;
+    width: 590px;
+  }
 }

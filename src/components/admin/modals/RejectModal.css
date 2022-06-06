@@ -26,3 +26,9 @@
 .reject-info > button {
   width: 95%;
 }
+
+@media only screen and (min-width: 600px) {
+  .reject-info {
+    width: 600px;
+  }
+}
