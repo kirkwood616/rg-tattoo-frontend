@@ -20,7 +20,7 @@
 }
 
 .request_container .request-date-time_container {
-  background-color: red;
+  background-color: var(--black);
   padding: 0.5rem 0;
 }
 
@@ -28,4 +28,10 @@
   background-color: white;
   color: black;
   padding: 0.5rem;
+}
+
+@media only screen and (min-width: 600px) {
+  .AppointmentRequests .request_container {
+    width: 600px;
+  }
 }

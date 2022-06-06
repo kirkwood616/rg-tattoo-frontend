@@ -1,12 +1,12 @@
 .time-select_container {
   background-color: var(--black);
   border-radius: 0.5rem;
-  box-shadow: 0 5px 7px black;
+  box-shadow: 0 0px 10px var(--light-gray-1);
   color: black;
   font-weight: bold;
   max-height: 60%;
   margin: auto;
-  overflow-y: scroll;
+  overflow: auto;
   position: relative;
   text-align: center;
   width: 95%;
@@ -33,4 +33,16 @@
 .time-option:nth-child(even):hover {
   background-color: #007bff;
   color: white;
+}
+
+@media only screen and (min-width: 768px) {
+  .time-select_container {
+    width: 75%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .time-select_container {
+    width: 50%;
+  }
 }

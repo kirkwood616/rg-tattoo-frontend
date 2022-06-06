@@ -11,8 +11,9 @@
 }
 
 .AppointmentRequestById .request-table {
+  border: 3px solid var(--black);
   border-radius: 0.5rem;
-  color: black;
+  box-shadow: 0 3px 7px var(--black);
   font-weight: bold;
   overflow: hidden;
   width: 95%;
@@ -20,11 +21,12 @@
 }
 
 .request-table .request-table-title {
-  background-color: var(--light-gray-1);
+  background-color: var(--black);
 }
 
 .request-table .request-table-info {
   background-color: white;
+  color: black;
 }
 .request-table .request-table-title,
 .request-table-info {
@@ -33,4 +35,11 @@
 
 .AppointmentRequestById > button {
   width: 95%;
+}
+
+@media only screen and (min-width: 600px) {
+  .AppointmentRequestById .request-table,
+  .AppointmentRequestById > button {
+    width: 575px;
+  }
 }
