@@ -75,6 +75,9 @@ function SetAvailableAppointments() {
           <DatePicker name="date-picker" id="date-picker" withPortal selected={startDate} minDate={new Date()} onChange={(date: Date) => setStartDate(date)} />
         </div>
 
+        <GoButton type="button" text="ADD ALL TIMES" backgroundColor="grey" onClick={() => setAppointmentTimes(timePickerValues!)} />
+        <GoButton type="button" text="REMOVE ALL TIMES" backgroundColor="red" onClick={() => setAppointmentTimes([])} />
+
         <div className="available-times_container">
           {appointmentTimes.length ? (
             appointmentTimes.map((time, index) => (
@@ -104,7 +107,7 @@ function SetAvailableAppointments() {
         <SaveButton type="button" text="SAVE CHANGES" onClick={() => saveChanges()} />
       </div>
 
-      {isTimesActive ? <SelectTimesModal timeValues={timePickerValues} isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} setStartTime={setStartTime} /> : ""}
+      {isTimesActive && <SelectTimesModal timeValues={timePickerValues} isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} setStartTime={setStartTime} />}
 
       <SaveChangesModal isSaveActive={isSaveActive} setIsSaveActive={setIsSaveActive} dateId={dateId} startDate={startDate!} appointmentTimes={appointmentTimes} />
     </AdminPage>
