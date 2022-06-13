@@ -51,7 +51,7 @@ select,
   border-radius: 0.5rem;
   box-shadow: 0 3px 7px var(--black);
   font-size: 1rem;
-  padding: 0.5rem;
+  padding: 0.75rem;
   text-align: center;
   width: 100%;
 }
