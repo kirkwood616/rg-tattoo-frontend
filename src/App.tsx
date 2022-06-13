@@ -19,7 +19,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        {isLoading ? <LoadingDotsIcon /> : ""}
+        {isLoading && <LoadingDotsIcon />}
         <Header />
         <Routes>
           <Route path="/" element={<Main />} />
@@ -29,10 +29,11 @@ function App() {
           <Route path="/admin/home" element={<AdminHome />} />
           <Route path="/admin/appointment-requests" element={<AppointmentRequests />} />
           <Route path="/admin/appointment-requests/:id" element={<AppointmentRequestById />} />
+          <Route path="/admin/rejected-requests/:id" element={<AppointmentRequestById />} />
           <Route path="/admin/set-available-appointments" element={<SetAvailableAppointments />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-      </Router>{" "}
+      </Router>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { format } from "date-fns";
 import { storage } from "../../firebaseConfig";
 import { StorageReference, getDownloadURL, ref } from "firebase/storage";
@@ -14,13 +14,27 @@ import { formatTime } from "../../utils/Formatting";
 
 function AppointmentRequestById() {
   // CONTEXT
-  let { appointmentRequests } = useContext(AppContext);
+  let { appointmentRequests, rejectedRequests } = useContext(AppContext);
+
+  // LOCATION
+  const location = useLocation();
+
+  function useCollection(): AppointmentRequest | undefined {
+    const activeRequest: AppointmentRequest | undefined = appointmentRequests.find((request) => request._id === id);
+    const rejectedRequest: AppointmentRequest | undefined = rejectedRequests.find((request) => request._id === id);
+    if (location.pathname.includes("appointment-requests")) {
+      return activeRequest;
+    } else if (location.pathname.includes("rejected-requests")) {
+      return rejectedRequest;
+    }
+  }
 
   // REQUEST ID
   let { id } = useParams<string>();
 
   // FIND REQUEST FROM STATE
-  let request: AppointmentRequest | undefined = appointmentRequests.find((request) => request._id === id);
+  // const request: AppointmentRequest | undefined = appointmentRequests.find((request) => request._id === id);
+  const request: AppointmentRequest | undefined = useCollection();
 
   // APPROVE & REJECT STATES
   const [isApproveActive, setIsApproveActive] = useState<boolean>(false);

@@ -22,9 +22,9 @@ import TattooDescription from "./request-form-fields/TattooDescription";
 import RequestConfirm from "./request-form-fields/RequestConfirm";
 import GoButton from "./buttons/GoButton";
 import LoadingDotsIcon from "./loading/LoadingDotsIcon";
+import PhotoUpload from "./request-form-fields/PhotoUpload";
 import "react-datepicker/dist/react-datepicker.css";
 import "./RequestAppointment.css";
-import PhotoUpload from "./request-form-fields/PhotoUpload";
 
 function RequestAppointment() {
   // CONTEXT
@@ -37,7 +37,7 @@ function RequestAppointment() {
   // CHECK FOR DATE IN DATABASE
   useEffect(() => {
     if (!state.startDate.value) return;
-    let dateInDatabase: AvailableAppointments | undefined = availableAppointments.find((date) => date.date === format(state.startDate.value!, "MM-dd-yyyy"));
+    const dateInDatabase: AvailableAppointments | undefined = availableAppointments.find((date) => date.date === format(state.startDate.value!, "MM-dd-yyyy"));
     if (dateInDatabase) {
       setAvailableAppointmentsTimes(dateInDatabase.availableTimes);
     } else {
@@ -67,7 +67,7 @@ function RequestAppointment() {
       return;
     } else {
       console.log("SUBMITTED");
-      let newRequest: AppointmentRequest = {
+      const newRequest: AppointmentRequest = {
         requestSubmittedDate: new Date(),
         requestDate: format(state.startDate.value!, "MM-dd-yyyy"),
         requestTime: state.appointmentTime.value,
@@ -82,8 +82,10 @@ function RequestAppointment() {
         placementPhotoPath: state.placementPhoto.value ? `${state.firstName.value}-${state.lastName!.value}-place-${state.placementPhoto.value.name}` : "",
         tattooDescription: state.tattooDescription.value,
         requestConfirm: state.requestConfirm.value,
+        isDepositReceived: false,
         isRequestApproved: false,
         isRequestDenied: false,
+        isCompleted: false,
       };
       setIsLoading(true);
       postAppointmentRequest(newRequest)
@@ -106,7 +108,7 @@ function RequestAppointment() {
         <h1>Request Appointment</h1>
         <form onSubmit={handleSubmit}>
           <SelectDate />
-          {state.startDate.value ? <AppointmentTimes /> : ""}
+          {state.startDate.value && <AppointmentTimes />}
           <FirstName />
           <LastName />
           <Age />
@@ -122,7 +124,7 @@ function RequestAppointment() {
           {!state.appointmentTime.value && <GoButton type="submit" text="Submit Request" backgroundColor="rgba(0,0,0,0.5)" isDisabled={true} />}
         </form>
       </div>
-      {isLoading ? <LoadingDotsIcon /> : ""}
+      {isLoading && <LoadingDotsIcon />}
     </Page>
   );
 }

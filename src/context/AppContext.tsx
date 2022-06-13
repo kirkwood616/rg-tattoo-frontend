@@ -6,6 +6,8 @@ import AppointmentRequest from "../models/AppointmentRequest";
 interface ContextModel {
   user: User | null;
   appointmentRequests: AppointmentRequest[];
+  newAppointmentRequests: AppointmentRequest[];
+  rejectedRequests: AppointmentRequest[];
   availableAppointments: AvailableAppointments[];
   isLoading: boolean;
   setUser: Dispatch<SetStateAction<User | null>>;
@@ -17,6 +19,8 @@ interface ContextModel {
 const defaultValue: ContextModel = {
   user: null,
   appointmentRequests: [],
+  newAppointmentRequests: [],
+  rejectedRequests: [],
   availableAppointments: [],
   isLoading: false,
   setUser: () => {},
