@@ -1,19 +1,12 @@
-// import "./NewRequests.css";
 import { format } from "date-fns";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import AppContext from "../../context/AppContext";
-// import AppointmentRequest from "../../models/AppointmentRequest";
 import { formatDate, formatTime } from "../../utils/Formatting";
+import AppContext from "../../context/AppContext";
 
 function NewRequests() {
   // CONTEXT
-  let { newAppointmentRequests } = useContext(AppContext);
-
-  // NEW APPOINTMENTS
-  // const newAppointmentRequests: AppointmentRequest[] | undefined = appointmentRequests.filter((request) => {
-  //   return request.isRequestApproved === false && request.isRequestDenied === false;
-  // });
+  const { newAppointmentRequests } = useContext(AppContext);
 
   return (
     <>

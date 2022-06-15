@@ -3,7 +3,6 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { formatDate, formatTime } from "../../utils/Formatting";
 import AppContext from "../../context/AppContext";
-// import "./RejectedRequests.css";
 
 function RejectedRequests() {
   // CONTEXT
