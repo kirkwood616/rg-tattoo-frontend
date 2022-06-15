@@ -3,6 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { format } from "date-fns";
 import { storage } from "../../firebaseConfig";
 import { StorageReference, getDownloadURL, ref } from "firebase/storage";
+import { formatTime } from "../../utils/Formatting";
 import AppContext from "../../context/AppContext";
 import AppointmentRequest from "../../models/AppointmentRequest";
 import AdminPage from "./AdminPage";
@@ -10,7 +11,6 @@ import GoButton from "../buttons/GoButton";
 import RejectModal from "./modals/RejectModal";
 import ApproveModal from "./modals/ApproveModal";
 import "./AppointmentRequestById.css";
-import { formatTime } from "../../utils/Formatting";
 
 function AppointmentRequestById() {
   // CONTEXT
@@ -33,7 +33,6 @@ function AppointmentRequestById() {
   let { id } = useParams<string>();
 
   // FIND REQUEST FROM STATE
-  // const request: AppointmentRequest | undefined = appointmentRequests.find((request) => request._id === id);
   const request: AppointmentRequest | undefined = useCollection();
 
   // APPROVE & REJECT STATES
