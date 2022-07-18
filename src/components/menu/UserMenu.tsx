@@ -14,6 +14,9 @@ function UserMenu() {
       <li>
         <Link to={"/request-appointment"}>REQUEST APPOINTMENT</Link>
       </li>
+      <li>
+        <Link to={"/aftercare"}>AFTERCARE</Link>
+      </li>
     </ul>
   );
 }
