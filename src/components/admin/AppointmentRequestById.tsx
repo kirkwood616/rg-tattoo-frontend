@@ -1,16 +1,16 @@
+import { format } from "date-fns";
+import { getDownloadURL, ref, StorageReference } from "firebase/storage";
 import { useContext, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { format } from "date-fns";
-import { storage } from "../../firebaseConfig";
-import { StorageReference, getDownloadURL, ref } from "firebase/storage";
-import { formatTime } from "../../utils/Formatting";
 import AppContext from "../../context/AppContext";
+import { storage } from "../../firebaseConfig";
 import AppointmentRequest from "../../models/AppointmentRequest";
-import AdminPage from "./AdminPage";
+import { formatTime } from "../../utils/Formatting";
 import GoButton from "../buttons/GoButton";
-import RejectModal from "./modals/RejectModal";
-import ApproveModal from "./modals/ApproveModal";
+import AdminPage from "./AdminPage";
 import "./AppointmentRequestById.css";
+import ApproveModal from "./modals/ApproveModal";
+import RejectModal from "./modals/RejectModal";
 
 function AppointmentRequestById() {
   // CONTEXT
@@ -30,7 +30,7 @@ function AppointmentRequestById() {
   }
 
   // REQUEST ID
-  let { id } = useParams<string>();
+  const { id } = useParams<string>();
 
   // FIND REQUEST FROM STATE
   const request: AppointmentRequest | undefined = useCollection();
@@ -40,12 +40,12 @@ function AppointmentRequestById() {
   const [isRejectActive, setIsRejectActive] = useState<boolean>(false);
 
   // PHOTOS
-  const referencePhotoRef: StorageReference = ref(storage, `images/${request?.referencePhotoPath}`);
-  const placementPhotoRef: StorageReference = ref(storage, `images/${request?.placementPhotoPath}`);
+  const referencePhotoRef: StorageReference = ref(storage, `images/${request!.referencePhotoPath}`);
+  const placementPhotoRef: StorageReference = ref(storage, `images/${request!.placementPhotoPath}`);
   const [referencePhotoURL, setReferencePhotoURL] = useState<string>("");
   const [placementPhotoURL, setPlacementPhotoURL] = useState<string>("");
 
-  if (request?.referencePhotoPath) {
+  if (request!.referencePhotoPath) {
     getDownloadURL(referencePhotoRef)
       .then((url) => {
         setReferencePhotoURL(url);
@@ -55,7 +55,7 @@ function AppointmentRequestById() {
       });
   }
 
-  if (request?.placementPhotoPath) {
+  if (request!.placementPhotoPath) {
     getDownloadURL(placementPhotoRef)
       .then((url) => {
         setPlacementPhotoURL(url);
@@ -71,32 +71,32 @@ function AppointmentRequestById() {
         <h1>Appointment Request</h1>
         <div className="request-table">
           <div className="request-table-title">Requested Date</div>
-          <div className="request-table-info">{request?.requestDate}</div>
+          <div className="request-table-info">{request!.requestDate}</div>
           <div className="request-table-title">Requested Time</div>
           <div className="request-table-info">{formatTime(request!.requestTime)}</div>
           <div className="request-table-title">Name</div>
-          <div className="request-table-info">{`${request?.firstName} ${request?.lastName}`}</div>
+          <div className="request-table-info">{`${request!.firstName} ${request!.lastName}`}</div>
           <div className="request-table-title">Email</div>
           <div className="request-table-info">
-            <a href={`mailto: ${request?.email}`}>{request?.email}</a>
+            <a href={`mailto: ${request!.email}`}>{request!.email}</a>
           </div>
           <div className="request-table-title">Phone</div>
-          <div className="request-table-info">{request?.phoneNumber}</div>
+          <div className="request-table-info">{request!.phoneNumber}</div>
           <div className="request-table-title">Age</div>
-          <div className="request-table-info">{request?.age}</div>
+          <div className="request-table-info">{request!.age}</div>
           <div className="request-table-title">Tattoo Style</div>
-          <div className="request-table-info">{request?.tattooStyle}</div>
+          <div className="request-table-info">{request!.tattooStyle}</div>
           <div className="request-table-title">Tattoo Placement</div>
-          <div className="request-table-info">{request?.tattooPlacement}</div>
+          <div className="request-table-info">{request!.tattooPlacement}</div>
           <div className="request-table-title">Tattoo Description</div>
           <div className="request-table-info" style={{ whiteSpace: "pre-line" }}>
-            {request?.tattooDescription}
+            {request!.tattooDescription}
           </div>
           <div className="request-table-title">Reference Photo</div>
           <div className="request-table-info">
-            {request?.referencePhotoPath.length ? (
+            {request!.referencePhotoPath.length ? (
               <a href={`${referencePhotoURL}`} target="_blank" rel="noopener noreferrer">
-                {request?.referencePhotoPath}
+                {request!.referencePhotoPath}
               </a>
             ) : (
               "None"
@@ -104,9 +104,9 @@ function AppointmentRequestById() {
           </div>
           <div className="request-table-title">Placement Photo</div>
           <div className="request-table-info">
-            {request?.placementPhotoPath.length ? (
+            {request!.placementPhotoPath.length ? (
               <a href={`${placementPhotoURL}`} target="_blank" rel="noopener noreferrer">
-                {request?.placementPhotoPath}
+                {request!.placementPhotoPath}
               </a>
             ) : (
               "None"

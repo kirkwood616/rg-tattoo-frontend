@@ -4,5 +4,9 @@
   box-shadow: 0 0 0 2px black;
   cursor: pointer;
   fill: red;
-  height: 32px;
+  filter: drop-shadow(1px 1px 0.1rem var(--black));
+  height: 2.25rem;
+  margin-right: 0.75rem;
+  position: absolute;
+  right: 0;
 }

@@ -1,29 +1,29 @@
-import { FormEvent, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
-import { storage } from "../firebaseConfig";
 import { ref, uploadBytesResumable } from "firebase/storage";
-import { postAppointmentRequest } from "../services/ApiService";
+import { FormEvent, useContext, useEffect } from "react";
+import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from "react-router-dom";
 import AppContext from "../context/AppContext";
 import RequestContext from "../context/RequestContext";
+import { storage } from "../firebaseConfig";
 import AppointmentRequest from "../models/AppointmentRequest";
 import AvailableAppointments from "../models/AvailableAppointments";
-import Page from "./Page";
-import SelectDate from "./request-form-fields/SelectDate";
-import AppointmentTimes from "./request-form-fields/AppointmentTimes";
-import FirstName from "./request-form-fields/FirstName";
-import LastName from "./request-form-fields/LastName";
-import Age from "./request-form-fields/Age";
-import Email from "./request-form-fields/Email";
-import PhoneNumber from "./request-form-fields/PhoneNumber";
-import TattooStyle from "./request-form-fields/TattooStyle";
-import TattooPlacement from "./request-form-fields/TattooPlacement";
-import TattooDescription from "./request-form-fields/TattooDescription";
-import RequestConfirm from "./request-form-fields/RequestConfirm";
+import { postAppointmentRequest } from "../services/ApiService";
 import GoButton from "./buttons/GoButton";
 import LoadingDotsIcon from "./loading/LoadingDotsIcon";
+import Page from "./Page";
+import Age from "./request-form-fields/Age";
+import AppointmentTimes from "./request-form-fields/AppointmentTimes";
+import Email from "./request-form-fields/Email";
+import FirstName from "./request-form-fields/FirstName";
+import LastName from "./request-form-fields/LastName";
+import PhoneNumber from "./request-form-fields/PhoneNumber";
 import PhotoUpload from "./request-form-fields/PhotoUpload";
-import "react-datepicker/dist/react-datepicker.css";
+import RequestConfirm from "./request-form-fields/RequestConfirm";
+import SelectDate from "./request-form-fields/SelectDate";
+import TattooDescription from "./request-form-fields/TattooDescription";
+import TattooPlacement from "./request-form-fields/TattooPlacement";
+import TattooStyle from "./request-form-fields/TattooStyle";
 import "./RequestAppointment.css";
 
 function RequestAppointment() {
@@ -109,19 +109,22 @@ function RequestAppointment() {
         <form onSubmit={handleSubmit}>
           <SelectDate />
           {state.startDate.value && <AppointmentTimes />}
-          <FirstName />
-          <LastName />
-          <Age />
-          <Email />
-          <PhoneNumber />
-          <TattooStyle />
-          <TattooPlacement />
-          <PhotoUpload name="referencePhoto" />
-          <PhotoUpload name="placementPhoto" />
-          <TattooDescription />
-          <RequestConfirm />
-          {state.appointmentTime.value && <GoButton type="submit" text="Submit Request" backgroundColor="green" isDisabled={false} />}
-          {!state.appointmentTime.value && <GoButton type="submit" text="Submit Request" backgroundColor="rgba(0,0,0,0.5)" isDisabled={true} />}
+          {state.appointmentTime.value && (
+            <>
+              <FirstName />
+              <LastName />
+              <Age />
+              <Email />
+              <PhoneNumber />
+              <TattooStyle />
+              <TattooPlacement />
+              <PhotoUpload name="referencePhoto" />
+              <PhotoUpload name="placementPhoto" />
+              <TattooDescription />
+              <RequestConfirm />
+              {state.appointmentTime.value && <GoButton type="submit" text="Submit Request" backgroundColor="green" isDisabled={false} />}
+            </>
+          )}
         </form>
       </div>
       {isLoading && <LoadingDotsIcon />}

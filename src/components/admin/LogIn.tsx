@@ -1,12 +1,11 @@
-import { FormEvent, useContext, useEffect, useState } from "react";
-import AppContext from "../../context/AppContext";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebaseConfig";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import AppContext from "../../context/AppContext";
+import { auth } from "../../firebaseConfig";
 import GoButton from "../buttons/GoButton";
-import Page from "../Page";
 import ErrorMessage from "../ErrorMessage";
+import Page from "../Page";
 import "./LogIn.css";
 
 function LogIn() {
@@ -16,8 +15,6 @@ function LogIn() {
   // STATES
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
-  // STATES FOR ERRORS
   const [errorMessage, setErrorMessage] = useState("");
 
   // NAVIGATE
