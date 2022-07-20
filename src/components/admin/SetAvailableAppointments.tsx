@@ -1,17 +1,17 @@
 import { format } from "date-fns";
 import { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { timePickerValues } from "../../admin/AdminSettings";
 import AppContext from "../../context/AppContext";
 import AvailableAppointments from "../../models/AvailableAppointments";
+import { formatTime } from "../../utils/Formatting";
 import GoButton from "../buttons/GoButton";
 import RemoveButton from "../buttons/RemoveButton";
 import SaveButton from "../buttons/SaveButton";
 import AdminPage from "./AdminPage";
 import SaveChangesModal from "./modals/SaveChangesModal";
-import { formatTime } from "../../utils/Formatting";
 import SelectTimesModal from "./modals/SelectTimesModal";
-import { timePickerValues } from "../../admin/AdminSettings";
-import "react-datepicker/dist/react-datepicker.css";
 import "./SetAvailableAppointments.css";
 
 function SetAvailableAppointments() {
@@ -64,53 +64,57 @@ function SetAvailableAppointments() {
   }
 
   return (
-    <AdminPage title="Set Available Appointments">
-      <div className="SetAvailableAppointments">
-        <h1>Set Available Appointments</h1>
+    <>
+      <AdminPage title="Set Available Appointments">
+        <div className="SetAvailableAppointments">
+          <h1>Set Available Appointments</h1>
 
-        <div className="date-picker_container">
-          <span className="label">
-            <label htmlFor="date-picker">Date:</label>
-          </span>
-          <DatePicker name="date-picker" id="date-picker" withPortal selected={startDate} minDate={new Date()} onChange={(date: Date) => setStartDate(date)} />
+          <div className="date-picker_container">
+            <span className="label">
+              <label htmlFor="date-picker">Date:</label>
+            </span>
+            <DatePicker name="date-picker" id="date-picker" withPortal selected={startDate} minDate={new Date()} onChange={(date: Date) => setStartDate(date)} />
+          </div>
+
+          <div className="button-container">
+            <GoButton type="button" text="ADD ALL TIMES" backgroundColor="#007bff" onClick={() => setAppointmentTimes(timePickerValues!)} />
+            <GoButton type="button" text="REMOVE ALL TIMES" backgroundColor="red" onClick={() => setAppointmentTimes([])} />
+          </div>
+
+          <div className="available-times_container">
+            {appointmentTimes.length > 0 &&
+              appointmentTimes.map((time, index) => (
+                <div className="available-time_container" key={String(startDate) + index}>
+                  <span className="available-time">{formatTime(time)}</span>
+                  <RemoveButton index={index} onClick={removeTime} />
+                </div>
+              ))}
+            {appointmentTimes.length <= 0 && (
+              <label htmlFor="time-picker">
+                <div className="no-times-set">NO TIMES SET</div>
+              </label>
+            )}
+          </div>
+
+          <div className="time-picker_container">
+            <span className="label">
+              <label htmlFor="time-picker">Times:</label>
+            </span>
+            <input type="text" name="time-picker" id="time-picker" placeholder="Select Time" value={formatTime(startTime)} onClick={() => setIsTimesActive(true)} readOnly />
+          </div>
+
+          <GoButton type="button" text="ADD TIME" backgroundColor="#007bff" onClick={() => addTime(startTime!)} />
         </div>
 
-        <GoButton type="button" text="ADD ALL TIMES" backgroundColor="#007bff" onClick={() => setAppointmentTimes(timePickerValues!)} />
-        <GoButton type="button" text="REMOVE ALL TIMES" backgroundColor="red" onClick={() => setAppointmentTimes([])} />
+        {isTimesActive && <SelectTimesModal timeValues={timePickerValues} isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} setStartTime={setStartTime} />}
 
-        <div className="available-times_container">
-          {appointmentTimes.length > 0 &&
-            appointmentTimes.map((time, index) => (
-              <div className="available-time_container" key={index}>
-                <span className="available-time">{formatTime(time)}</span>
-                <RemoveButton index={index} onClick={removeTime} />
-              </div>
-            ))}
-          {appointmentTimes.length <= 0 && (
-            <label htmlFor="time-picker">
-              <div className="no-times-set">NO TIMES SET</div>
-            </label>
-          )}
-        </div>
-
-        <div className="time-picker_container">
-          <span className="label">
-            <label htmlFor="time-picker">Times:</label>
-          </span>
-          <input type="text" name="time-picker" id="time-picker" placeholder="Select Time" value={formatTime(startTime)} onClick={() => setIsTimesActive(true)} readOnly />
-        </div>
-
-        <GoButton type="button" text="ADD TIME" backgroundColor="#007bff" onClick={() => addTime(startTime!)} />
-      </div>
+        <SaveChangesModal isSaveActive={isSaveActive} setIsSaveActive={setIsSaveActive} dateId={dateId} startDate={startDate!} appointmentTimes={appointmentTimes} />
+      </AdminPage>
 
       <div className="save-changes">
         <SaveButton type="button" text="SAVE CHANGES" onClick={() => saveChanges()} />
       </div>
-
-      {isTimesActive && <SelectTimesModal timeValues={timePickerValues} isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} setStartTime={setStartTime} />}
-
-      <SaveChangesModal isSaveActive={isSaveActive} setIsSaveActive={setIsSaveActive} dateId={dateId} startDate={startDate!} appointmentTimes={appointmentTimes} />
-    </AdminPage>
+    </>
   );
 }
 

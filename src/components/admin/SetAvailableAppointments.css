@@ -34,14 +34,6 @@
   width: 100%;
 }
 
-.available-times_container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin: 1rem 0;
-  width: 90%;
-}
-
 .no-times-set {
   background-color: var(--light-gray-1);
   border-radius: 0.5rem;
@@ -51,22 +43,32 @@
   width: 200px;
 }
 
+.available-times_container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+  width: 85%;
+}
+
 .available-time_container {
   align-items: center;
-  background-color: #007bff;
+  background-color: var(--light-gray-1);
   border-radius: 0.5rem;
   box-shadow: 0 3px 7px var(--black);
   display: flex;
-  justify-content: space-between;
-  margin: 0.5rem;
-  padding: 0.5rem;
-  width: 130px;
+  justify-content: center;
+  margin: 0.35rem 0;
+  padding: 1rem;
+  position: relative;
+  width: 100%;
 }
 
 .available-time {
-  font-size: 1rem;
+  color: black;
+  font-size: 1.1rem;
   font-weight: bold;
-  margin-right: 0.5rem;
+  text-align: center;
 }
 
 .SetAvailableAppointments > button {
@@ -74,8 +76,9 @@
 }
 
 .save-changes {
-  background-color: var(--light-gray-1);
+  background-color: var(--dark-gray-3);
   bottom: 0;
+  box-shadow: 0 0 7px var(--black);
   left: 0;
   right: 0;
   margin-top: 1rem;
@@ -86,9 +89,29 @@
   z-index: 1;
 }
 
+.button-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+  width: 85%;
+}
+
 @media only screen and (min-width: 600px) {
   .SetAvailableAppointments {
     margin: 0 auto 50px auto;
     width: 590px;
+  }
+
+  .button-container {
+    /* display: flex; */
+    flex-direction: row;
+    justify-content: space-between;
+    width: 85%;
+  }
+  .button-container > .go-button {
+    width: 100%;
+  }
+  .button-container > .go-button:last-child {
+    margin-left: 1rem;
   }
 }
