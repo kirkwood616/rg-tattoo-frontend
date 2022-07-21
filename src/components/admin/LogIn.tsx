@@ -35,7 +35,7 @@ function LogIn() {
   async function handleLogIn() {
     setIsLoading(true);
     try {
-      const user = await signInWithEmailAndPassword(auth, email, password).then(() => setIsLoading(false));
+      await signInWithEmailAndPassword(auth, email, password).then(() => setIsLoading(false));
     } catch (error: unknown) {
       setIsLoading(false);
       if (error instanceof Error) {

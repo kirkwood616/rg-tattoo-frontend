@@ -1,14 +1,14 @@
 import { format } from "date-fns";
 import { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
-import AppContext from "../../context/AppContext";
+import AdminContext from "../../context/AdminContext";
 import { AppointmentRequest } from "../../models/AppointmentRequest";
 import { formatDate, formatTime } from "../../utils/Formatting";
 import AdminPage from "./AdminPage";
 
 function RequestList() {
   // CONTEXT
-  const { newAppointmentRequests, rejectedRequests } = useContext(AppContext);
+  const { newAppointmentRequests, rejectedRequests } = useContext(AdminContext);
 
   // REQUEST TYPE VARIABLES
   let requestType: AppointmentRequest[] | undefined = undefined;
