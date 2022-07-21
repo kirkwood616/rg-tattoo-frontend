@@ -25,7 +25,7 @@ export default function AdminContextProvider({ children }: Props) {
   // NEW APPOINTMENT REQUESTS
   useEffect(() => {
     const newRequests: AppointmentRequest[] | undefined = appointmentRequests.filter((request) => {
-      return request.isRequestApproved === false && request.isRequestDenied === false;
+      return !request.isRequestApproved && !request.isRequestDenied && !request.isDepositReceived && !request.isCompleted && !request.isRequestClosed;
     });
     if (newRequests.length > 0) {
       setNewAppointmentRequests(newRequests);
@@ -33,6 +33,7 @@ export default function AdminContextProvider({ children }: Props) {
       return;
     }
   }, [appointmentRequests]);
+  console.log(newAppointmentRequests);
 
   // REJECTED REQUESTS
   useEffect(() => {

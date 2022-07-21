@@ -19,8 +19,8 @@ function AdminContainer() {
       <Routes>
         <Route path="login" element={<LogIn />} />
         <Route path="home" element={<AdminHome />} />
-        <Route path="appointment-requests/*" element={<AppointmentRequests />}>
-          <Route path="new" element={<RequestList />}></Route>
+        <Route path="appointment-requests" element={<AppointmentRequests />}>
+          <Route path="new" element={<RequestList />} />
           <Route path="new/:id" element={<AppointmentRequestById />} />
           <Route path="rejected" element={<RequestList />} />
           <Route path="rejected/:id" element={<AppointmentRequestById />} />
