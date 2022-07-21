@@ -1,13 +1,15 @@
-import { Link } from "react-router-dom";
-import { auth } from "../../../firebaseConfig";
 import { signOut } from "firebase/auth";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
+import AdminContext from "../../../context/AdminContext";
 import AppContext from "../../../context/AppContext";
+import { auth } from "../../../firebaseConfig";
 import RequestIcon from "./RequestIcon";
 
 function AdminMenu() {
   // CONTEXT
-  let { setUser, appointmentRequests } = useContext(AppContext);
+  let { setUser } = useContext(AppContext);
+  let { newAppointmentRequests } = useContext(AdminContext);
 
   // LOGOUT
   async function logOut() {
@@ -21,7 +23,7 @@ function AdminMenu() {
           <Link to={"/admin/home"}>HOME</Link>
         </li>
         <li>
-          <Link to={"/admin/appointment-requests"}>APPOINTMENT REQUESTS {appointmentRequests.length ? <RequestIcon /> : ""}</Link>
+          <Link to={"/admin/appointment-requests"}>APPOINTMENT REQUESTS {newAppointmentRequests.length && <RequestIcon />}</Link>
         </li>
         <li>
           <Link to={"/admin/set-available-appointments"}>SET AVAILABLE APPOINTMENTS</Link>

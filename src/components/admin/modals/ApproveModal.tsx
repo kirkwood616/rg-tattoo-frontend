@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useContext } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import AdminContext from "../../../context/AdminContext";
 import AppContext from "../../../context/AppContext";
 import { AppointmentRequest } from "../../../models/AppointmentRequest";
 import { updateAppointmentRequest } from "../../../services/AdminApiService";
@@ -15,7 +16,8 @@ interface Props {
 
 function ApproveModal({ isApproveActive, setIsApproveActive, request }: Props) {
   // CONTEXT
-  let { handleAppointmentRequests, setIsLoading } = useContext(AppContext);
+  let { setIsLoading } = useContext(AppContext);
+  let { handleAppointmentRequests } = useContext(AdminContext);
 
   // NAVIGATE
   const navigate: NavigateFunction = useNavigate();
