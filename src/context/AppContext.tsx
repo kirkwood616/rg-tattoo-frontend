@@ -1,7 +1,7 @@
-import { createContext, Dispatch, SetStateAction } from "react";
 import { User } from "firebase/auth";
+import { createContext, Dispatch, SetStateAction } from "react";
+import { AppointmentRequest } from "../models/AppointmentRequest";
 import AvailableAppointments from "../models/AvailableAppointments";
-import AppointmentRequest from "../models/AppointmentRequest";
 
 interface ContextModel {
   user: User | null;

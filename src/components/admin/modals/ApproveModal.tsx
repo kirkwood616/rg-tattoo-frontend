@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, useContext } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import AppContext from "../../../context/AppContext";
-import AppointmentRequest from "../../../models/AppointmentRequest";
+import { AppointmentRequest } from "../../../models/AppointmentRequest";
 import { updateAppointmentRequest } from "../../../services/AdminApiService";
 import GoButton from "../../buttons/GoButton";
-import "./ApproveModal.css";
 import ModalWindow from "../../modals/ModalWindow";
+import "./ApproveModal.css";
 
 interface Props {
   isApproveActive: boolean;
@@ -22,7 +22,7 @@ function ApproveModal({ isApproveActive, setIsApproveActive, request }: Props) {
 
   // APPROVE
   function onApprove(): void {
-    let approvedRequest: AppointmentRequest = {
+    const approvedRequest: AppointmentRequest = {
       ...request,
       isRequestApproved: true,
     };

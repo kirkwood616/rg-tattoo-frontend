@@ -1,8 +1,8 @@
 import { format } from "date-fns";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { formatDate, formatTime } from "../../utils/Formatting";
 import AppContext from "../../context/AppContext";
+import { formatDate, formatTime } from "../../utils/Formatting";
 
 function NewRequests() {
   // CONTEXT
@@ -14,7 +14,7 @@ function NewRequests() {
       {newAppointmentRequests.length > 0 &&
         newAppointmentRequests.map((request, index) => (
           <div className="request_container" key={request && index}>
-            <Link to={`/admin/appointment-requests/${request._id}`}>
+            <Link to={`/admin/appointment-requests/new/${request._id}`}>
               <div className="request-info_container">
                 <div className="request-date-time_container">
                   {formatDate(request.requestDate)} @ {formatTime(request.requestTime)}
