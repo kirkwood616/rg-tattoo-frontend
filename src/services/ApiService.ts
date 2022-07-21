@@ -1,5 +1,5 @@
 import axios from "axios";
-import AppointmentRequest from "../models/AppointmentRequest";
+import { AppointmentRequest } from "../models/AppointmentRequest";
 import AvailableAppointments from "../models/AvailableAppointments";
 
 const apiRequestAppointment = process.env.REACT_APP_API_REQUEST_ROUTE_LOCAL || "";

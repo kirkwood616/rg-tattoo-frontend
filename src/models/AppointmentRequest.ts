@@ -1,4 +1,4 @@
-interface AppointmentRequest {
+export interface AppointmentRequest {
   _id?: string;
   requestSubmittedDate: Date;
   requestDate: string;
@@ -18,7 +18,14 @@ interface AppointmentRequest {
   isDepositReceived: boolean;
   isRequestDenied: boolean;
   deniedMessage?: string;
+  isRequestCanceled: boolean;
   isCompleted: boolean;
+  isRequestClosed: boolean;
+  priceCharged: number;
+  notes: Note[];
 }
 
-export default AppointmentRequest;
+export interface Note {
+  dateCreated: string;
+  note: string;
+}

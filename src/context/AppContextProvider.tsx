@@ -1,11 +1,10 @@
-import { ReactNode, useEffect, useState } from "react";
 import { User } from "firebase/auth";
-
+import { ReactNode, useEffect, useState } from "react";
+import { AppointmentRequest } from "../models/AppointmentRequest";
 import AvailableAppointments from "../models/AvailableAppointments";
-import AppointmentRequest from "../models/AppointmentRequest";
+import { fetchAppointmentRequests, fetchRejectedRequests } from "../services/AdminApiService";
 import { fetchAvailableAppointments } from "../services/ApiService";
 import AppContext from "./AppContext";
-import { fetchAppointmentRequests, fetchRejectedRequests } from "../services/AdminApiService";
 
 interface Props {
   children: ReactNode;

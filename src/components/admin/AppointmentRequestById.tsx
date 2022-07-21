@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import AppContext from "../../context/AppContext";
 import { storage } from "../../firebaseConfig";
-import AppointmentRequest from "../../models/AppointmentRequest";
+import { AppointmentRequest } from "../../models/AppointmentRequest";
 import { formatTime } from "../../utils/Formatting";
 import GoButton from "../buttons/GoButton";
 import AdminPage from "./AdminPage";
@@ -22,9 +22,9 @@ function AppointmentRequestById() {
   function useCollection(): AppointmentRequest | undefined {
     const activeRequest: AppointmentRequest | undefined = appointmentRequests.find((request) => request._id === id);
     const rejectedRequest: AppointmentRequest | undefined = rejectedRequests.find((request) => request._id === id);
-    if (location.pathname.includes("appointment-requests")) {
+    if (location.pathname.includes("new")) {
       return activeRequest;
-    } else if (location.pathname.includes("rejected-requests")) {
+    } else if (location.pathname.includes("rejected")) {
       return rejectedRequest;
     }
   }
@@ -94,13 +94,9 @@ function AppointmentRequestById() {
           </div>
           <div className="request-table-title">Reference Photo</div>
           <div className="request-table-info">
-            {request!.referencePhotoPath.length ? (
-              <a href={`${referencePhotoURL}`} target="_blank" rel="noopener noreferrer">
-                {request!.referencePhotoPath}
-              </a>
-            ) : (
-              "None"
-            )}
+            <a href={`${referencePhotoURL}`} target="_blank" rel="noopener noreferrer">
+              {request!.referencePhotoPath}
+            </a>
           </div>
           <div className="request-table-title">Placement Photo</div>
           <div className="request-table-info">
@@ -115,10 +111,14 @@ function AppointmentRequestById() {
           <div className="request-table-title">Request Submitted</div>
           <div className="request-table-info">{format(new Date(request!.requestSubmittedDate), "M/dd/yyyy @ h:mm a")}</div>
         </div>
-        <GoButton type="button" text="APPROVE" backgroundColor="green" onClick={() => setIsApproveActive(true)} />
-        <GoButton type="button" text="REJECT" backgroundColor="red" onClick={() => setIsRejectActive(true)} />
-        <ApproveModal isApproveActive={isApproveActive} setIsApproveActive={setIsApproveActive} request={request!} />
-        <RejectModal isRejectActive={isRejectActive} setIsRejectActive={setIsRejectActive} request={request!} />
+        {request!.isRequestDenied === false && (
+          <>
+            <GoButton type="button" text="APPROVE" backgroundColor="green" onClick={() => setIsApproveActive(true)} />
+            <GoButton type="button" text="REJECT" backgroundColor="red" onClick={() => setIsRejectActive(true)} />
+            <ApproveModal isApproveActive={isApproveActive} setIsApproveActive={setIsApproveActive} request={request!} />
+            <RejectModal isRejectActive={isRejectActive} setIsRejectActive={setIsRejectActive} request={request!} />
+          </>
+        )}
       </div>
     </AdminPage>
   );

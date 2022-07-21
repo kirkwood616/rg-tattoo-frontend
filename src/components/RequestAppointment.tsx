@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import AppContext from "../context/AppContext";
 import RequestContext from "../context/RequestContext";
 import { storage } from "../firebaseConfig";
-import AppointmentRequest from "../models/AppointmentRequest";
+import { AppointmentRequest } from "../models/AppointmentRequest";
 import AvailableAppointments from "../models/AvailableAppointments";
 import { postAppointmentRequest } from "../services/ApiService";
 import GoButton from "./buttons/GoButton";
@@ -85,7 +85,11 @@ function RequestAppointment() {
         isDepositReceived: false,
         isRequestApproved: false,
         isRequestDenied: false,
+        isRequestCanceled: false,
         isCompleted: false,
+        isRequestClosed: false,
+        priceCharged: 0,
+        notes: [],
       };
       setIsLoading(true);
       postAppointmentRequest(newRequest)

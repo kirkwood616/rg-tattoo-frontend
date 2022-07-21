@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import AppContext from "../../../context/AppContext";
-import AppointmentRequest from "../../../models/AppointmentRequest";
+import { AppointmentRequest } from "../../../models/AppointmentRequest";
 import { rejectAppointmentRequest } from "../../../services/AdminApiService";
 import GoButton from "../../buttons/GoButton";
 import ModalWindow from "../../modals/ModalWindow";
