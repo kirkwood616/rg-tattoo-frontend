@@ -1,4 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
+import AdminContext from "../../context/AdminContext";
 import AppContext from "../../context/AppContext";
 import AdminMenu from "../admin/menu/AdminMenu";
 import RequestIcon from "../admin/menu/RequestIcon";
@@ -8,7 +9,8 @@ import UserMenu from "./UserMenu";
 
 function NavMenu() {
   // CONTEXT
-  let { user, appointmentRequests } = useContext(AppContext);
+  let { user } = useContext(AppContext);
+  let { appointmentRequests } = useContext(AdminContext);
 
   // STATES
   const [isActive, setIsActive] = useState<boolean>(false);

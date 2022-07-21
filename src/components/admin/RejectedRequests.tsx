@@ -1,12 +1,12 @@
 import { format } from "date-fns";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import AppContext from "../../context/AppContext";
+import AdminContext from "../../context/AdminContext";
 import { formatDate, formatTime } from "../../utils/Formatting";
 
 function RejectedRequests() {
   // CONTEXT
-  const { rejectedRequests } = useContext(AppContext);
+  const { rejectedRequests } = useContext(AdminContext);
 
   return (
     <>

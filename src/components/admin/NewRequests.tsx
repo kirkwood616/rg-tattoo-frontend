@@ -1,12 +1,12 @@
 import { format } from "date-fns";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import AppContext from "../../context/AppContext";
+import AdminContext from "../../context/AdminContext";
 import { formatDate, formatTime } from "../../utils/Formatting";
 
 function NewRequests() {
   // CONTEXT
-  const { newAppointmentRequests } = useContext(AppContext);
+  const { newAppointmentRequests } = useContext(AdminContext);
 
   return (
     <>
