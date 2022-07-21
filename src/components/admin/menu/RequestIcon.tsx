@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import AppContext from "../../../context/AppContext";
+import AdminContext from "../../../context/AdminContext";
 import "./RequestIcon.css";
 
 function RequestIcon() {
   // CONTEXT
-  let { appointmentRequests } = useContext(AppContext);
+  let { appointmentRequests } = useContext(AdminContext);
 
   return (
     <div className="RequestIcon">

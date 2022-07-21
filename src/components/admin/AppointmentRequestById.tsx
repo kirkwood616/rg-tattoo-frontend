@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import { getDownloadURL, ref, StorageReference } from "firebase/storage";
 import { useContext, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import AppContext from "../../context/AppContext";
+import AdminContext from "../../context/AdminContext";
 import { storage } from "../../firebaseConfig";
 import { AppointmentRequest } from "../../models/AppointmentRequest";
 import { formatTime } from "../../utils/Formatting";
@@ -14,7 +14,7 @@ import RejectModal from "./modals/RejectModal";
 
 function AppointmentRequestById() {
   // CONTEXT
-  let { appointmentRequests, rejectedRequests } = useContext(AppContext);
+  let { appointmentRequests, rejectedRequests } = useContext(AdminContext);
 
   // LOCATION
   const location = useLocation();
