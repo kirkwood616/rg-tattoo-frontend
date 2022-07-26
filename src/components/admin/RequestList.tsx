@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import AdminContext from "../../context/AdminContext";
 import { AppointmentRequest } from "../../models/AppointmentRequest";
 import { formatDate, formatTime } from "../../utils/Formatting";
@@ -16,10 +16,11 @@ function RequestList() {
 
   // LOCATION
   const location = useLocation();
-  const locationRoute = location.pathname.slice(28);
+  const locationListRoute = location.state;
+  const params = useParams();
 
   // ROUTE LOCATION LOGIC
-  switch (locationRoute) {
+  switch (locationListRoute) {
     case "new":
       requestType = newAppointmentRequests;
       title = "New";
@@ -36,27 +37,32 @@ function RequestList() {
 
   return (
     <AdminPage title={`${title} Requests`}>
-      <h2>{title} Requests</h2>
-      {requestType!.length > 0 &&
-        requestType!.map((request, index) => (
-          <div className="request_container" key={request && index}>
-            <Link to={`/admin/appointment-requests/${locationRoute}/${request._id}`}>
-              <div className="request-info_container">
-                <div className="request-date-time_container">
-                  {formatDate(request.requestDate)} @ {formatTime(request.requestTime)}
-                </div>
-                <div className="request-submitted_container">
+      {params.id && <Outlet />}
+      {!params.id && (
+        <>
+          <h2>{title} Requests</h2>
+          {requestType!.length > 0 &&
+            requestType!.map((request, index) => (
+              <div className="request_container" key={request && index}>
+                <Link to={request._id!} state={locationListRoute}>
                   <div className="request-info_container">
-                    {request.firstName} {request.lastName}
+                    <div className="request-date-time_container">
+                      {formatDate(request.requestDate)} @ {formatTime(request.requestTime)}
+                    </div>
+                    <div className="request-submitted_container">
+                      <div className="request-info_container">
+                        {request.firstName} {request.lastName}
+                      </div>
+                      <div className="request-info_container">{request.email}</div>
+                      <div className="request-info_container">Submitted: {format(new Date(request.requestSubmittedDate), "M/dd/yyyy @ h:mm a")}</div>
+                    </div>
                   </div>
-                  <div className="request-info_container">{request.email}</div>
-                  <div className="request-info_container">Submitted: {format(new Date(request.requestSubmittedDate), "M/dd/yyyy @ h:mm a")}</div>
-                </div>
+                </Link>
               </div>
-            </Link>
-          </div>
-        ))}
-      {requestType!.length === 0 && <h2>No {title} Requests</h2>}
+            ))}
+          {requestType!.length === 0 && <h2>No {title} Requests</h2>}
+        </>
+      )}
     </AdminPage>
   );
 }
