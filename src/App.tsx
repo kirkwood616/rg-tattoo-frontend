@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import AdminContainer from "./components/admin/AdminContainer";
+import LogIn from "./components/admin/LogIn";
+import PrivateRoutes from "./components/admin/PrivateRoutes";
 import Aftercare from "./components/Aftercare";
 import Header from "./components/Header";
 import LoadingDotsIcon from "./components/loading/LoadingDotsIcon";
@@ -23,7 +25,10 @@ function App() {
           <Route path="/aftercare" element={<Aftercare />} />
           <Route path="/request-appointment" element={<RequestPage />} />
           <Route path="/request-submitted" element={<RequestSubmitted />} />
-          <Route path="/admin/*" element={<AdminContainer />} />
+          <Route path="/user/login" element={<LogIn />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/admin/*" element={<AdminContainer />} />
+          </Route>
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>

@@ -20,3 +20,31 @@ export const timePickerValues: string[] | void = adminTimePickerValues("12:00 PM
 
 // TATTOO STYLES
 export const tattooStyles = ["Linework", "Black & White", "Full Color", "Lettering"];
+
+// REQUEST TYPES
+export const requestTypes = [
+  {
+    name: "New Requests",
+    path: "new",
+  },
+  {
+    name: "Awaiting Deposit",
+    path: "awaiting-deposit",
+  },
+  {
+    name: "Confirmed Requests",
+    path: "confirmed",
+  },
+  {
+    name: "Completed Requests",
+    path: "completed",
+  },
+  {
+    name: "Canceled Requests",
+    path: "canceled",
+  },
+  {
+    name: "Rejected Requests",
+    path: "rejected",
+  },
+];
