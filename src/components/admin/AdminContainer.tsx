@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
+import { requestTypes } from "../../admin/AdminSettings";
 import AdminContextProvider from "../../context/AdminContextProvider";
 import AppContext from "../../context/AppContext";
 import Header from "../Header";
 import AdminHome from "./AdminHome";
 import AppointmentRequestById from "./AppointmentRequestById";
 import AppointmentRequests from "./AppointmentRequests";
-import LogIn from "./LogIn";
 import RequestList from "./RequestList";
 import SetAvailableAppointments from "./SetAvailableAppointments";
 
@@ -17,13 +17,15 @@ function AdminContainer() {
     <AdminContextProvider>
       {user && <Header />}
       <Routes>
-        <Route path="login" element={<LogIn />} />
+        <Route index element={<AdminHome />} />
         <Route path="home" element={<AdminHome />} />
         <Route path="appointment-requests" element={<AppointmentRequests />}>
-          <Route path="new" element={<RequestList />} />
-          <Route path="new/:id" element={<AppointmentRequestById />} />
-          <Route path="rejected" element={<RequestList />} />
-          <Route path="rejected/:id" element={<AppointmentRequestById />} />
+          {requestTypes.map((item) => (
+            <>
+              <Route path={item.path} element={<RequestList />} key={`${item.name} Path`} />
+              <Route path={`${item.path}/:id`} element={<AppointmentRequestById key={`${item.name} ID`} />} />
+            </>
+          ))}
         </Route>
         <Route path="set-available-appointments" element={<SetAvailableAppointments />} />
       </Routes>
