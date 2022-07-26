@@ -5,7 +5,7 @@ import AppContext from "../../context/AppContext";
 function PrivateRoutes() {
   let { user } = useContext(AppContext);
 
-  return user ? <Outlet /> : <Navigate to="/user/login" />;
+  return user ? <Outlet /> : <Navigate to="user/login" />;
 }
 
 export default PrivateRoutes;

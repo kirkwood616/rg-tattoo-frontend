@@ -18,13 +18,14 @@ function AppointmentRequestById() {
 
   // LOCATION
   const location = useLocation();
+  const locationIdRoute = location.state;
 
   function useCollection(): AppointmentRequest | undefined {
     const activeRequest: AppointmentRequest | undefined = appointmentRequests.find((request) => request._id === id);
     const rejectedRequest: AppointmentRequest | undefined = rejectedRequests.find((request) => request._id === id);
-    if (location.pathname.includes("new")) {
+    if (locationIdRoute === "new") {
       return activeRequest;
-    } else if (location.pathname.includes("rejected")) {
+    } else if (locationIdRoute === "rejected") {
       return rejectedRequest;
     }
   }
@@ -40,10 +41,10 @@ function AppointmentRequestById() {
   const [isRejectActive, setIsRejectActive] = useState<boolean>(false);
 
   // PHOTOS
-  const referencePhotoRef: StorageReference = ref(storage, `images/${request!.referencePhotoPath}`);
-  const placementPhotoRef: StorageReference = ref(storage, `images/${request!.placementPhotoPath}`);
   const [referencePhotoURL, setReferencePhotoURL] = useState<string>("");
   const [placementPhotoURL, setPlacementPhotoURL] = useState<string>("");
+  const referencePhotoRef: StorageReference = ref(storage, `images/${request!.referencePhotoPath}`);
+  const placementPhotoRef: StorageReference = ref(storage, `images/${request!.placementPhotoPath}`);
 
   if (request!.referencePhotoPath) {
     getDownloadURL(referencePhotoRef)

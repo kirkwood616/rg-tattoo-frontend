@@ -12,10 +12,10 @@ function AppointmentRequests() {
       <div className="requests-menu" onClick={() => setIsMenuActive((prev) => !prev)}>
         {menuItem}
         <div className={isMenuActive ? "requests-menu-list_active" : "requests-menu-list_inactive"}>
-          {requestTypes.map((item, index) => (
-            <Link to={item.path} key={item.name + index}>
-              <button className="menu-link" value={item.name} onClick={(e) => setMenuItem(e.currentTarget.value)}>
-                {item.name}
+          {requestTypes.map((request, index) => (
+            <Link to={request.path} key={request.name + index} state={request.path}>
+              <button className="menu-link" value={request.name} onClick={(e) => setMenuItem(e.currentTarget.value)}>
+                {request.name}
               </button>
             </Link>
           ))}
