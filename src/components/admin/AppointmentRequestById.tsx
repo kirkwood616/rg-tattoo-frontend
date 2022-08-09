@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { getDownloadURL, ref, StorageReference } from "firebase/storage";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import AdminContext from "../../context/AdminContext";
 import { storage } from "../../firebaseConfig";
@@ -14,11 +14,12 @@ import RejectModal from "./modals/RejectModal";
 
 function AppointmentRequestById() {
   // CONTEXT
-  let { appointmentRequests, rejectedRequests } = useContext(AdminContext);
+  const { appointmentRequests, rejectedRequests } = useContext(AdminContext);
 
   // LOCATION
   const location = useLocation();
   const locationIdRoute = location.state;
+  const { id } = useParams();
 
   function useCollection(): AppointmentRequest | undefined {
     const activeRequest: AppointmentRequest | undefined = appointmentRequests.find((request) => request._id === id);
@@ -30,41 +31,49 @@ function AppointmentRequestById() {
     }
   }
 
-  // REQUEST ID
-  const { id } = useParams<string>();
-
   // FIND REQUEST FROM STATE
   const request: AppointmentRequest | undefined = useCollection();
 
   // APPROVE & REJECT STATES
-  const [isApproveActive, setIsApproveActive] = useState<boolean>(false);
-  const [isRejectActive, setIsRejectActive] = useState<boolean>(false);
+  const [isApproveActive, setIsApproveActive] = useState(false);
+  const [isRejectActive, setIsRejectActive] = useState(false);
 
   // PHOTOS
-  const [referencePhotoURL, setReferencePhotoURL] = useState<string>("");
-  const [placementPhotoURL, setPlacementPhotoURL] = useState<string>("");
-  const referencePhotoRef: StorageReference = ref(storage, `images/${request!.referencePhotoPath}`);
-  const placementPhotoRef: StorageReference = ref(storage, `images/${request!.placementPhotoPath}`);
+  const [referencePhotoURL, setReferencePhotoURL] = useState("");
+  const [placementPhotoURL, setPlacementPhotoURL] = useState("");
 
-  if (request!.referencePhotoPath) {
-    getDownloadURL(referencePhotoRef)
-      .then((url) => {
-        setReferencePhotoURL(url);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  useEffect(() => {
+    let isMounted = true;
+    const referencePhotoRef: StorageReference = ref(storage, `images/${request!.referencePhotoPath}`);
+    const placementPhotoRef: StorageReference = ref(storage, `images/${request!.placementPhotoPath}`);
 
-  if (request!.placementPhotoPath) {
-    getDownloadURL(placementPhotoRef)
-      .then((url) => {
-        setPlacementPhotoURL(url);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+    const fetchImages = async () => {
+      if (request!.referencePhotoPath) {
+        getDownloadURL(referencePhotoRef)
+          .then((url) => {
+            if (isMounted) setReferencePhotoURL(url);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      if (request!.placementPhotoPath) {
+        getDownloadURL(placementPhotoRef)
+          .then((url) => {
+            if (isMounted) setPlacementPhotoURL(url);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    };
+
+    fetchImages();
+    return () => {
+      isMounted = false;
+    };
+  }, [request]);
 
   return (
     <AdminPage title="Request">
