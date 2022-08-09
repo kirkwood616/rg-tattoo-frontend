@@ -10,11 +10,11 @@ import GoButton from "../buttons/GoButton";
 import AdminPage from "./AdminPage";
 import "./AppointmentRequestById.css";
 import ApproveModal from "./modals/ApproveModal";
-import RejectModal from "./modals/RejectModal";
+import DenyModal from "./modals/DenyModal";
 
 function AppointmentRequestById() {
   // CONTEXT
-  const { appointmentRequests, rejectedRequests } = useContext(AdminContext);
+  const { appointmentRequests, deniedRequests } = useContext(AdminContext);
 
   // LOCATION
   const location = useLocation();
@@ -23,20 +23,20 @@ function AppointmentRequestById() {
 
   function useCollection(): AppointmentRequest | undefined {
     const activeRequest: AppointmentRequest | undefined = appointmentRequests.find((request) => request._id === id);
-    const rejectedRequest: AppointmentRequest | undefined = rejectedRequests.find((request) => request._id === id);
+    const deniedRequest: AppointmentRequest | undefined = deniedRequests.find((request) => request._id === id);
     if (locationIdRoute === "new") {
       return activeRequest;
-    } else if (locationIdRoute === "rejected") {
-      return rejectedRequest;
+    } else if (locationIdRoute === "denied") {
+      return deniedRequest;
     }
   }
 
   // FIND REQUEST FROM STATE
   const request: AppointmentRequest | undefined = useCollection();
 
-  // APPROVE & REJECT STATES
+  // APPROVE & DENY STATES
   const [isApproveActive, setIsApproveActive] = useState(false);
-  const [isRejectActive, setIsRejectActive] = useState(false);
+  const [isDenyActive, setIsDenyActive] = useState(false);
 
   // PHOTOS
   const [referencePhotoURL, setReferencePhotoURL] = useState("");
@@ -124,9 +124,9 @@ function AppointmentRequestById() {
         {request!.isRequestDenied === false && (
           <>
             <GoButton type="button" text="APPROVE" backgroundColor="green" onClick={() => setIsApproveActive(true)} />
-            <GoButton type="button" text="REJECT" backgroundColor="red" onClick={() => setIsRejectActive(true)} />
+            <GoButton type="button" text="REJECT" backgroundColor="red" onClick={() => setIsDenyActive(true)} />
             <ApproveModal isApproveActive={isApproveActive} setIsApproveActive={setIsApproveActive} request={request!} />
-            <RejectModal isRejectActive={isRejectActive} setIsRejectActive={setIsRejectActive} request={request!} />
+            <DenyModal isDenyActive={isDenyActive} setIsDenyActive={setIsDenyActive} request={request!} />
           </>
         )}
       </div>

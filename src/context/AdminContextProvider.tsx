@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { AppointmentRequest } from "../models/AppointmentRequest";
-import { fetchAppointmentRequests, fetchRejectedRequests } from "../services/AdminApiService";
+import { fetchAppointmentRequests, fetchDeniedRequests } from "../services/AdminApiService";
 import AdminContext from "./AdminContext";
 
 interface Props {
@@ -11,7 +11,7 @@ export default function AdminContextProvider({ children }: Props) {
   // STATES
   const [appointmentRequests, setAppointmentRequests] = useState<AppointmentRequest[]>([]);
   const [newAppointmentRequests, setNewAppointmentRequests] = useState<AppointmentRequest[]>([]);
-  const [rejectedRequests, setRejectedRequests] = useState<AppointmentRequest[]>([]);
+  const [deniedRequests, setDeniedRequests] = useState<AppointmentRequest[]>([]);
 
   // APPOINTMENT REQUESTS
   function handleAppointmentRequests(): void {
@@ -35,9 +35,9 @@ export default function AdminContextProvider({ children }: Props) {
   }, [appointmentRequests]);
   console.log(newAppointmentRequests);
 
-  // REJECTED REQUESTS
+  // DENIED REQUESTS
   useEffect(() => {
-    fetchRejectedRequests().then((data) => setRejectedRequests(data));
+    fetchDeniedRequests().then((data) => setDeniedRequests(data));
   }, []);
 
   return (
@@ -45,7 +45,7 @@ export default function AdminContextProvider({ children }: Props) {
       value={{
         appointmentRequests,
         newAppointmentRequests,
-        rejectedRequests,
+        deniedRequests,
         handleAppointmentRequests,
       }}
     >

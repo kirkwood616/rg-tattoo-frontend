@@ -44,7 +44,7 @@ export const requestTypes = [
     path: "canceled",
   },
   {
-    name: "REJECTED",
-    path: "rejected",
+    name: "DENIED",
+    path: "denied",
   },
 ];

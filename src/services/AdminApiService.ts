@@ -4,7 +4,7 @@ import AvailableAppointments from "../models/AvailableAppointments";
 
 const apiRequestAppointment = process.env.REACT_APP_API_REQUEST_ROUTE_LOCAL || "";
 const apiAvailableAppointments = process.env.REACT_APP_API_AVAILABLE_ROUTE_LOCAL || "";
-const apiRejectedAppointments = process.env.REACT_APP_API_REJECTED_ROUTE_LOCAL || "";
+const apiDeniedAppointments = process.env.REACT_APP_API_DENIED_ROUTE_LOCAL || "";
 const apiBaseRoute = process.env.REACT_APP_API_BASE_ROUTE || "";
 
 //// 1. APPOINTMENT REQUESTS
@@ -19,13 +19,13 @@ export function updateAppointmentRequest(id: string, appointmentRequest: Appoint
 }
 
 // REJECT
-export function rejectAppointmentRequest(id: string, appointmentRequest: AppointmentRequest): Promise<AvailableAppointments> {
+export function denyAppointmentRequest(id: string, appointmentRequest: AppointmentRequest): Promise<AvailableAppointments> {
   return axios.put(`${apiRequestAppointment}/reject/${id}`, appointmentRequest).then((res) => res.data);
 }
 
 // GET ALL REJECTED REQUESTS
-export function fetchRejectedRequests(): Promise<AppointmentRequest[]> {
-  return axios.get(apiRejectedAppointments).then((res) => res.data);
+export function fetchDeniedRequests(): Promise<AppointmentRequest[]> {
+  return axios.get(apiDeniedAppointments).then((res) => res.data);
 }
 
 //// 2. AVAILABLE APPOINTMENTS

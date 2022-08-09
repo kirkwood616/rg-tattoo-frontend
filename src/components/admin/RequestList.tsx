@@ -8,7 +8,7 @@ import AdminPage from "./AdminPage";
 
 function RequestList() {
   // CONTEXT
-  const { newAppointmentRequests, rejectedRequests } = useContext(AdminContext);
+  const { newAppointmentRequests, deniedRequests } = useContext(AdminContext);
 
   // REQUEST TYPE VARIABLES
   let requestType: AppointmentRequest[] | undefined = undefined;
@@ -25,9 +25,9 @@ function RequestList() {
       requestType = newAppointmentRequests;
       title = "New";
       break;
-    case "rejected":
-      requestType = rejectedRequests;
-      title = "Rejected";
+    case "denied":
+      requestType = deniedRequests;
+      title = "Denied";
       break;
     default:
       requestType = newAppointmentRequests;

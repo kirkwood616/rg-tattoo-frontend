@@ -1,4 +1,4 @@
-.reject-info {
+.deny-info {
   background-color: var(--light-gray-1);
   border-radius: 0.5rem;
   box-shadow: 0 5px 7px black;
@@ -10,7 +10,7 @@
   width: 95%;
 }
 
-.reject-info .reject-textarea {
+.deny-info .deny-textarea {
   border: 1px solid black;
   border-radius: 0.5rem;
   box-shadow: 2px 2px 5px var(--black);
@@ -23,12 +23,12 @@
   resize: vertical;
 }
 
-.reject-info > button {
+.deny-info > button {
   width: 95%;
 }
 
 @media only screen and (min-width: 600px) {
-  .reject-info {
+  .deny-info {
     width: 600px;
   }
 }

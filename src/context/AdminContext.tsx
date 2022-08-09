@@ -4,14 +4,14 @@ import { AppointmentRequest } from "../models/AppointmentRequest";
 interface AdminContextModel {
   appointmentRequests: AppointmentRequest[];
   newAppointmentRequests: AppointmentRequest[];
-  rejectedRequests: AppointmentRequest[];
+  deniedRequests: AppointmentRequest[];
   handleAppointmentRequests: () => void;
 }
 
 const defaultValue: AdminContextModel = {
   appointmentRequests: [],
   newAppointmentRequests: [],
-  rejectedRequests: [],
+  deniedRequests: [],
   handleAppointmentRequests: () => {},
 };
 
