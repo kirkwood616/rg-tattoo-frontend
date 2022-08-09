@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useContext, useState } from "react";
-import { NavigateFunction, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AdminContext from "../../../context/AdminContext";
 import AppContext from "../../../context/AppContext";
 import { AppointmentRequest } from "../../../models/AppointmentRequest";
@@ -16,11 +16,11 @@ interface Props {
 
 function RejectModal({ isRejectActive, setIsRejectActive, request }: Props) {
   // CONTEXT
-  let { setIsLoading } = useContext(AppContext);
-  let { handleAppointmentRequests } = useContext(AdminContext);
+  const { setIsLoading } = useContext(AppContext);
+  const { handleAppointmentRequests } = useContext(AdminContext);
 
   // NAVIGATE
-  const navigate: NavigateFunction = useNavigate();
+  const navigate = useNavigate();
 
   // STATE
   const [rejectionReason, setRejectionReason] = useState<string>("");

@@ -1,7 +1,8 @@
 .AppointmentRequests {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  padding: 0 1rem;
 }
 
 .AppointmentRequests .request_container {
@@ -9,9 +10,10 @@
   box-shadow: 0 3px 7px var(--black);
   font-weight: bold;
   margin-bottom: 1rem;
+  margin: 0 auto 1rem auto;
   overflow: hidden;
   text-align: center;
-  width: 95%;
+  width: 100%;
 }
 
 .request_container > a {
@@ -39,7 +41,7 @@
   padding: 1rem;
   position: relative;
   text-align: center;
-  width: 90%;
+  width: 100%;
 }
 
 .requests-menu-list_inactive {
@@ -75,6 +77,6 @@
 
 @media only screen and (min-width: 600px) {
   .AppointmentRequests .request_container {
-    width: 600px;
+    width: 550px;
   }
 }

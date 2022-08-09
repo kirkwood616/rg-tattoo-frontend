@@ -10,7 +10,7 @@ function AppointmentRequests() {
   return (
     <div className="AppointmentRequests">
       <div className="requests-menu" onClick={() => setIsMenuActive((prev) => !prev)}>
-        {menuItem}
+        MENU
         <div className={isMenuActive ? "requests-menu-list_active" : "requests-menu-list_inactive"}>
           {requestTypes.map((request, index) => (
             <Link to={request.path} key={request.name + index} state={request.path}>

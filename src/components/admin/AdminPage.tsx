@@ -1,5 +1,4 @@
 import { ReactNode, useEffect } from "react";
-import "../Page.css";
 
 interface Props {
   title: string;
@@ -9,11 +8,14 @@ interface Props {
 function AdminPage({ children, title }: Props) {
   useEffect(() => {
     document.title = `${title} | Rack Ruin`;
-    const delay = setTimeout(() => window.scrollTo(0, 0), 700);
-    return () => clearTimeout(delay);
+    window.scrollTo(0, 0);
   }, [title]);
 
-  return <section className="section">{children}</section>;
+  return (
+    <section className="admin-section" style={{ width: "100%" }}>
+      {children}
+    </section>
+  );
 }
 
 export default AdminPage;
