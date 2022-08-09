@@ -4,15 +4,15 @@ import { Link } from "react-router-dom";
 import AdminContext from "../../context/AdminContext";
 import { formatDate, formatTime } from "../../utils/Formatting";
 
-function RejectedRequests() {
+function DeniedRequests() {
   // CONTEXT
-  const { rejectedRequests } = useContext(AdminContext);
+  const { deniedRequests } = useContext(AdminContext);
 
   return (
     <>
       <h2>Rejected Requests</h2>
-      {rejectedRequests.length > 0 &&
-        rejectedRequests.map((request, index) => (
+      {deniedRequests.length > 0 &&
+        deniedRequests.map((request, index) => (
           <div className="request_container" key={request && index}>
             <Link to={`/admin/appointment-requests/rejected/${request._id}`}>
               <div className="request-info_container">
@@ -30,9 +30,9 @@ function RejectedRequests() {
             </Link>
           </div>
         ))}
-      {rejectedRequests.length === 0 && <h2>No New Requests</h2>}
+      {deniedRequests.length === 0 && <h2>No New Requests</h2>}
     </>
   );
 }
 
-export default RejectedRequests;
+export default DeniedRequests;
