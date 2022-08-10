@@ -1,0 +1,42 @@
+.requests-menu {
+  background-color: var(--light-gray-1);
+  border-radius: 0.5rem;
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 1rem;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.requests-menu-list_inactive {
+  display: none;
+}
+
+.requests-menu-list_active {
+  background-color: white;
+  border-radius: 0 0 0.5rem 0.5rem;
+  display: block;
+  font-weight: bold;
+  left: 0;
+  padding: 1rem;
+  position: absolute;
+  right: 0;
+  top: 2.75rem;
+  width: 100%;
+}
+.requests-menu-list_active a {
+  text-decoration: none;
+}
+
+.menu-link {
+  background-color: inherit;
+  border: none;
+  display: block;
+  font-size: inherit;
+  font-weight: bold;
+  margin: auto;
+  padding: 0.25rem;
+  width: 100%;
+}
