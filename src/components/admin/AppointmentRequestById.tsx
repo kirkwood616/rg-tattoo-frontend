@@ -124,7 +124,7 @@ function AppointmentRequestById() {
         {request!.isRequestDenied === false && (
           <>
             <GoButton type="button" text="APPROVE" backgroundColor="green" onClick={() => setIsApproveActive(true)} />
-            <GoButton type="button" text="REJECT" backgroundColor="red" onClick={() => setIsDenyActive(true)} />
+            <GoButton type="button" text="DENY" backgroundColor="red" onClick={() => setIsDenyActive(true)} />
             <ApproveModal isApproveActive={isApproveActive} setIsApproveActive={setIsApproveActive} request={request!} />
             <DenyModal isDenyActive={isDenyActive} setIsDenyActive={setIsDenyActive} request={request!} />
           </>

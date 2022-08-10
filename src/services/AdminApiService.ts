@@ -5,7 +5,6 @@ import AvailableAppointments from "../models/AvailableAppointments";
 const apiRequestAppointment = process.env.REACT_APP_API_REQUEST_ROUTE_LOCAL || "";
 const apiAvailableAppointments = process.env.REACT_APP_API_AVAILABLE_ROUTE_LOCAL || "";
 const apiDeniedAppointments = process.env.REACT_APP_API_DENIED_ROUTE_LOCAL || "";
-const apiBaseRoute = process.env.REACT_APP_API_BASE_ROUTE || "";
 
 //// 1. APPOINTMENT REQUESTS
 // GET ALL REQUESTS
