@@ -16,7 +16,7 @@ function RequestList() {
 
   // LOCATION
   const location = useLocation();
-  const locationListRoute = location.state;
+  const locationListRoute = location.state as string;
   const params = useParams();
 
   // ROUTE LOCATION LOGIC

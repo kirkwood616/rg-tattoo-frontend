@@ -24,27 +24,27 @@ export const tattooStyles = ["Linework", "Black & White", "Full Color", "Letteri
 // REQUEST TYPES
 export const requestTypes = [
   {
-    name: "NEW",
+    name: "new",
     path: "new",
   },
   {
-    name: "AWAITING DEPOSIT",
+    name: "awaiting deposit",
     path: "awaiting-deposit",
   },
   {
-    name: "DEPOSIT RECEIVED",
+    name: "deposit received",
     path: "deposit-received",
   },
   {
-    name: "COMPLETED",
+    name: "completed",
     path: "completed",
   },
   {
-    name: "CANCELED",
+    name: "canceled",
     path: "canceled",
   },
   {
-    name: "DENIED",
+    name: "denied",
     path: "denied",
   },
 ];

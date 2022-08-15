@@ -13,7 +13,7 @@ function AppointmentRequestMenu() {
         {requestTypes.map((request, index) => (
           <Link to={request.path} key={request.name + index} state={request.path}>
             <button className="menu-link" value={request.name}>
-              {request.name}
+              {request.name.toUpperCase()}
             </button>
           </Link>
         ))}
