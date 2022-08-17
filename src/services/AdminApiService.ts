@@ -19,7 +19,7 @@ export function updateAppointmentRequest(id: string, appointmentRequest: Appoint
 
 // REJECT
 export function denyAppointmentRequest(id: string, appointmentRequest: AppointmentRequest): Promise<AvailableAppointments> {
-  return axios.put(`${apiRequestAppointment}/reject/${id}`, appointmentRequest).then((res) => res.data);
+  return axios.put(`${apiRequestAppointment}/denied/${id}`, appointmentRequest).then((res) => res.data);
 }
 
 // GET ALL REJECTED REQUESTS

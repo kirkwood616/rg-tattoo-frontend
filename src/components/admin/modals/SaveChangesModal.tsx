@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { Dispatch, SetStateAction, useContext } from "react";
+import { useSWRConfig } from "swr";
 import AppContext from "../../../context/AppContext";
 import AvailableAppointments from "../../../models/AvailableAppointments";
 import { postAvailableAppointment, updateAvailableAppointment } from "../../../services/AdminApiService";
@@ -16,8 +17,10 @@ interface Props {
 }
 
 function SaveChangesModal({ isSaveActive, setIsSaveActive, dateId, startDate, appointmentTimes }: Props) {
+  const { mutate } = useSWRConfig();
+
   // CONTEXT
-  let { handleAvailableAppointments, setIsLoading } = useContext(AppContext);
+  let { setIsLoading } = useContext(AppContext);
 
   // SAVE CHANGES
   function handleOnSave(): void {
@@ -28,14 +31,15 @@ function SaveChangesModal({ isSaveActive, setIsSaveActive, dateId, startDate, ap
     };
     if (dateId) {
       updateAvailableAppointment(dateId, appointmentDateTimes)
-        .then(() => handleAvailableAppointments())
+        .then(() => mutate("available-appointments"))
+        .catch((error) => console.error(error))
         .then(() => {
           setIsLoading(false);
           setIsSaveActive(false);
         });
     } else {
       postAvailableAppointment(appointmentDateTimes)
-        .then(() => handleAvailableAppointments())
+        .catch((error) => console.error(error))
         .then(() => {
           setIsLoading(false);
           setIsSaveActive(false);

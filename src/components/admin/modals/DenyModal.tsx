@@ -29,13 +29,16 @@ function DenyModal({ isDenyActive, setIsDenyActive, request }: Props) {
   function onDeny(): void {
     const deniedRequest: AppointmentRequest = {
       ...request,
-      isRequestDenied: true,
+      requestStatus: "denied",
       deniedMessage: deniedReason,
+      isRequestClosed: true,
+      historyLog: [...request.historyLog, { dateCreated: new Date(), note: "Request Denied." }],
     };
     if (!deniedRequest._id) return;
     setIsLoading(true);
     denyAppointmentRequest(deniedRequest._id, deniedRequest)
       .then(() => handleAppointmentRequests())
+      .catch((error) => console.error(error))
       .then(() => {
         setDeniedReason("");
         setIsLoading(false);

@@ -1,22 +1,24 @@
 import { format } from "date-fns";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import useSWR from "swr";
 import { timePickerValues } from "../../admin/AdminSettings";
-import AppContext from "../../context/AppContext";
 import AvailableAppointments from "../../models/AvailableAppointments";
+import { getAvailableAppointments } from "../../services/ApiService";
 import { formatTime } from "../../utils/Formatting";
 import GoButton from "../buttons/GoButton";
 import RemoveButton from "../buttons/RemoveButton";
 import SaveButton from "../buttons/SaveButton";
+import LoadingDotsIcon from "../loading/LoadingDotsIcon";
 import AdminPage from "./AdminPage";
 import SaveChangesModal from "./modals/SaveChangesModal";
 import SelectTimesModal from "./modals/SelectTimesModal";
 import "./SetAvailableAppointments.css";
 
 function SetAvailableAppointments() {
-  // CONTEXT
-  let { availableAppointments } = useContext(AppContext);
+  // SWR
+  const { data: available, error } = useSWR("available-appointments", getAvailableAppointments, { revalidateOnFocus: false });
 
   // STATES
   const [appointmentTimes, setAppointmentTimes] = useState<string[]>([]);
@@ -28,7 +30,7 @@ function SetAvailableAppointments() {
 
   // CHECK FOR DATE IN DATABASE
   useEffect(() => {
-    const dateInDatabase: AvailableAppointments | undefined = availableAppointments.find((date) => date.date === format(startDate!, "MM-dd-yyyy"));
+    const dateInDatabase: AvailableAppointments | undefined = available?.find((date) => date.date === format(startDate!, "MM-dd-yyyy"));
 
     if (dateInDatabase) {
       setDateId(dateInDatabase._id!);
@@ -37,7 +39,7 @@ function SetAvailableAppointments() {
       setDateId("");
       setAppointmentTimes([]);
     }
-  }, [availableAppointments, startDate]);
+  }, [available, startDate]);
 
   // ADD TIME
   function addTime(time: string): void {
@@ -63,6 +65,8 @@ function SetAvailableAppointments() {
     setIsSaveActive(true);
   }
 
+  if (error) return <h1>Something went wrong!</h1>;
+  if (!available) return <LoadingDotsIcon />;
   return (
     <>
       <AdminPage title="Set Available Appointments">
