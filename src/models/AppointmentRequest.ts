@@ -14,22 +14,17 @@ export interface AppointmentRequest {
   placementPhotoPath: string;
   tattooDescription: string;
   requestConfirm: boolean;
-  // requestStatus: RequestStatus;
-  isRequestApproved: boolean; // remove?
-  isDepositReceived: boolean;
-  // depositAmmountReceived: number;
-  isRequestDenied: boolean; // remove?
+  requestStatus: RequestStatus;
+  depositAmmountReceived: number;
   deniedMessage?: string;
-  isRequestCanceled: boolean; // remove?
-  isCompleted: boolean; // remove?
   isRequestClosed: boolean;
   priceCharged: number;
-  notes: Note[];
+  historyLog: HistoryLogItem[];
 }
 
 export type RequestStatus = "new" | "awaiting-deposit" | "deposit-received" | "completed" | "canceled" | "denied";
 
-export interface Note {
-  dateCreated: string;
+export interface HistoryLogItem {
+  dateCreated: Date;
   note: string;
 }

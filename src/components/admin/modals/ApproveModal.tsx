@@ -26,7 +26,8 @@ function ApproveModal({ isApproveActive, setIsApproveActive, request }: Props) {
   function onApprove(): void {
     const approvedRequest: AppointmentRequest = {
       ...request,
-      isRequestApproved: true,
+      requestStatus: "awaiting-deposit",
+      historyLog: [...request.historyLog, { dateCreated: new Date(), note: "Request Approved. Awaiting Deposit." }],
     };
     if (!approvedRequest._id) return;
     setIsLoading(true);

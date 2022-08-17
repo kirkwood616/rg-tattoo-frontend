@@ -3,12 +3,13 @@ import { ref, uploadBytesResumable } from "firebase/storage";
 import { FormEvent, useContext, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
+import useSWR from "swr";
 import AppContext from "../context/AppContext";
 import RequestContext from "../context/RequestContext";
 import { storage } from "../firebaseConfig";
 import { AppointmentRequest } from "../models/AppointmentRequest";
 import AvailableAppointments from "../models/AvailableAppointments";
-import { postAppointmentRequest } from "../services/ApiService";
+import { getAvailableAppointments, postAppointmentRequest } from "../services/ApiService";
 import GoButton from "./buttons/GoButton";
 import LoadingDotsIcon from "./loading/LoadingDotsIcon";
 import Page from "./Page";
@@ -28,22 +29,25 @@ import "./RequestAppointment.css";
 
 function RequestAppointment() {
   // CONTEXT
-  let { availableAppointments, isLoading, setIsLoading } = useContext(AppContext);
+  let { setIsLoading } = useContext(AppContext);
   let { setAvailableAppointmentsTimes, state, dispatch } = useContext(RequestContext);
 
+  // SWR
+  const { data: available, error } = useSWR("/available-appointments", getAvailableAppointments, { revalidateOnFocus: false });
+
   // NAVIGATE
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   // CHECK FOR DATE IN DATABASE
   useEffect(() => {
     if (!state.startDate.value) return;
-    const dateInDatabase: AvailableAppointments | undefined = availableAppointments.find((date) => date.date === format(state.startDate.value!, "MM-dd-yyyy"));
+    const dateInDatabase: AvailableAppointments | undefined = available!.find((appointment) => appointment.date === format(state.startDate.value!, "MM-dd-yyyy"));
     if (dateInDatabase) {
       setAvailableAppointmentsTimes(dateInDatabase.availableTimes);
     } else {
       setAvailableAppointmentsTimes([]);
     }
-  }, [availableAppointments, setAvailableAppointmentsTimes, state.startDate.value]);
+  }, [state.startDate.value, available, setAvailableAppointmentsTimes]);
 
   // FILE UPLOAD
   function handleReferencePhotoUpload(): void {
@@ -82,23 +86,25 @@ function RequestAppointment() {
         placementPhotoPath: state.placementPhoto.value ? `${state.firstName.value}-${state.lastName!.value}-place-${state.placementPhoto.value.name}` : "",
         tattooDescription: state.tattooDescription.value,
         requestConfirm: state.requestConfirm.value,
-        isDepositReceived: false,
-        isRequestApproved: false,
-        isRequestDenied: false,
-        isRequestCanceled: false,
-        isCompleted: false,
+        requestStatus: "new",
+        depositAmmountReceived: 0,
         isRequestClosed: false,
         priceCharged: 0,
-        notes: [],
+        historyLog: [
+          {
+            dateCreated: new Date(),
+            note: "New Appointment Request Submitted",
+          },
+        ],
       };
       setIsLoading(true);
       postAppointmentRequest(newRequest)
         .then(() => {
           handleReferencePhotoUpload();
-          handlePlacementPhotoUpload();
+          if (state.placementPhoto.value) handlePlacementPhotoUpload();
         })
         .catch((error) => console.error(error))
-        .finally(() => {
+        .then(() => {
           setIsLoading(false);
           navigate("/request-submitted");
         });
@@ -106,6 +112,8 @@ function RequestAppointment() {
   }
 
   // RENDER
+  if (error) return <h1>Something went wrong!</h1>;
+  if (!available) return <LoadingDotsIcon />;
   return (
     <Page title="Request Appointment">
       <div className="RequestAppointment">
@@ -131,7 +139,6 @@ function RequestAppointment() {
           )}
         </form>
       </div>
-      {isLoading && <LoadingDotsIcon />}
     </Page>
   );
 }

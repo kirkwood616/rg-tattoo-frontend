@@ -25,7 +25,7 @@ export default function AdminContextProvider({ children }: Props) {
   // NEW APPOINTMENT REQUESTS
   useEffect(() => {
     const newRequests: AppointmentRequest[] | undefined = appointmentRequests.filter((request) => {
-      return !request.isRequestApproved && !request.isRequestDenied && !request.isDepositReceived && !request.isCompleted && !request.isRequestClosed;
+      return request.requestStatus === "new";
     });
     if (newRequests.length > 0) {
       setNewAppointmentRequests(newRequests);
