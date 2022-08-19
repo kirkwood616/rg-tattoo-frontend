@@ -21,6 +21,8 @@ export const timePickerValues: string[] | void = adminTimePickerValues("12:00 PM
 // TATTOO STYLES
 export const tattooStyles = ["Linework", "Black & White", "Full Color", "Lettering"];
 
+export const depositBaseValue: number = 50;
+
 // REQUEST TYPES
 export const requestTypes = [
   {

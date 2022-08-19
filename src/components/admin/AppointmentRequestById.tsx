@@ -1,42 +1,26 @@
 import { format } from "date-fns";
 import { getDownloadURL, ref, StorageReference } from "firebase/storage";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import AdminContext from "../../context/AdminContext";
+import useSWR from "swr";
 import { storage } from "../../firebaseConfig";
-import { AppointmentRequest } from "../../models/AppointmentRequest";
+import { getRequest } from "../../services/AdminApiService";
 import { formatTime } from "../../utils/Formatting";
-import GoButton from "../buttons/GoButton";
+import LoadingDotsIcon from "../loading/LoadingDotsIcon";
 import AdminPage from "./AdminPage";
 import "./AppointmentRequestById.css";
-import ApproveModal from "./modals/ApproveModal";
-import DenyModal from "./modals/DenyModal";
+import ReqActions from "./ReqActions";
 
 function AppointmentRequestById() {
-  // CONTEXT
-  const { appointmentRequests, deniedRequests } = useContext(AdminContext);
-
   // LOCATION
   const location = useLocation();
-  const locationIdRoute = location.state;
+  const locationIdRoute = location.state as string;
   const { id } = useParams();
 
-  function useCollection(): AppointmentRequest | undefined {
-    const activeRequest: AppointmentRequest | undefined = appointmentRequests.find((request) => request._id === id);
-    const deniedRequest: AppointmentRequest | undefined = deniedRequests.find((request) => request._id === id);
-    if (locationIdRoute === "new") {
-      return activeRequest;
-    } else if (locationIdRoute === "denied") {
-      return deniedRequest;
-    }
-  }
-
-  // FIND REQUEST FROM STATE
-  const request: AppointmentRequest | undefined = useCollection();
-
-  // APPROVE & DENY STATES
-  const [isApproveActive, setIsApproveActive] = useState(false);
-  const [isDenyActive, setIsDenyActive] = useState(false);
+  // SWR
+  const { data: request, error: requestError } = useSWR(`/appointment-requests/${locationIdRoute}/${id!}`, getRequest, {
+    revalidateOnFocus: false,
+  });
 
   // PHOTOS
   const [referencePhotoURL, setReferencePhotoURL] = useState("");
@@ -44,91 +28,107 @@ function AppointmentRequestById() {
 
   useEffect(() => {
     let isMounted = true;
-    const referencePhotoRef: StorageReference = ref(storage, `images/${request!.referencePhotoPath}`);
-    const placementPhotoRef: StorageReference = ref(storage, `images/${request!.placementPhotoPath}`);
+    if (request) {
+      const referencePhotoRef: StorageReference = ref(storage, `images/${request!.referencePhotoPath}`);
+      const placementPhotoRef: StorageReference = ref(storage, `images/${request!.placementPhotoPath}`);
 
-    const fetchImages = async () => {
-      if (request!.referencePhotoPath) {
-        getDownloadURL(referencePhotoRef)
-          .then((url) => {
-            if (isMounted) setReferencePhotoURL(url);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
+      const fetchImages = async () => {
+        if (request!.referencePhotoPath.length) {
+          getDownloadURL(referencePhotoRef)
+            .then((url) => {
+              if (isMounted) setReferencePhotoURL(url);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
 
-      if (request!.placementPhotoPath) {
-        getDownloadURL(placementPhotoRef)
-          .then((url) => {
-            if (isMounted) setPlacementPhotoURL(url);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    };
+        if (request!.placementPhotoPath.length) {
+          getDownloadURL(placementPhotoRef)
+            .then((url) => {
+              if (isMounted) setPlacementPhotoURL(url);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      };
 
-    fetchImages();
+      fetchImages();
+    }
     return () => {
       isMounted = false;
     };
   }, [request]);
 
+  if (requestError) return <h1>Something went wrong!</h1>;
+  if (!request) return <LoadingDotsIcon />;
   return (
     <AdminPage title="Request">
       <div className="AppointmentRequestById">
         <h1>Appointment Request</h1>
         <div className="request-table">
-          <div className="request-table-title">Requested Date</div>
-          <div className="request-table-info">{request!.requestDate}</div>
-          <div className="request-table-title">Requested Time</div>
-          <div className="request-table-info">{formatTime(request!.requestTime)}</div>
-          <div className="request-table-title">Name</div>
-          <div className="request-table-info">{`${request!.firstName} ${request!.lastName}`}</div>
-          <div className="request-table-title">Email</div>
-          <div className="request-table-info">
+          <div className="request-table_title">REQUEST STATUS</div>
+          <div className="request-table_info">{request!.requestStatus.toUpperCase()}</div>
+
+          <div className="request-table_title">Date Requested</div>
+          <div className="request-table_info">{request!.requestDate}</div>
+          <div className="request-table_title">Time Requested</div>
+          <div className="request-table_info">{formatTime(request!.requestTime)}</div>
+          <div className="request-table_title">Date Submitted</div>
+          <div className="request-table_info">{format(new Date(request!.requestSubmittedDate), "M/dd/yyyy @ h:mm a")}</div>
+
+          <div className="request-table_title">Name</div>
+          <div className="request-table_info">{`${request!.firstName} ${request!.lastName}`}</div>
+          <div className="request-table_title">Email</div>
+          <div className="request-table_info">
             <a href={`mailto: ${request!.email}`}>{request!.email}</a>
           </div>
-          <div className="request-table-title">Phone</div>
-          <div className="request-table-info">{request!.phoneNumber}</div>
-          <div className="request-table-title">Age</div>
-          <div className="request-table-info">{request!.age}</div>
-          <div className="request-table-title">Tattoo Style</div>
-          <div className="request-table-info">{request!.tattooStyle}</div>
-          <div className="request-table-title">Tattoo Placement</div>
-          <div className="request-table-info">{request!.tattooPlacement}</div>
-          <div className="request-table-title">Tattoo Description</div>
-          <div className="request-table-info" style={{ whiteSpace: "pre-line" }}>
+          <div className="request-table_title">Phone</div>
+          <div className="request-table_info">{request!.phoneNumber}</div>
+          <div className="request-table_title">Age</div>
+          <div className="request-table_info">{request!.age}</div>
+
+          <div className="request-table_title">Tattoo Style</div>
+          <div className="request-table_info">{request!.tattooStyle}</div>
+          <div className="request-table_title">Tattoo Placement</div>
+          <div className="request-table_info">{request!.tattooPlacement}</div>
+          <div className="request-table_title">Tattoo Description</div>
+          <div className="request-table_info" style={{ whiteSpace: "pre-line" }}>
             {request!.tattooDescription}
           </div>
-          <div className="request-table-title">Reference Photo</div>
-          <div className="request-table-info">
+          <div className="request-table_title">Reference Photo</div>
+          <div className="request-table_info">
             <a href={`${referencePhotoURL}`} target="_blank" rel="noopener noreferrer">
               {request!.referencePhotoPath}
             </a>
           </div>
-          <div className="request-table-title">Placement Photo</div>
-          <div className="request-table-info">
-            {request!.placementPhotoPath.length ? (
-              <a href={`${placementPhotoURL}`} target="_blank" rel="noopener noreferrer">
-                {request!.placementPhotoPath}
-              </a>
-            ) : (
-              "None"
-            )}
-          </div>
-          <div className="request-table-title">Request Submitted</div>
-          <div className="request-table-info">{format(new Date(request!.requestSubmittedDate), "M/dd/yyyy @ h:mm a")}</div>
+          {request!.placementPhotoPath && (
+            <>
+              <div className="request-table_title">Placement Photo</div>
+              <div className="request-table_info">
+                <a href={`${placementPhotoURL}`} target="_blank" rel="noopener noreferrer">
+                  {request!.placementPhotoPath}
+                </a>
+              </div>
+            </>
+          )}
+
+          <div className="request-table_title">HISTORY LOG</div>
+          {request!.historyLog.map((item, index) => (
+            <div className="request-table_info" key={String(item.dateCreated) + index}>
+              <p>{format(new Date(item.dateCreated), "M/dd/yyyy @ h:mm a")}</p>
+              {item.action && <p>{item.action}</p>}
+              {item.note && (
+                <>
+                  <p>Note:</p>
+                  <p>{item.note}</p>
+                </>
+              )}
+            </div>
+          ))}
         </div>
-        {request!.requestStatus === "new" && (
-          <>
-            <GoButton type="button" text="APPROVE" backgroundColor="green" onClick={() => setIsApproveActive(true)} />
-            <GoButton type="button" text="DENY" backgroundColor="red" onClick={() => setIsDenyActive(true)} />
-            <ApproveModal isApproveActive={isApproveActive} setIsApproveActive={setIsApproveActive} request={request!} />
-            <DenyModal isDenyActive={isDenyActive} setIsDenyActive={setIsDenyActive} request={request!} />
-          </>
-        )}
+        <ReqActions request={request} />
       </div>
     </AdminPage>
   );

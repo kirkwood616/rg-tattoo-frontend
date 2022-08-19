@@ -1,9 +1,8 @@
 import { Dispatch, SetStateAction, useContext } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import AdminContext from "../../../context/AdminContext";
 import AppContext from "../../../context/AppContext";
 import { AppointmentRequest } from "../../../models/AppointmentRequest";
-import { updateAppointmentRequest } from "../../../services/AdminApiService";
+import { approveNewRequest } from "../../../services/AdminApiService";
 import GoButton from "../../buttons/GoButton";
 import ModalWindow from "../../modals/ModalWindow";
 import "./ApproveModal.css";
@@ -17,7 +16,6 @@ interface Props {
 function ApproveModal({ isApproveActive, setIsApproveActive, request }: Props) {
   // CONTEXT
   let { setIsLoading } = useContext(AppContext);
-  let { handleAppointmentRequests } = useContext(AdminContext);
 
   // NAVIGATE
   const navigate: NavigateFunction = useNavigate();
@@ -27,17 +25,15 @@ function ApproveModal({ isApproveActive, setIsApproveActive, request }: Props) {
     const approvedRequest: AppointmentRequest = {
       ...request,
       requestStatus: "awaiting-deposit",
-      historyLog: [...request.historyLog, { dateCreated: new Date(), note: "Request Approved. Awaiting Deposit." }],
+      historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Request Approved. Awaiting Deposit." }],
     };
     if (!approvedRequest._id) return;
     setIsLoading(true);
-    updateAppointmentRequest(approvedRequest._id, approvedRequest)
-      .then(() => handleAppointmentRequests())
-      .then(() => {
-        setIsLoading(false);
-        setIsApproveActive(false);
-        navigate("/admin/appointment-requests");
-      });
+    approveNewRequest(approvedRequest._id, approvedRequest).then(() => {
+      setIsLoading(false);
+      setIsApproveActive(false);
+      navigate("/admin/appointment-requests");
+    });
   }
 
   return (

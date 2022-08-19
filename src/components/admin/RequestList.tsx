@@ -1,48 +1,40 @@
 import { format } from "date-fns";
-import { useContext } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
-import AdminContext from "../../context/AdminContext";
-import { AppointmentRequest } from "../../models/AppointmentRequest";
+import useSWR from "swr";
+import { getRequests } from "../../services/AdminApiService";
 import { formatDate, formatTime } from "../../utils/Formatting";
+import LoadingDotsIcon from "../loading/LoadingDotsIcon";
 import AdminPage from "./AdminPage";
 
 function RequestList() {
   // CONTEXT
-  const { newAppointmentRequests, deniedRequests } = useContext(AdminContext);
+  // const { newAppointmentRequests, deniedRequests } = useContext(AdminContext);
 
   // REQUEST TYPE VARIABLES
-  let requestType: AppointmentRequest[] | undefined = undefined;
-  let title: string = "";
+  // let requestType: AppointmentRequest[] | undefined = undefined;
 
   // LOCATION
   const location = useLocation();
   const locationListRoute = location.state as string;
   const params = useParams();
 
-  // ROUTE LOCATION LOGIC
-  switch (locationListRoute) {
-    case "new":
-      requestType = newAppointmentRequests;
-      title = "New";
-      break;
-    case "denied":
-      requestType = deniedRequests;
-      title = "Denied";
-      break;
-    default:
-      requestType = newAppointmentRequests;
-      title = "New";
-      break;
-  }
+  // SWR
+  const { data: requests, error: requestsError } = useSWR(`/appointment-requests/${locationListRoute}`, getRequests, {
+    revalidateOnFocus: false,
+  });
 
+  let title: string = locationListRoute[0].toUpperCase() + locationListRoute.substring(1);
+
+  if (requestsError) return <h1>Something went wrong!</h1>;
+  if (!requests) return <LoadingDotsIcon />;
   return (
     <AdminPage title={`${title} Requests`}>
       {params.id && <Outlet />}
       {!params.id && (
         <>
           <h2>{title} Requests</h2>
-          {requestType!.length > 0 &&
-            requestType!.map((request, index) => (
+          {requests!.length > 0 &&
+            requests!.map((request, index) => (
               <div className="request_container" key={request && index}>
                 <Link to={request._id!} state={locationListRoute}>
                   <div className="request-info_container">
@@ -60,7 +52,7 @@ function RequestList() {
                 </Link>
               </div>
             ))}
-          {requestType!.length === 0 && <h2>No {title} Requests</h2>}
+          {requests!.length === 0 && <h2>No {title} Requests</h2>}
         </>
       )}
     </AdminPage>

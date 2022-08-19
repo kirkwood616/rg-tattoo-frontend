@@ -20,16 +20,16 @@
   overflow-wrap: break-word;
 }
 
-.request-table .request-table-title {
+.request-table .request-table_title {
   background-color: var(--black);
 }
 
-.request-table .request-table-info {
+.request-table .request-table_info {
   background-color: white;
   color: black;
 }
-.request-table .request-table-title,
-.request-table-info {
+.request-table .request-table_title,
+.request-table_info {
   padding: 0.5rem 0;
 }
 
