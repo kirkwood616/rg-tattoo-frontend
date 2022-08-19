@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { AppointmentRequest } from "../models/AppointmentRequest";
-import { fetchAppointmentRequests, fetchDeniedRequests } from "../services/AdminApiService";
+import { fetchAppointmentRequests } from "../services/AdminApiService";
 import AdminContext from "./AdminContext";
 
 interface Props {
@@ -18,9 +18,9 @@ export default function AdminContextProvider({ children }: Props) {
     fetchAppointmentRequests().then((data) => setAppointmentRequests(data));
   }
 
-  useEffect(() => {
-    handleAppointmentRequests();
-  }, []);
+  // useEffect(() => {
+  //   handleAppointmentRequests();
+  // }, []);
 
   // NEW APPOINTMENT REQUESTS
   useEffect(() => {
@@ -36,9 +36,9 @@ export default function AdminContextProvider({ children }: Props) {
   console.log(newAppointmentRequests);
 
   // DENIED REQUESTS
-  useEffect(() => {
-    fetchDeniedRequests().then((data) => setDeniedRequests(data));
-  }, []);
+  // useEffect(() => {
+  //   fetchDeniedRequests().then((data) => setDeniedRequests(data));
+  // }, []);
 
   return (
     <AdminContext.Provider

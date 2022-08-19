@@ -26,5 +26,14 @@ export type RequestStatus = "new" | "awaiting-deposit" | "deposit-received" | "c
 
 export interface HistoryLogItem {
   dateCreated: Date;
-  note: string;
+  action?: HistoryAction;
+  note?: string;
 }
+
+export type HistoryAction =
+  | "New Appointment Request Submitted."
+  | "Request Approved. Awaiting Deposit."
+  | "Deposit Received. Appointment Scheduled."
+  | "Appointment Completed."
+  | "Appointment Canceled."
+  | "Request Denied.";

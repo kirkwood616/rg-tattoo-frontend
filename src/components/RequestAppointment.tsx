@@ -93,7 +93,7 @@ function RequestAppointment() {
         historyLog: [
           {
             dateCreated: new Date(),
-            note: "New Appointment Request Submitted",
+            action: "New Appointment Request Submitted.",
           },
         ],
       };

@@ -5,6 +5,7 @@ import AvailableAppointments from "../models/AvailableAppointments";
 const apiRequestAppointment = process.env.REACT_APP_API_REQUEST_ROUTE_LOCAL || "";
 const apiAvailableAppointments = process.env.REACT_APP_API_AVAILABLE_ROUTE_LOCAL || "";
 const apiDeniedAppointments = process.env.REACT_APP_API_DENIED_ROUTE_LOCAL || "";
+const apiBaseRoute = process.env.REACT_APP_API_BASE_ROUTE || "";
 
 //// 1. APPOINTMENT REQUESTS
 // GET ALL REQUESTS
@@ -36,4 +37,25 @@ export function postAvailableAppointment(appointment: AvailableAppointments): Pr
 // PUT
 export function updateAvailableAppointment(id: string, appointmentDateTimes: AvailableAppointments): Promise<AvailableAppointments> {
   return axios.put(`${apiAvailableAppointments}/${id}`, appointmentDateTimes).then((res) => res.data);
+}
+
+// SWR
+export async function getRequests(url: string): Promise<AppointmentRequest[]> {
+  const res = await axios.get(`${apiBaseRoute}/${url}`);
+  return res.data;
+}
+
+export async function getRequest(url: string): Promise<AppointmentRequest> {
+  const res = await axios.get(`${apiBaseRoute}/${url}`);
+  return res.data;
+}
+
+export async function approveNewRequest(id: string, request: AppointmentRequest) {
+  const res = await axios.put(`${apiBaseRoute}/appointment-requests/new/approve/${id}`, request);
+  return res.data;
+}
+
+export async function depositReceivedRequest(id: string, request: AppointmentRequest) {
+  const res = await axios.put(`${apiBaseRoute}/appointment-requests/awaiting-deposit/received/${id}`, request);
+  return res.data;
 }

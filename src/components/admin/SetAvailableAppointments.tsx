@@ -18,7 +18,7 @@ import "./SetAvailableAppointments.css";
 
 function SetAvailableAppointments() {
   // SWR
-  const { data: available, error } = useSWR("available-appointments", getAvailableAppointments, { revalidateOnFocus: false });
+  const { data: available, error } = useSWR("/available-appointments", getAvailableAppointments, { revalidateOnFocus: false });
 
   // STATES
   const [appointmentTimes, setAppointmentTimes] = useState<string[]>([]);

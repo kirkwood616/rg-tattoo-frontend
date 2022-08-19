@@ -32,7 +32,7 @@ function DenyModal({ isDenyActive, setIsDenyActive, request }: Props) {
       requestStatus: "denied",
       deniedMessage: deniedReason,
       isRequestClosed: true,
-      historyLog: [...request.historyLog, { dateCreated: new Date(), note: "Request Denied." }],
+      historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Request Denied." }],
     };
     if (!deniedRequest._id) return;
     setIsLoading(true);
@@ -49,7 +49,6 @@ function DenyModal({ isDenyActive, setIsDenyActive, request }: Props) {
 
   // CANCEL
   function onCancel(): void {
-    setDeniedReason("");
     setIsDenyActive(false);
   }
 

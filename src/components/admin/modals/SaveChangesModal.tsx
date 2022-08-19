@@ -31,7 +31,7 @@ function SaveChangesModal({ isSaveActive, setIsSaveActive, dateId, startDate, ap
     };
     if (dateId) {
       updateAvailableAppointment(dateId, appointmentDateTimes)
-        .then(() => mutate("available-appointments"))
+        .then(() => mutate("/available-appointments"))
         .catch((error) => console.error(error))
         .then(() => {
           setIsLoading(false);
