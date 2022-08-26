@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useContext } from "react";
-import { NavigateFunction, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AppContext from "../../../context/AppContext";
 import { AppointmentRequest } from "../../../models/AppointmentRequest";
 import { approveNewRequest } from "../../../services/AdminApiService";
@@ -15,10 +15,10 @@ interface Props {
 
 function ApproveModal({ isApproveActive, setIsApproveActive, request }: Props) {
   // CONTEXT
-  let { setIsLoading } = useContext(AppContext);
+  const { setIsLoading } = useContext(AppContext);
 
   // NAVIGATE
-  const navigate: NavigateFunction = useNavigate();
+  const navigate = useNavigate();
 
   // APPROVE
   function onApprove(): void {
@@ -29,7 +29,7 @@ function ApproveModal({ isApproveActive, setIsApproveActive, request }: Props) {
     };
     if (!approvedRequest._id) return;
     setIsLoading(true);
-    approveNewRequest(approvedRequest._id, approvedRequest).then(() => {
+    approveNewRequest(approvedRequest).then(() => {
       setIsLoading(false);
       setIsApproveActive(false);
       navigate("/admin/appointment-requests");

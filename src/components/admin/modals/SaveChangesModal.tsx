@@ -39,6 +39,7 @@ function SaveChangesModal({ isSaveActive, setIsSaveActive, dateId, startDate, ap
         });
     } else {
       postAvailableAppointment(appointmentDateTimes)
+        .then(() => mutate("/available-appointments"))
         .catch((error) => console.error(error))
         .then(() => {
           setIsLoading(false);

@@ -33,7 +33,6 @@ export default function AdminContextProvider({ children }: Props) {
       return;
     }
   }, [appointmentRequests]);
-  console.log(newAppointmentRequests);
 
   // DENIED REQUESTS
   // useEffect(() => {

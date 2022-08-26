@@ -1,18 +1,21 @@
 import { AppointmentRequest } from "../../models/AppointmentRequest";
-import ReqActionsAwaitingDeposit from "./ReqActionsAwaitingDeposit";
-import ReqActionsNew from "./ReqActionsNew";
+import ClosedRequestActions from "./ClosedRequestActions";
+import OpenRequestActions from "./OpenRequestActions";
+import "./ReqActions.css";
 
 interface Props {
   request: AppointmentRequest;
 }
 
 function ReqActions({ request }: Props) {
-  return (
-    <>
-      {request.requestStatus === "new" && <ReqActionsNew request={request} />}
-      {request.requestStatus === "awaiting-deposit" && <ReqActionsAwaitingDeposit request={request} />}
-    </>
-  );
+  switch (request.requestStatus) {
+    case "new":
+    case "awaiting-deposit":
+    case "deposit-received":
+      return <OpenRequestActions request={request} />;
+    default:
+      return <ClosedRequestActions request={request} />;
+  }
 }
 
 export default ReqActions;

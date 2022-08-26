@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AppointmentRequest } from "../../models/AppointmentRequest";
 import GoButton from "../buttons/GoButton";
-import ApproveModal from "./modals/ApproveModal";
+import ActionModal from "./modals/ActionModal";
 import DenyModal from "./modals/DenyModal";
 
 interface Props {
@@ -16,7 +16,9 @@ function ReqActionsNew({ request }: Props) {
     <>
       <GoButton type="button" text="APPROVE" backgroundColor="green" onClick={() => setIsApproveActive(true)} />
       <GoButton type="button" text="DENY" backgroundColor="red" onClick={() => setIsDenyActive(true)} />
-      {isApproveActive && <ApproveModal isApproveActive={isApproveActive} setIsApproveActive={setIsApproveActive} request={request} />}
+      {isApproveActive && (
+        <ActionModal request={request} isActive={isApproveActive} setIsActive={setIsApproveActive} modalClassName="approving-request" submitButtonText="APPROVE" />
+      )}
       {isDenyActive && <DenyModal isDenyActive={isDenyActive} setIsDenyActive={setIsDenyActive} request={request} />}
     </>
   );

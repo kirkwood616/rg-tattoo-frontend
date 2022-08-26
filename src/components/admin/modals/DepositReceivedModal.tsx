@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { depositBaseValue } from "../../../admin/AdminSettings";
 import AppContext from "../../../context/AppContext";
 import { AppointmentRequest } from "../../../models/AppointmentRequest";
-import { depositReceivedRequest } from "../../../services/AdminApiService";
+import { sendDepositReceivedRequest } from "../../../services/AdminApiService";
 import GoButton from "../../buttons/GoButton";
 import ModalWindow from "../../modals/ModalWindow";
 
@@ -21,7 +21,6 @@ function DepositReceivedModal({ request, isReceivedActive, setIsReceivedActive }
 
   // STATE
   const [depositAmmount, setDepositAmmount] = useState(depositBaseValue);
-  console.log(depositAmmount);
 
   // NAVIGATE
   const navigate = useNavigate();
@@ -35,7 +34,7 @@ function DepositReceivedModal({ request, isReceivedActive, setIsReceivedActive }
       historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Deposit Received. Appointment Scheduled." }],
     };
     setIsLoading(true);
-    depositReceivedRequest(requestWithDeposit._id!, requestWithDeposit)
+    sendDepositReceivedRequest(requestWithDeposit)
       .catch((error) => console.error(error))
       .then(() => {
         setIsLoading(false);
@@ -44,17 +43,12 @@ function DepositReceivedModal({ request, isReceivedActive, setIsReceivedActive }
       });
   }
 
-  // CANCEL
-  function onCancel(): void {
-    setIsReceivedActive(false);
-  }
-
   return (
     <ModalWindow isActive={isReceivedActive} setIsActive={setIsReceivedActive} className={"deposit-confirm"}>
       <label htmlFor="ammount">Ammount Received: </label>
       <input type="number" id="ammount" min={0} value={depositAmmount} onChange={(e) => setDepositAmmount(Number(e.target.value))} />
       <GoButton type="button" text="SUBMIT" backgroundColor="green" onClick={onReceived} />
-      <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={onCancel} />
+      <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={() => setIsReceivedActive(false)} />
     </ModalWindow>
   );
 }

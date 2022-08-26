@@ -36,9 +36,9 @@ function App() {
               <Route index element={<AdminHome />} />
               <Route path="home" element={<AdminHome />} />
               <Route path="appointment-requests" element={<AppointmentRequests />}>
-                {requestTypes.map((request) => (
-                  <Route path={request.path} element={<RequestList />} key={request.name + request.path}>
-                    <Route path=":id" element={<AppointmentRequestById />} />
+                {requestTypes.map((request, index) => (
+                  <Route path={":route"} element={<RequestList />} key={request.name + request.path}>
+                    <Route path=":id" element={<AppointmentRequestById />} key={request.name + request.path + index} />
                   </Route>
                 ))}
               </Route>
