@@ -18,12 +18,11 @@ import "./SetAvailableAppointments.css";
 
 function SetAvailableAppointments() {
   // SWR
-  const { data: available, error } = useSWR("/available-appointments", getAvailableAppointments, { revalidateOnFocus: false });
+  const { data: available, error: availableError } = useSWR("/available-appointments", getAvailableAppointments, { revalidateOnFocus: false });
 
   // STATES
   const [appointmentTimes, setAppointmentTimes] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<Date | undefined>(new Date());
-  const [startTime, setStartTime] = useState<string>("");
   const [dateId, setDateId] = useState<string>("");
   const [isTimesActive, setIsTimesActive] = useState<boolean>(false);
   const [isSaveActive, setIsSaveActive] = useState<boolean>(false);
@@ -65,7 +64,7 @@ function SetAvailableAppointments() {
     setIsSaveActive(true);
   }
 
-  if (error) return <h1>Something went wrong!</h1>;
+  if (availableError) return <h1>Something went wrong!</h1>;
   if (!available) return <LoadingDotsIcon />;
   return (
     <>
@@ -95,24 +94,21 @@ function SetAvailableAppointments() {
               ))}
             {appointmentTimes.length <= 0 && (
               <label htmlFor="time-picker">
-                <div className="no-times-set">NO TIMES SET</div>
+                <div className="no-times-set" onClick={() => setIsTimesActive(true)}>
+                  NO TIMES SET
+                </div>
               </label>
             )}
           </div>
 
-          <div className="time-picker_container">
-            <span className="label">
-              <label htmlFor="time-picker">Times:</label>
-            </span>
-            <input type="text" name="time-picker" id="time-picker" placeholder="Select Time" value={formatTime(startTime)} onClick={() => setIsTimesActive(true)} readOnly />
-          </div>
-
-          <GoButton type="button" text="ADD TIME" backgroundColor="#007bff" onClick={() => addTime(startTime!)} />
+          <GoButton type="button" text="ADD TIME" backgroundColor="#007bff" onClick={() => setIsTimesActive(true)} />
         </div>
 
-        {isTimesActive && <SelectTimesModal timeValues={timePickerValues} isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} setStartTime={setStartTime} />}
+        {isTimesActive && <SelectTimesModal isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} addTime={addTime} />}
 
-        <SaveChangesModal isSaveActive={isSaveActive} setIsSaveActive={setIsSaveActive} dateId={dateId} startDate={startDate!} appointmentTimes={appointmentTimes} />
+        {isSaveActive && (
+          <SaveChangesModal isSaveActive={isSaveActive} setIsSaveActive={setIsSaveActive} dateId={dateId} startDate={startDate!} appointmentTimes={appointmentTimes} />
+        )}
       </AdminPage>
 
       <div className="save-changes">

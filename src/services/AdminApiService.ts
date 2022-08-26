@@ -19,8 +19,9 @@ export function updateAppointmentRequest(id: string, appointmentRequest: Appoint
 }
 
 // REJECT
-export function denyAppointmentRequest(id: string, appointmentRequest: AppointmentRequest): Promise<AvailableAppointments> {
-  return axios.put(`${apiRequestAppointment}/denied/${id}`, appointmentRequest).then((res) => res.data);
+export async function denyAppointmentRequest(request: AppointmentRequest): Promise<AvailableAppointments> {
+  const res = await axios.put(`${apiRequestAppointment}/denied/${request._id}`, request);
+  return res.data;
 }
 
 // GET ALL REJECTED REQUESTS
@@ -50,12 +51,27 @@ export async function getRequest(url: string): Promise<AppointmentRequest> {
   return res.data;
 }
 
-export async function approveNewRequest(id: string, request: AppointmentRequest) {
-  const res = await axios.put(`${apiBaseRoute}/appointment-requests/new/approve/${id}`, request);
+export async function approveNewRequest(request: AppointmentRequest) {
+  const res = await axios.put(`${apiBaseRoute}/appointment-requests/new/approve/${request._id}`, request);
   return res.data;
 }
 
-export async function depositReceivedRequest(id: string, request: AppointmentRequest) {
-  const res = await axios.put(`${apiBaseRoute}/appointment-requests/awaiting-deposit/received/${id}`, request);
+export async function sendDepositReceivedRequest(request: AppointmentRequest) {
+  const res = await axios.put(`${apiBaseRoute}/appointment-requests/awaiting-deposit/received/${request._id}`, request);
+  return res.data;
+}
+
+export async function sendCompletedRequest(request: AppointmentRequest) {
+  const res = await axios.put(`${apiBaseRoute}/appointment-requests/deposit-received/completed/${request._id}`, request);
+  return res.data;
+}
+
+export async function sendCanceledRequest(request: AppointmentRequest) {
+  const res = await axios.put(`${apiBaseRoute}/appointment-requests/cancel-request/${request._id}`, request);
+  return res.data;
+}
+
+export async function putClosedRequest(request: AppointmentRequest) {
+  const res = await axios.put(`${apiBaseRoute}/archive/update/${request._id}`, request);
   return res.data;
 }

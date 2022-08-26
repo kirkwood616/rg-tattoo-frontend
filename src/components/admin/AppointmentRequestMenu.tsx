@@ -7,16 +7,24 @@ function AppointmentRequestMenu() {
   const [isMenuActive, setIsMenuActive] = useState(false);
 
   return (
-    <div className="requests-menu" onClick={() => setIsMenuActive((prev) => !prev)}>
-      MENU
-      <div className={isMenuActive ? "requests-menu-list_active" : "requests-menu-list_inactive"}>
-        {requestTypes.map((request, index) => (
-          <Link to={request.path} key={request.name + index} state={request.path}>
-            <button className="menu-link" value={request.name}>
-              {request.name.toUpperCase()}
-            </button>
-          </Link>
-        ))}
+    <div className={isMenuActive ? "menu-container" : "menu-container menu-container_hide"} onClick={() => setIsMenuActive(false)}>
+      <div
+        className={isMenuActive ? "requests-menu open" : "requests-menu"}
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsMenuActive((prev) => !prev);
+        }}
+      >
+        REQUESTS MENU
+        <div className={isMenuActive ? "requests-menu-list active" : "requests-menu-list inactive"}>
+          {requestTypes.map((request, index) => (
+            <Link to={request.path} key={request.name + index}>
+              <button className="menu-link" value={request.name}>
+                {request.name.toUpperCase()}
+              </button>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

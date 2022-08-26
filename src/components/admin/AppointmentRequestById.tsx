@@ -1,24 +1,22 @@
 import { format } from "date-fns";
 import { getDownloadURL, ref, StorageReference } from "firebase/storage";
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
 import useSWR from "swr";
 import { storage } from "../../firebaseConfig";
 import { getRequest } from "../../services/AdminApiService";
-import { formatTime } from "../../utils/Formatting";
+import { formatDate, formatTime } from "../../utils/Formatting";
 import LoadingDotsIcon from "../loading/LoadingDotsIcon";
 import AdminPage from "./AdminPage";
 import "./AppointmentRequestById.css";
+import useLocationRoute from "./hooks/useLocationRoute";
 import ReqActions from "./ReqActions";
 
 function AppointmentRequestById() {
   // LOCATION
-  const location = useLocation();
-  const locationIdRoute = location.state as string;
-  const { id } = useParams();
+  const { route, id, title } = useLocationRoute();
 
   // SWR
-  const { data: request, error: requestError } = useSWR(`/appointment-requests/${locationIdRoute}/${id!}`, getRequest, {
+  const { data: request, error: requestError } = useSWR(`appointment-requests/${route}/${id}`, getRequest, {
     revalidateOnFocus: false,
   });
 
@@ -33,7 +31,7 @@ function AppointmentRequestById() {
       const placementPhotoRef: StorageReference = ref(storage, `images/${request!.placementPhotoPath}`);
 
       const fetchImages = async () => {
-        if (request!.referencePhotoPath.length) {
+        if (request!.referencePhotoPath.length > 0) {
           getDownloadURL(referencePhotoRef)
             .then((url) => {
               if (isMounted) setReferencePhotoURL(url);
@@ -43,13 +41,13 @@ function AppointmentRequestById() {
             });
         }
 
-        if (request!.placementPhotoPath.length) {
+        if (request!.placementPhotoPath.length > 0) {
           getDownloadURL(placementPhotoRef)
             .then((url) => {
               if (isMounted) setPlacementPhotoURL(url);
             })
             .catch((error) => {
-              console.log(error);
+              console.error(error);
             });
         }
       };
@@ -61,75 +59,99 @@ function AppointmentRequestById() {
     };
   }, [request]);
 
+  // RENDER
   if (requestError) return <h1>Something went wrong!</h1>;
   if (!request) return <LoadingDotsIcon />;
   return (
-    <AdminPage title="Request">
+    <AdminPage title={`${title} Request`}>
       <div className="AppointmentRequestById">
-        <h1>Appointment Request</h1>
-        <div className="request-table">
-          <div className="request-table_title">REQUEST STATUS</div>
-          <div className="request-table_info">{request!.requestStatus.toUpperCase()}</div>
+        <h2>{title} Request</h2>
 
-          <div className="request-table_title">Date Requested</div>
-          <div className="request-table_info">{request!.requestDate}</div>
-          <div className="request-table_title">Time Requested</div>
-          <div className="request-table_info">{formatTime(request!.requestTime)}</div>
-          <div className="request-table_title">Date Submitted</div>
-          <div className="request-table_info">{format(new Date(request!.requestSubmittedDate), "M/dd/yyyy @ h:mm a")}</div>
+        <section className="request-section_container">
+          <div className="request-section_title">REQUEST DETAILS</div>
+          <div className="request-item_title">REQUEST STATUS</div>
+          <div className="request-item_info">{request!.requestStatus.replace("-", " ").toUpperCase()}</div>
+          <div className="request-item_title">REQUESTED DATE</div>
+          <div className="request-item_info">{formatDate(request!.requestDate)}</div>
+          <div className="request-item_title">REQUESTED TIME</div>
+          <div className="request-item_info">{formatTime(request!.requestTime)}</div>
+          <div className="request-item_title">SUBMITTED DATE</div>
+          <div className="request-item_info">{format(new Date(request!.requestSubmittedDate), "M/dd/yyyy @ h:mm a")}</div>
+          {request.depositAmmountReceived > 0 && (
+            <>
+              <div className="request-item_title">DEPOSIT RECEIVED</div>
+              <div className="request-item_info">${request.depositAmmountReceived}</div>
+            </>
+          )}
+          {request.priceCharged > 0 && (
+            <>
+              <div className="request-item_title">PRICE CHARGED</div>
+              <div className="request-item_info">${request.priceCharged}</div>
+            </>
+          )}
+        </section>
 
-          <div className="request-table_title">Name</div>
-          <div className="request-table_info">{`${request!.firstName} ${request!.lastName}`}</div>
-          <div className="request-table_title">Email</div>
-          <div className="request-table_info">
+        <section className="request-section_container">
+          <div className="request-section_title">CUSTOMER DETAILS</div>
+          <div className="request-item_title">NAME</div>
+          <div className="request-item_info">{`${request!.firstName} ${request!.lastName}`}</div>
+          <div className="request-item_title">AGE</div>
+          <div className="request-item_info">{request!.age}</div>
+          <div className="request-item_title">EMAIL</div>
+          <div className="request-item_info">
             <a href={`mailto: ${request!.email}`}>{request!.email}</a>
           </div>
-          <div className="request-table_title">Phone</div>
-          <div className="request-table_info">{request!.phoneNumber}</div>
-          <div className="request-table_title">Age</div>
-          <div className="request-table_info">{request!.age}</div>
+          <div className="request-item_title">PHONE</div>
+          <div className="request-item_info">{request!.phoneNumber}</div>
+        </section>
 
-          <div className="request-table_title">Tattoo Style</div>
-          <div className="request-table_info">{request!.tattooStyle}</div>
-          <div className="request-table_title">Tattoo Placement</div>
-          <div className="request-table_info">{request!.tattooPlacement}</div>
-          <div className="request-table_title">Tattoo Description</div>
-          <div className="request-table_info" style={{ whiteSpace: "pre-line" }}>
+        <section className="request-section_container">
+          <div className="request-section_title">DETAILS</div>
+          <div className="request-item_title">STYLE</div>
+          <div className="request-item_info">{request!.tattooStyle}</div>
+          <div className="request-item_title">PLACEMENT</div>
+          <div className="request-item_info">{request!.tattooPlacement}</div>
+          <div className="request-item_title">DESCRIPTION</div>
+          <div className="request-item_info" style={{ whiteSpace: "pre-line" }}>
             {request!.tattooDescription}
           </div>
-          <div className="request-table_title">Reference Photo</div>
-          <div className="request-table_info">
+          <div className="request-item_title">Reference Photo</div>
+          <div className="request-item_info">
             <a href={`${referencePhotoURL}`} target="_blank" rel="noopener noreferrer">
               {request!.referencePhotoPath}
             </a>
           </div>
           {request!.placementPhotoPath && (
             <>
-              <div className="request-table_title">Placement Photo</div>
-              <div className="request-table_info">
+              <div className="request-item_title">Placement Photo</div>
+              <div className="request-item_info">
                 <a href={`${placementPhotoURL}`} target="_blank" rel="noopener noreferrer">
                   {request!.placementPhotoPath}
                 </a>
               </div>
             </>
           )}
+        </section>
 
-          <div className="request-table_title">HISTORY LOG</div>
+        <section className="request-section_container">
+          <div className="request-section_title">HISTORY LOG</div>
           {request!.historyLog.map((item, index) => (
-            <div className="request-table_info" key={String(item.dateCreated) + index}>
-              <p>{format(new Date(item.dateCreated), "M/dd/yyyy @ h:mm a")}</p>
-              {item.action && <p>{item.action}</p>}
-              {item.note && (
-                <>
-                  <p>Note:</p>
-                  <p>{item.note}</p>
-                </>
-              )}
+            <div className="request-log_container" key={String(item.dateCreated) + index}>
+              <div className="request-item_title">{format(new Date(item.dateCreated), "M/dd/yyyy @ h:mm a")}</div>
+              <div className="request-item_info">
+                {item.action && <p>{item.action}</p>}
+                {item.note && (
+                  <>
+                    <p>Note:</p>
+                    <p>{item.note}</p>
+                  </>
+                )}
+              </div>
             </div>
           ))}
-        </div>
-        <ReqActions request={request} />
+        </section>
       </div>
+      <ReqActions request={request} />
     </AdminPage>
   );
 }
