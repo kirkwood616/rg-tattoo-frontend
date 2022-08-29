@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AdminContext from "../../../context/AdminContext";
 import AppContext from "../../../context/AppContext";
 import { AppointmentRequest } from "../../../models/AppointmentRequest";
 import { denyAppointmentRequest } from "../../../services/AdminApiService";
 import GoButton from "../../buttons/GoButton";
 import ModalWindow from "../../modals/ModalWindow";
+import AddNote from "../AddNote";
 import "./DenyModal.css";
 
 interface Props {
@@ -17,45 +17,52 @@ interface Props {
 function DenyModal({ isDenyActive, setIsDenyActive, request }: Props) {
   // CONTEXT
   const { setIsLoading } = useContext(AppContext);
-  const { handleAppointmentRequests } = useContext(AdminContext);
 
   // NAVIGATE
   const navigate = useNavigate();
 
   // STATE
   const [deniedReason, setDeniedReason] = useState<string>("");
+  const [newNote, setNewNote] = useState("");
 
   // DENY
   function onDeny(): void {
-    const deniedRequest: AppointmentRequest = {
-      ...request,
-      isRequestDenied: true,
-      deniedMessage: deniedReason,
-    };
-    if (!deniedRequest._id) return;
+    let deniedRequest: AppointmentRequest;
+    if (newNote.length > 0) {
+      deniedRequest = {
+        ...request,
+        requestStatus: "denied",
+        deniedMessage: deniedReason,
+        isRequestClosed: true,
+        historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Request Denied.", note: newNote }],
+      };
+    } else {
+      deniedRequest = {
+        ...request,
+        requestStatus: "denied",
+        deniedMessage: deniedReason,
+        isRequestClosed: true,
+        historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Request Denied." }],
+      };
+    }
     setIsLoading(true);
-    denyAppointmentRequest(deniedRequest._id, deniedRequest)
-      .then(() => handleAppointmentRequests())
+    denyAppointmentRequest(deniedRequest)
+      .catch((error) => console.error(error))
       .then(() => {
-        setDeniedReason("");
         setIsLoading(false);
         setIsDenyActive(false);
-      })
-      .then(() => navigate("/admin/appointment-requests"));
-  }
-
-  // CANCEL
-  function onCancel(): void {
-    setDeniedReason("");
-    setIsDenyActive(false);
+        navigate("/admin/appointment-requests");
+      });
   }
 
   return (
     <ModalWindow isActive={isDenyActive} setIsActive={setIsDenyActive} className="deny-info">
-      Please provide a reason for denying this request. <br /> <br />
+      <p>Please provide a reason for denying this request.</p>
+      <p>* This message will appear in the client's denied notification email. *</p>
       <textarea id="denyReason" name="denyReason" className="deny-textarea" value={deniedReason} onChange={(e) => setDeniedReason(e.target.value)} />
+      <AddNote request={request} note={newNote} setNote={setNewNote} />
       <GoButton type="button" text="DENY" backgroundColor="green" onClick={onDeny} />
-      <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={onCancel} />
+      <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={() => setIsDenyActive(false)} />
     </ModalWindow>
   );
 }

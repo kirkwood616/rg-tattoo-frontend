@@ -1,5 +1,5 @@
 import { User } from "firebase/auth";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import AvailableAppointments from "../models/AvailableAppointments";
 import { fetchAvailableAppointments } from "../services/ApiService";
 import AppContext from "./AppContext";
@@ -19,9 +19,9 @@ export default function AppContextProvider({ children }: Props) {
     fetchAvailableAppointments().then((data) => setAvailableAppointments(data));
   }
 
-  useEffect(() => {
-    handleAvailableAppointments();
-  }, []);
+  // useEffect(() => {
+  //   handleAvailableAppointments();
+  // }, []);
 
   return (
     <AppContext.Provider

@@ -5,13 +5,14 @@ import AppContext from "../../context/AppContext";
 import { auth } from "../../firebaseConfig";
 import GoButton from "../buttons/GoButton";
 import ErrorMessage from "../ErrorMessage";
+import LoadingDotsIcon from "../loading/LoadingDotsIcon";
 import "./LogIn.css";
 
 function LogIn() {
   // CONTEXT
   let { user, setUser, setIsLoading } = useContext(AppContext);
 
-  // STATES
+  // STATE
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -21,16 +22,16 @@ function LogIn() {
 
   // USER CHECK
   useEffect(() => {
-    if (user) {
-      navigate("/admin/home");
-    }
-  }, [navigate, user]);
-
-  // AUTH
-  onAuthStateChanged(auth, (currentUser) => {
-    if (currentUser) setUser(currentUser);
-    else setUser(null);
-  });
+    const authChange = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+        navigate("/admin/home");
+      } else {
+        setUser(null);
+      }
+    });
+    return authChange;
+  }, []);
 
   async function handleLogIn() {
     setIsLoading(true);
@@ -51,6 +52,7 @@ function LogIn() {
     handleLogIn();
   }
 
+  if (!user) return <LoadingDotsIcon />;
   return (
     <div className="LogIn">
       <form onSubmit={onSubmit}>

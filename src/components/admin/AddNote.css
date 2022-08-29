@@ -1,0 +1,44 @@
+.AddNote {
+  background-color: blue;
+  border-radius: 3rem;
+  font-weight: bold;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  transition: all 0.25s ease;
+  width: 90%;
+}
+
+.add-note {
+  margin: 1rem;
+}
+.note-field {
+  background-color: white;
+}
+
+.note-field.inactive {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.5s ease;
+  width: 100%;
+}
+.note-field.active {
+  color: black;
+  max-height: 1000px;
+  display: block;
+  transition: all 0.5s ease;
+  width: 100%;
+  padding: 1rem;
+}
+.note-field > button {
+  display: block;
+  margin: 0 auto 1rem auto;
+  width: 50%;
+}
+
+@media only screen and (min-width: 600px) {
+  .AddNote {
+    width: 575px;
+  }
+}
