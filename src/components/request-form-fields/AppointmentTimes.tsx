@@ -14,11 +14,11 @@ function AppointmentTimes() {
   return (
     <>
       <div className="apt-times-container">
-        <span className="label">
-          <label htmlFor="aptTimes">Available Times:</label>
-        </span>
         {availableAppointmentTimes.length > 0 && (
           <>
+            <span className="label">
+              <label htmlFor="aptTimes">Available Times:</label>
+            </span>
             <input
               type="text"
               name="time-picker"
@@ -31,7 +31,7 @@ function AppointmentTimes() {
             <FormErrorMessage message={"SELECT A TIME"} name={"appointmentTime"} />
           </>
         )}
-        {!availableAppointmentTimes.length && <div className="no-available-appointments">No Available Appointments</div>}
+        {!availableAppointmentTimes.length && <FormErrorMessage message={`NO AVAILABLE TIMES. PLEASE SELECT ANOTHER DATE`} name={"appointmentTime"} />}
 
         {isTimesActive && <SelectAppointmentTimes isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} />}
       </div>

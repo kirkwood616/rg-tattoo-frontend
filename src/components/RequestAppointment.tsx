@@ -1,15 +1,14 @@
 import { format } from "date-fns";
-import { ref, uploadBytesResumable } from "firebase/storage";
 import { FormEvent, useContext, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import AppContext from "../context/AppContext";
 import RequestContext from "../context/RequestContext";
-import { storage } from "../firebaseConfig";
 import { AppointmentRequest } from "../models/AppointmentRequest";
 import AvailableAppointments from "../models/AvailableAppointments";
 import { getAvailableAppointments, postAppointmentRequest } from "../services/ApiService";
+import { handlePlacementPhotoUpload, handleReferencePhotoUpload } from "../utils/Photos";
 import GoButton from "./buttons/GoButton";
 import LoadingDotsIcon from "./loading/LoadingDotsIcon";
 import Page from "./Page";
@@ -29,27 +28,20 @@ function RequestAppointment() {
 
   // CHECK FOR DATE IN DATABASE
   useEffect(() => {
-    if (!state.startDate.value) return;
-    const dateInDatabase: AvailableAppointments | undefined = available!.find((appointment) => appointment.date === format(state.startDate.value!, "MM-dd-yyyy"));
+    if (!state.startDate.value || !available) return;
+    const dateInDatabase: AvailableAppointments | undefined = available.find((appointment) => {
+      if (state.startDate.value) {
+        return appointment.date === format(state.startDate.value, "MM-dd-yyyy");
+      } else {
+        return undefined;
+      }
+    });
     if (dateInDatabase) {
       setAvailableAppointmentsTimes(dateInDatabase.availableTimes);
     } else {
       setAvailableAppointmentsTimes([]);
     }
   }, [state.startDate.value, available, setAvailableAppointmentsTimes]);
-
-  // FILE UPLOAD
-  function handleReferencePhotoUpload(): void {
-    if (!state.referencePhoto.value) return;
-    const storageRef = ref(storage, `/images/${state.firstName.value}-${state.lastName.value}-ref-${state.referencePhoto.value.name}`);
-    uploadBytesResumable(storageRef, state.referencePhoto.value);
-  }
-
-  function handlePlacementPhotoUpload(): void {
-    if (!state.placementPhoto.value) return;
-    const storageRef = ref(storage, `/images/${state.firstName.value}-${state.lastName.value}-place-${state.placementPhoto.value.name}`);
-    uploadBytesResumable(storageRef, state.placementPhoto.value);
-  }
 
   // HANDLE SUBMIT
   function handleSubmit(e: FormEvent): void {
@@ -89,8 +81,8 @@ function RequestAppointment() {
       setIsLoading(true);
       postAppointmentRequest(newRequest)
         .then(() => {
-          handleReferencePhotoUpload();
-          if (state.placementPhoto.value) handlePlacementPhotoUpload();
+          handleReferencePhotoUpload(state);
+          if (state.placementPhoto.value) handlePlacementPhotoUpload(state);
         })
         .catch((error) => console.error(error))
         .then(() => {

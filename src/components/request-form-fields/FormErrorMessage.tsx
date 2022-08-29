@@ -4,11 +4,11 @@ import { FieldValues, RequestReducer } from "../../models/RequestReducer";
 import { StateFields } from "../../models/StateFields";
 
 interface Props {
-  name: StateFields;
   message: string;
+  name: StateFields;
 }
 
-function FormErrorMessage({ name, message }: Props) {
+function FormErrorMessage({ message, name }: Props) {
   const { state } = useContext(RequestContext);
 
   let fieldClassName: string = "";
