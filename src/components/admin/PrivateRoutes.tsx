@@ -13,7 +13,7 @@ function PrivateRoutes() {
       if (currentUser) setUser(currentUser);
     });
     return authChange;
-  }, []);
+  }, [setUser]);
 
   if (user === null) return <LoadingDotsIcon />;
 
