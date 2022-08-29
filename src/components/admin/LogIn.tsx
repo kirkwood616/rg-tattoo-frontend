@@ -5,7 +5,6 @@ import AppContext from "../../context/AppContext";
 import { auth } from "../../firebaseConfig";
 import GoButton from "../buttons/GoButton";
 import ErrorMessage from "../ErrorMessage";
-import LoadingDotsIcon from "../loading/LoadingDotsIcon";
 import "./LogIn.css";
 
 function LogIn() {
@@ -31,7 +30,7 @@ function LogIn() {
       }
     });
     return authChange;
-  }, []);
+  });
 
   async function handleLogIn() {
     setIsLoading(true);
@@ -52,7 +51,6 @@ function LogIn() {
     handleLogIn();
   }
 
-  if (!user) return <LoadingDotsIcon />;
   return (
     <div className="LogIn">
       <form onSubmit={onSubmit}>
