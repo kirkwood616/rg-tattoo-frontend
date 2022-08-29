@@ -1,4 +1,6 @@
 import axios from "axios";
+import { getDownloadURL, ref, StorageReference } from "firebase/storage";
+import { auth, storage } from "../firebaseConfig";
 import { AppointmentRequest } from "../models/AppointmentRequest";
 import AvailableAppointments from "../models/AvailableAppointments";
 
@@ -41,37 +43,70 @@ export function updateAvailableAppointment(id: string, appointmentDateTimes: Ava
 }
 
 // SWR
-export async function getRequests(url: string): Promise<AppointmentRequest[]> {
-  const res = await axios.get(`${apiBaseRoute}/${url}`);
+export async function getRequests(url: string): Promise<AppointmentRequest[] | void> {
+  const token = await auth.currentUser?.getIdToken(true);
+  if (!token) return;
+  const res = await axios.get(`${apiBaseRoute}/${url}`, { headers: { token } });
   return res.data;
 }
 
-export async function getRequest(url: string): Promise<AppointmentRequest> {
-  const res = await axios.get(`${apiBaseRoute}/${url}`);
+export async function getRequest(url: string): Promise<AppointmentRequest | void> {
+  const token = await auth.currentUser?.getIdToken(true);
+  if (!token) return;
+  const res = await axios.get(`${apiBaseRoute}/${url}`, { headers: { token } });
   return res.data;
 }
 
 export async function approveNewRequest(request: AppointmentRequest) {
-  const res = await axios.put(`${apiBaseRoute}/appointment-requests/new/approve/${request._id}`, request);
+  const token = await auth.currentUser?.getIdToken(true);
+  if (!token) return;
+  const res = await axios.put(`${apiBaseRoute}/appointment-requests/new/approve/${request._id}`, request, { headers: { token } });
   return res.data;
 }
 
 export async function sendDepositReceivedRequest(request: AppointmentRequest) {
-  const res = await axios.put(`${apiBaseRoute}/appointment-requests/awaiting-deposit/received/${request._id}`, request);
+  const token = await auth.currentUser?.getIdToken(true);
+  if (!token) return;
+  const res = await axios.put(`${apiBaseRoute}/appointment-requests/awaiting-deposit/received/${request._id}`, request, { headers: { token } });
   return res.data;
 }
 
 export async function sendCompletedRequest(request: AppointmentRequest) {
-  const res = await axios.put(`${apiBaseRoute}/appointment-requests/deposit-received/completed/${request._id}`, request);
+  const token = await auth.currentUser?.getIdToken(true);
+  if (!token) return;
+  const res = await axios.put(`${apiBaseRoute}/appointment-requests/deposit-received/completed/${request._id}`, request, { headers: { token } });
   return res.data;
 }
 
 export async function sendCanceledRequest(request: AppointmentRequest) {
-  const res = await axios.put(`${apiBaseRoute}/appointment-requests/cancel-request/${request._id}`, request);
+  const token = await auth.currentUser?.getIdToken(true);
+  if (!token) return;
+  const res = await axios.put(`${apiBaseRoute}/appointment-requests/cancel-request/${request._id}`, request, { headers: { token } });
   return res.data;
 }
 
 export async function putClosedRequest(request: AppointmentRequest) {
-  const res = await axios.put(`${apiBaseRoute}/archive/update/${request._id}`, request);
+  const token = await auth.currentUser?.getIdToken(true);
+  if (!token) return;
+  const res = await axios.put(`${apiBaseRoute}/archive/update/${request._id}`, request, { headers: { token } });
   return res.data;
+}
+
+export async function fetchPhotoUrls(request: AppointmentRequest) {
+  const referencePhotoRef: StorageReference = ref(storage, `images/${request.referencePhotoPath}`);
+  const placementPhotoRef: StorageReference = ref(storage, `images/${request.placementPhotoPath}`);
+
+  try {
+    if (request.placementPhotoPath.length) {
+      const referencePhotoURL = await getDownloadURL(referencePhotoRef);
+      const placementPhotoURL = await getDownloadURL(placementPhotoRef);
+      return { referencePhotoURL, placementPhotoURL };
+    } else {
+      const referencePhotoURL = await getDownloadURL(referencePhotoRef);
+      const placementPhotoURL = undefined;
+      return { referencePhotoURL, placementPhotoURL };
+    }
+  } catch (error) {
+    console.error(error);
+  }
 }
