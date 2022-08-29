@@ -3,15 +3,9 @@ import useLocationRoute from "./hooks/useLocationRoute";
 import RequestListByStatus from "./RequestListByStatus";
 
 function RequestList() {
-  // LOCATION
-  const { params } = useLocationRoute();
+  const { id } = useLocationRoute();
 
-  return (
-    <>
-      {params.id && <Outlet />}
-      {!params.id && <RequestListByStatus />}
-    </>
-  );
+  return <>{id ? <Outlet /> : <RequestListByStatus />}</>;
 }
 
 export default RequestList;

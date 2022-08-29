@@ -19,7 +19,7 @@ function RequestListByStatus() {
   return (
     <AdminPage title={`${title} Requests`}>
       <div className="request-list_container">
-        <h2>{requests.length > 0 ? `${title} Requests` : `No ${title} Requests`}</h2>
+        <h2>{requests.length ? `${title} Requests` : `No ${title} Requests`}</h2>
         {requests.map((request, index) => (
           <div className="request_container" key={request && index}>
             <Link to={request._id!}>

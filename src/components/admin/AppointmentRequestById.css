@@ -18,24 +18,26 @@
 }
 
 .request-section_container {
+  background-color: var(--black);
   border: 3px solid var(--black);
   border-radius: 1.5rem;
   box-shadow: 0 3px 15px var(--black);
   margin-bottom: 2rem;
   overflow: hidden;
+  padding-bottom: 1rem;
   width: 100%;
 }
 
 .request-section_title {
-  background-color: var(--black);
-  color: white;
+  background-color: var(--light-gray-1);
+  color: var(--black);
   font-size: 1.25rem;
   padding: 0.75rem;
 }
 
 .request-item_title {
-  background-color: var(--light-gray-1);
-  color: black;
+  background-color: var(--black);
+  color: white;
 }
 
 .request-item_info {
@@ -44,6 +46,7 @@
 }
 .request-item_title,
 .request-item_info {
+  border-radius: 1.5rem;
   padding: 0.5rem 0;
 }
 

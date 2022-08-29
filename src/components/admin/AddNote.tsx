@@ -62,14 +62,14 @@ function AddNote({ request, note, setNote }: Props) {
     setIsNoteSaved(false);
   }
 
-  function isClosedRequest() {
+  function setSaveFunction() {
     switch (request.requestStatus) {
       case "completed":
       case "canceled":
       case "denied":
-        return true;
+        return updateClosedWithNote();
       default:
-        return false;
+        return onSaveNote();
     }
   }
 
@@ -104,7 +104,7 @@ function AddNote({ request, note, setNote }: Props) {
 
         <p>* Notes are only visible to you. Clients will not see your notes *</p>
 
-        <GoButton type={"button"} text={"SAVE NOTE"} backgroundColor={"green"} onClick={() => (isClosedRequest() ? updateClosedWithNote() : onSaveNote())} />
+        <GoButton type={"button"} text={"SAVE NOTE"} backgroundColor={"green"} onClick={setSaveFunction} />
 
         <GoButton type={"button"} text={"CANCEL NOTE"} backgroundColor={"red"} onClick={onToggleNote} />
       </div>
