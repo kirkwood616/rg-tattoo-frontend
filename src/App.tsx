@@ -18,7 +18,7 @@ import RequestSubmitted from "./components/RequestSubmitted";
 import AppContext from "./context/AppContext";
 
 function App() {
-  let { user, isLoading } = useContext(AppContext);
+  const { user, isLoading } = useContext(AppContext);
 
   return (
     <div className="App">

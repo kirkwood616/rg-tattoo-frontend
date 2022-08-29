@@ -1,8 +1,8 @@
-import "./SelectTattooStyle.css";
 import React, { Dispatch, SetStateAction, useContext } from "react";
 import { tattooStyles } from "../../admin/AdminSettings";
 import RequestContext from "../../context/RequestContext";
 import ModalWindow from "./ModalWindow";
+import "./SelectTattooStyle.css";
 
 interface Props {
   isStyleActive: boolean;
@@ -11,7 +11,7 @@ interface Props {
 
 function SelectTattooStyle({ isStyleActive, setIsStyleActive }: Props) {
   // CONTEXT
-  let { dispatch } = useContext(RequestContext);
+  const { dispatch } = useContext(RequestContext);
 
   function onStyleClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     dispatch({ type: "tattooStyle", value: e.currentTarget.value });
@@ -21,7 +21,7 @@ function SelectTattooStyle({ isStyleActive, setIsStyleActive }: Props) {
   return (
     <ModalWindow isActive={isStyleActive} setIsActive={setIsStyleActive} className="style-select_container">
       {tattooStyles.map((style, index) => (
-        <button value={style} key={index} className="style-option" onClick={(e) => onStyleClick(e)}>
+        <button value={style} key={style + index} className="style-option" onClick={(e) => onStyleClick(e)}>
           {style}
         </button>
       ))}

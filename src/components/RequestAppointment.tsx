@@ -13,24 +13,13 @@ import { getAvailableAppointments, postAppointmentRequest } from "../services/Ap
 import GoButton from "./buttons/GoButton";
 import LoadingDotsIcon from "./loading/LoadingDotsIcon";
 import Page from "./Page";
-import Age from "./request-form-fields/Age";
-import AppointmentTimes from "./request-form-fields/AppointmentTimes";
-import Email from "./request-form-fields/Email";
-import FirstName from "./request-form-fields/FirstName";
-import LastName from "./request-form-fields/LastName";
-import PhoneNumber from "./request-form-fields/PhoneNumber";
-import PhotoUpload from "./request-form-fields/PhotoUpload";
-import RequestConfirm from "./request-form-fields/RequestConfirm";
-import SelectDate from "./request-form-fields/SelectDate";
-import TattooDescription from "./request-form-fields/TattooDescription";
-import TattooPlacement from "./request-form-fields/TattooPlacement";
-import TattooStyle from "./request-form-fields/TattooStyle";
+import * as Field from "./request-form-fields";
 import "./RequestAppointment.css";
 
 function RequestAppointment() {
   // CONTEXT
-  let { setIsLoading } = useContext(AppContext);
-  let { setAvailableAppointmentsTimes, state, dispatch } = useContext(RequestContext);
+  const { setIsLoading } = useContext(AppContext);
+  const { setAvailableAppointmentsTimes, state, dispatch } = useContext(RequestContext);
 
   // SWR
   const { data: available, error } = useSWR("/available-appointments", getAvailableAppointments, { revalidateOnFocus: false });
@@ -119,21 +108,21 @@ function RequestAppointment() {
       <div className="RequestAppointment">
         <h1>Request Appointment</h1>
         <form onSubmit={handleSubmit}>
-          <SelectDate />
-          {state.startDate.value && <AppointmentTimes />}
+          <Field.SelectDate />
+          {state.startDate.value && <Field.AppointmentTimes />}
           {state.appointmentTime.value && (
             <>
-              <FirstName />
-              <LastName />
-              <Age />
-              <Email />
-              <PhoneNumber />
-              <TattooStyle />
-              <TattooPlacement />
-              <PhotoUpload name="referencePhoto" />
-              <PhotoUpload name="placementPhoto" />
-              <TattooDescription />
-              <RequestConfirm />
+              <Field.FirstName />
+              <Field.LastName />
+              <Field.Age />
+              <Field.Email />
+              <Field.PhoneNumber />
+              <Field.TattooStyle />
+              <Field.TattooPlacement />
+              <Field.PhotoUpload name="referencePhoto" />
+              <Field.PhotoUpload name="placementPhoto" />
+              <Field.TattooDescription />
+              <Field.RequestConfirm />
               {state.appointmentTime.value && <GoButton type="submit" text="Submit Request" backgroundColor="green" isDisabled={false} />}
             </>
           )}

@@ -5,7 +5,7 @@ import ErrorMessage from "../ErrorMessage";
 
 function ReferenceImage() {
   // CONTEXT
-  let { state, dispatch } = useContext(RequestContext);
+  const { state, dispatch } = useContext(RequestContext);
 
   // STATE
   const [referenceRandom, setReferenceRandom] = useState<string>("");

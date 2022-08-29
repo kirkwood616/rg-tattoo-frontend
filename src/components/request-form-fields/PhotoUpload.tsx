@@ -2,7 +2,6 @@ import { ChangeEvent, useContext } from "react";
 import RequestContext from "../../context/RequestContext";
 import { isTextDisabled } from "../../utils/DisabledField";
 import RemoveFileButton from "../buttons/RemoveFileButton";
-import ErrorMessage from "../ErrorMessage";
 import FormErrorMessage from "./FormErrorMessage";
 
 type PhotoName = "referencePhoto" | "placementPhoto";
@@ -13,7 +12,7 @@ interface Props {
 
 function PhotoUpload({ name }: Props) {
   // CONTEXT
-  let { state, dispatch } = useContext(RequestContext);
+  const { state, dispatch } = useContext(RequestContext);
 
   // FUNCTIONS
   function handlePhotoChange(e: ChangeEvent<HTMLInputElement>): void {
@@ -64,7 +63,7 @@ function PhotoUpload({ name }: Props) {
           <div className="choose-file">Choose File</div>
         </label>
         {state[name].value && <div className="photo-file-name">{state[name].value?.name}</div>}
-        {state[name].value && <RemoveFileButton onClick={() => resetPhoto()} />}
+        {state[name].value && <RemoveFileButton onClick={resetPhoto} />}
       </div>
       <FormErrorMessage message={"REFERENCE PHOTO REQUIRED"} name={name} />
     </>

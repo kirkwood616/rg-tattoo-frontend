@@ -1,12 +1,11 @@
 import { useContext } from "react";
 import RequestContext from "../../context/RequestContext";
 import { isTextDisabled } from "../../utils/DisabledField";
-import ErrorMessage from "../ErrorMessage";
 import FormErrorMessage from "./FormErrorMessage";
 
 function LastName() {
   // CONTEXT
-  let { state, dispatch } = useContext(RequestContext);
+  const { state, dispatch } = useContext(RequestContext);
 
   return (
     <>

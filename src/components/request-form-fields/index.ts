@@ -1,0 +1,12 @@
+export { default as Age } from "./Age";
+export { default as AppointmentTimes } from "./AppointmentTimes";
+export { default as Email } from "./Email";
+export { default as FirstName } from "./FirstName";
+export { default as LastName } from "./LastName";
+export { default as PhoneNumber } from "./PhoneNumber";
+export { default as PhotoUpload } from "./PhotoUpload";
+export { default as RequestConfirm } from "./RequestConfirm";
+export { default as SelectDate } from "./SelectDate";
+export { default as TattooDescription } from "./TattooDescription";
+export { default as TattooPlacement } from "./TattooPlacement";
+export { default as TattooStyle } from "./TattooStyle";

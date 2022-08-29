@@ -9,7 +9,7 @@ interface Props {
 }
 
 function FormErrorMessage({ name, message }: Props) {
-  let { state } = useContext(RequestContext);
+  const { state } = useContext(RequestContext);
 
   let fieldClassName: string = "";
 

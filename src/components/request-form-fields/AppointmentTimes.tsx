@@ -1,13 +1,12 @@
 import { useContext, useState } from "react";
 import RequestContext from "../../context/RequestContext";
 import { formatTime } from "../../utils/Formatting";
-import ErrorMessage from "../ErrorMessage";
 import SelectAppointmentTimes from "../modals/SelectAppointmentTimes";
 import FormErrorMessage from "./FormErrorMessage";
 
 function AppointmentTimes() {
   // CONTEXT
-  let { availableAppointmentTimes, state } = useContext(RequestContext);
+  const { availableAppointmentTimes, state } = useContext(RequestContext);
 
   // STATE
   const [isTimesActive, setIsTimesActive] = useState<boolean>(false);
@@ -18,7 +17,7 @@ function AppointmentTimes() {
         <span className="label">
           <label htmlFor="aptTimes">Available Times:</label>
         </span>
-        {availableAppointmentTimes.length ? (
+        {availableAppointmentTimes.length > 0 && (
           <>
             <input
               type="text"
@@ -31,10 +30,10 @@ function AppointmentTimes() {
             ></input>
             <FormErrorMessage message={"SELECT A TIME"} name={"appointmentTime"} />
           </>
-        ) : (
-          <div className="no-available-appointments">No Available Appointments</div>
         )}
-        {isTimesActive ? <SelectAppointmentTimes isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} /> : ""}
+        {!availableAppointmentTimes.length && <div className="no-available-appointments">No Available Appointments</div>}
+
+        {isTimesActive && <SelectAppointmentTimes isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} />}
       </div>
     </>
   );

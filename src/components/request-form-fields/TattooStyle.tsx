@@ -1,13 +1,12 @@
 import { useContext, useState } from "react";
 import RequestContext from "../../context/RequestContext";
 import { isTextDisabled } from "../../utils/DisabledField";
-import ErrorMessage from "../ErrorMessage";
 import SelectTattooStyle from "../modals/SelectTattooStyle";
 import FormErrorMessage from "./FormErrorMessage";
 
 function TattooStyle() {
   // CONTEXT
-  let { state } = useContext(RequestContext);
+  const { state } = useContext(RequestContext);
 
   // STATE
   const [isStyleActive, setIsStyleActive] = useState<boolean>(false);
@@ -29,7 +28,7 @@ function TattooStyle() {
         readOnly
       />
       <FormErrorMessage message={"PLEASE SELECT A TATTOO STYLE"} name={"tattooStyle"} />
-      {isStyleActive ? <SelectTattooStyle isStyleActive={isStyleActive} setIsStyleActive={setIsStyleActive} /> : ""}
+      {isStyleActive && <SelectTattooStyle isStyleActive={isStyleActive} setIsStyleActive={setIsStyleActive} />}
     </>
   );
 }

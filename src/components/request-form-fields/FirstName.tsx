@@ -1,4 +1,3 @@
-// import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { useContext } from "react";
 import RequestContext from "../../context/RequestContext";
 import { isTextDisabled } from "../../utils/DisabledField";
@@ -6,7 +5,7 @@ import FormErrorMessage from "./FormErrorMessage";
 
 function FirstName() {
   // CONTEXT
-  let { state, dispatch } = useContext(RequestContext);
+  const { state, dispatch } = useContext(RequestContext);
 
   return (
     <>
