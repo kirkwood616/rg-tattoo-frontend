@@ -1,34 +1,35 @@
 import { format } from "date-fns";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import useSWR from "swr";
 import { timePickerValues } from "../../admin/AdminSettings";
-import AppContext from "../../context/AppContext";
 import AvailableAppointments from "../../models/AvailableAppointments";
+import { getAvailableAppointments } from "../../services/ApiService";
 import { formatTime } from "../../utils/Formatting";
 import GoButton from "../buttons/GoButton";
 import RemoveButton from "../buttons/RemoveButton";
 import SaveButton from "../buttons/SaveButton";
+import LoadingDotsIcon from "../loading/LoadingDotsIcon";
 import AdminPage from "./AdminPage";
 import SaveChangesModal from "./modals/SaveChangesModal";
 import SelectTimesModal from "./modals/SelectTimesModal";
 import "./SetAvailableAppointments.css";
 
 function SetAvailableAppointments() {
-  // CONTEXT
-  let { availableAppointments } = useContext(AppContext);
+  // SWR
+  const { data: available, error: availableError } = useSWR("/available-appointments", getAvailableAppointments, { revalidateOnFocus: false });
 
   // STATES
   const [appointmentTimes, setAppointmentTimes] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<Date | undefined>(new Date());
-  const [startTime, setStartTime] = useState<string>("");
   const [dateId, setDateId] = useState<string>("");
   const [isTimesActive, setIsTimesActive] = useState<boolean>(false);
   const [isSaveActive, setIsSaveActive] = useState<boolean>(false);
 
   // CHECK FOR DATE IN DATABASE
   useEffect(() => {
-    const dateInDatabase: AvailableAppointments | undefined = availableAppointments.find((date) => date.date === format(startDate!, "MM-dd-yyyy"));
+    const dateInDatabase: AvailableAppointments | undefined = available?.find((date) => date.date === format(startDate!, "MM-dd-yyyy"));
 
     if (dateInDatabase) {
       setDateId(dateInDatabase._id!);
@@ -37,7 +38,7 @@ function SetAvailableAppointments() {
       setDateId("");
       setAppointmentTimes([]);
     }
-  }, [availableAppointments, startDate]);
+  }, [available, startDate]);
 
   // ADD TIME
   function addTime(time: string): void {
@@ -63,6 +64,8 @@ function SetAvailableAppointments() {
     setIsSaveActive(true);
   }
 
+  if (availableError) return <h1>Something went wrong!</h1>;
+  if (!available) return <LoadingDotsIcon />;
   return (
     <>
       <AdminPage title="Set Available Appointments">
@@ -91,24 +94,21 @@ function SetAvailableAppointments() {
               ))}
             {appointmentTimes.length <= 0 && (
               <label htmlFor="time-picker">
-                <div className="no-times-set">NO TIMES SET</div>
+                <div className="no-times-set" onClick={() => setIsTimesActive(true)}>
+                  NO TIMES SET
+                </div>
               </label>
             )}
           </div>
 
-          <div className="time-picker_container">
-            <span className="label">
-              <label htmlFor="time-picker">Times:</label>
-            </span>
-            <input type="text" name="time-picker" id="time-picker" placeholder="Select Time" value={formatTime(startTime)} onClick={() => setIsTimesActive(true)} readOnly />
-          </div>
-
-          <GoButton type="button" text="ADD TIME" backgroundColor="#007bff" onClick={() => addTime(startTime!)} />
+          <GoButton type="button" text="ADD TIME" backgroundColor="#007bff" onClick={() => setIsTimesActive(true)} />
         </div>
 
-        {isTimesActive && <SelectTimesModal timeValues={timePickerValues} isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} setStartTime={setStartTime} />}
+        {isTimesActive && <SelectTimesModal isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} addTime={addTime} />}
 
-        <SaveChangesModal isSaveActive={isSaveActive} setIsSaveActive={setIsSaveActive} dateId={dateId} startDate={startDate!} appointmentTimes={appointmentTimes} />
+        {isSaveActive && (
+          <SaveChangesModal isSaveActive={isSaveActive} setIsSaveActive={setIsSaveActive} dateId={dateId} startDate={startDate!} appointmentTimes={appointmentTimes} />
+        )}
       </AdminPage>
 
       <div className="save-changes">

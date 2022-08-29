@@ -1,0 +1,10 @@
+.ReqActions {
+  margin: auto;
+  width: 90%;
+}
+
+@media only screen and (min-width: 600px) {
+  .ReqActions {
+    width: 575px;
+  }
+}

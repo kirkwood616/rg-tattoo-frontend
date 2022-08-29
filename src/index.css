@@ -21,7 +21,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--dark-gray-2);
   color: white;
-  height: 100vh;
+  /* height: 100vh; */
+  height: fit-content;
 }
 
 code {
@@ -41,5 +42,6 @@ button {
 }
 
 .App {
-  height: 100vh;
+  /* height: 100vh; */
+  height: fit-content;
 }
