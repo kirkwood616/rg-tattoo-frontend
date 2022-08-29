@@ -1,12 +1,11 @@
 import { useContext } from "react";
 import RequestContext from "../../context/RequestContext";
 import { isNumberDisabled } from "../../utils/DisabledField";
-import ErrorMessage from "../ErrorMessage";
 import FormErrorMessage from "./FormErrorMessage";
 
 function Age() {
   // CONTEXT
-  let { state, dispatch } = useContext(RequestContext);
+  const { state, dispatch } = useContext(RequestContext);
 
   return (
     <>

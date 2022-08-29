@@ -1,8 +1,8 @@
 import { ReactNode, useEffect, useState } from "react";
-import RequestContext from "./RequestContext";
-import { reducer, initialState } from "./Reducer";
 import { useImmerReducer } from "use-immer";
 import { FieldValues } from "../models/RequestReducer";
+import { initialState, reducer } from "./Reducer";
+import RequestContext from "./RequestContext";
 
 interface Props {
   children: ReactNode;
@@ -19,8 +19,8 @@ export default function RequestContextProvider({ children }: Props) {
 
   // CHECK FOR ERRORS & ASSIGN MAIN hasErrors
   useEffect(() => {
-    let valueArray: FieldValueArray = Object.values(state) as FieldValueArray;
-    let errorsExist: FieldValues | undefined = valueArray.find((item) => {
+    const valueArray: FieldValueArray = Object.values(state) as FieldValueArray;
+    const errorsExist: FieldValues | undefined = valueArray.find((item) => {
       return item.hasErrors;
     });
     if (errorsExist) {

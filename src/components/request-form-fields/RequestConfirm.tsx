@@ -5,7 +5,7 @@ import FormErrorMessage from "./FormErrorMessage";
 
 function RequestConfirm() {
   // CONTEXT
-  let { state, dispatch } = useContext(RequestContext);
+  const { state, dispatch } = useContext(RequestContext);
 
   return (
     <>

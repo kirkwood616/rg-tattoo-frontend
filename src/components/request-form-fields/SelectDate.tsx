@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import RequestContext from "../../context/RequestContext";
-import ErrorMessage from "../ErrorMessage";
+import FormErrorMessage from "./FormErrorMessage";
 
 function SelectDate() {
   // CONTEXT
-  let { state, dispatch } = useContext(RequestContext);
+  const { state, dispatch } = useContext(RequestContext);
 
   // STATES
   const [maxAppointmentDate, setMaxAppointmentDate] = useState<Date>();
@@ -41,7 +41,7 @@ function SelectDate() {
           required
         />
       </div>
-      <ErrorMessage message={"SELECT DATE"} name={"startDate"} />
+      <FormErrorMessage message={"SELECT DATE"} name={"startDate"} />
     </>
   );
 }

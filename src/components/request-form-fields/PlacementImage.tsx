@@ -4,7 +4,7 @@ import RemoveFileButton from "../buttons/RemoveFileButton";
 
 function PlacementImage() {
   // CONTEXT
-  let { state, dispatch } = useContext(RequestContext);
+  const { state, dispatch } = useContext(RequestContext);
 
   // STATE
   const [placementRandom, setPlacementRandom] = useState<string>("");
@@ -20,7 +20,7 @@ function PlacementImage() {
 
   function resetPlacement(): void {
     // triggers file input re-render based on key value
-    let randomText = Math.random().toString(36);
+    const randomText = Math.random().toString(36);
     setPlacementRandom(randomText);
     dispatch({ type: "placementPhoto", value: null });
   }

@@ -10,7 +10,7 @@ interface Props {
 
 function SelectAppointmentTimes({ isTimesActive, setIsTimesActive }: Props) {
   // CONTEXT
-  let { availableAppointmentTimes, dispatch } = useContext(RequestContext);
+  const { availableAppointmentTimes, dispatch } = useContext(RequestContext);
 
   function onTimeClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     dispatch({ type: "appointmentTime", value: e.currentTarget.value });
@@ -19,7 +19,7 @@ function SelectAppointmentTimes({ isTimesActive, setIsTimesActive }: Props) {
   return (
     <ModalWindow isActive={isTimesActive} setIsActive={setIsTimesActive} className="time-select_container">
       {availableAppointmentTimes.map((time, index) => (
-        <button value={time} key={index} className="time-option" onClick={(e) => onTimeClick(e)}>
+        <button value={time} key={time + index} className="time-option" onClick={(e) => onTimeClick(e)}>
           {formatTime(time)}
         </button>
       ))}
