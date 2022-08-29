@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import RequestContext from "../../context/RequestContext";
-import { isTextDisabled } from "../../utils/DisabledField";
 import FormErrorMessage from "./FormErrorMessage";
 
 function TattooDescription() {
@@ -19,7 +18,6 @@ function TattooDescription() {
         onChange={(e) => dispatch({ type: "tattooDescription", value: e.target.value })}
         value={state.tattooDescription.value}
         minLength={7}
-        disabled={isTextDisabled(state, "tattooDescription")}
       />
       <FormErrorMessage message={"MUST BE AT LEAST 7 CHARACTERS"} name={"tattooDescription"} />
     </>

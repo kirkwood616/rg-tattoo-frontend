@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import RequestContext from "../../context/RequestContext";
-import { isTextDisabled } from "../../utils/DisabledField";
 import FormErrorMessage from "./FormErrorMessage";
 
 function RequestConfirm() {
@@ -17,7 +16,6 @@ function RequestConfirm() {
             id="requestConfirmBox"
             className="request-confirm-box"
             onChange={() => dispatch({ type: "requestConfirm", value: !state.requestConfirm.value })}
-            disabled={isTextDisabled(state, "requestConfirm")}
           />
         </div>
         <div className="request-confirm-text">

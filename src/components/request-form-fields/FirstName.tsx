@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import RequestContext from "../../context/RequestContext";
-import { isTextDisabled } from "../../utils/DisabledField";
 import FormErrorMessage from "./FormErrorMessage";
 
 function FirstName() {
@@ -12,14 +11,7 @@ function FirstName() {
       <label htmlFor="firstName" className={state.appointmentTime.value ? "label" : "label disabled"}>
         First Name:
       </label>
-      <input
-        type="text"
-        name="firstName"
-        id="firstName"
-        onChange={(e) => dispatch({ type: "firstName", value: e.target.value })}
-        value={state.firstName.value}
-        disabled={isTextDisabled(state, "firstName")}
-      />
+      <input type="text" name="firstName" id="firstName" onChange={(e) => dispatch({ type: "firstName", value: e.target.value })} value={state.firstName.value} />
       <FormErrorMessage message="FIRST NAME REQUIRED" name={"firstName"} />
     </>
   );

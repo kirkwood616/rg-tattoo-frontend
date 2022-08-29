@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import RequestContext from "../../context/RequestContext";
-import { isTextDisabled } from "../../utils/DisabledField";
 import FormErrorMessage from "./FormErrorMessage";
 
 function TattooPlacement() {
@@ -19,7 +18,6 @@ function TattooPlacement() {
         maxLength={30}
         onChange={(e) => dispatch({ type: "tattooPlacement", value: e.target.value })}
         value={state.tattooPlacement.value}
-        disabled={isTextDisabled(state, "tattooPlacement")}
       />
       <FormErrorMessage message={"PLEASE ENTER A TATTOO PLACEMENT"} name={"tattooPlacement"} />
     </>
