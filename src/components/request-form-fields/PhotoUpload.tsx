@@ -1,6 +1,5 @@
 import { ChangeEvent, useContext } from "react";
 import RequestContext from "../../context/RequestContext";
-import { isTextDisabled } from "../../utils/DisabledField";
 import RemoveFileButton from "../buttons/RemoveFileButton";
 import FormErrorMessage from "./FormErrorMessage";
 
@@ -56,7 +55,6 @@ function PhotoUpload({ name }: Props) {
             id={name}
             accept="image/*"
             onChange={(e) => handlePhotoChange(e)}
-            disabled={isTextDisabled(state, name)}
             // trigger re-render based on unique key
             key={Math.random().toString(36)}
           />
