@@ -20,7 +20,7 @@ function SetAvailableAppointments() {
   // SWR
   const { data: available, error: availableError } = useSWR("/available-appointments", getAvailableAppointments, { revalidateOnFocus: false });
 
-  // STATES
+  // STATE
   const [appointmentTimes, setAppointmentTimes] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<Date | undefined>(new Date());
   const [dateId, setDateId] = useState<string>("");
@@ -29,14 +29,12 @@ function SetAvailableAppointments() {
 
   // CHECK FOR DATE IN DATABASE
   useEffect(() => {
-    const dateInDatabase: AvailableAppointments | undefined = available?.find((date) => date.date === format(startDate!, "MM-dd-yyyy"));
+    if (!available) return;
+    const dateInDatabase: AvailableAppointments | undefined = available.find((date) => date.date === format(startDate!, "MM-dd-yyyy"));
 
     if (dateInDatabase) {
       setDateId(dateInDatabase._id!);
       setAppointmentTimes(dateInDatabase.availableTimes);
-    } else {
-      setDateId("");
-      setAppointmentTimes([]);
     }
   }, [available, startDate]);
 

@@ -1,6 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
-import { AppointmentRequest } from "../models/AppointmentRequest";
-import { fetchAppointmentRequests } from "../services/AdminApiService";
+import { ReactNode } from "react";
 import AdminContext from "./AdminContext";
 
 interface Props {
@@ -8,31 +6,31 @@ interface Props {
 }
 
 export default function AdminContextProvider({ children }: Props) {
-  // STATES
-  const [appointmentRequests, setAppointmentRequests] = useState<AppointmentRequest[]>([]);
-  const [newAppointmentRequests, setNewAppointmentRequests] = useState<AppointmentRequest[]>([]);
-  const [deniedRequests, setDeniedRequests] = useState<AppointmentRequest[]>([]);
+  // STATE
+  // const [appointmentRequests] = useState<AppointmentRequest[]>([]);
+  // const [newAppointmentRequests] = useState<AppointmentRequest[]>([]);
+  // const [deniedRequests] = useState<AppointmentRequest[]>([]);
 
   // APPOINTMENT REQUESTS
-  function handleAppointmentRequests(): void {
-    fetchAppointmentRequests().then((data) => setAppointmentRequests(data));
-  }
+  // function handleAppointmentRequests(): void {
+  //   fetchAppointmentRequests().then((data) => setAppointmentRequests(data));
+  // }
 
   // useEffect(() => {
   //   handleAppointmentRequests();
   // }, []);
 
   // NEW APPOINTMENT REQUESTS
-  useEffect(() => {
-    const newRequests: AppointmentRequest[] | undefined = appointmentRequests.filter((request) => {
-      return request.requestStatus === "new";
-    });
-    if (newRequests.length > 0) {
-      setNewAppointmentRequests(newRequests);
-    } else {
-      return;
-    }
-  }, [appointmentRequests]);
+  // useEffect(() => {
+  //   const newRequests: AppointmentRequest[] | undefined = appointmentRequests.filter((request) => {
+  //     return request.requestStatus === "new";
+  //   });
+  //   if (newRequests.length > 0) {
+  //     setNewAppointmentRequests(newRequests);
+  //   } else {
+  //     return;
+  //   }
+  // }, [appointmentRequests]);
 
   // DENIED REQUESTS
   // useEffect(() => {
@@ -41,12 +39,14 @@ export default function AdminContextProvider({ children }: Props) {
 
   return (
     <AdminContext.Provider
-      value={{
-        appointmentRequests,
-        newAppointmentRequests,
-        deniedRequests,
-        handleAppointmentRequests,
-      }}
+      value={
+        {
+          // appointmentRequests,
+          // newAppointmentRequests,
+          // deniedRequests,
+          // handleAppointmentRequests,
+        }
+      }
     >
       {children}
     </AdminContext.Provider>
