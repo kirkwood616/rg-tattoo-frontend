@@ -1,8 +1,8 @@
 import { ReactNode, useEffect, useState } from "react";
 import { useImmerReducer } from "use-immer";
 import { FieldValues } from "../models/RequestReducer";
-import { initialState, reducer } from "./Reducer";
 import RequestContext from "./RequestContext";
+import { initialState, requestReducer } from "./RequestReducer";
 
 interface Props {
   children: ReactNode;
@@ -15,7 +15,7 @@ export default function RequestContextProvider({ children }: Props) {
   const [availableAppointmentTimes, setAvailableAppointmentsTimes] = useState<string[]>([]);
 
   // REDUCER
-  const [state, dispatch] = useImmerReducer(reducer, initialState);
+  const [state, dispatch] = useImmerReducer(requestReducer, initialState);
 
   // CHECK FOR ERRORS & ASSIGN MAIN hasErrors
   useEffect(() => {

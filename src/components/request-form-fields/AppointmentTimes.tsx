@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import RequestContext from "../../context/RequestContext";
 import { formatTime } from "../../utils/Formatting";
+import FormErrorMessage from "../errors/FormErrorMessage";
 import SelectAppointmentTimes from "../modals/SelectAppointmentTimes";
-import FormErrorMessage from "./FormErrorMessage";
 
 function AppointmentTimes() {
   // CONTEXT

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import RequestContext from "../../context/RequestContext";
-import FormErrorMessage from "./FormErrorMessage";
+import FormErrorMessage from "../errors/FormErrorMessage";
 
 function Age() {
   // CONTEXT

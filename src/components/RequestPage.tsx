@@ -1,5 +1,5 @@
 import RequestContextProvider from "../context/RequestContextProvider";
-import RequestAppointment from "./RequestAppointment";
+import RequestAppointment from "../pages/RequestAppointment";
 
 function RequestPage() {
   return (
