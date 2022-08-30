@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useContext } from "react";
-import { tattooStyles } from "../../admin/AdminSettings";
+import { tattooStyles } from "../../admin/settings/AdminSettings";
 import RequestContext from "../../context/RequestContext";
 import ModalWindow from "./ModalWindow";
 import "./SelectTattooStyle.css";
