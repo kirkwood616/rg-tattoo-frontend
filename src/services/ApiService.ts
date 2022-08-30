@@ -6,8 +6,6 @@ const apiRequestAppointment = process.env.REACT_APP_API_REQUEST_ROUTE_LOCAL || "
 const apiAvailableAppointments = process.env.REACT_APP_API_AVAILABLE_ROUTE_LOCAL || "";
 const apiBaseRoute = process.env.REACT_APP_API_BASE_ROUTE || "";
 
-//// APPOINTMENT REQUESTS
-
 // POST
 export async function postAppointmentRequest(request: AppointmentRequest): Promise<AppointmentRequest> {
   const res = await axios.post<AppointmentRequest>(apiRequestAppointment, request);

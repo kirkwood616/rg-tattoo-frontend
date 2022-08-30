@@ -1,7 +1,7 @@
 import { ChangeEvent, useContext } from "react";
 import RequestContext from "../../context/RequestContext";
 import RemoveFileButton from "../buttons/RemoveFileButton";
-import FormErrorMessage from "./FormErrorMessage";
+import FormErrorMessage from "../errors/FormErrorMessage";
 
 type PhotoName = "referencePhoto" | "placementPhoto";
 

@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import RequestContext from "../../context/RequestContext";
+import FormErrorMessage from "../errors/FormErrorMessage";
 import SelectTattooStyle from "../modals/SelectTattooStyle";
-import FormErrorMessage from "./FormErrorMessage";
 
 function TattooStyle() {
   // CONTEXT
