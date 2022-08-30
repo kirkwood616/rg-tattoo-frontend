@@ -1,19 +1,19 @@
+import AdminPage from "admin/components/AdminPage";
+import SaveChangesModal from "admin/modals/SaveChangesModal";
+import SelectTimesModal from "admin/modals/SelectTimesModal";
+import { timePickerValues } from "admin/settings/AdminSettings";
+import GoButton from "components/buttons/GoButton";
+import RemoveButton from "components/buttons/RemoveButton";
+import SaveButton from "components/buttons/SaveButton";
+import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
 import { format } from "date-fns";
+import AvailableAppointments from "models/AvailableAppointments";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { getAvailableAppointments } from "services/ApiService";
 import useSWR from "swr";
-import SaveChangesModal from "../../admin/modals/SaveChangesModal";
-import SelectTimesModal from "../../admin/modals/SelectTimesModal";
-import { timePickerValues } from "../../admin/settings/AdminSettings";
-import GoButton from "../../components/buttons/GoButton";
-import RemoveButton from "../../components/buttons/RemoveButton";
-import SaveButton from "../../components/buttons/SaveButton";
-import LoadingDotsIcon from "../../components/loading/LoadingDotsIcon";
-import AvailableAppointments from "../../models/AvailableAppointments";
-import { getAvailableAppointments } from "../../services/ApiService";
-import { formatTime } from "../../utils/Formatting";
-import AdminPage from "../components/AdminPage";
+import { formatTime } from "utils/Formatting";
 import "./SetAvailableAppointments.css";
 
 function SetAvailableAppointments() {
@@ -26,6 +26,7 @@ function SetAvailableAppointments() {
   const [dateId, setDateId] = useState<string>("");
   const [isTimesActive, setIsTimesActive] = useState<boolean>(false);
   const [isSaveActive, setIsSaveActive] = useState<boolean>(false);
+  console.log(available);
 
   // CHECK FOR DATE IN DATABASE
   useEffect(() => {

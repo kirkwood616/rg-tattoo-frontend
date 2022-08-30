@@ -1,21 +1,21 @@
 import { useContext } from "react";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
-import AdminContainer from "./admin/components/AdminContainer";
-import RequestList from "./admin/components/RequestList";
-import AdminHome from "./admin/pages/AdminHome";
-import AppointmentRequestById from "./admin/pages/AppointmentRequestById";
-import AppointmentRequests from "./admin/pages/AppointmentRequests";
-import LogIn from "./admin/pages/LogIn";
-import SetAvailableAppointments from "./admin/pages/SetAvailableAppointments";
-import { requestTypes } from "./admin/settings/AdminSettings";
-import Header from "./components/Header";
-import LoadingDotsIcon from "./components/loading/LoadingDotsIcon";
-import RequestPage from "./components/RequestPage";
-import AppContext from "./context/AppContext";
-import Aftercare from "./pages/Aftercare";
-import Home from "./pages/Home";
-import RequestSubmitted from "./pages/RequestSubmitted";
-import PrivateRoutes from "./routes/PrivateRoutes";
+import AdminContainer from "admin/components/AdminContainer";
+import RequestList from "admin/components/RequestList";
+import AdminHome from "admin/pages/AdminHome";
+import AppointmentRequestById from "admin/pages/AppointmentRequestById";
+import AppointmentRequests from "admin/pages/AppointmentRequests";
+import LogIn from "admin/pages/LogIn";
+import SetAvailableAppointments from "admin/pages/SetAvailableAppointments";
+import { requestTypes } from "admin/settings/AdminSettings";
+import Header from "components/Header";
+import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
+import RequestPage from "components/RequestPage";
+import AppContext from "context/AppContext";
+import Aftercare from "pages/Aftercare";
+import Home from "pages/Home";
+import RequestSubmitted from "pages/RequestSubmitted";
+import PrivateRoutes from "routes/PrivateRoutes";
 
 function App() {
   const { user, isLoading } = useContext(AppContext);

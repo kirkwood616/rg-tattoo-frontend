@@ -1,7 +1,7 @@
+import { timePickerValues } from "admin/settings/AdminSettings";
+import ModalWindow from "components/modals/ModalWindow";
 import { Dispatch, SetStateAction } from "react";
-import ModalWindow from "../../components/modals/ModalWindow";
-import { formatTime } from "../../utils/Formatting";
-import { timePickerValues } from "../settings/AdminSettings";
+import { formatTime } from "utils/Formatting";
 import "./SelectTimesModal.css";
 
 interface Props {

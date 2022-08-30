@@ -1,12 +1,12 @@
+import AppContext from "context/AppContext";
 import { signOut } from "firebase/auth";
+import { auth } from "firebaseConfig";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import AppContext from "../../../context/AppContext";
-import { auth } from "../../../firebaseConfig";
 
 function AdminMenu() {
   // CONTEXT
-  let { setUser } = useContext(AppContext);
+  const { setUser } = useContext(AppContext);
 
   // LOGOUT
   async function logOut() {

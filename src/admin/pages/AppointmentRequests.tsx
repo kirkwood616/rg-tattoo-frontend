@@ -1,5 +1,5 @@
+import AppointmentRequestMenu from "admin/components/menu/AppointmentRequestMenu";
 import { Outlet } from "react-router-dom";
-import AppointmentRequestMenu from "../../admin/components/menu/AppointmentRequestMenu";
 import "./AppointmentRequests.css";
 
 function AppointmentRequests() {

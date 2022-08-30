@@ -1,6 +1,6 @@
+import useLocationRoute from "admin/hooks/useLocationRoute";
+import RequestListByStatus from "admin/pages/RequestListByStatus";
 import { Outlet } from "react-router-dom";
-import useLocationRoute from "../hooks/useLocationRoute";
-import RequestListByStatus from "../pages/RequestListByStatus";
 
 function RequestList() {
   const { id } = useLocationRoute();

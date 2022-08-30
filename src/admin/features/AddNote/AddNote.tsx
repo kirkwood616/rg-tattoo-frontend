@@ -1,10 +1,10 @@
+import useLocationRoute from "admin/hooks/useLocationRoute";
+import { putClosedRequest } from "admin/services/AdminApiService";
+import GoButton from "components/buttons/GoButton";
+import AppContext from "context/AppContext";
+import { AppointmentRequest } from "models/AppointmentRequest";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { useSWRConfig } from "swr";
-import GoButton from "../../../components/buttons/GoButton";
-import AppContext from "../../../context/AppContext";
-import { AppointmentRequest } from "../../../models/AppointmentRequest";
-import useLocationRoute from "../../hooks/useLocationRoute";
-import { putClosedRequest } from "../../services/AdminApiService";
 import "./AddNote.css";
 
 interface Props {
