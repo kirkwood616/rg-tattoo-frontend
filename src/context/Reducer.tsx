@@ -1,5 +1,5 @@
+import { RequestAction, RequestReducer } from "../models/RequestReducer";
 import { formatPhoneNumber, validateEmail, validatePhone } from "../utils/Validation";
-import { RequestReducer, RequestAction } from "../models/RequestReducer";
 
 export const initialState: RequestReducer = {
   startDate: {

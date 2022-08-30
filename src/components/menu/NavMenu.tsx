@@ -1,5 +1,4 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import AdminContext from "../../context/AdminContext";
 import AppContext from "../../context/AppContext";
 import AdminMenu from "../admin/menu/AdminMenu";
 import MenuHamburger from "./MenuHamburger";
@@ -9,7 +8,6 @@ import UserMenu from "./UserMenu";
 function NavMenu() {
   // CONTEXT
   const { user } = useContext(AppContext);
-  const { appointmentRequests } = useContext(AdminContext);
 
   // STATE
   const [isActive, setIsActive] = useState(false);
@@ -35,7 +33,6 @@ function NavMenu() {
     <div className="NavMenu">
       <div className="nav-container">
         <button onClick={onClick} className={isActive ? "menu-trigger active" : "menu-trigger"}>
-          {/* {user && appointmentRequests.length > 0 ? <RequestIcon /> : ""} */}
           <MenuHamburger isActive={isActive} />
         </button>
         <nav ref={dropdownRef} className={`menu ${isActive ? "active" : "inactive"}`}>

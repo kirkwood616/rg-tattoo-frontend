@@ -17,15 +17,16 @@ interface Props {
 }
 
 function SaveChangesModal({ isSaveActive, setIsSaveActive, dateId, startDate, appointmentTimes }: Props) {
+  // SWR
   const { mutate } = useSWRConfig();
 
   // CONTEXT
-  let { setIsLoading } = useContext(AppContext);
+  const { setIsLoading } = useContext(AppContext);
 
   // SAVE CHANGES
   function handleOnSave(): void {
     setIsLoading(true);
-    let appointmentDateTimes: AvailableAppointments = {
+    const appointmentDateTimes: AvailableAppointments = {
       date: format(startDate!, "MM-dd-yyyy"),
       availableTimes: appointmentTimes!,
     };
