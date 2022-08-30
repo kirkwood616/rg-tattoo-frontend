@@ -1,6 +1,6 @@
+import GoButton from "components/buttons/GoButton";
+import Page from "components/Page";
 import { useNavigate } from "react-router-dom";
-import GoButton from "../components/buttons/GoButton";
-import Page from "../components/Page";
 import "./RequestSubmitted.css";
 
 function RequestSubmitted() {

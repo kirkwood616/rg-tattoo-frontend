@@ -1,9 +1,9 @@
+import ActionModal from "admin/modals/ActionModal";
+import CancelModal from "admin/modals/CancelModal";
+import DenyModal from "admin/modals/DenyModal";
+import GoButton from "components/buttons/GoButton";
+import { AppointmentRequest } from "models/AppointmentRequest";
 import { useState } from "react";
-import GoButton from "../../../components/buttons/GoButton";
-import { AppointmentRequest } from "../../../models/AppointmentRequest";
-import ActionModal from "../../modals/ActionModal";
-import CancelModal from "../../modals/CancelModal";
-import DenyModal from "../../modals/DenyModal";
 
 interface Props {
   request: AppointmentRequest;

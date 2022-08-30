@@ -1,7 +1,7 @@
+import RequestContext from "context/RequestContext";
+import { FieldValues, RequestReducer } from "models/RequestReducer";
+import { StateFields } from "models/StateFields";
 import { useContext } from "react";
-import RequestContext from "../../context/RequestContext";
-import { FieldValues, RequestReducer } from "../../models/RequestReducer";
-import { StateFields } from "../../models/StateFields";
 
 interface Props {
   message: string;

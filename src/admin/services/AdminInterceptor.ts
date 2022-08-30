@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { auth } from "../../firebaseConfig";
+import { auth } from "firebaseConfig";
 
 const apiAdminRoute = process.env.REACT_APP_API_ADMIN_ROUTE || "";
 

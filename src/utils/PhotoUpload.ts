@@ -1,6 +1,6 @@
 import { ref, uploadBytesResumable } from "firebase/storage";
-import { storage } from "../firebaseConfig";
-import { RequestReducer } from "../models/RequestReducer";
+import { storage } from "firebaseConfig";
+import { RequestReducer } from "models/RequestReducer";
 
 function handleReferencePhotoUpload(state: RequestReducer): void {
   if (!state.referencePhoto.value) return;

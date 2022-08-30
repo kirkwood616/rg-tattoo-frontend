@@ -1,6 +1,6 @@
+import AddNote from "admin/features/AddNote/AddNote";
+import { AppointmentRequest } from "models/AppointmentRequest";
 import { useState } from "react";
-import { AppointmentRequest } from "../../../models/AppointmentRequest";
-import AddNote from "../AddNote/AddNote";
 
 interface Props {
   request: AppointmentRequest;
