@@ -1,9 +1,9 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
-import { Action } from "../models/Errors";
+import { DispatchAction } from "../models/DispatchAction";
 import { RequestReducer } from "../models/RequestReducer";
 
 // FIRST & LAST NAME
-export function validateName(e: ChangeEvent<HTMLInputElement>, setState: Dispatch<SetStateAction<string>>, dispatch: Dispatch<Action>, type: string) {
+export function validateName(e: ChangeEvent<HTMLInputElement>, setState: Dispatch<SetStateAction<string>>, dispatch: Dispatch<DispatchAction>, type: string) {
   setState(e.target.value);
   const delay = setTimeout(() => {
     if (e.target.value.length < 1) dispatch({ type: type, value: true });
@@ -13,7 +13,7 @@ export function validateName(e: ChangeEvent<HTMLInputElement>, setState: Dispatc
 }
 
 // AGE
-export function validateAge(e: ChangeEvent<HTMLInputElement>, setState: Dispatch<SetStateAction<number>>, dispatch: Dispatch<Action>) {
+export function validateAge(e: ChangeEvent<HTMLInputElement>, setState: Dispatch<SetStateAction<number>>, dispatch: Dispatch<DispatchAction>) {
   setState(Number(e.target.value));
   const delay = setTimeout(() => {
     if (Number(e.target.value) < 18) dispatch({ type: "age", value: true });
@@ -54,7 +54,7 @@ export function validatePhone(value: string, state: RequestReducer): string {
 }
 
 // TATTOO PLACEMENT
-export function validateTattooPlacement(e: ChangeEvent<HTMLInputElement>, setState: Dispatch<SetStateAction<string>>, dispatch: Dispatch<Action>) {
+export function validateTattooPlacement(e: ChangeEvent<HTMLInputElement>, setState: Dispatch<SetStateAction<string>>, dispatch: Dispatch<DispatchAction>) {
   setState(e.target.value);
   const delay = setTimeout(() => {
     if (e.target.value.length <= 2) dispatch({ type: "tattooPlacement", value: true });
@@ -64,7 +64,7 @@ export function validateTattooPlacement(e: ChangeEvent<HTMLInputElement>, setSta
 }
 
 // TATTOO DESCRIPTION
-export function validateTattooDescription(e: ChangeEvent<HTMLTextAreaElement>, setState: Dispatch<SetStateAction<string>>, dispatch: Dispatch<Action>) {
+export function validateTattooDescription(e: ChangeEvent<HTMLTextAreaElement>, setState: Dispatch<SetStateAction<string>>, dispatch: Dispatch<DispatchAction>) {
   setState(e.target.value);
   const delay = setTimeout(() => {
     if (e.target.value.length < 7) dispatch({ type: "tattooDescription", value: true });
