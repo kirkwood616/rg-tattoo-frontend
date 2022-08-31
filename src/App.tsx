@@ -3,7 +3,6 @@ import RequestList from "admin/components/RequestList";
 import AdminHome from "admin/pages/AdminHome";
 import AppointmentRequestById from "admin/pages/AppointmentRequestById";
 import AppointmentRequests from "admin/pages/AppointmentRequests";
-import LogIn from "admin/pages/LogIn";
 import SetAvailableAppointments from "admin/pages/SetAvailableAppointments";
 import { requestTypes } from "admin/settings/AdminSettings";
 import Header from "components/Header";
@@ -12,19 +11,20 @@ import RequestPage from "components/RequestPage";
 import AppContext from "context/AppContext";
 import Aftercare from "pages/Aftercare";
 import Home from "pages/Home";
+import LogIn from "pages/LogIn";
 import RequestSubmitted from "pages/RequestSubmitted";
 import { useContext } from "react";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import PrivateRoutes from "routes/PrivateRoutes";
 
 function App() {
-  const { user, isLoading } = useContext(AppContext);
+  const { isLoading } = useContext(AppContext);
 
   return (
     <div className="App">
       <Router>
         {isLoading && <LoadingDotsIcon />}
-        {!user && <Header />}
+        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="aftercare" element={<Aftercare />} />

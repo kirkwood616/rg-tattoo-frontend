@@ -11,7 +11,7 @@ interface Props {
 
 function ErrorMessage({ loginError, name, message }: Props) {
   // CONTEXT
-  let { state } = useContext(RequestContext);
+  const { state } = useContext(RequestContext);
 
   // CLASSNAMES
   let fieldClassName: string = "";
