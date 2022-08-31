@@ -26,7 +26,6 @@ function SetAvailableAppointments() {
   const [dateId, setDateId] = useState<string>("");
   const [isTimesActive, setIsTimesActive] = useState<boolean>(false);
   const [isSaveActive, setIsSaveActive] = useState<boolean>(false);
-  console.log(available);
 
   // CHECK FOR DATE IN DATABASE
   useEffect(() => {
@@ -36,6 +35,9 @@ function SetAvailableAppointments() {
     if (dateInDatabase) {
       setDateId(dateInDatabase._id!);
       setAppointmentTimes(dateInDatabase.availableTimes);
+    } else {
+      setDateId("");
+      setAppointmentTimes([]);
     }
   }, [available, startDate]);
 
