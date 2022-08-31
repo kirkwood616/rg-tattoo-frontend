@@ -9,7 +9,7 @@ import "./LogIn.css";
 
 function LogIn() {
   // CONTEXT
-  let { setUser, setIsLoading } = useContext(AppContext);
+  const { setUser, setIsLoading } = useContext(AppContext);
 
   // STATE
   const [email, setEmail] = useState("");
