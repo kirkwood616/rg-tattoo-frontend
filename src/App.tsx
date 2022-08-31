@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import AdminContainer from "admin/components/AdminContainer";
 import RequestList from "admin/components/RequestList";
 import AdminHome from "admin/pages/AdminHome";
@@ -15,6 +13,8 @@ import AppContext from "context/AppContext";
 import Aftercare from "pages/Aftercare";
 import Home from "pages/Home";
 import RequestSubmitted from "pages/RequestSubmitted";
+import { useContext } from "react";
+import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import PrivateRoutes from "routes/PrivateRoutes";
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
           <Route path="aftercare" element={<Aftercare />} />
           <Route path="request-appointment" element={<RequestPage />} />
           <Route path="request-submitted" element={<RequestSubmitted />} />
-          <Route path="user/login" element={<LogIn />} />
+          <Route path="login" element={<LogIn />} />
           <Route element={<PrivateRoutes />}>
             <Route path="/admin/*" element={<AdminContainer />}>
               <Route index element={<AdminHome />} />
