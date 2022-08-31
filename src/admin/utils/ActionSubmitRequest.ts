@@ -1,4 +1,4 @@
-import { AppointmentRequest } from "../../models/AppointmentRequest";
+import { AppointmentRequest } from "models/AppointmentRequest";
 
 export default function actionSubmitRequest(request: AppointmentRequest, note: string, deposit: number, priceCharged: number): AppointmentRequest {
   let updatedRequest: AppointmentRequest = request;

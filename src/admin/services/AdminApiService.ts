@@ -1,8 +1,8 @@
 import axios from "axios";
 import { getDownloadURL, ref, StorageReference } from "firebase/storage";
-import { storage } from "../../firebaseConfig";
-import { AppointmentRequest } from "../../models/AppointmentRequest";
-import AvailableAppointments from "../../models/AvailableAppointments";
+import { storage } from "firebaseConfig";
+import { AppointmentRequest } from "models/AppointmentRequest";
+import AvailableAppointments from "models/AvailableAppointments";
 import admin from "./AdminInterceptor";
 
 const apiRequestAppointment = process.env.REACT_APP_API_REQUEST_ROUTE_LOCAL || "";

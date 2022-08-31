@@ -1,6 +1,6 @@
+import { DispatchAction } from "models/DispatchAction";
+import { RequestReducer } from "models/RequestReducer";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
-import { DispatchAction } from "../models/DispatchAction";
-import { RequestReducer } from "../models/RequestReducer";
 
 // FIRST & LAST NAME
 export function validateName(e: ChangeEvent<HTMLInputElement>, setState: Dispatch<SetStateAction<string>>, dispatch: Dispatch<DispatchAction>, type: string) {

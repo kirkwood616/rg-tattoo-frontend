@@ -1,5 +1,3 @@
-// import "./UserMenu.css";
-
 import { Link } from "react-router-dom";
 
 function UserMenu() {

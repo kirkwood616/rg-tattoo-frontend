@@ -1,5 +1,5 @@
-import { AppointmentRequest } from "../../models/AppointmentRequest";
-import { approveNewRequest, sendCompletedRequest, sendDepositReceivedRequest } from "../services/AdminApiService";
+import { approveNewRequest, sendCompletedRequest, sendDepositReceivedRequest } from "admin/services/AdminApiService";
+import { AppointmentRequest } from "models/AppointmentRequest";
 
 // Request is updated to it's next status from actionSubmitRequest()
 // Use next status in chain (e.g. "new" === "awaiting-deposit")

@@ -1,18 +1,18 @@
+import GoButton from "components/buttons/GoButton";
+import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
+import Page from "components/Page";
+import * as Field from "components/request-form-fields";
+import AppContext from "context/AppContext";
+import RequestContext from "context/RequestContext";
 import { format } from "date-fns";
+import { AppointmentRequest } from "models/AppointmentRequest";
+import AvailableAppointments from "models/AvailableAppointments";
 import { FormEvent, useContext, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
+import { getAvailableAppointments, postAppointmentRequest } from "services/ApiService";
 import useSWR from "swr";
-import GoButton from "../components/buttons/GoButton";
-import LoadingDotsIcon from "../components/loading/LoadingDotsIcon";
-import Page from "../components/Page";
-import * as Field from "../components/request-form-fields";
-import AppContext from "../context/AppContext";
-import RequestContext from "../context/RequestContext";
-import { AppointmentRequest } from "../models/AppointmentRequest";
-import AvailableAppointments from "../models/AvailableAppointments";
-import { getAvailableAppointments, postAppointmentRequest } from "../services/ApiService";
-import { handlePlacementPhotoUpload, handleReferencePhotoUpload } from "../utils/PhotoUpload";
+import { handlePlacementPhotoUpload, handleReferencePhotoUpload } from "utils/PhotoUpload";
 import "./RequestAppointment.css";
 
 function RequestAppointment() {

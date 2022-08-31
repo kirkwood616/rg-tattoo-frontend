@@ -1,4 +1,4 @@
-import { AppointmentRequest } from "../../../models/AppointmentRequest";
+import { AppointmentRequest } from "models/AppointmentRequest";
 import "./RequestActions.css";
 import ClosedRequestActions from "./RequestActionsClosed";
 import OpenRequestActions from "./RequestActionsOpen";
