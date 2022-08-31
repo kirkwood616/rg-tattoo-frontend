@@ -1,13 +1,13 @@
+import AddNote from "admin/features/AddNote/AddNote";
+import { depositBaseValue } from "admin/settings/AdminSettings";
+import actionSubmitRequest from "admin/utils/ActionSubmitRequest";
+import requestApiCall from "admin/utils/RequestApiCall";
+import GoButton from "components/buttons/GoButton";
+import ModalWindow from "components/modals/ModalWindow";
+import AppContext from "context/AppContext";
+import { AppointmentRequest } from "models/AppointmentRequest";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import GoButton from "../../components/buttons/GoButton";
-import ModalWindow from "../../components/modals/ModalWindow";
-import AppContext from "../../context/AppContext";
-import { AppointmentRequest } from "../../models/AppointmentRequest";
-import AddNote from "../features/AddNote/AddNote";
-import { depositBaseValue } from "../settings/AdminSettings";
-import actionSubmitRequest from "../utils/ActionSubmitRequest";
-import requestApiCall from "../utils/RequestApiCall";
 
 interface Props {
   request: AppointmentRequest;

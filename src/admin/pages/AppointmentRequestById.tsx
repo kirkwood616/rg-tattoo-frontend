@@ -1,11 +1,11 @@
+import AdminPage from "admin/components/AdminPage";
+import RequestActions from "admin/features/RequestActions/RequestActions";
+import useLocationRoute from "admin/hooks/useLocationRoute";
+import { fetchPhotoUrls, getRequest } from "admin/services/AdminApiService";
+import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
 import { format } from "date-fns";
 import useSWR from "swr";
-import useLocationRoute from "../../admin/hooks/useLocationRoute";
-import LoadingDotsIcon from "../../components/loading/LoadingDotsIcon";
-import { formatDate, formatTime, formatTitle } from "../../utils/Formatting";
-import AdminPage from "../components/AdminPage";
-import RequestActions from "../features/RequestActions/RequestActions";
-import { fetchPhotoUrls, getRequest } from "../services/AdminApiService";
+import { formatDate, formatTime, formatTitle } from "utils/Formatting";
 import "./AppointmentRequestById.css";
 
 function AppointmentRequestById() {
@@ -16,7 +16,6 @@ function AppointmentRequestById() {
   const { data: request, error: requestError } = useSWR(`appointment-requests/${route}/${id}`, getRequest, {
     revalidateOnFocus: false,
   });
-
   const { data: photos } = useSWR(() => request, fetchPhotoUrls, { revalidateOnFocus: false });
 
   // RENDER

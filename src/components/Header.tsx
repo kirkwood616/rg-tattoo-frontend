@@ -1,10 +1,10 @@
+import NavMenu from "components/menu/NavMenu";
 import "./Header.css";
-import NavMenu from "./menu/NavMenu";
 
 function Header() {
   return (
     <div className="Header">
-      <span className="rack-ruin">rack&ruin</span>
+      <span className="rack-ruin">rackxruin</span>
       <NavMenu />
     </div>
   );

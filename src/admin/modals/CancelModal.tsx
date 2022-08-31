@@ -1,11 +1,11 @@
+import AddNote from "admin/features/AddNote/AddNote";
+import { sendCanceledRequest } from "admin/services/AdminApiService";
+import GoButton from "components/buttons/GoButton";
+import ModalWindow from "components/modals/ModalWindow";
+import AppContext from "context/AppContext";
+import { AppointmentRequest } from "models/AppointmentRequest";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import GoButton from "../../components/buttons/GoButton";
-import ModalWindow from "../../components/modals/ModalWindow";
-import AppContext from "../../context/AppContext";
-import { AppointmentRequest } from "../../models/AppointmentRequest";
-import AddNote from "../features/AddNote/AddNote";
-import { sendCanceledRequest } from "../services/AdminApiService";
 
 interface Props {
   request: AppointmentRequest;

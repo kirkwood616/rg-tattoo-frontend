@@ -1,6 +1,6 @@
+import { RequestStatus } from "models/AppointmentRequest";
 import { useLocation, useParams } from "react-router-dom";
-import { RequestStatus } from "../../models/AppointmentRequest";
-import { formatTitle } from "../../utils/Formatting";
+import { formatTitle } from "utils/Formatting";
 
 export default function useLocationRoute() {
   const location = useLocation();

@@ -1,11 +1,11 @@
+import { postAvailableAppointment, updateAvailableAppointment } from "admin/services/AdminApiService";
+import GoButton from "components/buttons/GoButton";
+import ModalWindow from "components/modals/ModalWindow";
+import AppContext from "context/AppContext";
 import { format } from "date-fns";
+import AvailableAppointments from "models/AvailableAppointments";
 import { Dispatch, SetStateAction, useContext } from "react";
 import { useSWRConfig } from "swr";
-import GoButton from "../../components/buttons/GoButton";
-import ModalWindow from "../../components/modals/ModalWindow";
-import AppContext from "../../context/AppContext";
-import AvailableAppointments from "../../models/AvailableAppointments";
-import { postAvailableAppointment, updateAvailableAppointment } from "../services/AdminApiService";
 import "./SaveChangesModal.css";
 
 interface Props {

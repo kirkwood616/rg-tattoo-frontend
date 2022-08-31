@@ -1,9 +1,7 @@
-// import "./CompletedModal.css";
-
+import GoButton from "components/buttons/GoButton";
+import ModalWindow from "components/modals/ModalWindow";
+import { AppointmentRequest } from "models/AppointmentRequest";
 import { Dispatch, SetStateAction, useState } from "react";
-import GoButton from "../../components/buttons/GoButton";
-import ModalWindow from "../../components/modals/ModalWindow";
-import { AppointmentRequest } from "../../models/AppointmentRequest";
 
 interface Props {
   request: AppointmentRequest;

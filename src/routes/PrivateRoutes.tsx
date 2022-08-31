@@ -1,12 +1,12 @@
+import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
+import AppContext from "context/AppContext";
 import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "firebaseConfig";
 import { useContext, useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import LoadingDotsIcon from "../components/loading/LoadingDotsIcon";
-import AppContext from "../context/AppContext";
-import { auth } from "../firebaseConfig";
 
 function PrivateRoutes() {
-  let { user, setUser } = useContext(AppContext);
+  const { user, setUser } = useContext(AppContext);
 
   useEffect(() => {
     const authChange = onAuthStateChanged(auth, (currentUser) => {

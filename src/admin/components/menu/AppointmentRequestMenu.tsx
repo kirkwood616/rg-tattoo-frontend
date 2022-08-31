@@ -1,6 +1,6 @@
+import { requestTypes } from "admin/settings/AdminSettings";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { requestTypes } from "../../settings/AdminSettings";
 import "./AppointmentRequestMenu.css";
 
 function AppointmentRequestMenu() {

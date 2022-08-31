@@ -1,6 +1,6 @@
+import AdminMenu from "admin/components/menu/AdminMenu";
+import AppContext from "context/AppContext";
 import { useContext, useEffect, useRef, useState } from "react";
-import AdminMenu from "../../admin/components/menu/AdminMenu";
-import AppContext from "../../context/AppContext";
 import MenuHamburger from "./MenuHamburger";
 import "./NavMenu.css";
 import UserMenu from "./UserMenu";

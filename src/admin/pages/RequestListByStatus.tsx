@@ -1,11 +1,11 @@
+import AdminPage from "admin/components/AdminPage";
+import useLocationRoute from "admin/hooks/useLocationRoute";
+import { getRequests } from "admin/services/AdminApiService";
+import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import useSWR from "swr";
-import useLocationRoute from "../../admin/hooks/useLocationRoute";
-import LoadingDotsIcon from "../../components/loading/LoadingDotsIcon";
-import { formatDate, formatTime } from "../../utils/Formatting";
-import AdminPage from "../components/AdminPage";
-import { getRequests } from "../services/AdminApiService";
+import { formatDate, formatTime } from "utils/Formatting";
 
 function RequestListByStatus() {
   const { route, title } = useLocationRoute();

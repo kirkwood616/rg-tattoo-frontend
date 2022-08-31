@@ -1,15 +1,15 @@
+import GoButton from "components/buttons/GoButton";
+import ErrorMessage from "components/errors/ErrorMessage";
+import AppContext from "context/AppContext";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "firebaseConfig";
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import GoButton from "../../components/buttons/GoButton";
-import ErrorMessage from "../../components/errors/ErrorMessage";
-import AppContext from "../../context/AppContext";
-import { auth } from "../../firebaseConfig";
 import "./LogIn.css";
 
 function LogIn() {
   // CONTEXT
-  let { user, setUser, setIsLoading } = useContext(AppContext);
+  const { setUser, setIsLoading } = useContext(AppContext);
 
   // STATE
   const [email, setEmail] = useState("");
