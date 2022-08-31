@@ -1,22 +1,16 @@
-import AppContext from "context/AppContext";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "firebaseConfig";
-import { useContext, useEffect } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
+import useAuthCheck from "hooks/useAuthCheck";
+import { Navigate } from "react-router-dom";
 
-function PrivateRoutes() {
-  const { user, setUser, setIsLoading } = useContext(AppContext);
+interface Props {
+  component: JSX.Element;
+}
+function PrivateRoutes({ component }: Props) {
+  const { user, checkingAuth } = useAuthCheck();
 
-  useEffect(() => {
-    setIsLoading(true);
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) setUser(currentUser);
-      setIsLoading(false);
-    });
-    return unsubscribe;
-  }, [setIsLoading, setUser, user]);
-
-  return user ? <Outlet /> : <Navigate to="/login" />;
+  if (checkingAuth) return <LoadingDotsIcon />;
+  if (user) return component;
+  return <Navigate to="/login" />;
 }
 
 export default PrivateRoutes;

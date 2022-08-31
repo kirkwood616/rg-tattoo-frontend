@@ -1,13 +1,13 @@
 import AdminMenu from "admin/components/menu/AdminMenu";
-import AppContext from "context/AppContext";
-import { useContext, useEffect, useRef, useState } from "react";
+import useAuthCheck from "hooks/useAuthCheck";
+import { useEffect, useRef, useState } from "react";
 import MenuHamburger from "./MenuHamburger";
 import "./NavMenu.css";
 import UserMenu from "./UserMenu";
 
 function NavMenu() {
-  // CONTEXT
-  const { user } = useContext(AppContext);
+  // AUTH
+  const { user, setUser } = useAuthCheck();
 
   // STATE
   const [isActive, setIsActive] = useState(false);
@@ -15,7 +15,7 @@ function NavMenu() {
   // REF
   const dropdownRef = useRef(null);
 
-  // ON-CLICKS
+  // ON-CLICK
   const onClick = () => setIsActive((prev) => !prev);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ function NavMenu() {
           <MenuHamburger isActive={isActive} />
         </button>
         <nav ref={dropdownRef} className={`menu ${isActive ? "active" : "inactive"}`}>
-          {user ? <AdminMenu /> : <UserMenu />}
+          {user ? <AdminMenu setUser={setUser} /> : <UserMenu />}
         </nav>
       </div>
     </div>

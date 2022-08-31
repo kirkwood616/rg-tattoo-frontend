@@ -1,39 +1,29 @@
 import GoButton from "components/buttons/GoButton";
 import ErrorMessage from "components/errors/ErrorMessage";
+import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
 import AppContext from "context/AppContext";
-import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "firebaseConfig";
-import { FormEvent, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import useAuthCheck from "hooks/useAuthCheck";
+import { FormEvent, useContext, useState } from "react";
+import { Navigate } from "react-router-dom";
 import "./LogIn.css";
 
 function LogIn() {
   // CONTEXT
-  const { setUser, setIsLoading } = useContext(AppContext);
+  const { setIsLoading } = useContext(AppContext);
+
+  // AUTH
+  const { user, checkingAuth } = useAuthCheck();
 
   // STATE
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  // NAVIGATE
-  const navigate = useNavigate();
-
-  // USER CHECK
-  useEffect(() => {
-    setIsLoading(true);
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-        navigate("/admin/home");
-      }
-      setIsLoading(false);
-    });
-
-    return unsubscribe;
-  }, [navigate, setIsLoading, setUser]);
-
-  async function handleLogIn() {
+  // LOGIN
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault();
     setIsLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -45,12 +35,8 @@ function LogIn() {
     }
   }
 
-  // ON SUBMIT
-  function onSubmit(e: FormEvent) {
-    e.preventDefault();
-    handleLogIn();
-  }
-
+  if (checkingAuth) return <LoadingDotsIcon />;
+  if (user) return <Navigate to="/admin/home" />;
   return (
     <div className="LogIn">
       <form onSubmit={onSubmit}>
