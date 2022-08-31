@@ -1,13 +1,17 @@
 import AppContext from "context/AppContext";
-import { signOut } from "firebase/auth";
+import { signOut, User } from "firebase/auth";
 import { auth } from "firebaseConfig";
-import { useContext } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-function AdminMenu() {
+interface Props {
+  setUser: Dispatch<SetStateAction<User | null>>;
+}
+function AdminMenu({ setUser }: Props) {
   // CONTEXT
-  const { setUser, setIsLoading } = useContext(AppContext);
+  const { setIsLoading } = useContext(AppContext);
 
+  // NAVIGATE
   const navigate = useNavigate();
 
   // LOGOUT

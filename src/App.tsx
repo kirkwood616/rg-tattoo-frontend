@@ -31,8 +31,8 @@ function App() {
           <Route path="request-appointment" element={<RequestPage />} />
           <Route path="request-submitted" element={<RequestSubmitted />} />
           <Route path="login" element={<LogIn />} />
-          <Route element={<PrivateRoutes />}>
-            <Route path="/admin/*" element={<AdminContainer />}>
+          <Route element={<PrivateRoutes component={<AdminContainer />} />}>
+            <Route path="/admin/*">
               <Route index element={<AdminHome />} />
               <Route path="home" element={<AdminHome />} />
               <Route path="appointment-requests" element={<AppointmentRequests />}>
