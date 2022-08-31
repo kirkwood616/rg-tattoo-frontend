@@ -2,15 +2,26 @@ import AppContext from "context/AppContext";
 import { signOut } from "firebase/auth";
 import { auth } from "firebaseConfig";
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function AdminMenu() {
   // CONTEXT
-  const { setUser } = useContext(AppContext);
+  const { setUser, setIsLoading } = useContext(AppContext);
+
+  const navigate = useNavigate();
 
   // LOGOUT
   async function logOut() {
-    await signOut(auth).then(() => setUser(null));
+    setIsLoading(true);
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+      setUser(null);
+      navigate("/login");
+    }
   }
 
   return (

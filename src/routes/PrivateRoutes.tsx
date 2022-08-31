@@ -1,4 +1,3 @@
-import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
 import AppContext from "context/AppContext";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "firebaseConfig";
@@ -6,18 +5,18 @@ import { useContext, useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 function PrivateRoutes() {
-  const { user, setUser } = useContext(AppContext);
+  const { user, setUser, setIsLoading } = useContext(AppContext);
 
   useEffect(() => {
-    const authChange = onAuthStateChanged(auth, (currentUser) => {
+    setIsLoading(true);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) setUser(currentUser);
+      setIsLoading(false);
     });
-    return authChange;
-  }, [setUser]);
+    return unsubscribe;
+  }, [setIsLoading, setUser, user]);
 
-  if (user === null) return <LoadingDotsIcon />;
-
-  return user ? <Outlet /> : <Navigate to="user/login" />;
+  return user ? <Outlet /> : <Navigate to="/login" />;
 }
 
 export default PrivateRoutes;
