@@ -1,4 +1,5 @@
 import AdminMenu from "admin/components/menu/AdminMenu";
+import useLocationRoute from "admin/hooks/useLocationRoute";
 import useAuthCheck from "hooks/useAuthCheck";
 import { useEffect, useRef, useState } from "react";
 import MenuHamburger from "./MenuHamburger";
@@ -8,6 +9,9 @@ import UserMenu from "./UserMenu";
 function NavMenu() {
   // AUTH
   const { user, setUser } = useAuthCheck();
+
+  // LOCATION
+  const { isAdmin } = useLocationRoute();
 
   // STATE
   const [isActive, setIsActive] = useState(false);
@@ -36,7 +40,7 @@ function NavMenu() {
           <MenuHamburger isActive={isActive} />
         </button>
         <nav ref={dropdownRef} className={`menu ${isActive ? "active" : "inactive"}`}>
-          {user ? <AdminMenu setUser={setUser} /> : <UserMenu />}
+          {user && isAdmin ? <AdminMenu setUser={setUser} /> : <UserMenu />}
         </nav>
       </div>
     </div>
