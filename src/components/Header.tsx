@@ -4,7 +4,7 @@ import "./Header.css";
 function Header() {
   return (
     <div className="Header">
-      <span className="rack-ruin">rackxruin</span>
+      <span className="site-title">rackxruin</span>
       <NavMenu />
     </div>
   );
