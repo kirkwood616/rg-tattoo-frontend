@@ -15,10 +15,12 @@ function PhotoUpload({ name }: Props) {
 
   // FUNCTIONS
   function handlePhotoChange(e: ChangeEvent<HTMLInputElement>): void {
-    if (e.currentTarget.files![0]) {
+    if (!e.currentTarget.files) {
+      resetPhoto();
+    } else if (e.currentTarget.files[0]) {
       dispatch({ type: name, value: e.currentTarget.files![0] });
     } else {
-      resetPhoto();
+      return;
     }
   }
 
@@ -34,20 +36,12 @@ function PhotoUpload({ name }: Props) {
     }
   }
 
-  function isFieldDisabled() {
-    if (!state.appointmentTime.value) {
-      return "photo-upload_disabled";
-    } else {
-      return "photo-upload";
-    }
-  }
-
   return (
     <>
       <label htmlFor={name} className={state.appointmentTime.value ? "label" : "label disabled"}>
         {labelTitle()}
       </label>
-      <div className={isFieldDisabled()}>
+      <div className="photo-upload">
         <label className="file-label">
           <input
             type="file"
