@@ -10,8 +10,12 @@ export function formatDate(date: string): string {
 }
 
 // FORMAT TITLE FROM STATUS/ROUTE (e.g. awaiting-deposit => Awaiting Deposit)a
-export function formatTitle(title: string): string {
-  if (title.includes("-")) {
+export function formatTitle(title: string | undefined): string {
+  if (title === undefined) {
+    return "Home";
+  } else if (title.includes("/admin/")) {
+    return title.replace("/admin/", "") + title;
+  } else if (title.includes("-")) {
     return (
       title[0].toUpperCase() +
       title
