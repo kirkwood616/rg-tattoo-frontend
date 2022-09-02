@@ -1,16 +1,17 @@
-// FORMAT TIME FROM STRING (e.g. 04:00 PM => 4:00 PM)
-export function formatTime(time: string): string {
-  if (Number(time[0]) > 0) return time;
-  return time.substring(1);
-}
-
-export function formatDate(date: string): string {
-  if (Number(date[0]) > 0) return date;
-  return date.substring(1);
-}
-
-// FORMAT TITLE FROM STATUS/ROUTE (e.g. awaiting-deposit => Awaiting Deposit)
-export function formatTitle(title: string | undefined): string {
+/**
+ * Formats the current browser path & parameters into a title to be displayed
+ * within components. If no path or parameters in the route, it will return
+ * a default title of `Home`.
+ *
+ * @param title Takes in a `string` or `undefined` route from the current browser
+ * path. If `admin` is present in the path, it will be removed.
+ *
+ * @returns A `string` formatted with capitalization and removing of hyphens.
+ *  If `undefined` is passed as a parameter, it will return `Home`.
+ * @example formatRouteTitle("/admin/appointment-requests") // Returns "Appointment Requests"
+ * @example formatRouteTitle(undefined) // Returns "Home"
+ */
+export function formatRouteTitle(title: string | undefined): string {
   if (title === undefined) {
     return "Home";
   } else if (title.includes("/admin/")) {
@@ -76,4 +77,30 @@ export function formatEstTimeWithSuffix(date: Date | string): string {
   } else {
     return estDate;
   }
+}
+
+/**
+ *
+ * @param time A `string` in HH:MM AM/PM format.
+ * @returns A `string` without a leading 0, if present. If no leading 0 present,
+ * the return will be the initial `time` parameter passed.
+ * @example 09:30 AM => 9:30 AM
+ * @example 10:30 PM => 10:30 PM
+ */
+export function formatTimeNoLeadingZero(time: string): string {
+  if (Number(time[0]) > 0) return time;
+  return time.substring(1);
+}
+
+/**
+ *
+ * @param date A `string` in MM/DD/YYYY format.
+ * @returns A `string` without a leading 0, if present. If no leading 0 present,
+ * the return will be the initial `date` parameter passed.
+ * @example 09/01/2022 => 9/01/2022
+ * @example 10/01/2022 => 10/01/2022
+ */
+export function formatDateNoLeadingZero(date: string): string {
+  if (Number(date[0]) > 0) return date;
+  return date.substring(1);
 }
