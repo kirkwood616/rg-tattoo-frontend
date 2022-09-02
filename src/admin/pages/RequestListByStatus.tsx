@@ -5,7 +5,7 @@ import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import useSWR from "swr";
-import { formatDate, formatTime } from "utils/Formatting";
+import { formatDateNoLeadingZero, formatTimeNoLeadingZero } from "utils/Formatting";
 
 function RequestListByStatus() {
   const { route, title } = useLocationRoute();
@@ -25,7 +25,7 @@ function RequestListByStatus() {
             <Link to={request._id!}>
               <div className="request-info_container">
                 <div className="request-date-time_container">
-                  {formatDate(request.requestDate)} @ {formatTime(request.requestTime)}
+                  {formatDateNoLeadingZero(request.requestDate)} @ {formatTimeNoLeadingZero(request.requestTime)}
                 </div>
                 <div className="request-submitted_container">
                   <div className="request-info_container">

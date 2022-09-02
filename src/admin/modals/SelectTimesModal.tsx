@@ -1,7 +1,7 @@
 import { timePickerValues } from "admin/settings/AdminSettings";
 import ModalWindow from "components/modals/ModalWindow";
 import { Dispatch, SetStateAction } from "react";
-import { formatTime } from "utils/Formatting";
+import { formatTimeNoLeadingZero } from "utils/Formatting";
 import "./SelectTimesModal.css";
 
 interface Props {
@@ -19,7 +19,7 @@ function SelectTimesModal({ isTimesActive, setIsTimesActive, addTime }: Props) {
     <ModalWindow isActive={isTimesActive} setIsActive={setIsTimesActive} className="time-select_container">
       {timePickerValues!.map((time, index) => (
         <button value={time} key={index} className="time-option" onClick={(e) => onTimeClick(e)}>
-          {formatTime(time)}
+          {formatTimeNoLeadingZero(time)}
         </button>
       ))}
     </ModalWindow>
