@@ -64,6 +64,20 @@ function SetAvailableAppointments() {
     if (!startDate) return;
     setIsSaveActive(true);
   }
+  console.log(
+    startDate?.toLocaleString("en-US", {
+      timeZone: "America/New_York",
+    })
+  );
+
+  // const date = new Date();
+  // const newDate = date.toLocaleString("en-Us", {
+  //   timeZone: "America/New_York",
+  //   dateStyle: "short",
+  //   timeStyle: "short",
+  // });
+  // console.log(date);
+  // console.log(newDate);
 
   if (availableError) return <h1>Something went wrong!</h1>;
   if (!available) return <LoadingDotsIcon />;

@@ -3,9 +3,8 @@ import RequestActions from "admin/features/RequestActions/RequestActions";
 import useLocationRoute from "admin/hooks/useLocationRoute";
 import { fetchPhotoUrls, getRequest } from "admin/services/AdminApiService";
 import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
-import { format } from "date-fns";
 import useSWR from "swr";
-import { formatDate, formatTime, formatTitle } from "utils/Formatting";
+import { formatEstTimeWithSuffix, formatTime, formatTitle, formatUnitedStatesDate } from "utils/Formatting";
 import "./AppointmentRequestById.css";
 
 function AppointmentRequestById() {
@@ -21,21 +20,26 @@ function AppointmentRequestById() {
   // RENDER
   if (requestError) return <h1>Something went wrong!</h1>;
   if (!request) return <LoadingDotsIcon />;
+
   return (
     <AdminPage title={`${title} Request`}>
       <div className="AppointmentRequestById">
         <h2>{title} Request</h2>
-
         <section className="request-section_container">
           <div className="request-section_title">REQUEST DETAILS</div>
           <div className="request-item_title">REQUEST STATUS</div>
           <div className="request-item_info">{formatTitle(request.requestStatus)}</div>
           <div className="request-item_title">REQUESTED DATE</div>
-          <div className="request-item_info">{formatDate(request.requestDate)}</div>
+          <div className="request-item_info">{formatUnitedStatesDate(request.requestDate)}</div>
           <div className="request-item_title">REQUESTED TIME</div>
-          <div className="request-item_info">{formatTime(request.requestTime)}</div>
-          <div className="request-item_title">SUBMITTED DATE</div>
-          <div className="request-item_info">{format(new Date(request.requestSubmittedDate), "M/dd/yyyy @ h:mm a")}</div>
+          <div className="request-item_info">{formatTime(request.requestTime) + " (EST)"}</div>
+          <div className="request-item_title">DATE SUBMITTED</div>
+          <div className="request-item_info">
+            {formatUnitedStatesDate(request.requestSubmittedDate)}
+            <br />
+            {formatEstTimeWithSuffix(request.requestSubmittedDate)}
+          </div>
+
           {request.depositAmmountReceived > 0 && (
             <>
               <div className="request-item_title">DEPOSIT RECEIVED</div>
@@ -100,7 +104,9 @@ function AppointmentRequestById() {
           <div className="request-section_title">HISTORY LOG</div>
           {request.historyLog.map((item, index) => (
             <div className="request-log_container" key={String(item.dateCreated) + index}>
-              <div className="request-item_title">{format(new Date(item.dateCreated), "M/dd/yyyy @ h:mm a")}</div>
+              <div className="request-item_title">
+                {formatUnitedStatesDate(item.dateCreated)} @ {formatEstTimeWithSuffix(item.dateCreated)}
+              </div>
               <div className="request-item_info">
                 {item.action && (
                   <>
