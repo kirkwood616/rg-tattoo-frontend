@@ -13,7 +13,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getAvailableAppointments } from "services/ApiService";
 import useSWR from "swr";
-import { formatTime } from "utils/Formatting";
+import { formatTimeNoLeadingZero } from "utils/Formatting";
 import "./SetAvailableAppointments.css";
 
 function SetAvailableAppointments() {
@@ -103,7 +103,7 @@ function SetAvailableAppointments() {
             {appointmentTimes.length > 0 &&
               appointmentTimes.map((time, index) => (
                 <div className="available-time_container" key={String(startDate) + index}>
-                  <span className="available-time">{formatTime(time)}</span>
+                  <span className="available-time">{formatTimeNoLeadingZero(time)}</span>
                   <RemoveButton index={index} onClick={removeTime} />
                 </div>
               ))}

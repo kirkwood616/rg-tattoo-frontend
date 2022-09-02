@@ -2,7 +2,7 @@ import FormErrorMessage from "components/errors/FormErrorMessage";
 import SelectAppointmentTimes from "components/modals/SelectAppointmentTimes";
 import RequestContext from "context/RequestContext";
 import { useContext, useState } from "react";
-import { formatTime } from "utils/Formatting";
+import { formatTimeNoLeadingZero } from "utils/Formatting";
 
 function AppointmentTimes() {
   // CONTEXT
@@ -24,7 +24,7 @@ function AppointmentTimes() {
               name="time-picker"
               id="time-picker"
               placeholder="--- Select Time ---"
-              value={formatTime(state.appointmentTime.value)}
+              value={formatTimeNoLeadingZero(state.appointmentTime.value)}
               onClick={() => setIsTimesActive(true)}
               readOnly
             ></input>

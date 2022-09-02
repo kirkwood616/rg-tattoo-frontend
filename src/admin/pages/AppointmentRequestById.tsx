@@ -4,7 +4,7 @@ import useLocationRoute from "admin/hooks/useLocationRoute";
 import { fetchPhotoUrls, getRequest } from "admin/services/AdminApiService";
 import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
 import useSWR from "swr";
-import { formatEstTimeWithSuffix, formatTime, formatTitle, formatUnitedStatesDate } from "utils/Formatting";
+import { formatEstTimeWithSuffix, formatRouteTitle, formatTimeNoLeadingZero, formatUnitedStatesDate } from "utils/Formatting";
 import "./AppointmentRequestById.css";
 
 function AppointmentRequestById() {
@@ -28,11 +28,11 @@ function AppointmentRequestById() {
         <section className="request-section_container">
           <div className="request-section_title">REQUEST DETAILS</div>
           <div className="request-item_title">REQUEST STATUS</div>
-          <div className="request-item_info">{formatTitle(request.requestStatus)}</div>
+          <div className="request-item_info">{formatRouteTitle(request.requestStatus)}</div>
           <div className="request-item_title">REQUESTED DATE</div>
           <div className="request-item_info">{formatUnitedStatesDate(request.requestDate)}</div>
           <div className="request-item_title">REQUESTED TIME</div>
-          <div className="request-item_info">{formatTime(request.requestTime) + " (EST)"}</div>
+          <div className="request-item_info">{formatTimeNoLeadingZero(request.requestTime) + " (EST)"}</div>
           <div className="request-item_title">DATE SUBMITTED</div>
           <div className="request-item_info">
             {formatUnitedStatesDate(request.requestSubmittedDate)}
