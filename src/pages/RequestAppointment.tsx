@@ -21,7 +21,9 @@ function RequestAppointment() {
   const { setAvailableAppointmentsTimes, state, dispatch } = useContext(RequestContext);
 
   // SWR
-  const { data: available, error } = useSWR("/available-appointments", getAvailableAppointments, { revalidateOnFocus: false });
+  const { data: available, error } = useSWR("/available-appointments", getAvailableAppointments, {
+    revalidateOnFocus: false,
+  });
 
   // NAVIGATE
   const navigate = useNavigate();
@@ -63,8 +65,13 @@ function RequestAppointment() {
         phoneNumber: state.phoneNumber.value,
         tattooStyle: state.tattooStyle.value,
         tattooPlacement: state.tattooPlacement.value,
-        referencePhotoPath: state.referencePhoto.value ? `${state.firstName.value}-${state.lastName!.value}-ref-${state.referencePhoto.value.name}` : "",
-        placementPhotoPath: state.placementPhoto.value ? `${state.firstName.value}-${state.lastName!.value}-place-${state.placementPhoto.value.name}` : "",
+        budget: state.budget.value,
+        referencePhotoPath: state.referencePhoto.value
+          ? `${state.firstName.value}-${state.lastName!.value}-ref-${state.referencePhoto.value.name}`
+          : "",
+        placementPhotoPath: state.placementPhoto.value
+          ? `${state.firstName.value}-${state.lastName!.value}-place-${state.placementPhoto.value.name}`
+          : "",
         tattooDescription: state.tattooDescription.value,
         requestConfirm: state.requestConfirm.value,
         requestStatus: "new",
@@ -111,11 +118,14 @@ function RequestAppointment() {
               <Field.PhoneNumber />
               <Field.TattooStyle />
               <Field.TattooPlacement />
+              <Field.Budget />
               <Field.PhotoUpload name="referencePhoto" />
               <Field.PhotoUpload name="placementPhoto" />
               <Field.TattooDescription />
               <Field.RequestConfirm />
-              {state.appointmentTime.value && <GoButton type="submit" text="Submit Request" backgroundColor="green" isDisabled={false} />}
+              {state.appointmentTime.value && (
+                <GoButton type="submit" text="Submit Request" backgroundColor="green" isDisabled={false} />
+              )}
             </>
           )}
         </form>

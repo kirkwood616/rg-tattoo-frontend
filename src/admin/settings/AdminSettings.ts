@@ -21,6 +21,10 @@ export const timePickerValues: string[] | void = adminTimePickerValues("12:00 PM
 // TATTOO STYLES
 export const tattooStyles = ["Linework", "Black & White", "Full Color", "Lettering"];
 
+// BUDGET
+export const budgetBrackets = ["$80 - $120", "$130 - $220", "$230 - $320", "$330 - $420", "$430+"];
+
+// DEPOSIT
 export const depositBaseValue: number = 50;
 
 // REQUEST TYPES

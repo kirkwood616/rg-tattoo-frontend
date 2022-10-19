@@ -8,6 +8,7 @@ export type StateFields =
   | "phoneNumber"
   | "tattooStyle"
   | "tattooPlacement"
+  | "budget"
   | "referencePhoto"
   | "placementPhoto"
   | "tattooDescription"
