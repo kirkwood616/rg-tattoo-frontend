@@ -1,0 +1,36 @@
+.select_container {
+  background-color: var(--black);
+  border-radius: 0.5rem;
+  box-shadow: 0 0px 10px var(--light-gray-1);
+  color: black;
+  font-weight: bold;
+  max-height: 60%;
+  margin: auto;
+  overflow: auto;
+  position: relative;
+  text-align: center;
+  width: 95%;
+}
+
+.select-option {
+  border: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0;
+  padding: 0.75rem 0;
+  width: 100%;
+}
+
+.select-option:nth-child(even) {
+  background-color: white;
+}
+
+.select-option:nth-child(odd) {
+  background-color: var(--light-gray-2);
+}
+
+.select-option:nth-child(odd):hover,
+.select-option:nth-child(even):hover {
+  background-color: #007bff;
+  color: white;
+}
