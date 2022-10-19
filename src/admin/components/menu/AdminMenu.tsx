@@ -1,7 +1,8 @@
+import AreYouSure from "components/modals/AreYouSure";
 import AppContext from "context/AppContext";
 import { signOut, User } from "firebase/auth";
 import { auth } from "firebaseConfig";
-import { Dispatch, SetStateAction, useContext } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 interface Props {
@@ -10,6 +11,9 @@ interface Props {
 function AdminMenu({ setUser }: Props) {
   // CONTEXT
   const { setIsLoading } = useContext(AppContext);
+
+  // STATE
+  const [isLogOutActive, setIsLogOutActive] = useState(false);
 
   // NAVIGATE
   const navigate = useNavigate();
@@ -40,10 +44,18 @@ function AdminMenu({ setUser }: Props) {
         <li>
           <Link to={"/admin/set-available-appointments"}>SET AVAILABLE APPOINTMENTS</Link>
         </li>
-        <li onClick={logOut}>
-          <Link to={"/login"}>LOG OUT</Link>
+        <li
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsLogOutActive((current) => !current);
+          }}
+        >
+          <Link to={"#"}>LOG OUT</Link>
         </li>
       </ul>
+      {isLogOutActive && (
+        <AreYouSure isActive={isLogOutActive} setIsActive={setIsLogOutActive} yesFunction={logOut} yesButtonText="YES" />
+      )}
     </div>
   );
 }
