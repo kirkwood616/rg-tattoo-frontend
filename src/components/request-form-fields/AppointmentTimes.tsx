@@ -1,5 +1,5 @@
 import FormErrorMessage from "components/errors/FormErrorMessage";
-import SelectAppointmentTimes from "components/modals/SelectAppointmentTimes";
+import SelectList from "components/modals/SelectList";
 import RequestContext from "context/RequestContext";
 import { useContext, useState } from "react";
 import { formatTimeNoLeadingZero } from "utils/Formatting";
@@ -33,7 +33,16 @@ function AppointmentTimes() {
         )}
         {!availableAppointmentTimes.length && <FormErrorMessage message={`NO AVAILABLE TIMES. PLEASE SELECT ANOTHER DATE`} name={"appointmentTime"} />}
 
-        {isTimesActive && <SelectAppointmentTimes isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} />}
+        {isTimesActive && (
+          <SelectList
+            isSelectActive={isTimesActive}
+            setIsSelectActive={setIsTimesActive}
+            selectList={availableAppointmentTimes}
+            actionType="appointmentTime"
+            formatter={formatTimeNoLeadingZero}
+          />
+        )}
+        {/* {isTimesActive && <SelectAppointmentTimes isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} />} */}
       </div>
     </>
   );
