@@ -47,6 +47,11 @@ export const initialState: RequestReducer = {
     hasErrors: true,
     checkCount: 0,
   },
+  budget: {
+    value: "",
+    hasErrors: true,
+    checkCount: 0,
+  },
   referencePhoto: {
     value: null,
     hasErrors: true,
@@ -140,7 +145,7 @@ export function requestReducer(state: RequestReducer, action: RequestAction) {
     case "tattooStyle":
       state.tattooStyle.value = action.value;
       state.tattooStyle.checkCount++;
-      if (state.tattooStyle.value === "select") {
+      if (state.tattooStyle.value === "") {
         state.tattooStyle.hasErrors = true;
       } else {
         state.tattooStyle.hasErrors = false;
@@ -153,6 +158,15 @@ export function requestReducer(state: RequestReducer, action: RequestAction) {
         state.tattooPlacement.hasErrors = true;
       } else {
         state.tattooPlacement.hasErrors = false;
+      }
+      return;
+    case "budget":
+      state.budget.value = action.value;
+      state.budget.checkCount++;
+      if (state.budget.value === "") {
+        state.budget.hasErrors = true;
+      } else {
+        state.budget.hasErrors = false;
       }
       return;
     case "referencePhoto":
@@ -199,6 +213,7 @@ export function requestReducer(state: RequestReducer, action: RequestAction) {
       if (!state.phoneNumber.value.length) state.phoneNumber.hasErrors = true;
       if (!state.tattooStyle.value.length) state.tattooStyle.hasErrors = true;
       if (!state.tattooPlacement.value.length) state.tattooPlacement.hasErrors = true;
+      if (!state.budget.value.length) state.budget.hasErrors = true;
       if (state.referencePhoto.value === null) state.referencePhoto.hasErrors = true;
       if (!state.tattooDescription.value.length) state.tattooDescription.hasErrors = true;
       if (!state.requestConfirm.value) state.requestConfirm.hasErrors = true;

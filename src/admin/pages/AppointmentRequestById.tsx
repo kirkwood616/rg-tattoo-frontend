@@ -4,7 +4,12 @@ import useLocationRoute from "admin/hooks/useLocationRoute";
 import { fetchPhotoUrls, getRequest } from "admin/services/AdminApiService";
 import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
 import useSWR from "swr";
-import { formatEstTimeWithSuffix, formatRouteTitle, formatTimeNoLeadingZero, formatUnitedStatesDate } from "utils/Formatting";
+import {
+  formatEstTimeWithSuffix,
+  formatRouteTitle,
+  formatTimeNoLeadingZero,
+  formatUnitedStatesDate,
+} from "utils/Formatting";
 import "./AppointmentRequestById.css";
 
 function AppointmentRequestById() {
@@ -74,6 +79,8 @@ function AppointmentRequestById() {
           <div className="request-item_info">{request.tattooStyle}</div>
           <div className="request-item_title">PLACEMENT</div>
           <div className="request-item_info">{request.tattooPlacement}</div>
+          <div className="request-item_title">BUDGET</div>
+          <div className="request-item_info">{request.budget}</div>
           <div className="request-item_title">DESCRIPTION</div>
           <div className="request-item_info" style={{ whiteSpace: "pre-line" }}>
             {request.tattooDescription}

@@ -1,5 +1,6 @@
 export { default as Age } from "./Age";
 export { default as AppointmentTimes } from "./AppointmentTimes";
+export { default as Budget } from "./Budget";
 export { default as Email } from "./Email";
 export { default as FirstName } from "./FirstName";
 export { default as LastName } from "./LastName";

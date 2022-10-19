@@ -54,6 +54,11 @@ export interface RequestReducer extends ReducerModel {
     hasErrors: boolean;
     checkCount: number;
   };
+  budget: {
+    value: string;
+    hasErrors: boolean;
+    checkCount: number;
+  };
   referencePhoto: {
     value: File | null;
     hasErrors: boolean;
@@ -91,6 +96,7 @@ export type RequestAction =
   | { type: "phoneNumber"; value: string }
   | { type: "tattooStyle"; value: string }
   | { type: "tattooPlacement"; value: string }
+  | { type: "budget"; value: string }
   | { type: "referencePhoto"; value: File | null }
   | { type: "placementPhoto"; value: File | null }
   | { type: "tattooDescription"; value: string }

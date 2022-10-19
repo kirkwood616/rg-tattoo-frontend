@@ -10,6 +10,7 @@ export interface AppointmentRequest {
   phoneNumber: string;
   tattooStyle: string;
   tattooPlacement: string;
+  budget: string;
   referencePhotoPath: string;
   placementPhotoPath: string;
   tattooDescription: string;
