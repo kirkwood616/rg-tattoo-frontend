@@ -10,11 +10,12 @@
 
 .SetAvailableAppointments #time-picker,
 #date-picker {
+  font-size: 1.5rem;
   padding: 1rem;
 }
 
-.date-picker_container,
-.time-picker_container {
+.SetAvailableAppointments .date-picker_container,
+.SetAvailableAppointments .time-picker_container {
   width: 85%;
 }
 
@@ -53,7 +54,7 @@
 
 .available-time_container {
   align-items: center;
-  background-color: var(--light-gray-1);
+  background-color: var(--light-gray-2);
   border-radius: 0.5rem;
   box-shadow: 0 3px 7px var(--black);
   display: flex;
