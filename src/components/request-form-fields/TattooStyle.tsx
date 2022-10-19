@@ -1,13 +1,11 @@
+import { tattooStyles } from "admin/settings/AdminSettings";
 import FormErrorMessage from "components/errors/FormErrorMessage";
-import SelectTattooStyle from "components/modals/SelectTattooStyle";
+import SelectList from "components/modals/SelectList";
 import RequestContext from "context/RequestContext";
 import { useContext, useState } from "react";
 
 function TattooStyle() {
-  // CONTEXT
   const { state } = useContext(RequestContext);
-
-  // STATE
   const [isStyleActive, setIsStyleActive] = useState<boolean>(false);
 
   return (
@@ -26,7 +24,14 @@ function TattooStyle() {
         readOnly
       />
       <FormErrorMessage message={"PLEASE SELECT A TATTOO STYLE"} name={"tattooStyle"} />
-      {isStyleActive && <SelectTattooStyle isStyleActive={isStyleActive} setIsStyleActive={setIsStyleActive} />}
+      {isStyleActive && (
+        <SelectList
+          isSelectActive={isStyleActive}
+          setIsSelectActive={setIsStyleActive}
+          selectList={tattooStyles}
+          actionType="tattooStyle"
+        />
+      )}
     </>
   );
 }

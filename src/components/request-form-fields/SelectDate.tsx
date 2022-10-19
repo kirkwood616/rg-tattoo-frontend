@@ -1,5 +1,6 @@
 import FormErrorMessage from "components/errors/FormErrorMessage";
 import RequestContext from "context/RequestContext";
+import { initialState } from "context/RequestReducer";
 import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 
@@ -28,8 +29,8 @@ function SelectDate() {
           placeholderText="Select Date"
           selected={state.startDate.value}
           onChange={(date: Date) => {
+            dispatch({ type: "reset", value: initialState });
             dispatch({ type: "startDate", value: date });
-            dispatch({ type: "appointmentTime", value: "" });
           }}
           minDate={new Date()}
           maxDate={maxAppointmentDate}

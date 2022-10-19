@@ -1,24 +1,30 @@
 import AdminPage from "admin/components/AdminPage";
-import SaveChangesModal from "admin/modals/SaveChangesModal";
-import SelectTimesModal from "admin/modals/SelectTimesModal";
+import { postAvailableAppointment, updateAvailableAppointment } from "admin/services/AdminApiService";
 import { timePickerValues } from "admin/settings/AdminSettings";
 import GoButton from "components/buttons/GoButton";
 import RemoveButton from "components/buttons/RemoveButton";
 import SaveButton from "components/buttons/SaveButton";
 import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
+import AreYouSure from "components/modals/AreYouSure";
+import SelectList from "components/modals/SelectList";
+import AppContext from "context/AppContext";
 import { format } from "date-fns";
 import AvailableAppointments from "models/AvailableAppointments";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getAvailableAppointments } from "services/ApiService";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import { formatTimeNoLeadingZero } from "utils/Formatting";
 import "./SetAvailableAppointments.css";
 
 function SetAvailableAppointments() {
   // SWR
   const { data: available, error: availableError } = useSWR("/available-appointments", getAvailableAppointments, { revalidateOnFocus: false });
+  const { mutate } = useSWRConfig();
+
+  // CONTEXT
+  const { setIsLoading } = useContext(AppContext);
 
   // STATE
   const [appointmentTimes, setAppointmentTimes] = useState<string[]>([]);
@@ -60,24 +66,32 @@ function SetAvailableAppointments() {
   }
 
   // SAVE CHANGES
-  function saveChanges(): void {
+  function confirmSave(): void {
     if (!startDate) return;
     setIsSaveActive(true);
   }
-  console.log(
-    startDate?.toLocaleString("en-US", {
-      timeZone: "America/New_York",
-    })
-  );
 
-  // const date = new Date();
-  // const newDate = date.toLocaleString("en-Us", {
-  //   timeZone: "America/New_York",
-  //   dateStyle: "short",
-  //   timeStyle: "short",
-  // });
-  // console.log(date);
-  // console.log(newDate);
+  async function onHandleSave() {
+    setIsLoading((current) => !current);
+
+    const appointmentDateTimes: AvailableAppointments = {
+      date: format(startDate!, "MM-dd-yyyy"),
+      availableTimes: appointmentTimes,
+    };
+
+    try {
+      if (dateId) {
+        await updateAvailableAppointment(dateId, appointmentDateTimes);
+      } else {
+        await postAvailableAppointment(appointmentDateTimes);
+      }
+      await mutate("/available-appointments");
+      setIsLoading((current) => !current);
+      setIsSaveActive((current) => !current);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   if (availableError) return <h1>Something went wrong!</h1>;
   if (!available) return <LoadingDotsIcon />;
@@ -109,25 +123,23 @@ function SetAvailableAppointments() {
               ))}
             {appointmentTimes.length <= 0 && (
               <label htmlFor="time-picker">
-                <div className="no-times-set" onClick={() => setIsTimesActive(true)}>
+                <div className="no-times-set" onClick={() => setIsTimesActive((current) => !current)}>
                   NO TIMES SET
                 </div>
               </label>
             )}
           </div>
 
-          <GoButton type="button" text="ADD TIME" backgroundColor="#007bff" onClick={() => setIsTimesActive(true)} />
+          <GoButton type="button" text="ADD TIME" backgroundColor="#007bff" onClick={() => setIsTimesActive((current) => !current)} />
         </div>
 
-        {isTimesActive && <SelectTimesModal isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} addTime={addTime} />}
+        {isTimesActive && <SelectList isSelectActive={isTimesActive} setIsSelectActive={setIsTimesActive} selectList={timePickerValues!} selectFunction={addTime} />}
 
-        {isSaveActive && (
-          <SaveChangesModal isSaveActive={isSaveActive} setIsSaveActive={setIsSaveActive} dateId={dateId} startDate={startDate!} appointmentTimes={appointmentTimes} />
-        )}
+        {isSaveActive && <AreYouSure isActive={isSaveActive} setIsActive={setIsSaveActive} yesFunction={onHandleSave} yesButtonText="SAVE" />}
       </AdminPage>
 
       <div className="save-changes">
-        <SaveButton type="button" text="SAVE CHANGES" onClick={() => saveChanges()} />
+        <SaveButton type="button" text="SAVE CHANGES" onClick={confirmSave} />
       </div>
     </>
   );
