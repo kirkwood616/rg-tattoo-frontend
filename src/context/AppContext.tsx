@@ -6,6 +6,7 @@ interface ContextModel {
   isLoading: boolean;
   setUser: Dispatch<SetStateAction<User | null>>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
+  toggleLoading: () => void;
 }
 
 const defaultValue: ContextModel = {
@@ -13,6 +14,7 @@ const defaultValue: ContextModel = {
   isLoading: false,
   setUser: () => {},
   setIsLoading: () => {},
+  toggleLoading: () => {},
 };
 
 const AppContext = createContext(defaultValue);
