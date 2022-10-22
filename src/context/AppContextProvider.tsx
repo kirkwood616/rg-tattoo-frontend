@@ -10,6 +10,10 @@ export default function AppContextProvider({ children }: Props) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  function toggleLoading() {
+    setIsLoading((current) => !current);
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -17,6 +21,7 @@ export default function AppContextProvider({ children }: Props) {
         isLoading,
         setUser,
         setIsLoading,
+        toggleLoading,
       }}
     >
       {children}
