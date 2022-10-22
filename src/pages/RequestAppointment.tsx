@@ -1,12 +1,13 @@
 import GoButton from "components/buttons/GoButton";
 import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
+import AreYouSure from "components/modals/AreYouSure";
 import Page from "components/Page";
 import * as Field from "components/request-form-fields";
 import AppContext from "context/AppContext";
 import RequestContext from "context/RequestContext";
 import { format } from "date-fns";
 import AvailableAppointments from "models/AvailableAppointments";
-import { FormEvent, useContext, useEffect } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 import { getAvailableAppointments, postAppointmentRequest } from "services/ApiService";
@@ -19,6 +20,9 @@ function RequestAppointment() {
   // CONTEXT
   const { setIsLoading } = useContext(AppContext);
   const { setAvailableAppointmentsTimes, state, dispatch } = useContext(RequestContext);
+
+  // STATE
+  const [isSubmitActive, setIsSubmitActive] = useState(false);
 
   // SWR
   const { data: available, error } = useSWR("/available-appointments", getAvailableAppointments, {
@@ -46,23 +50,31 @@ function RequestAppointment() {
   }, [state.startDate.value, available, setAvailableAppointmentsTimes]);
 
   // HANDLE SUBMIT
-  function handleSubmit(e: FormEvent): void {
+  function onSubmit(e: FormEvent): void {
     e.preventDefault();
+    setIsSubmitActive((current) => !current);
+  }
+
+  function handleSubmit(): void {
     dispatch({ type: "submitCount" });
     if (state.hasErrors) {
       console.log("ERRORS");
       return;
     } else {
       const newRequest = generateNewRequest(state);
-      setIsLoading(true);
+      setIsLoading((current) => !current);
       postAppointmentRequest(newRequest)
         .then(() => {
           handlePhotoUpload(state, "reference");
           if (state.placementPhoto.value) handlePhotoUpload(state, "placement");
         })
-        .catch((error) => console.error(error))
+        .catch((error) => {
+          console.error(error);
+          setIsLoading((current) => !current);
+          navigate("/");
+        })
         .then(() => {
-          setIsLoading(false);
+          setIsLoading((current) => !current);
           navigate("/request-submitted");
         });
     }
@@ -75,7 +87,7 @@ function RequestAppointment() {
     <Page title="Request Appointment">
       <div className="RequestAppointment">
         <h1>Request Appointment</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={onSubmit}>
           <Field.SelectDate />
           {state.startDate.value && <Field.AppointmentTimes />}
           {state.appointmentTime.value && (
@@ -93,7 +105,21 @@ function RequestAppointment() {
               <Field.TattooDescription />
               <Field.RequestConfirm />
               {state.appointmentTime.value && (
-                <GoButton type="submit" text="Submit Request" backgroundColor="green" isDisabled={false} />
+                <GoButton
+                  type="button"
+                  text="Submit Request"
+                  backgroundColor="green"
+                  isDisabled={false}
+                  onClick={() => setIsSubmitActive((current) => !current)}
+                />
+              )}
+              {isSubmitActive && (
+                <AreYouSure
+                  isActive={isSubmitActive}
+                  setIsActive={setIsSubmitActive}
+                  yesFunction={handleSubmit}
+                  yesButtonText="YES"
+                />
               )}
             </>
           )}
