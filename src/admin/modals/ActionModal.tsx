@@ -25,6 +25,7 @@ function ActionModal({ request, isActive, setIsActive, modalClassName, submitBut
   const navigate = useNavigate();
 
   // STATE
+  const [depositRequired, setDepositRequired] = useState(50);
   const [note, setNote] = useState("");
   const [depositAmmount, setDepositAmmount] = useState(depositBaseValue);
   const [priceCharged, setPriceCharged] = useState(0);
@@ -43,19 +44,46 @@ function ActionModal({ request, isActive, setIsActive, modalClassName, submitBut
 
   return (
     <ModalWindow isActive={isActive} setIsActive={setIsActive} className={modalClassName}>
-      {request.requestStatus === "new" && <h1>Are You Sure?</h1>}
+      {request.requestStatus === "new" && (
+        <>
+          <h1>Are You Sure?</h1>
+          <label htmlFor="deposit-required">Deposit Ammount Required:</label>
+          <input
+            type="number"
+            name="deposit-required"
+            id="deposit-required"
+            min={50}
+            step={25}
+            value={depositRequired}
+            onChange={(e) => setDepositRequired(Number(e.target.value))}
+          />
+        </>
+      )}
 
       {request.requestStatus === "awaiting-deposit" && (
         <>
           <label htmlFor="ammount">Ammount Received: </label>
-          <input type="number" id="ammount" min={0} value={depositAmmount} onChange={(e) => setDepositAmmount(Number(e.target.value))} />
+          <input
+            type="number"
+            id="ammount"
+            min={0}
+            value={depositAmmount}
+            onChange={(e) => setDepositAmmount(Number(e.target.value))}
+          />
         </>
       )}
 
       {request.requestStatus === "deposit-received" && (
         <>
           <label htmlFor="price-charged">Price Charged: </label>
-          <input type="number" name="price-charged" id="price-charged" min={0} value={priceCharged} onChange={(e) => setPriceCharged(Number(e.target.value))} />
+          <input
+            type="number"
+            name="price-charged"
+            id="price-charged"
+            min={0}
+            value={priceCharged}
+            onChange={(e) => setPriceCharged(Number(e.target.value))}
+          />
         </>
       )}
 
