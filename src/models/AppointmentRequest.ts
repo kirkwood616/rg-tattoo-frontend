@@ -16,10 +16,12 @@ export interface AppointmentRequest {
   tattooDescription: string;
   requestConfirm: boolean;
   requestStatus: RequestStatus;
+  depositRequired: number;
   depositAmmountReceived: number;
   deniedMessage?: string;
   isRequestClosed: boolean;
   priceCharged: number;
+  refundAmmount?: number;
   historyLog: HistoryLogItem[];
 }
 
@@ -38,3 +40,5 @@ export type HistoryAction =
   | "Appointment Completed."
   | "Appointment Canceled."
   | "Request Denied.";
+
+export type PhotoType = "reference" | "placement";
