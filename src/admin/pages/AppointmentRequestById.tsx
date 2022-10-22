@@ -22,10 +22,8 @@ function AppointmentRequestById() {
   });
   const { data: photos } = useSWR(() => request, fetchPhotoUrls, { revalidateOnFocus: false });
 
-  // RENDER
   if (requestError) return <h1>Something went wrong!</h1>;
   if (!request) return <LoadingDotsIcon />;
-
   return (
     <AdminPage title={`${title} Request`}>
       <div className="AppointmentRequestById">
@@ -44,6 +42,13 @@ function AppointmentRequestById() {
             <br />
             {formatEstTimeWithSuffix(request.requestSubmittedDate)}
           </div>
+
+          {request.requestStatus !== "new" && (
+            <>
+              <div className="request-item_title">DEPOSIT REQUIRED</div>
+              <div className="request-item_info">${request.depositRequired}</div>
+            </>
+          )}
 
           {request.depositAmmountReceived > 0 && (
             <>
@@ -74,7 +79,7 @@ function AppointmentRequestById() {
         </section>
 
         <section className="request-section_container">
-          <div className="request-section_title">DETAILS</div>
+          <div className="request-section_title">TATTOO DETAILS</div>
           <div className="request-item_title">STYLE</div>
           <div className="request-item_info">{request.tattooStyle}</div>
           <div className="request-item_title">PLACEMENT</div>
@@ -82,9 +87,11 @@ function AppointmentRequestById() {
           <div className="request-item_title">BUDGET</div>
           <div className="request-item_info">{request.budget}</div>
           <div className="request-item_title">DESCRIPTION</div>
-          <div className="request-item_info" style={{ whiteSpace: "pre-line" }}>
-            {request.tattooDescription}
-          </div>
+          <div
+            className="request-item_info"
+            dangerouslySetInnerHTML={{ __html: request.tattooDescription }}
+            style={{ whiteSpace: "pre-line" }}
+          ></div>
           <div className="request-item_title">REFERENCE PHOTO</div>
 
           {photos?.referencePhotoURL && (
