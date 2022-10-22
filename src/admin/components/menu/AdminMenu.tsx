@@ -9,24 +9,19 @@ interface Props {
   setUser: Dispatch<SetStateAction<User | null>>;
 }
 function AdminMenu({ setUser }: Props) {
-  // CONTEXT
-  const { setIsLoading } = useContext(AppContext);
-
-  // STATE
   const [isLogOutActive, setIsLogOutActive] = useState(false);
 
-  // NAVIGATE
+  const { toggleLoading } = useContext(AppContext);
   const navigate = useNavigate();
 
-  // LOGOUT
   async function logOut() {
-    setIsLoading(true);
+    toggleLoading();
     try {
       await signOut(auth);
     } catch (error) {
       console.error(error);
     } finally {
-      setIsLoading(false);
+      toggleLoading();
       setUser(null);
       navigate("/login");
     }

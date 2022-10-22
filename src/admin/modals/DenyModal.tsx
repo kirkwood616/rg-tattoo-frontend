@@ -15,17 +15,12 @@ interface Props {
 }
 
 function DenyModal({ isDenyActive, setIsDenyActive, request }: Props) {
-  // CONTEXT
-  const { setIsLoading } = useContext(AppContext);
-
-  // NAVIGATE
-  const navigate = useNavigate();
-
-  // STATE
   const [deniedReason, setDeniedReason] = useState<string>("");
   const [newNote, setNewNote] = useState("");
 
-  // DENY
+  const { toggleLoading } = useContext(AppContext);
+  const navigate = useNavigate();
+
   function onDeny(): void {
     let deniedRequest: AppointmentRequest;
     if (newNote.length > 0) {
@@ -45,11 +40,11 @@ function DenyModal({ isDenyActive, setIsDenyActive, request }: Props) {
         historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Request Denied." }],
       };
     }
-    setIsLoading(true);
+    toggleLoading();
     denyAppointmentRequest(deniedRequest)
       .catch((error) => console.error(error))
       .then(() => {
-        setIsLoading(false);
+        toggleLoading();
         setIsDenyActive(false);
         navigate("/admin/appointment-requests");
       });
@@ -59,7 +54,13 @@ function DenyModal({ isDenyActive, setIsDenyActive, request }: Props) {
     <ModalWindow isActive={isDenyActive} setIsActive={setIsDenyActive} className="deny-info">
       <p>Please provide a reason for denying this request.</p>
       <p>* This message will appear in the client's denied notification email. *</p>
-      <textarea id="denyReason" name="denyReason" className="deny-textarea" value={deniedReason} onChange={(e) => setDeniedReason(e.target.value)} />
+      <textarea
+        id="denyReason"
+        name="denyReason"
+        className="deny-textarea"
+        value={deniedReason}
+        onChange={(e) => setDeniedReason(e.target.value)}
+      />
       <AddNote request={request} note={newNote} setNote={setNewNote} />
       <GoButton type="button" text="DENY" backgroundColor="green" onClick={onDeny} />
       <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={() => setIsDenyActive(false)} />

@@ -18,26 +18,21 @@ interface Props {
 }
 
 function ActionModal({ request, isActive, setIsActive, modalClassName, submitButtonText }: Props) {
-  // CONTEXT
-  const { setIsLoading } = useContext(AppContext);
-
-  // NAVIGATE
-  const navigate = useNavigate();
-
-  // STATE
   const [depositRequired, setDepositRequired] = useState(50);
   const [note, setNote] = useState("");
   const [depositAmmount, setDepositAmmount] = useState(depositBaseValue);
   const [priceCharged, setPriceCharged] = useState(0);
 
-  // SUBMIT
+  const { toggleLoading } = useContext(AppContext);
+  const navigate = useNavigate();
+
   function onSubmit(): void {
-    setIsLoading(true);
+    toggleLoading();
     requestApiCall(actionSubmitRequest(request, note, depositAmmount, priceCharged))
       ?.catch((error) => console.error(error))
       .then(() => {
-        setIsLoading(false);
-        setIsActive(false);
+        toggleLoading();
+        setIsActive((current) => !current);
         navigate("/admin/appointment-requests");
       });
   }
@@ -89,7 +84,7 @@ function ActionModal({ request, isActive, setIsActive, modalClassName, submitBut
 
       <AddNote request={request} note={note} setNote={setNote} />
       <GoButton type="button" text={submitButtonText} backgroundColor="green" onClick={onSubmit} />
-      <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={() => setIsActive(false)} />
+      <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={() => setIsActive((current) => !current)} />
     </ModalWindow>
   );
 }

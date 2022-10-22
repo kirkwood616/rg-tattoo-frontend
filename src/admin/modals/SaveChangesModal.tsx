@@ -17,15 +17,11 @@ interface Props {
 }
 
 function SaveChangesModal({ isSaveActive, setIsSaveActive, dateId, startDate, appointmentTimes }: Props) {
-  // SWR
+  const { toggleLoading } = useContext(AppContext);
   const { mutate } = useSWRConfig();
 
-  // CONTEXT
-  const { setIsLoading } = useContext(AppContext);
-
-  // SAVE CHANGES
   function handleOnSave(): void {
-    setIsLoading(true);
+    toggleLoading();
     const appointmentDateTimes: AvailableAppointments = {
       date: format(startDate!, "MM-dd-yyyy"),
       availableTimes: appointmentTimes!,
@@ -35,16 +31,16 @@ function SaveChangesModal({ isSaveActive, setIsSaveActive, dateId, startDate, ap
         .then(() => mutate("/available-appointments"))
         .catch((error) => console.error(error))
         .then(() => {
-          setIsLoading(false);
-          setIsSaveActive(false);
+          toggleLoading();
+          setIsSaveActive((current) => !current);
         });
     } else {
       postAvailableAppointment(appointmentDateTimes)
         .then(() => mutate("/available-appointments"))
         .catch((error) => console.error(error))
         .then(() => {
-          setIsLoading(false);
-          setIsSaveActive(false);
+          toggleLoading();
+          setIsSaveActive((current) => !current);
         });
     }
   }
