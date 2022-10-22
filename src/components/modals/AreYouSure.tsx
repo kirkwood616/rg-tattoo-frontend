@@ -1,13 +1,12 @@
-import "./AreYouSure.css";
-
 import GoButton from "components/buttons/GoButton";
 import { Dispatch, SetStateAction } from "react";
+import "./AreYouSure.css";
 import ModalWindow from "./ModalWindow";
 
 interface Props {
   isActive: boolean;
   setIsActive: Dispatch<SetStateAction<boolean>>;
-  yesFunction: () => Promise<void>;
+  yesFunction: () => Promise<void> | void;
   yesButtonText: string;
 }
 
