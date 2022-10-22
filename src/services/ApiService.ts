@@ -8,7 +8,7 @@ const apiBaseRoute = process.env.REACT_APP_API_BASE_ROUTE || "";
 
 // POST
 export async function postAppointmentRequest(request: AppointmentRequest): Promise<AppointmentRequest> {
-  const res = await axios.post<AppointmentRequest>(apiRequestAppointment, request);
+  const res = await axios.post<AppointmentRequest>(`${apiAvailableAppointments}/new-request`, request);
   return res.data;
 }
 
