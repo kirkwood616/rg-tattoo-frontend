@@ -10,28 +10,23 @@ import { Navigate } from "react-router-dom";
 import "./LogIn.css";
 
 function LogIn() {
-  // CONTEXT
-  const { setIsLoading } = useContext(AppContext);
-
-  // AUTH
-  const { user, checkingAuth } = useAuthCheck();
-
-  // STATE
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  // LOGIN
-  async function onSubmit(e: FormEvent) {
+  const { toggleLoading } = useContext(AppContext);
+  const { user, checkingAuth } = useAuthCheck();
+
+  async function onSubmit(e: FormEvent): Promise<void> {
     e.preventDefault();
-    setIsLoading(true);
+    toggleLoading();
     try {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
       if (error instanceof Error) setErrorMessage(error.message);
       console.error(error);
     } finally {
-      setIsLoading(false);
+      toggleLoading();
     }
   }
 
@@ -41,7 +36,15 @@ function LogIn() {
     <div className="LogIn">
       <form onSubmit={onSubmit}>
         <div className="input_container">
-          <input type="text" name="email" id="email" placeholder="EMAIL" value={email} required onChange={(e) => setEmail(e.target.value)} />
+          <input
+            type="text"
+            name="email"
+            id="email"
+            placeholder="EMAIL"
+            value={email}
+            required
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <ErrorMessage message={"INCORRECT EMAIL"} loginError={errorMessage.includes("user-not-found")} />
         </div>
         <div className="input_container">

@@ -19,24 +19,24 @@ import { formatTimeNoLeadingZero } from "utils/Formatting";
 import "./SetAvailableAppointments.css";
 
 function SetAvailableAppointments() {
-  // SWR
-  const { data: available, error: availableError } = useSWR("/available-appointments", getAvailableAppointments, { revalidateOnFocus: false });
-  const { mutate } = useSWRConfig();
-
-  // CONTEXT
-  const { setIsLoading } = useContext(AppContext);
-
-  // STATE
   const [appointmentTimes, setAppointmentTimes] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<Date | undefined>(new Date());
   const [dateId, setDateId] = useState<string>("");
   const [isTimesActive, setIsTimesActive] = useState<boolean>(false);
   const [isSaveActive, setIsSaveActive] = useState<boolean>(false);
 
+  const { toggleLoading } = useContext(AppContext);
+  const { data: available, error: availableError } = useSWR("/available-appointments", getAvailableAppointments, {
+    revalidateOnFocus: false,
+  });
+  const { mutate } = useSWRConfig();
+
   // CHECK FOR DATE IN DATABASE
   useEffect(() => {
     if (!available) return;
-    const dateInDatabase: AvailableAppointments | undefined = available.find((date) => date.date === format(startDate!, "MM-dd-yyyy"));
+    const dateInDatabase: AvailableAppointments | undefined = available.find(
+      (date) => date.date === format(startDate!, "MM-dd-yyyy")
+    );
 
     if (dateInDatabase) {
       setDateId(dateInDatabase._id!);
@@ -47,7 +47,6 @@ function SetAvailableAppointments() {
     }
   }, [available, startDate]);
 
-  // ADD TIME
   function addTime(time: string): void {
     if (!time) return;
     if (appointmentTimes.includes(time)) return;
@@ -60,22 +59,21 @@ function SetAvailableAppointments() {
     setAppointmentTimes(newTimes);
   }
 
-  // REMOVE TIME
   function removeTime(index: number): void {
     setAppointmentTimes((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
   }
 
-  // SAVE CHANGES
   function confirmSave(): void {
     if (!startDate) return;
     setIsSaveActive(true);
   }
 
-  async function onHandleSave() {
-    setIsLoading((current) => !current);
+  async function onHandleSave(): Promise<void> {
+    if (!startDate) return;
+    toggleLoading();
 
     const appointmentDateTimes: AvailableAppointments = {
-      date: format(startDate!, "MM-dd-yyyy"),
+      date: format(startDate, "MM-dd-yyyy"),
       availableTimes: appointmentTimes,
     };
 
@@ -86,7 +84,7 @@ function SetAvailableAppointments() {
         await postAvailableAppointment(appointmentDateTimes);
       }
       await mutate("/available-appointments");
-      setIsLoading((current) => !current);
+      toggleLoading();
       setIsSaveActive((current) => !current);
     } catch (error) {
       console.error(error);
@@ -105,11 +103,23 @@ function SetAvailableAppointments() {
             <span className="label">
               <label htmlFor="date-picker">Date:</label>
             </span>
-            <DatePicker name="date-picker" id="date-picker" withPortal selected={startDate} minDate={new Date()} onChange={(date: Date) => setStartDate(date)} />
+            <DatePicker
+              name="date-picker"
+              id="date-picker"
+              withPortal
+              selected={startDate}
+              minDate={new Date()}
+              onChange={(date: Date) => setStartDate(date)}
+            />
           </div>
 
           <div className="button-container">
-            <GoButton type="button" text="ADD ALL TIMES" backgroundColor="#007bff" onClick={() => setAppointmentTimes(timePickerValues!)} />
+            <GoButton
+              type="button"
+              text="ADD ALL TIMES"
+              backgroundColor="#007bff"
+              onClick={() => setAppointmentTimes(timePickerValues!)}
+            />
             <GoButton type="button" text="REMOVE ALL TIMES" backgroundColor="red" onClick={() => setAppointmentTimes([])} />
           </div>
 
@@ -130,12 +140,31 @@ function SetAvailableAppointments() {
             )}
           </div>
 
-          <GoButton type="button" text="ADD TIME" backgroundColor="#007bff" onClick={() => setIsTimesActive((current) => !current)} />
+          <GoButton
+            type="button"
+            text="ADD TIME"
+            backgroundColor="#007bff"
+            onClick={() => setIsTimesActive((current) => !current)}
+          />
         </div>
 
-        {isTimesActive && <SelectList isSelectActive={isTimesActive} setIsSelectActive={setIsTimesActive} selectList={timePickerValues!} selectFunction={addTime} />}
+        {isTimesActive && (
+          <SelectList
+            isSelectActive={isTimesActive}
+            setIsSelectActive={setIsTimesActive}
+            selectList={timePickerValues!}
+            selectFunction={addTime}
+          />
+        )}
 
-        {isSaveActive && <AreYouSure isActive={isSaveActive} setIsActive={setIsSaveActive} yesFunction={onHandleSave} yesButtonText="SAVE" />}
+        {isSaveActive && (
+          <AreYouSure
+            isActive={isSaveActive}
+            setIsActive={setIsSaveActive}
+            yesFunction={onHandleSave}
+            yesButtonText="SAVE"
+          />
+        )}
       </AdminPage>
 
       <div className="save-changes">

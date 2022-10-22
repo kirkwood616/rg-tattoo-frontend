@@ -14,33 +14,27 @@ interface Props {
 }
 
 function AddNote({ request, note, setNote }: Props) {
-  // CONTEXT
-  const { setIsLoading } = useContext(AppContext);
-
-  // STATE
   const [isNoteActive, setIsNoteActive] = useState(false);
   const [isNoteSaved, setIsNoteSaved] = useState(false);
-
-  // LOCATION
   const { route, id } = useLocationRoute();
 
-  // SWR
+  const { toggleLoading } = useContext(AppContext);
   const { mutate } = useSWRConfig();
 
   function onToggleNote() {
-    setIsNoteActive((prev) => !prev);
+    setIsNoteActive((current) => !current);
     if (note.length > 0) setNote("");
   }
 
   function onSaveNote() {
     if (note.length === 0) return;
     setIsNoteSaved(true);
-    setIsNoteActive((prev) => !prev);
+    setIsNoteActive((current) => !current);
   }
 
   async function updateClosedWithNote() {
     if (!note.length) return;
-    setIsLoading((prev) => !prev);
+    toggleLoading();
     try {
       const updatedRequest: AppointmentRequest = {
         ...request,
@@ -56,9 +50,9 @@ function AddNote({ request, note, setNote }: Props) {
     } catch (error) {
       console.error(error);
     }
-    setIsLoading((prev) => !prev);
+    toggleLoading();
     setNote("");
-    setIsNoteActive((prev) => !prev);
+    setIsNoteActive((current) => !current);
     setIsNoteSaved(false);
   }
 
@@ -79,8 +73,8 @@ function AddNote({ request, note, setNote }: Props) {
         <p>{note}</p>
         <button
           onClick={() => {
-            setIsNoteSaved((prev) => !prev);
-            setIsNoteActive((prev) => !prev);
+            setIsNoteSaved((current) => !current);
+            setIsNoteActive((current) => !current);
           }}
         >
           EDIT NOTE

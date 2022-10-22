@@ -14,16 +14,11 @@ interface Props {
 }
 
 function CancelModal({ request, isCancelActive, setIsCancelActive }: Props) {
-  // CONTEXT
-  const { setIsLoading } = useContext(AppContext);
-
-  // STATE
   const [newNote, setNewNote] = useState("");
 
-  // NAVIGATE
+  const { toggleLoading } = useContext(AppContext);
   const navigate = useNavigate();
 
-  // CANCEL
   function onCancel(): void {
     let canceledRequest: AppointmentRequest;
     if (newNote.length) {
@@ -39,15 +34,16 @@ function CancelModal({ request, isCancelActive, setIsCancelActive }: Props) {
         historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Appointment Canceled." }],
       };
     }
-    setIsLoading(true);
+    toggleLoading();
     sendCanceledRequest(canceledRequest)
       .catch((error) => console.error(error))
       .then(() => {
-        setIsLoading(false);
-        setIsCancelActive(false);
+        toggleLoading();
+        setIsCancelActive((current) => !current);
         navigate("/admin/appointment-requests");
       });
   }
+
   return (
     <ModalWindow isActive={isCancelActive} setIsActive={setIsCancelActive} className="cancel-confirm">
       <label htmlFor="">Please enter a reason the appointment was cancelled</label>
@@ -55,7 +51,7 @@ function CancelModal({ request, isCancelActive, setIsCancelActive }: Props) {
       <p>* This message will be sent to the client in a notification email *</p>
       <AddNote request={request} note={newNote} setNote={setNewNote} />
       <GoButton type="button" text="SUBMIT" backgroundColor="green" onClick={onCancel} />
-      <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={() => setIsCancelActive(false)} />
+      <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={() => setIsCancelActive((current) => !current)} />
     </ModalWindow>
   );
 }
