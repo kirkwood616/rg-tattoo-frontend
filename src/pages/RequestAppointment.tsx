@@ -21,7 +21,7 @@ function RequestAppointment() {
   const { setAvailableAppointmentsTimes, state, dispatch } = useContext(RequestContext);
   const [isSubmitActive, setIsSubmitActive] = useState(false);
 
-  const { data: available, error } = useSWR("/available-appointments", getAvailableAppointments, {
+  const { data: available, error } = useSWR("available-appointments", getAvailableAppointments, {
     revalidateOnFocus: false,
   });
 
@@ -55,23 +55,22 @@ function RequestAppointment() {
     }
   }
 
-  function handleSubmit(): void {
-    const newRequest = generateNewRequest(state);
+  async function handleSubmit(): Promise<void> {
     toggleLoading();
-    postAppointmentRequest(newRequest)
-      .then(() => {
-        handlePhotoUpload(state, "reference");
-        if (state.placementPhoto.value) handlePhotoUpload(state, "placement");
-      })
-      .catch((error) => {
-        console.error(error);
-        toggleLoading();
-        navigate("/");
-      })
-      .then(() => {
-        toggleLoading();
-        navigate("/request-submitted");
-      });
+    const newRequest = generateNewRequest(state);
+    try {
+      await postAppointmentRequest(newRequest);
+      await handlePhotoUpload(state, "reference");
+      if (state.placementPhoto.value) {
+        await handlePhotoUpload(state, "placement");
+      }
+      navigate("/request-submitted");
+    } catch (error) {
+      console.error(error);
+      navigate("/aftercare");
+    } finally {
+      toggleLoading();
+    }
   }
 
   if (error) return <h1>Something went wrong!</h1>;

@@ -4,7 +4,7 @@ import { PhotoType } from "models/AppointmentRequest";
 import { RequestReducer } from "models/RequestReducer";
 import { formatPhotoPath } from "./Formatting";
 
-export function handlePhotoUpload(state: RequestReducer, photoType: PhotoType) {
+export async function handlePhotoUpload(state: RequestReducer, photoType: PhotoType) {
   let file: File;
   let fileName: string;
   let storageRef: StorageReference;
@@ -15,16 +15,27 @@ export function handlePhotoUpload(state: RequestReducer, photoType: PhotoType) {
       fileName = formatPhotoPath(state, "reference");
       if (!fileName) return;
       storageRef = ref(storage, `/images/${fileName}`);
-      uploadBytesResumable(storageRef, file);
-      break;
+      try {
+        await uploadBytesResumable(storageRef, file);
+        console.log("uploaded");
+        break;
+      } catch (error) {
+        console.error(error);
+        break;
+      }
     case "placement":
       if (!state.placementPhoto.value) break;
       file = state.placementPhoto.value;
       fileName = formatPhotoPath(state, "reference");
       if (!fileName) return;
       storageRef = ref(storage, `/images/${fileName}`);
-      uploadBytesResumable(storageRef, file);
-      break;
+      try {
+        await uploadBytesResumable(storageRef, file);
+        break;
+      } catch (error) {
+        console.error(error);
+        break;
+      }
   }
 }
 
