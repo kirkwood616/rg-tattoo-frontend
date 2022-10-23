@@ -15,7 +15,7 @@ import Home from "pages/Home";
 import LogIn from "pages/LogIn";
 import RequestSubmitted from "pages/RequestSubmitted";
 import { useContext } from "react";
-import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import PrivateRoutes from "routes/PrivateRoutes";
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
           <Route path="aftercare" element={<Aftercare />} />
           <Route path="request-appointment" element={<RequestPage />} />
           <Route path="request-submitted" element={<RequestSubmitted />} />
-          <Route path="login" element={<LogIn />} />
+          <Route path="/user/login" element={<LogIn />} />
           <Route element={<PrivateRoutes component={<AdminContainer />} />}>
             <Route path="/admin">
               <Route index element={<AdminHome />} />
@@ -47,7 +47,7 @@ function App() {
               <Route path="*" element={<Error404 />} />
             </Route>
           </Route>
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="*" element={<Error404 />} />
         </Routes>
       </Router>
     </div>
