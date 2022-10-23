@@ -84,10 +84,11 @@ function SetAvailableAppointments() {
         await postAvailableAppointment(appointmentDateTimes);
       }
       await mutate("/available-appointments");
-      toggleLoading();
       setIsSaveActive((current) => !current);
     } catch (error) {
       console.error(error);
+    } finally {
+      toggleLoading();
     }
   }
 
