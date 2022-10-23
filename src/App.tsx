@@ -10,6 +10,7 @@ import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
 import RequestPage from "components/RequestPage";
 import AppContext from "context/AppContext";
 import Aftercare from "pages/Aftercare";
+import Error404 from "pages/Error404";
 import Home from "pages/Home";
 import LogIn from "pages/LogIn";
 import RequestSubmitted from "pages/RequestSubmitted";
@@ -32,7 +33,7 @@ function App() {
           <Route path="request-submitted" element={<RequestSubmitted />} />
           <Route path="login" element={<LogIn />} />
           <Route element={<PrivateRoutes component={<AdminContainer />} />}>
-            <Route path="/admin/*">
+            <Route path="/admin">
               <Route index element={<AdminHome />} />
               <Route path="home" element={<AdminHome />} />
               <Route path="appointment-requests" element={<AppointmentRequests />}>
@@ -43,6 +44,7 @@ function App() {
                 ))}
               </Route>
               <Route path="set-available-appointments" element={<SetAvailableAppointments />} />
+              <Route path="*" element={<Error404 />} />
             </Route>
           </Route>
           <Route path="*" element={<Navigate to="/" />} />
