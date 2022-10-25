@@ -3,13 +3,10 @@ import RequestActions from "admin/features/RequestActions/RequestActions";
 import useLocationRoute from "admin/hooks/useLocationRoute";
 import { fetchPhotoUrls, getRequest } from "admin/services/AdminApiService";
 import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
+import { parseISO } from "date-fns";
 import useSWR from "swr";
-import {
-  formatEstTimeWithSuffix,
-  formatRouteTitle,
-  formatTimeNoLeadingZero,
-  formatUnitedStatesDate,
-} from "utils/Formatting";
+import { dateFormatUS } from "utils/Date";
+import { formatEstTimeWithSuffix, formatRouteTitle, formatTimeNoLeadingZero } from "utils/Formatting";
 import "./AppointmentRequestById.css";
 
 function AppointmentRequestById() {
@@ -21,6 +18,7 @@ function AppointmentRequestById() {
     revalidateOnFocus: false,
   });
   const { data: photos } = useSWR(() => request, fetchPhotoUrls, { revalidateOnFocus: false });
+  // console.log(parseISO(request?.requestSubmittedDate!));
 
   if (requestError) return <h1>Something went wrong!</h1>;
   if (!request) return <LoadingDotsIcon />;
@@ -33,14 +31,19 @@ function AppointmentRequestById() {
           <div className="request-item_title">REQUEST STATUS</div>
           <div className="request-item_info">{formatRouteTitle(request.requestStatus)}</div>
           <div className="request-item_title">REQUESTED DATE</div>
-          <div className="request-item_info">{formatUnitedStatesDate(request.requestDate)}</div>
+          <div className="request-item_info">
+            {parseISO(String(request.requestDate)).toLocaleDateString("en-Us", { timeZone: "America/New_York" })}
+          </div>
+          {/* <div className="request-item_info">{formatUnitedStatesDate(request.requestDate)}</div> */}
           <div className="request-item_title">REQUESTED TIME</div>
           <div className="request-item_info">{formatTimeNoLeadingZero(request.requestTime) + " (EST)"}</div>
           <div className="request-item_title">DATE SUBMITTED</div>
           <div className="request-item_info">
-            {formatUnitedStatesDate(request.requestSubmittedDate)}
-            <br />
-            {formatEstTimeWithSuffix(request.requestSubmittedDate)}
+            {/* {formatUnitedStatesDate(request.requestSubmittedDate)} */}
+            {/* {parseISO(String(request.requestSubmittedDate)).toLocaleDateString("en-Us")} */}
+            {/* <br /> */}
+            {/* {formatEstTimeWithSuffix(request.requestSubmittedDate)} */}
+            {parseISO(String(request.requestSubmittedDate)).toLocaleString("en-Us", { timeZone: "America/New_York" })}
           </div>
 
           {request.requestStatus !== "new" && (
@@ -119,7 +122,8 @@ function AppointmentRequestById() {
           {request.historyLog.map((item, index) => (
             <div className="request-log_container" key={String(item.dateCreated) + index}>
               <div className="request-item_title">
-                {formatUnitedStatesDate(item.dateCreated)} @ {formatEstTimeWithSuffix(item.dateCreated)}
+                {dateFormatUS(item.dateCreated)} @ {formatEstTimeWithSuffix(item.dateCreated)}
+                {/* {formatUnitedStatesDate(item.dateCreated)} @ {formatEstTimeWithSuffix(item.dateCreated)} */}
               </div>
               <div className="request-item_info">
                 {item.action && (

@@ -8,13 +8,13 @@ import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
 import AreYouSure from "components/modals/AreYouSure";
 import SelectList from "components/modals/SelectList";
 import AppContext from "context/AppContext";
-import { format } from "date-fns";
 import AvailableAppointments from "models/AvailableAppointments";
 import { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getAvailableAppointments } from "services/ApiService";
 import useSWR, { useSWRConfig } from "swr";
+import { dateEstUS, dateFormatUS } from "utils/Date";
 import { formatTimeNoLeadingZero } from "utils/Formatting";
 import "./SetAvailableAppointments.css";
 
@@ -35,11 +35,15 @@ function SetAvailableAppointments() {
   useEffect(() => {
     if (!available) return;
     const dateInDatabase: AvailableAppointments | undefined = available.find(
-      (date) => date.date === format(startDate!, "MM-dd-yyyy")
+      (date) => {
+        if (!startDate) return undefined;
+        return dateFormatUS(date.date) === dateFormatUS(startDate);
+      }
+      // (date) => date.date === format(startDate!, "MM-dd-yyyy")
     );
 
-    if (dateInDatabase) {
-      setDateId(dateInDatabase._id!);
+    if (dateInDatabase && dateInDatabase._id) {
+      setDateId(dateInDatabase._id);
       setAppointmentTimes(dateInDatabase.availableTimes);
     } else {
       setDateId("");
@@ -73,7 +77,8 @@ function SetAvailableAppointments() {
     toggleLoading();
 
     const appointmentDateTimes: AvailableAppointments = {
-      date: format(startDate, "MM-dd-yyyy"),
+      date: dateEstUS(startDate),
+      // date: format(startDate, "MM-dd-yyyy"),
       availableTimes: appointmentTimes,
     };
 
@@ -83,7 +88,7 @@ function SetAvailableAppointments() {
       } else {
         await postAvailableAppointment(appointmentDateTimes);
       }
-      await mutate("/available-appointments");
+      await mutate("available-appointments");
       setIsSaveActive((current) => !current);
     } catch (error) {
       console.error(error);

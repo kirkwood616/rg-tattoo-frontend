@@ -26,13 +26,15 @@ function RequestAppointment() {
   });
 
   const navigate = useNavigate();
+  // console.log(new Date(state.startDate.value!).toISOString());
 
   // CHECK FOR DATE IN DATABASE
   useEffect(() => {
     if (!state.startDate.value || !available) return;
     const dateInDatabase: AvailableAppointments | undefined = available.find((appointment) => {
       if (state.startDate.value) {
-        return appointment.date === format(state.startDate.value, "MM-dd-yyyy");
+        return format(new Date(appointment.date), "MM-dd-yyyy") === format(state.startDate.value, "MM-dd-yyyy");
+        // return appointment.date === format(state.startDate.value, "MM-dd-yyyy");
       } else {
         return undefined;
       }

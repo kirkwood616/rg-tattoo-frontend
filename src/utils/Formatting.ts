@@ -58,16 +58,17 @@ export function formatUnitedStatesDate(date: Date | string): string {
 /**
  * Formats a Date object or date-time string to US Eastern Standard Time to a string.
  *
- * The returned string will be in the format of MM/DD/YYYY (EST).
+ * The returned string will be in the format of MM/DD/YYYY.
  *
- * If the month has a leading the 0, it will be returned as M/DD/YYYY (EST).
+ * If the month has a leading the 0, it will be returned as M/DD/YYYY.
  *
- * @param date Date object or parsed date-time string. Date-time strings should be parsed to ISO or UTC. Preferred usage of `date.toLocaleString("en-US")` on a `Date` object.
+ * @param dateInput Date object or parsed date-time string. Date-time strings should be parsed to ISO or UTC. Preferred usage of `date.toLocaleDateString("en-US")` on a `Date` object.
  */
-export function formatEstTime(date: Date | string): string {
-  const estDate = new Date(date).toLocaleTimeString("en-US", {
+export function formatEstTime(dateInput: Date | string): string {
+  const date = typeof dateInput === "string" ? new Date(dateInput) : dateInput;
+  const estDate = date.toLocaleTimeString("en-US", {
     timeZone: "America/New_York",
-    hour: "2-digit",
+    hour: "numeric",
     minute: "2-digit",
   });
   return estDate;
@@ -82,17 +83,14 @@ export function formatEstTime(date: Date | string): string {
  *
  * @param date Date object or parsed date-time string. Date-time strings should be parsed to ISO or UTC. Preferred usage of `date.toLocaleString("en-US")` on a `Date` object.
  */
-export function formatEstTimeWithSuffix(date: Date | string): string {
-  const estDate = new Date(date).toLocaleTimeString("en-US", {
+export function formatEstTimeWithSuffix(dateInput: Date | string): string {
+  const date = typeof dateInput === "string" ? new Date(dateInput) : dateInput;
+  const estDate = date.toLocaleTimeString("en-US", {
     timeZone: "America/New_York",
-    hour: "2-digit",
+    hour: "numeric",
     minute: "2-digit",
   });
-  if (estDate[0] === "0") {
-    return `${estDate.substring(1)} (EST)`;
-  } else {
-    return estDate;
-  }
+  return `${estDate} (EST)`;
 }
 
 /**

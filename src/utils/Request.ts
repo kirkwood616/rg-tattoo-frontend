@@ -6,7 +6,9 @@ import { formatPhotoPath } from "./Formatting";
 export function generateNewRequest(state: RequestReducer): AppointmentRequest {
   const newRequest: AppointmentRequest = {
     requestSubmittedDate: new Date(),
-    requestDate: format(state.startDate.value!, "MM-dd-yyyy"),
+    requestDate: format(state.startDate.value!, "MM/dd/yyyy"),
+    // requestDate: dateEstUS(state.startDate.value!),
+    // requestDate: format(state.startDate.value!, "MM-dd-yyyy"),
     requestTime: state.appointmentTime.value,
     firstName: state.firstName.value,
     lastName: state.lastName.value,
