@@ -3,7 +3,7 @@ import { formatPhoneNumber, validateEmail, validatePhone } from "utils/Validatio
 
 export const initialState: RequestReducer = {
   startDate: {
-    value: undefined,
+    value: null,
     hasErrors: true,
     checkCount: 0,
   },

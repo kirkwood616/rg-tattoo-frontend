@@ -10,7 +10,7 @@ export interface ReducerModel {
 
 export interface RequestReducer extends ReducerModel {
   startDate: {
-    value: Date | undefined;
+    value: Date | null;
     hasErrors: boolean;
     checkCount: number;
   };
@@ -87,7 +87,7 @@ export interface RequestReducer extends ReducerModel {
 export type RequestAction =
   | { type: "reset"; value: RequestReducer }
   | { type: "hasErrors"; value: boolean }
-  | { type: "startDate"; value: Date | undefined }
+  | { type: "startDate"; value: Date | null }
   | { type: "appointmentTime"; value: string }
   | { type: "firstName"; value: string }
   | { type: "lastName"; value: string }
