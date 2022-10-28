@@ -1,6 +1,6 @@
 export interface AppointmentRequest {
   _id?: string;
-  requestSubmittedDate: Date;
+  requestSubmittedDate: Date | string;
   requestDate: string;
   requestTime: string;
   firstName: string;
@@ -28,7 +28,7 @@ export interface AppointmentRequest {
 export type RequestStatus = "new" | "awaiting-deposit" | "deposit-received" | "completed" | "canceled" | "denied";
 
 export interface HistoryLogItem {
-  dateCreated: Date;
+  dateCreated: Date | string;
   action?: HistoryAction;
   note?: string;
 }
