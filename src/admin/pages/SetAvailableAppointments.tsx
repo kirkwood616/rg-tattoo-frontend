@@ -20,7 +20,7 @@ import "./SetAvailableAppointments.css";
 
 function SetAvailableAppointments() {
   const [appointmentTimes, setAppointmentTimes] = useState<string[]>([]);
-  const [startDate, setStartDate] = useState<Date | undefined>(new Date());
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [dateId, setDateId] = useState<string>("");
   const [isTimesActive, setIsTimesActive] = useState<boolean>(false);
   const [isSaveActive, setIsSaveActive] = useState<boolean>(false);
@@ -35,7 +35,7 @@ function SetAvailableAppointments() {
   useEffect(() => {
     if (!available) return;
     const dateInDatabase: AvailableAppointments | undefined = available.find(
-      (date) => date.date === format(startDate!, "MM-dd-yyyy")
+      (date) => date.date === format(startDate!, "yyyy-MM-dd")
     );
 
     if (dateInDatabase) {
@@ -63,17 +63,17 @@ function SetAvailableAppointments() {
     setAppointmentTimes((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
   }
 
-  function confirmSave(): void {
+  function onSave(): void {
     if (!startDate) return;
-    setIsSaveActive(true);
+    setIsSaveActive((current) => !current);
   }
 
-  async function onHandleSave(): Promise<void> {
+  async function handleSave(): Promise<void> {
     if (!startDate) return;
     toggleLoading();
 
     const appointmentDateTimes: AvailableAppointments = {
-      date: format(startDate, "MM-dd-yyyy"),
+      date: format(startDate, "yyyy-MM-dd"),
       availableTimes: appointmentTimes,
     };
 
@@ -159,17 +159,12 @@ function SetAvailableAppointments() {
         )}
 
         {isSaveActive && (
-          <AreYouSure
-            isActive={isSaveActive}
-            setIsActive={setIsSaveActive}
-            yesFunction={onHandleSave}
-            yesButtonText="SAVE"
-          />
+          <AreYouSure isActive={isSaveActive} setIsActive={setIsSaveActive} yesFunction={handleSave} yesButtonText="SAVE" />
         )}
       </AdminPage>
 
       <div className="save-changes">
-        <SaveButton type="button" text="SAVE CHANGES" onClick={confirmSave} />
+        <SaveButton type="button" text="SAVE CHANGES" onClick={onSave} />
       </div>
     </>
   );
