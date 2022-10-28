@@ -33,17 +33,18 @@ export function formatRouteTitle(title: string | undefined): string {
 }
 
 /**
- * Formats a Date object or date-time string to US date format.
+ * Formats a `Date` object or date-time `string` to US date format in the locale provided.
  *
- * The returned string will be in the format of MM/DD/YYYY.
+ * The returned `string` will be in the format of MM/DD/YYYY.
  *
  * If the month has a leading the 0, it will be returned as M/DD/YYYY.
  *
- * @param date Date object or parsed date-time string. Date-time strings should be parsed to ISO or UTC. Preferred usage of `date.toLocaleString("en-US")` on a `Date` object.
+ * @param date `Date` object or parsed date-time `string`. Date-time strings should be parsed to ISO or UTC. Preferred usage of `date.toLocaleString("en-US")` on a `Date` object.
+ * @param localeTZ `string` of the user's locale timezone
  */
-export function formatUnitedStatesDate(date: Date | string): string {
+export function formatUnitedStatesDate(date: Date | string, localeTZ: string): string {
   const dateENUS = new Date(date).toLocaleDateString("en-US", {
-    timeZone: "America/New_York",
+    timeZone: localeTZ,
     month: "2-digit",
     day: "2-digit",
     year: "numeric",
@@ -66,7 +67,7 @@ export function formatUnitedStatesDate(date: Date | string): string {
  */
 export function formatEstTime(date: Date | string): string {
   const estDate = new Date(date).toLocaleTimeString("en-US", {
-    timeZone: "America/New_York",
+    timeZone: "America/Detroit",
     hour: "2-digit",
     minute: "2-digit",
   });
@@ -87,12 +88,50 @@ export function formatEstTimeWithSuffix(date: Date | string): string {
     timeZone: "America/New_York",
     hour: "2-digit",
     minute: "2-digit",
+    timeZoneName: "short",
   });
-  if (estDate[0] === "0") {
-    return `${estDate.substring(1)} (EST)`;
-  } else {
-    return estDate;
-  }
+  // if (estDate[0] === "0") {
+  //   return `${estDate.substring(1)} (EST)`;
+  // } else {
+  //   return estDate;
+  // }
+  return estDate;
+}
+
+/**
+ * Formats a `Date` object or date-time `string` to a time `string` with the provided
+ * locale appended to the end of the string in parenthesis.
+ *
+ * @param date `Date` object or date `string`
+ * @param localeTZ `string` of user's locale
+ * @returns `string` time formatted with locale in parenthesis
+ */
+export function formatZonedTime(date: Date | string, localeTZ: string) {
+  const zonedTimeFull = new Date(date).toLocaleTimeString("en-US", {
+    timeZone: localeTZ,
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZoneName: "short",
+  });
+  const zonedTime = zonedTimeFull.slice(0, -3);
+  const zonedSuffixAcronym = zonedTimeFull.slice(-3);
+  const formattedTime = `${zonedTime}(${zonedSuffixAcronym})`;
+  return formattedTime;
+}
+
+/**
+ * Generates an acronym of locale timezone wrapped in parenthesis.
+ *
+ * @param localeTZ `string` of user's locale timezone
+ * @returns `string` acronym of locale timezone wrapped in parenthesis
+ */
+export function localeTzAcronym(localeTZ: string) {
+  const zonedTime = new Date().toLocaleTimeString("en-US", {
+    timeZone: localeTZ,
+    timeZoneName: "short",
+  });
+  const zoneAcronym = zonedTime.slice(-3);
+  return `(${zoneAcronym})`;
 }
 
 /**
@@ -100,12 +139,28 @@ export function formatEstTimeWithSuffix(date: Date | string): string {
  * @param time A `string` in HH:MM AM/PM format.
  * @returns A `string` without a leading 0, if present. If no leading 0 present,
  * the return will be the initial `time` parameter passed.
- * @example 09:30 AM => 9:30 AM
- * @example 10:30 PM => 10:30 PM
+ * @example '09:30 AM' => '9:30 AM'
+ * @example '10:30 PM' => '10:30 PM'
  */
 export function formatTimeNoLeadingZero(time: string): string {
   if (Number(time[0]) > 0) return time;
   return time.substring(1);
+}
+
+/**
+ *
+ * @param time `string` in HH:MM AM/PM format.
+ * @param localeTZ `string` of user's locale timezone
+ * @returns `string` time format without a leading 0 (if present) with an acronym
+ * of the locale timezone wrapped in parenthesis separated with a space.
+ *
+ * @example formatTimeWithZone('05:30 PM', 'America/Detroit') => '5:30 PM (EDT)'
+ */
+export function formatTimeWithZone(time: string, localeTZ: string): string {
+  const timeFormat = formatTimeNoLeadingZero(time);
+  const zoneFormat = localeTzAcronym(localeTZ);
+  const formattedTime = `${timeFormat} ${zoneFormat}`;
+  return formattedTime;
 }
 
 /**
