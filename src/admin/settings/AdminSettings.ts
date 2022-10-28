@@ -54,3 +54,7 @@ export const requestTypes = [
     path: "denied",
   },
 ];
+
+// LOCALE
+export const adminLocale: string = "en-Us";
+export const adminLocaleTZ: string = "America/Detroit";
