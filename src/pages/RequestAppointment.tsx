@@ -32,7 +32,7 @@ function RequestAppointment() {
     if (!state.startDate.value || !available) return;
     const dateInDatabase: AvailableAppointments | undefined = available.find((appointment) => {
       if (state.startDate.value) {
-        return appointment.date === format(state.startDate.value, "MM-dd-yyyy");
+        return appointment.date === format(state.startDate.value, "yyyy-MM-dd");
       } else {
         return undefined;
       }

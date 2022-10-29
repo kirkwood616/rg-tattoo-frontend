@@ -4,16 +4,18 @@ import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 
 function SelectDate() {
-  // CONTEXT
-  const { state, dispatch } = useContext(RequestContext);
-
-  // STATES
   const [maxAppointmentDate, setMaxAppointmentDate] = useState<Date>();
   const [excludedDates, setExcludedDates] = useState<Date[]>([]);
 
-  // DIABLE OFF-DAYS OF SUNDAY & MONDAYS ON CALENDAR
-  function disableSundayMonday(date: Date): boolean {
+  const { state, dispatch } = useContext(RequestContext);
+
+  function disabledDates(date: Date): boolean {
     return date.getDay() !== 0 && date.getDay() !== 1;
+  }
+
+  function handleDateChange(date: Date) {
+    dispatch({ type: "startDate", value: date });
+    dispatch({ type: "appointmentTime", value: "" });
   }
 
   return (
@@ -27,17 +29,14 @@ function SelectDate() {
           id="datePicker"
           placeholderText="Select Date"
           selected={state.startDate.value}
-          onChange={(date: Date) => {
-            dispatch({ type: "startDate", value: date });
-            dispatch({ type: "appointmentTime", value: "" });
-          }}
+          onChange={handleDateChange}
           minDate={new Date()}
           maxDate={maxAppointmentDate}
-          filterDate={disableSundayMonday}
+          filterDate={disabledDates}
           excludeDates={excludedDates}
+          autoComplete="off"
           isClearable
           withPortal
-          autoComplete="off"
           required
         />
       </div>
