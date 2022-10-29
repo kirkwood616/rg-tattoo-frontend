@@ -5,11 +5,9 @@ import { useContext, useState } from "react";
 import { formatTimeNoLeadingZero } from "utils/Formatting";
 
 function AppointmentTimes() {
-  // CONTEXT
-  const { availableAppointmentTimes, state } = useContext(RequestContext);
-
-  // STATE
   const [isTimesActive, setIsTimesActive] = useState<boolean>(false);
+
+  const { availableAppointmentTimes, state } = useContext(RequestContext);
 
   return (
     <>
@@ -25,13 +23,15 @@ function AppointmentTimes() {
               id="time-picker"
               placeholder="--- Select Time ---"
               value={formatTimeNoLeadingZero(state.appointmentTime.value)}
-              onClick={() => setIsTimesActive(true)}
+              onClick={() => setIsTimesActive((current) => !current)}
               readOnly
             ></input>
             <FormErrorMessage message={"SELECT A TIME"} name={"appointmentTime"} />
           </>
         )}
-        {!availableAppointmentTimes.length && <FormErrorMessage message={`NO AVAILABLE TIMES. PLEASE SELECT ANOTHER DATE`} name={"appointmentTime"} />}
+        {!availableAppointmentTimes.length && (
+          <FormErrorMessage message={`NO AVAILABLE TIMES. PLEASE SELECT ANOTHER DATE`} name={"appointmentTime"} />
+        )}
 
         {isTimesActive && (
           <SelectList
@@ -42,7 +42,6 @@ function AppointmentTimes() {
             formatter={formatTimeNoLeadingZero}
           />
         )}
-        {/* {isTimesActive && <SelectAppointmentTimes isTimesActive={isTimesActive} setIsTimesActive={setIsTimesActive} />} */}
       </div>
     </>
   );
