@@ -28,7 +28,7 @@ function AddNote({ request, note, setNote }: Props) {
 
   function onSaveNote() {
     if (note.length === 0) return;
-    setIsNoteSaved(true);
+    setIsNoteSaved((current) => !current);
     setIsNoteActive((current) => !current);
   }
 
@@ -47,13 +47,14 @@ function AddNote({ request, note, setNote }: Props) {
       };
 
       await mutate(`appointment-requests/${route}/${id}`, putClosedRequest(updatedRequest), options);
+      setNote("");
+      setIsNoteActive((current) => !current);
+      setIsNoteSaved((current) => !current);
     } catch (error) {
       console.error(error);
+    } finally {
+      toggleLoading();
     }
-    toggleLoading();
-    setNote("");
-    setIsNoteActive((current) => !current);
-    setIsNoteSaved(false);
   }
 
   function setSaveFunction() {
