@@ -120,6 +120,24 @@ export function formatZonedTime(date: Date | string, localeTZ: string) {
 }
 
 /**
+ * Takes an ISO date `string` or `Date` object and returns a `string` in
+ * `MM/dd/yyyy @ HH:mm AM/PM (locale)` format.
+ *
+ * If hours (HH) has a leading 0, it will be removed.
+ * @param date `string` in ISO format | `Date` object
+ * @param localeTZ `string` of user locale
+ * @returns `string` formatted to `MM/dd/yyyy @ HH:mm AM/PM (locale)`
+ */
+export function formatISODateTime(date: string | Date, localeTZ: string): string {
+  const dateString = typeof date === "string" ? date : date.toISOString();
+  const dateFormat = formatUnitedStatesDate(dateString, localeTZ);
+  let timeFormat = formatZonedTime(dateString, localeTZ);
+  if (timeFormat[0] === "0") timeFormat = timeFormat.substring(1);
+  const dateTimeFormat = `${dateFormat} @ ${timeFormat}`;
+  return dateTimeFormat;
+}
+
+/**
  * Generates an acronym of locale timezone wrapped in parenthesis.
  *
  * @param localeTZ `string` of user's locale timezone
@@ -132,6 +150,18 @@ export function localeTzAcronym(localeTZ: string) {
   });
   const zoneAcronym = zonedTime.slice(-3);
   return `(${zoneAcronym})`;
+}
+
+/**
+ *
+ * @param dateString `string` of ISO date 2022-10-31
+ * @returns `string` formatted into en-US date format 'MM/dd/yyyy'
+ * @example '2022-10-31' => '10/31/2022'
+ */
+export function formatUsDate(dateString: string): string {
+  const split = dateString.split("-");
+  const formattedDate = [split[1], split[2], split[0]].join("/");
+  return formattedDate;
 }
 
 /**
