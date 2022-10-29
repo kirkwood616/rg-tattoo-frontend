@@ -5,13 +5,7 @@ import { fetchPhotoUrls, getRequest } from "admin/services/AdminApiService";
 import { adminLocaleTZ } from "admin/settings/AdminSettings";
 import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
 import useSWR from "swr";
-import {
-  formatRouteTitle,
-  formatTimeNoLeadingZero,
-  formatUnitedStatesDate,
-  formatZonedTime,
-  localeTzAcronym,
-} from "utils/Formatting";
+import { formatISODateTime, formatRouteTitle, formatTimeWithZone, formatUsDate } from "utils/Formatting";
 import "./AppointmentRequestById.css";
 
 function AppointmentRequestById() {
@@ -35,17 +29,11 @@ function AppointmentRequestById() {
           <div className="request-item_title">REQUEST STATUS</div>
           <div className="request-item_info">{formatRouteTitle(request.requestStatus)}</div>
           <div className="request-item_title">REQUESTED DATE</div>
-          <div className="request-item_info">{formatUnitedStatesDate(request.requestDate, adminLocaleTZ)}</div>
+          <div className="request-item_info">{formatUsDate(request.requestDate)}</div>
           <div className="request-item_title">REQUESTED TIME</div>
-          <div className="request-item_info">
-            {`${formatTimeNoLeadingZero(request.requestTime)} ${localeTzAcronym(adminLocaleTZ)}`}
-          </div>
+          <div className="request-item_info">{formatTimeWithZone(request.requestTime, adminLocaleTZ)}</div>
           <div className="request-item_title">DATE SUBMITTED</div>
-          <div className="request-item_info">
-            {formatUnitedStatesDate(request.requestSubmittedDate, adminLocaleTZ)}
-            <br />
-            {formatZonedTime(request.requestSubmittedDate, adminLocaleTZ)}
-          </div>
+          <div className="request-item_info">{formatISODateTime(request.requestSubmittedDate, adminLocaleTZ)}</div>
 
           {request.requestStatus !== "new" && (
             <>
@@ -122,12 +110,7 @@ function AppointmentRequestById() {
           <div className="request-section_title">HISTORY LOG</div>
           {request.historyLog.map((item, index) => (
             <div className="request-log_container" key={String(item.dateCreated) + index}>
-              <div className="request-item_title">
-                {`${formatUnitedStatesDate(item.dateCreated, adminLocaleTZ)} @ ${formatZonedTime(
-                  item.dateCreated,
-                  adminLocaleTZ
-                )}`}
-              </div>
+              <div className="request-item_title">{formatISODateTime(item.dateCreated, adminLocaleTZ)}</div>
               <div className="request-item_info">
                 {item.action && (
                   <>
