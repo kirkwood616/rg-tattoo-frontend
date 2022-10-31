@@ -1,6 +1,12 @@
 import { AppointmentRequest } from "models/AppointmentRequest";
 
-export default function actionSubmitRequest(request: AppointmentRequest, note: string, deposit: number, priceCharged: number): AppointmentRequest {
+export default function actionSubmitRequest(
+  request: AppointmentRequest,
+  note: string,
+  depositRequired: number,
+  deposit: number,
+  priceCharged: number
+): AppointmentRequest {
   let updatedRequest: AppointmentRequest = request;
   switch (request.requestStatus) {
     case "new":
@@ -8,12 +14,17 @@ export default function actionSubmitRequest(request: AppointmentRequest, note: s
         updatedRequest = {
           ...request,
           requestStatus: "awaiting-deposit",
-          historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Request Approved. Awaiting Deposit.", note: note }],
+          depositRequired: depositRequired,
+          historyLog: [
+            ...request.historyLog,
+            { dateCreated: new Date(), action: "Request Approved. Awaiting Deposit.", note: note },
+          ],
         };
       } else {
         updatedRequest = {
           ...request,
           requestStatus: "awaiting-deposit",
+          depositRequired: depositRequired,
           historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Request Approved. Awaiting Deposit." }],
         };
       }
@@ -24,14 +35,20 @@ export default function actionSubmitRequest(request: AppointmentRequest, note: s
           ...request,
           requestStatus: "deposit-received",
           depositAmmountReceived: deposit,
-          historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Deposit Received. Appointment Scheduled.", note: note }],
+          historyLog: [
+            ...request.historyLog,
+            { dateCreated: new Date(), action: "Deposit Received. Appointment Scheduled.", note: note },
+          ],
         };
       } else {
         updatedRequest = {
           ...request,
           requestStatus: "deposit-received",
           depositAmmountReceived: deposit,
-          historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Deposit Received. Appointment Scheduled." }],
+          historyLog: [
+            ...request.historyLog,
+            { dateCreated: new Date(), action: "Deposit Received. Appointment Scheduled." },
+          ],
         };
       }
       break;
