@@ -26,6 +26,9 @@
   resize: vertical;
   min-width: 90%;
 }
+.note-field.active > p {
+  margin: 1rem;
+}
 
 .note-field.inactive {
   max-height: 0;
@@ -45,10 +48,4 @@
   display: block;
   margin: 0 auto 1rem auto;
   width: 90%;
-}
-
-@media only screen and (min-width: 600px) {
-  .AddNote {
-    width: 575px;
-  }
 }
