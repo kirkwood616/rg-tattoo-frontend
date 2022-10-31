@@ -7,6 +7,7 @@ import admin from "./AdminInterceptor";
 
 const apiRequestAppointment = process.env.REACT_APP_API_REQUEST_ROUTE_LOCAL || "";
 const apiDeniedAppointments = process.env.REACT_APP_API_DENIED_ROUTE_LOCAL || "";
+const apiAdminRoute = process.env.REACT_APP_API_ADMIN_ROUTE || "";
 
 //// 1. APPOINTMENT REQUESTS
 // GET ALL REQUESTS
@@ -15,7 +16,10 @@ export function fetchAppointmentRequests(): Promise<AppointmentRequest[]> {
 }
 
 // PUT
-export function updateAppointmentRequest(id: string, appointmentRequest: AppointmentRequest): Promise<AvailableAppointments> {
+export function updateAppointmentRequest(
+  id: string,
+  appointmentRequest: AppointmentRequest
+): Promise<AvailableAppointments> {
   return axios.put(`${apiRequestAppointment}/${id}`, appointmentRequest).then((res) => res.data);
 }
 
@@ -40,7 +44,10 @@ export async function postAvailableAppointment(appointment: AvailableAppointment
 }
 
 // PUT
-export async function updateAvailableAppointment(id: string, appointmentDateTimes: AvailableAppointments): Promise<AvailableAppointments> {
+export async function updateAvailableAppointment(
+  id: string,
+  appointmentDateTimes: AvailableAppointments
+): Promise<AvailableAppointments> {
   const res = await admin.put(`/available-appointments/update/${id}`, appointmentDateTimes);
   return res.data;
 }
@@ -58,6 +65,12 @@ export async function getRequest(url: string): Promise<AppointmentRequest | void
 
 export async function approveNewRequest(request: AppointmentRequest) {
   const res = await admin.put(`appointment-requests/new/approve/${request._id}`, request);
+  return res.data;
+}
+
+// HERE
+export async function denyRequest(request: AppointmentRequest) {
+  const res = await admin.put(`appointment-requests/deny-request/${request._id}`);
   return res.data;
 }
 
