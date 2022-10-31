@@ -1,4 +1,3 @@
-import AddNote from "admin/features/AddNote/AddNote";
 import { denyRequest } from "admin/services/AdminApiService";
 import GoButton from "components/buttons/GoButton";
 import AreYouSure from "components/modals/AreYouSure";
@@ -17,37 +16,27 @@ interface Props {
 
 function DenyModal({ isDenyActive, setIsDenyActive, request }: Props) {
   const [deniedReason, setDeniedReason] = useState("");
-  const [newNote, setNewNote] = useState("");
   const [isSubmitActive, setIsSubmitActive] = useState(false);
 
   const { toggleLoading } = useContext(AppContext);
   const navigate = useNavigate();
 
-  function onDeny() {
+  function onDeny(): void {
+    if (!deniedReason.length) return;
     setIsSubmitActive((current) => !current);
   }
 
-  async function handleDeny() {
+  async function handleDeny(): Promise<void> {
     toggleLoading();
     try {
-      let deniedRequest: AppointmentRequest = {
+      const deniedRequest: AppointmentRequest = {
         ...request,
         requestStatus: "denied",
-        deniedMessage: deniedReason,
-        isRequestClosed: true,
-        historyLog: [...request.historyLog],
+        historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Request Denied.", note: deniedReason }],
       };
-      if (newNote.length > 0) {
-        deniedRequest.historyLog = [
-          ...request.historyLog,
-          { dateCreated: new Date(), action: "Request Denied.", note: newNote },
-        ];
-      } else {
-        deniedRequest.historyLog = [...request.historyLog, { dateCreated: new Date(), action: "Request Denied." }];
-      }
       await denyRequest(deniedRequest);
       setIsDenyActive((current) => !current);
-      navigate("/admin/appointment-requests");
+      navigate(`/admin/appointment-requests/denied/${deniedRequest._id}`);
     } catch (error) {
       console.error(error);
     } finally {
@@ -66,9 +55,9 @@ function DenyModal({ isDenyActive, setIsDenyActive, request }: Props) {
         value={deniedReason}
         onChange={(e) => setDeniedReason(e.target.value)}
       />
-      <AddNote request={request} note={newNote} setNote={setNewNote} />
+      {!deniedReason.length && <p>*Reason Required*</p>}
       <GoButton type="button" text="DENY" backgroundColor="green" onClick={onDeny} />
-      <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={() => setIsDenyActive(false)} />
+      <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={() => setIsDenyActive((current) => !current)} />
 
       {isSubmitActive && (
         <AreYouSure
