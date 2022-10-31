@@ -1,6 +1,7 @@
 import AddNote from "admin/features/AddNote/AddNote";
 import { denyRequest } from "admin/services/AdminApiService";
 import GoButton from "components/buttons/GoButton";
+import AreYouSure from "components/modals/AreYouSure";
 import ModalWindow from "components/modals/ModalWindow";
 import AppContext from "context/AppContext";
 import { AppointmentRequest } from "models/AppointmentRequest";
@@ -15,39 +16,43 @@ interface Props {
 }
 
 function DenyModal({ isDenyActive, setIsDenyActive, request }: Props) {
-  const [deniedReason, setDeniedReason] = useState<string>("");
+  const [deniedReason, setDeniedReason] = useState("");
   const [newNote, setNewNote] = useState("");
+  const [isSubmitActive, setIsSubmitActive] = useState(false);
 
   const { toggleLoading } = useContext(AppContext);
   const navigate = useNavigate();
 
-  function onDeny(): void {
-    let deniedRequest: AppointmentRequest;
-    if (newNote.length > 0) {
-      deniedRequest = {
-        ...request,
-        requestStatus: "denied",
-        deniedMessage: deniedReason,
-        isRequestClosed: true,
-        historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Request Denied.", note: newNote }],
-      };
-    } else {
-      deniedRequest = {
-        ...request,
-        requestStatus: "denied",
-        deniedMessage: deniedReason,
-        isRequestClosed: true,
-        historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Request Denied." }],
-      };
-    }
+  function onDeny() {
+    setIsSubmitActive((current) => !current);
+  }
+
+  async function handleDeny() {
     toggleLoading();
-    denyRequest(deniedRequest)
-      .catch((error) => console.error(error))
-      .then(() => {
-        toggleLoading();
-        setIsDenyActive(false);
-        navigate("/admin/appointment-requests");
-      });
+    try {
+      let deniedRequest: AppointmentRequest = {
+        ...request,
+        requestStatus: "denied",
+        deniedMessage: deniedReason,
+        isRequestClosed: true,
+        historyLog: [...request.historyLog],
+      };
+      if (newNote.length > 0) {
+        deniedRequest.historyLog = [
+          ...request.historyLog,
+          { dateCreated: new Date(), action: "Request Denied.", note: newNote },
+        ];
+      } else {
+        deniedRequest.historyLog = [...request.historyLog, { dateCreated: new Date(), action: "Request Denied." }];
+      }
+      await denyRequest(deniedRequest);
+      setIsDenyActive((current) => !current);
+      navigate("/admin/appointment-requests");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      toggleLoading();
+    }
   }
 
   return (
@@ -64,6 +69,15 @@ function DenyModal({ isDenyActive, setIsDenyActive, request }: Props) {
       <AddNote request={request} note={newNote} setNote={setNewNote} />
       <GoButton type="button" text="DENY" backgroundColor="green" onClick={onDeny} />
       <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={() => setIsDenyActive(false)} />
+
+      {isSubmitActive && (
+        <AreYouSure
+          isActive={isSubmitActive}
+          setIsActive={setIsSubmitActive}
+          yesFunction={handleDeny}
+          yesButtonText={"SUBMIT"}
+        />
+      )}
     </ModalWindow>
   );
 }
