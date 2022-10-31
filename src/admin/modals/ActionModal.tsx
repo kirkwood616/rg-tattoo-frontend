@@ -3,6 +3,7 @@ import { depositBaseValue } from "admin/settings/AdminSettings";
 import actionSubmitRequest from "admin/utils/ActionSubmitRequest";
 import requestApiCall from "admin/utils/RequestApiCall";
 import GoButton from "components/buttons/GoButton";
+import AreYouSure from "components/modals/AreYouSure";
 import ModalWindow from "components/modals/ModalWindow";
 import AppContext from "context/AppContext";
 import { AppointmentRequest } from "models/AppointmentRequest";
@@ -22,26 +23,33 @@ function ActionModal({ request, isActive, setIsActive, modalClassName, submitBut
   const [note, setNote] = useState("");
   const [depositAmmount, setDepositAmmount] = useState(depositBaseValue);
   const [priceCharged, setPriceCharged] = useState(0);
+  const [isSubmitActive, setIsSubmitActive] = useState(false);
 
   const { toggleLoading } = useContext(AppContext);
   const navigate = useNavigate();
 
   function onSubmit(): void {
+    setIsSubmitActive((current) => !current);
+  }
+
+  async function handleSubmit(): Promise<void> {
     toggleLoading();
-    requestApiCall(actionSubmitRequest(request, note, depositAmmount, priceCharged))
-      ?.catch((error) => console.error(error))
-      .then(() => {
-        toggleLoading();
-        setIsActive((current) => !current);
-        navigate("/admin/appointment-requests");
-      });
+    try {
+      await requestApiCall(actionSubmitRequest(request, note, depositRequired, depositAmmount, priceCharged));
+      setIsActive((current) => !current);
+      navigate("/admin/appointment-requests");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      toggleLoading();
+    }
   }
 
   return (
     <ModalWindow isActive={isActive} setIsActive={setIsActive} className={modalClassName}>
       {request.requestStatus === "new" && (
-        <>
-          <h1>Are You Sure?</h1>
+        <div className="approve-request">
+          <h1>APPROVE REQUEST</h1>
           <label htmlFor="deposit-required">Deposit Ammount Required:</label>
           <input
             type="number"
@@ -52,11 +60,12 @@ function ActionModal({ request, isActive, setIsActive, modalClassName, submitBut
             value={depositRequired}
             onChange={(e) => setDepositRequired(Number(e.target.value))}
           />
-        </>
+        </div>
       )}
 
       {request.requestStatus === "awaiting-deposit" && (
         <>
+          <h1>DEPOSIT RECEIVED</h1>
           <label htmlFor="ammount">Ammount Received: </label>
           <input
             type="number"
@@ -70,6 +79,7 @@ function ActionModal({ request, isActive, setIsActive, modalClassName, submitBut
 
       {request.requestStatus === "deposit-received" && (
         <>
+          <h1>APPOINTMENT COMPLETED</h1>
           <label htmlFor="price-charged">Price Charged: </label>
           <input
             type="number"
@@ -85,6 +95,15 @@ function ActionModal({ request, isActive, setIsActive, modalClassName, submitBut
       <AddNote request={request} note={note} setNote={setNote} />
       <GoButton type="button" text={submitButtonText} backgroundColor="green" onClick={onSubmit} />
       <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={() => setIsActive((current) => !current)} />
+
+      {isSubmitActive && (
+        <AreYouSure
+          isActive={isSubmitActive}
+          setIsActive={setIsSubmitActive}
+          yesFunction={handleSubmit}
+          yesButtonText="SUBMIT"
+        />
+      )}
     </ModalWindow>
   );
 }
