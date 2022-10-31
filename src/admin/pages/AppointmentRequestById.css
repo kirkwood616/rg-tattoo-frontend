@@ -27,6 +27,9 @@
   padding-bottom: 1rem;
   width: 100%;
 }
+.AppointmentRequestById > section:last-child {
+  padding-bottom: 0;
+}
 
 .request-section_title {
   background-color: var(--light-gray-1);
