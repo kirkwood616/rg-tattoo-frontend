@@ -70,7 +70,7 @@ export async function approveNewRequest(request: AppointmentRequest) {
 
 // HERE
 export async function denyRequest(request: AppointmentRequest) {
-  const res = await admin.put(`appointment-requests/deny-request/${request._id}`);
+  const res = await admin.put(`appointment-requests/deny-request/${request._id}`, request);
   return res.data;
 }
 
