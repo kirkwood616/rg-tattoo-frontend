@@ -12,3 +12,20 @@
 .hide {
   display: none;
 }
+
+.ModalWindow > .modal_body {
+  background-color: whitesmoke;
+  border-radius: 1rem;
+  color: black;
+  margin: auto;
+  padding: 1rem;
+  text-align: center;
+  width: 90%;
+}
+
+.modal_body > div > .go-button,
+.modal_body > .go-button {
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+}

@@ -1,13 +1,15 @@
 .AddNote {
   background-color: blue;
   border-radius: 3rem;
+  box-shadow: 0 3px 7px var(--black);
+  color: white;
   font-weight: bold;
-  margin: auto;
+  margin: 1rem auto;
   overflow: hidden;
   position: relative;
   text-align: center;
   transition: all 0.25s ease;
-  width: 90%;
+  width: 100%;
 }
 
 .add-note {
@@ -15,6 +17,13 @@
 }
 .note-field {
   background-color: white;
+  width: 100%;
+}
+.note-field > textarea {
+  min-height: 10rem;
+  max-height: 15rem;
+  resize: vertical;
+  min-width: 90%;
 }
 
 .note-field.inactive {
@@ -31,10 +40,10 @@
   width: 100%;
   padding: 1rem;
 }
-.note-field > button {
+.note-field > .go-button {
   display: block;
   margin: 0 auto 1rem auto;
-  width: 50%;
+  width: 90%;
 }
 
 @media only screen and (min-width: 600px) {
