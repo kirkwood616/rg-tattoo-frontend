@@ -16,9 +16,9 @@ interface Props {
 function AddNote({ request, note, setNote }: Props) {
   const [isNoteActive, setIsNoteActive] = useState(false);
   const [isNoteSaved, setIsNoteSaved] = useState(false);
-  const { route, id } = useLocationRoute();
 
   const { toggleLoading } = useContext(AppContext);
+  const { route, id } = useLocationRoute();
   const { mutate } = useSWRConfig();
 
   function onToggleNote() {
@@ -35,6 +35,7 @@ function AddNote({ request, note, setNote }: Props) {
   async function updateClosedWithNote() {
     if (!note.length) return;
     toggleLoading();
+    setIsNoteSaved((current) => !current);
     try {
       const updatedRequest: AppointmentRequest = {
         ...request,
@@ -68,7 +69,7 @@ function AddNote({ request, note, setNote }: Props) {
     }
   }
 
-  if (isNoteSaved)
+  if (isNoteSaved && request.requestStatus === ("new" || "awaiting-deposit" || "deposit-received"))
     return (
       <>
         <p>{note}</p>
@@ -83,8 +84,8 @@ function AddNote({ request, note, setNote }: Props) {
         <button
           onClick={() => {
             setNote("");
-            setIsNoteSaved(false);
-            setIsNoteActive(false);
+            setIsNoteSaved((current) => !current);
+            setIsNoteActive((current) => !current);
           }}
         >
           DELETE NOTE
