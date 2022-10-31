@@ -1,5 +1,5 @@
 import AddNote from "admin/features/AddNote/AddNote";
-import { denyAppointmentRequest } from "admin/services/AdminApiService";
+import { denyRequest } from "admin/services/AdminApiService";
 import GoButton from "components/buttons/GoButton";
 import ModalWindow from "components/modals/ModalWindow";
 import AppContext from "context/AppContext";
@@ -41,7 +41,7 @@ function DenyModal({ isDenyActive, setIsDenyActive, request }: Props) {
       };
     }
     toggleLoading();
-    denyAppointmentRequest(deniedRequest)
+    denyRequest(deniedRequest)
       .catch((error) => console.error(error))
       .then(() => {
         toggleLoading();
