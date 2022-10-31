@@ -7,7 +7,6 @@ import admin from "./AdminInterceptor";
 
 const apiRequestAppointment = process.env.REACT_APP_API_REQUEST_ROUTE_LOCAL || "";
 const apiDeniedAppointments = process.env.REACT_APP_API_DENIED_ROUTE_LOCAL || "";
-const apiAdminRoute = process.env.REACT_APP_API_ADMIN_ROUTE || "";
 
 //// 1. APPOINTMENT REQUESTS
 // GET ALL REQUESTS
@@ -84,12 +83,18 @@ export async function sendCompletedRequest(request: AppointmentRequest) {
   return res.data;
 }
 
-export async function sendCanceledRequest(request: AppointmentRequest) {
+export async function cancelRequest(request: AppointmentRequest) {
   const res = await admin.put(`appointment-requests/cancel-request/${request._id}`, request);
   return res.data;
 }
 
-export async function putClosedRequest(request: AppointmentRequest) {
+// HERE
+export async function updateOpenRequest(request: AppointmentRequest) {
+  const res = await admin.put(`appointment-requests/update/${request._id}`, request);
+  return res.data;
+}
+
+export async function updateClosedRequest(request: AppointmentRequest) {
   const res = await admin.put(`archive/update/${request._id}`, request);
   return res.data;
 }

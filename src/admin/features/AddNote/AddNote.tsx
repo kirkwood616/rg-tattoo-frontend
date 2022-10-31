@@ -1,5 +1,5 @@
 import useLocationRoute from "admin/hooks/useLocationRoute";
-import { putClosedRequest } from "admin/services/AdminApiService";
+import { updateClosedRequest, updateOpenRequest } from "admin/services/AdminApiService";
 import GoButton from "components/buttons/GoButton";
 import AppContext from "context/AppContext";
 import { AppointmentRequest } from "models/AppointmentRequest";
@@ -15,27 +15,30 @@ interface Props {
 
 function AddNote({ request, note, setNote }: Props) {
   const [isNoteActive, setIsNoteActive] = useState(false);
-  const [isNoteSaved, setIsNoteSaved] = useState(false);
 
   const { toggleLoading } = useContext(AppContext);
   const { route, id } = useLocationRoute();
   const { mutate } = useSWRConfig();
 
-  function onToggleNote() {
+  function onToggleNote(): void {
     setIsNoteActive((current) => !current);
     if (note.length > 0) setNote("");
   }
 
-  function onSaveNote() {
-    if (note.length === 0) return;
-    setIsNoteSaved((current) => !current);
-    setIsNoteActive((current) => !current);
+  function updateByRequestStatus(request: AppointmentRequest): Promise<any> {
+    switch (request.requestStatus) {
+      case "new":
+      case "awaiting-deposit":
+      case "deposit-received":
+        return updateOpenRequest(request);
+      default:
+        return updateClosedRequest(request);
+    }
   }
 
-  async function updateClosedWithNote() {
+  async function handleSaveNote(): Promise<void> {
     if (!note.length) return;
     toggleLoading();
-    setIsNoteSaved((current) => !current);
     try {
       const updatedRequest: AppointmentRequest = {
         ...request,
@@ -47,10 +50,9 @@ function AddNote({ request, note, setNote }: Props) {
         rollbackOnError: true,
       };
 
-      await mutate(`appointment-requests/${route}/${id}`, putClosedRequest(updatedRequest), options);
+      await mutate(`appointment-requests/${route}/${id}`, updateByRequestStatus(updatedRequest), options);
       setNote("");
       setIsNoteActive((current) => !current);
-      setIsNoteSaved((current) => !current);
     } catch (error) {
       console.error(error);
     } finally {
@@ -58,49 +60,20 @@ function AddNote({ request, note, setNote }: Props) {
     }
   }
 
-  function setSaveFunction() {
-    switch (request.requestStatus) {
-      case "completed":
-      case "canceled":
-      case "denied":
-        return updateClosedWithNote();
-      default:
-        return onSaveNote();
-    }
-  }
-
-  if (isNoteSaved && request.requestStatus === ("new" || "awaiting-deposit" || "deposit-received"))
-    return (
-      <>
-        <p>{note}</p>
-        <button
-          onClick={() => {
-            setIsNoteSaved((current) => !current);
-            setIsNoteActive((current) => !current);
-          }}
-        >
-          EDIT NOTE
-        </button>
-        <button
-          onClick={() => {
-            setNote("");
-            setIsNoteSaved((current) => !current);
-            setIsNoteActive((current) => !current);
-          }}
-        >
-          DELETE NOTE
-        </button>
-      </>
-    );
   return (
     <div className="AddNote" onClick={onToggleNote}>
-      <p className="add-note">ADD NOTE</p>
+      <div className="add-note">ADD NOTE</div>
       <div className={isNoteActive ? "note-field active" : "note-field inactive"} onClick={(e) => e.stopPropagation()}>
         <textarea name="note" id="note" className="note" value={note} onChange={(e) => setNote(e.target.value)} />
 
         <p>* Notes are only visible to you. Clients will not see your notes *</p>
 
-        <GoButton type={"button"} text={"SAVE NOTE"} backgroundColor={"green"} onClick={setSaveFunction} />
+        <GoButton
+          type={"button"}
+          text={"SAVE NOTE"}
+          backgroundColor={note.length ? "green" : "var(--dark-gray-3)"}
+          onClick={handleSaveNote}
+        />
 
         <GoButton type={"button"} text={"CANCEL NOTE"} backgroundColor={"red"} onClick={onToggleNote} />
       </div>

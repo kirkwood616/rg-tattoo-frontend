@@ -1,4 +1,3 @@
-import AddNote from "admin/features/AddNote/AddNote";
 import { depositBaseValue } from "admin/settings/AdminSettings";
 import actionSubmitRequest from "admin/utils/ActionSubmitRequest";
 import requestApiCall from "admin/utils/RequestApiCall";
@@ -19,11 +18,10 @@ interface Props {
 }
 
 function ActionModal({ request, isActive, setIsActive, modalClassName, submitButtonText }: Props) {
-  const [depositRequired, setDepositRequired] = useState(50);
-  const [note, setNote] = useState("");
-  const [depositAmmount, setDepositAmmount] = useState(depositBaseValue);
-  const [priceCharged, setPriceCharged] = useState(0);
-  const [isSubmitActive, setIsSubmitActive] = useState(false);
+  const [depositRequired, setDepositRequired] = useState<number>(request.depositRequired);
+  const [depositAmmount, setDepositAmmount] = useState<number>(depositBaseValue);
+  const [priceCharged, setPriceCharged] = useState<number>(0);
+  const [isSubmitActive, setIsSubmitActive] = useState<boolean>(false);
 
   const { toggleLoading } = useContext(AppContext);
   const navigate = useNavigate();
@@ -35,9 +33,10 @@ function ActionModal({ request, isActive, setIsActive, modalClassName, submitBut
   async function handleSubmit(): Promise<void> {
     toggleLoading();
     try {
-      await requestApiCall(actionSubmitRequest(request, note, depositRequired, depositAmmount, priceCharged));
+      const updatedRequest: AppointmentRequest = actionSubmitRequest(request, depositRequired, depositAmmount, priceCharged);
+      await requestApiCall(updatedRequest);
       setIsActive((current) => !current);
-      navigate("/admin/appointment-requests");
+      navigate(`/admin/appointment-requests/${updatedRequest.requestStatus}/${updatedRequest._id}`);
     } catch (error) {
       console.error(error);
     } finally {
@@ -92,7 +91,6 @@ function ActionModal({ request, isActive, setIsActive, modalClassName, submitBut
         </>
       )}
 
-      <AddNote request={request} note={note} setNote={setNote} />
       <GoButton type="button" text={submitButtonText} backgroundColor="green" onClick={onSubmit} />
       <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={() => setIsActive((current) => !current)} />
 

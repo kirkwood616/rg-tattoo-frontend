@@ -2,74 +2,52 @@ import { AppointmentRequest } from "models/AppointmentRequest";
 
 export default function actionSubmitRequest(
   request: AppointmentRequest,
-  note: string,
-  depositRequired: number,
-  deposit: number,
-  priceCharged: number
+  depositAmmountRequired: number,
+  depositReceived: number,
+  ammountCharged: number
 ): AppointmentRequest {
-  let updatedRequest: AppointmentRequest = request;
+  let updatedRequest: AppointmentRequest = { ...request };
   switch (request.requestStatus) {
     case "new":
-      if (note.length) {
-        updatedRequest = {
-          ...request,
-          requestStatus: "awaiting-deposit",
-          depositRequired: depositRequired,
-          historyLog: [
-            ...request.historyLog,
-            { dateCreated: new Date(), action: "Request Approved. Awaiting Deposit.", note: note },
-          ],
-        };
-      } else {
-        updatedRequest = {
-          ...request,
-          requestStatus: "awaiting-deposit",
-          depositRequired: depositRequired,
-          historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Request Approved. Awaiting Deposit." }],
-        };
-      }
+      updatedRequest = {
+        ...request,
+        requestStatus: "awaiting-deposit",
+        depositRequired: depositAmmountRequired,
+        historyLog: [
+          ...request.historyLog,
+          {
+            dateCreated: new Date(),
+            action: "Request Approved. Awaiting Deposit.",
+            note: `$${depositAmmountRequired} deposit required.`,
+          },
+        ],
+      };
       break;
     case "awaiting-deposit":
-      if (note.length) {
-        updatedRequest = {
-          ...request,
-          requestStatus: "deposit-received",
-          depositAmmountReceived: deposit,
-          historyLog: [
-            ...request.historyLog,
-            { dateCreated: new Date(), action: "Deposit Received. Appointment Scheduled.", note: note },
-          ],
-        };
-      } else {
-        updatedRequest = {
-          ...request,
-          requestStatus: "deposit-received",
-          depositAmmountReceived: deposit,
-          historyLog: [
-            ...request.historyLog,
-            { dateCreated: new Date(), action: "Deposit Received. Appointment Scheduled." },
-          ],
-        };
-      }
+      updatedRequest = {
+        ...request,
+        requestStatus: "deposit-received",
+        depositAmmountReceived: depositReceived,
+        historyLog: [
+          ...request.historyLog,
+          {
+            dateCreated: new Date(),
+            action: "Deposit Received. Appointment Scheduled.",
+            note: `$${depositReceived} deposit required.`,
+          },
+        ],
+      };
       break;
     case "deposit-received":
-      if (note.length) {
-        updatedRequest = {
-          ...request,
-          requestStatus: "completed",
-          isRequestClosed: true,
-          priceCharged: priceCharged,
-          historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Appointment Completed.", note: note }],
-        };
-      } else {
-        updatedRequest = {
-          ...request,
-          requestStatus: "completed",
-          isRequestClosed: true,
-          priceCharged: priceCharged,
-          historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Appointment Completed." }],
-        };
-      }
+      updatedRequest = {
+        ...request,
+        requestStatus: "completed",
+        priceCharged: ammountCharged,
+        historyLog: [
+          ...request.historyLog,
+          { dateCreated: new Date(), action: "Appointment Completed.", note: `$${ammountCharged} payment received.` },
+        ],
+      };
       break;
   }
   return updatedRequest;

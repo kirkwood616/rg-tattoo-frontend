@@ -1,14 +1,18 @@
 import AdminPage from "admin/components/AdminPage";
+import AddNote from "admin/features/AddNote/AddNote";
 import RequestActions from "admin/features/RequestActions/RequestActions";
 import useLocationRoute from "admin/hooks/useLocationRoute";
 import { fetchPhotoUrls, getRequest } from "admin/services/AdminApiService";
 import { adminLocaleTZ } from "admin/settings/AdminSettings";
 import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
+import { useState } from "react";
 import useSWR from "swr";
 import { formatISODateTime, formatRouteTitle, formatTimeWithZone, formatUsDate } from "utils/Formatting";
 import "./AppointmentRequestById.css";
 
 function AppointmentRequestById() {
+  const [note, setNote] = useState<string>("");
+
   // LOCATION
   const { route, id, title } = useLocationRoute();
 
@@ -127,6 +131,7 @@ function AppointmentRequestById() {
               </div>
             </div>
           ))}
+          <AddNote request={request} note={note} setNote={setNote} />
         </section>
       </div>
       <RequestActions request={request} />

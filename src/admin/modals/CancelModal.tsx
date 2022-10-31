@@ -1,6 +1,6 @@
-import AddNote from "admin/features/AddNote/AddNote";
-import { sendCanceledRequest } from "admin/services/AdminApiService";
+import { cancelRequest } from "admin/services/AdminApiService";
 import GoButton from "components/buttons/GoButton";
+import AreYouSure from "components/modals/AreYouSure";
 import ModalWindow from "components/modals/ModalWindow";
 import AppContext from "context/AppContext";
 import { AppointmentRequest } from "models/AppointmentRequest";
@@ -14,44 +14,65 @@ interface Props {
 }
 
 function CancelModal({ request, isCancelActive, setIsCancelActive }: Props) {
-  const [newNote, setNewNote] = useState("");
+  const [canceledReason, setCanceledReason] = useState("");
+  const [isSubmitActive, setIsSubmitActive] = useState(false);
 
   const { toggleLoading } = useContext(AppContext);
   const navigate = useNavigate();
 
-  function onCancel(): void {
-    let canceledRequest: AppointmentRequest;
-    if (newNote.length) {
-      canceledRequest = {
-        ...request,
-        requestStatus: "canceled",
-        historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Appointment Canceled.", note: newNote }],
-      };
-    } else {
-      canceledRequest = {
-        ...request,
-        requestStatus: "canceled",
-        historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Appointment Canceled." }],
-      };
-    }
+  function onCancelRequest(): void {
+    if (!canceledReason.length) return;
+    setIsSubmitActive((current) => !current);
+  }
+
+  async function handleCancelRequest(): Promise<void> {
     toggleLoading();
-    sendCanceledRequest(canceledRequest)
-      .catch((error) => console.error(error))
-      .then(() => {
-        toggleLoading();
-        setIsCancelActive((current) => !current);
-        navigate("/admin/appointment-requests");
-      });
+    try {
+      const canceledRequest: AppointmentRequest = {
+        ...request,
+        requestStatus: "canceled",
+        historyLog: [
+          ...request.historyLog,
+          { dateCreated: new Date(), action: "Appointment Canceled.", note: canceledReason },
+        ],
+      };
+      await cancelRequest(canceledRequest);
+      setIsCancelActive((current) => !current);
+      navigate(`/admin/appointment-requests/canceled/${canceledRequest._id}`);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      toggleLoading();
+    }
   }
 
   return (
     <ModalWindow isActive={isCancelActive} setIsActive={setIsCancelActive} className="cancel-confirm">
       <label htmlFor="">Please enter a reason the appointment was cancelled</label>
-      <textarea name="cancel-reason" id="cancel-reason" />
+      <textarea
+        name="cancel-reason"
+        id="cancel-reason"
+        value={canceledReason}
+        onChange={(e) => setCanceledReason(e.target.value)}
+      />
+      {!canceledReason.length && <p>*Reason Required*</p>}
       <p>* This message will be sent to the client in a notification email *</p>
-      <AddNote request={request} note={newNote} setNote={setNewNote} />
-      <GoButton type="button" text="SUBMIT" backgroundColor="green" onClick={onCancel} />
-      <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={() => setIsCancelActive((current) => !current)} />
+      <GoButton type="button" text="SUBMIT" backgroundColor="green" onClick={onCancelRequest} />
+      <GoButton
+        type="button"
+        text="CLOSE WINDOW"
+        backgroundColor="red"
+        onClick={() => setIsCancelActive((current) => !current)}
+      />
+
+      {isSubmitActive && (
+        <AreYouSure
+          isActive={isSubmitActive}
+          setIsActive={setIsSubmitActive}
+          yesFunction={handleCancelRequest}
+          yesButtonText={"SUBMIT"}
+        />
+      )}
     </ModalWindow>
   );
 }
