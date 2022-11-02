@@ -23,6 +23,12 @@
   width: 90%;
 }
 
+.ModalWindow > .modal_body > label {
+  display: inline-block;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
 .modal_body > div > .go-button,
 .modal_body > .go-button {
   display: block;
