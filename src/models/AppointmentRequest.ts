@@ -42,3 +42,5 @@ export type HistoryAction =
   | "Request Denied.";
 
 export type PhotoType = "reference" | "placement";
+
+export type RejectType = "denied" | "canceled";
