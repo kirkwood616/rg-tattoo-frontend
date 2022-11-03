@@ -18,8 +18,8 @@ interface Props {
 }
 
 function ActionModal({ request, isActive, setIsActive, modalClassName, submitButtonText }: Props) {
-  const [depositRequired, setDepositRequired] = useState<number>(request.depositRequired);
-  const [depositAmmount, setDepositAmmount] = useState<number>(depositBaseValue);
+  const [depositRequired, setDepositRequired] = useState<number>(depositBaseValue);
+  const [depositAmmount, setDepositAmmount] = useState<number>(request.depositRequired);
   const [priceCharged, setPriceCharged] = useState<number>(0);
   const [isSubmitActive, setIsSubmitActive] = useState<boolean>(false);
 
@@ -45,7 +45,7 @@ function ActionModal({ request, isActive, setIsActive, modalClassName, submitBut
   }
 
   return (
-    <ModalWindow isActive={isActive} setIsActive={setIsActive} className={modalClassName}>
+    <ModalWindow isActive={isActive} setIsActive={setIsActive}>
       {request.requestStatus === "new" && (
         <div className="approve-request">
           <h1>APPROVE REQUEST</h1>
@@ -54,7 +54,7 @@ function ActionModal({ request, isActive, setIsActive, modalClassName, submitBut
             type="number"
             name="deposit-required"
             id="deposit-required"
-            min={50}
+            min={depositBaseValue}
             step={25}
             value={depositRequired}
             onChange={(e) => setDepositRequired(Number(e.target.value))}
@@ -99,7 +99,7 @@ function ActionModal({ request, isActive, setIsActive, modalClassName, submitBut
           isActive={isSubmitActive}
           setIsActive={setIsSubmitActive}
           yesFunction={handleSubmit}
-          yesButtonText="SUBMIT"
+          yesButtonText="YES"
         />
       )}
     </ModalWindow>
