@@ -1,6 +1,5 @@
 import ActionModal from "admin/modals/ActionModal";
-import CancelModal from "admin/modals/CancelModal";
-import DenyModal from "admin/modals/DenyModal";
+import RejectModal from "admin/modals/RejectModal";
 import GoButton from "components/buttons/GoButton";
 import { AppointmentRequest } from "models/AppointmentRequest";
 import { useState } from "react";
@@ -23,31 +22,86 @@ function OpenRequestActions({ request }: Props) {
           <GoButton type="button" text="APPROVE" backgroundColor="green" onClick={() => setIsApproveActive(true)} />
           <GoButton type="button" text="DENY" backgroundColor="red" onClick={() => setIsDenyActive(true)} />
           {isApproveActive && (
-            <ActionModal request={request} isActive={isApproveActive} setIsActive={setIsApproveActive} modalClassName="approving-request" submitButtonText="APPROVE" />
+            <ActionModal
+              request={request}
+              isActive={isApproveActive}
+              setIsActive={setIsApproveActive}
+              modalClassName="approving-request"
+              submitButtonText="APPROVE"
+            />
           )}
-          {isDenyActive && <DenyModal isDenyActive={isDenyActive} setIsDenyActive={setIsDenyActive} request={request} />}
+          {isDenyActive && (
+            <RejectModal
+              isActive={isDenyActive}
+              setIsActive={setIsDenyActive}
+              request={request}
+              submitButtonText="SUBMIT"
+              rejectType="denied"
+              denyRequest
+            />
+          )}
         </>
       )}
 
       {request.requestStatus === "awaiting-deposit" && (
         <>
-          <GoButton type="button" text="DEPOSIT RECEIVED" backgroundColor="green" onClick={() => setIsReceivedActive(true)} />
+          <GoButton
+            type="button"
+            text="DEPOSIT RECEIVED"
+            backgroundColor="green"
+            onClick={() => setIsReceivedActive(true)}
+          />
           <GoButton type="button" text="DENY" backgroundColor="red" onClick={() => setIsDenyActive(true)} />
           {isReceivedActive && (
-            <ActionModal request={request} isActive={isReceivedActive} setIsActive={setIsReceivedActive} modalClassName={"deposit-received"} submitButtonText={"SUBMIT"} />
+            <ActionModal
+              request={request}
+              isActive={isReceivedActive}
+              setIsActive={setIsReceivedActive}
+              modalClassName={"deposit-received"}
+              submitButtonText={"SUBMIT"}
+            />
           )}
-          {isDenyActive && <DenyModal isDenyActive={isDenyActive} setIsDenyActive={setIsDenyActive} request={request} />}
+          {isDenyActive && (
+            <RejectModal
+              isActive={isDenyActive}
+              setIsActive={setIsDenyActive}
+              request={request}
+              submitButtonText="SUBMIT"
+              rejectType="denied"
+              denyRequest
+            />
+          )}
         </>
       )}
 
       {request.requestStatus === "deposit-received" && (
         <>
-          <GoButton type="button" text="APPOINTMENT COMPLETED" backgroundColor="green" onClick={() => setIsCompletedActive(true)} />
+          <GoButton
+            type="button"
+            text="APPOINTMENT COMPLETED"
+            backgroundColor="green"
+            onClick={() => setIsCompletedActive(true)}
+          />
           <GoButton type="button" text="CANCEL APPOINTMENT" backgroundColor="red" onClick={() => setIsCancelActive(true)} />
           {isCompletedActive && (
-            <ActionModal request={request} isActive={isCompletedActive} setIsActive={setIsCompletedActive} modalClassName={"completed-request"} submitButtonText={"SUBMIT"} />
+            <ActionModal
+              request={request}
+              isActive={isCompletedActive}
+              setIsActive={setIsCompletedActive}
+              modalClassName={"completed-request"}
+              submitButtonText={"SUBMIT"}
+            />
           )}
-          {isCancelActive && <CancelModal request={request} isCancelActive={isCancelActive} setIsCancelActive={setIsCancelActive} />}
+          {isCancelActive && (
+            <RejectModal
+              request={request}
+              isActive={isCancelActive}
+              setIsActive={setIsCancelActive}
+              submitButtonText="SUBMIT"
+              rejectType="canceled"
+              cancelRequest
+            />
+          )}
         </>
       )}
     </div>
