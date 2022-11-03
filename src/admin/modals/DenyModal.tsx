@@ -1,4 +1,4 @@
-import { denyRequest } from "admin/services/AdminApiService";
+import { sendDeniedRequest } from "admin/services/AdminApiService";
 import GoButton from "components/buttons/GoButton";
 import AreYouSure from "components/modals/AreYouSure";
 import ModalWindow from "components/modals/ModalWindow";
@@ -34,7 +34,7 @@ function DenyModal({ isDenyActive, setIsDenyActive, request }: Props) {
         requestStatus: "denied",
         historyLog: [...request.historyLog, { dateCreated: new Date(), action: "Request Denied.", note: deniedReason }],
       };
-      await denyRequest(deniedRequest);
+      await sendDeniedRequest(deniedRequest);
       setIsDenyActive((current) => !current);
       navigate(`/admin/appointment-requests/denied/${deniedRequest._id}`);
     } catch (error) {

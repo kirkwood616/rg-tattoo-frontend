@@ -1,4 +1,4 @@
-import { cancelRequest } from "admin/services/AdminApiService";
+import { sendCanceledRequest } from "admin/services/AdminApiService";
 import GoButton from "components/buttons/GoButton";
 import AreYouSure from "components/modals/AreYouSure";
 import ModalWindow from "components/modals/ModalWindow";
@@ -36,7 +36,7 @@ function CancelModal({ request, isCancelActive, setIsCancelActive }: Props) {
           { dateCreated: new Date(), action: "Appointment Canceled.", note: canceledReason },
         ],
       };
-      await cancelRequest(canceledRequest);
+      await sendCanceledRequest(canceledRequest);
       setIsCancelActive((current) => !current);
       navigate(`/admin/appointment-requests/canceled/${canceledRequest._id}`);
     } catch (error) {
