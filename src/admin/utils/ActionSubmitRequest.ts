@@ -6,7 +6,10 @@ export default function actionSubmitRequest(
   depositReceived: number,
   ammountCharged: number
 ): AppointmentRequest {
-  let updatedRequest: AppointmentRequest = { ...request };
+  let updatedRequest: AppointmentRequest = {
+    ...request,
+    historyLog: [...request.historyLog],
+  };
   switch (request.requestStatus) {
     case "new":
       updatedRequest = {
@@ -33,7 +36,7 @@ export default function actionSubmitRequest(
           {
             dateCreated: new Date(),
             action: "Deposit Received. Appointment Scheduled.",
-            note: `$${depositReceived} deposit required.`,
+            note: `$${depositReceived} deposit received.`,
           },
         ],
       };
