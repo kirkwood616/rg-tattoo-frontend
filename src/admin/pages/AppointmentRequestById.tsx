@@ -120,9 +120,11 @@ function AppointmentRequestById() {
                   <>
                     <p>Action:</p>
                     <p>{item.action}</p>
+                    <p>Note to Client:</p>
+                    <p>{item.note}</p>
                   </>
                 )}
-                {item.note && (
+                {!item.action && item.note && (
                   <>
                     <p>Note:</p>
                     <p>{item.note}</p>
