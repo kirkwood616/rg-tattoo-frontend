@@ -62,13 +62,13 @@ export async function getRequest(url: string): Promise<AppointmentRequest | void
   return res.data;
 }
 
-export async function approveNewRequest(request: AppointmentRequest) {
+export async function sendApprovedRequest(request: AppointmentRequest) {
   const res = await admin.put(`appointment-requests/new/approve/${request._id}`, request);
   return res.data;
 }
 
 // HERE
-export async function denyRequest(request: AppointmentRequest) {
+export async function sendDeniedRequest(request: AppointmentRequest) {
   const res = await admin.put(`appointment-requests/deny-request/${request._id}`, request);
   return res.data;
 }
@@ -83,7 +83,7 @@ export async function sendCompletedRequest(request: AppointmentRequest) {
   return res.data;
 }
 
-export async function cancelRequest(request: AppointmentRequest) {
+export async function sendCanceledRequest(request: AppointmentRequest) {
   const res = await admin.put(`appointment-requests/cancel-request/${request._id}`, request);
   return res.data;
 }
