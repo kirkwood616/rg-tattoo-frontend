@@ -43,4 +43,13 @@ export type HistoryAction =
 
 export type PhotoType = "reference" | "placement";
 
+export type OpenRequestStatus = "new" | "awaiting-deposit" | "deposit-received";
+
 export type RejectType = "denied" | "canceled";
+
+export type ActionType = "approve" | "reject";
+
+export interface ActionInfo {
+  approve: boolean;
+  status: OpenRequestStatus;
+}
