@@ -1,38 +1,43 @@
+import ActionContext from "admin/context/ActionContext";
+import * as ActionField from "admin/features/RequestActions/ActionFields";
 import { rejectSubmitRequest } from "admin/utils/RejectSubmitRequest";
 import requestApiCall from "admin/utils/RequestApiCall";
 import GoButton from "components/buttons/GoButton";
 import AreYouSure from "components/modals/AreYouSure";
 import ModalWindow from "components/modals/ModalWindow";
 import AppContext from "context/AppContext";
-import { AppointmentRequest, RejectType } from "models/AppointmentRequest";
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { AppointmentRequest } from "models/AppointmentRequest";
+import Error404 from "pages/Error404";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-interface Props {
-  request: AppointmentRequest;
-  isActive: boolean;
-  setIsActive: Dispatch<SetStateAction<boolean>>;
-  submitButtonText: string;
-  rejectType: RejectType;
-  denyRequest?: boolean;
-  cancelRequest?: boolean;
-}
-
-function RejectModal({ request, isActive, setIsActive, submitButtonText, rejectType, denyRequest, cancelRequest }: Props) {
-  const [isSubmitActive, setIsSubmitActive] = useState(false);
-  const [deniedReason, setDeniedReason] = useState("");
-  const [canceledReason, setCanceledReason] = useState("");
-
+function RejectModal() {
+  const { actionState, dispatch, dispatchIsRejectActive } = useContext(ActionContext);
   const { toggleLoading } = useContext(AppContext);
+
+  const [isSubmitActive, setIsSubmitActive] = useState(false);
+
   const navigate = useNavigate();
 
+  useEffect(() => {
+    dispatch({ type: "hasErrors" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function onClose() {
+    dispatch({ type: "resetWithState" });
+  }
+
   function onRejectRequest(): void {
-    if (rejectType === "denied") {
-      if (!deniedReason.length) return;
+    if (!actionState.request) return;
+
+    if (actionState.request.requestStatus === "new" || "awaiting-deposit") {
+      if (!actionState.deniedReason) return;
       else setIsSubmitActive((current) => !current);
     }
-    if (rejectType === "canceled") {
-      if (!canceledReason.length) return;
+
+    if (actionState.request.requestStatus === "deposit-received") {
+      if (!actionState.canceledReason) return;
       else setIsSubmitActive((current) => !current);
     }
   }
@@ -40,9 +45,10 @@ function RejectModal({ request, isActive, setIsActive, submitButtonText, rejectT
   async function handleRejectRequest(): Promise<void> {
     toggleLoading();
     try {
-      const updatedRequest: AppointmentRequest = rejectSubmitRequest(request, rejectType, deniedReason, canceledReason);
+      if (!actionState.request) throw new Error("No Request");
+      const updatedRequest: AppointmentRequest = rejectSubmitRequest(actionState);
       await requestApiCall(updatedRequest);
-      setIsActive((current) => !current);
+      dispatch({ type: "reset" });
       navigate(`/admin/appointment-requests/${updatedRequest.requestStatus}/${updatedRequest._id}`);
     } catch (error) {
       console.error(error);
@@ -51,52 +57,34 @@ function RejectModal({ request, isActive, setIsActive, submitButtonText, rejectT
     }
   }
 
+  if (!actionState.request) return <Error404 />;
   return (
-    <ModalWindow isActive={isActive} setIsActive={setIsActive}>
-      {denyRequest && (
-        <>
-          <h1>DENY REQUEST</h1>
-          <label htmlFor="deny-reason">Please provide a reason for denying this request:</label>
-          <textarea
-            id="deny-reason"
-            name="deny-reason"
-            className="deny-textarea"
-            value={deniedReason}
-            onChange={(e) => setDeniedReason(e.target.value)}
-          />
-
-          {!deniedReason.length && <p>*Reason Required*</p>}
-
-          <p>* This message will appear in the client's denied notification email. *</p>
-        </>
+    <ModalWindow isActive={actionState.isRejectActive} setIsActive={dispatchIsRejectActive} isDispatch>
+      {(actionState.request.requestStatus === "new" || "awaiting-deposit") && (
+        <ActionField.RejectText
+          title="DENY REQUEST"
+          label="Please enter a reason why the request was denied:"
+          stateText={actionState.deniedReason}
+          dispatchType="deniedReason"
+        />
       )}
-
-      {cancelRequest && (
-        <>
-          <h1>CANCEL APPOINTMENT</h1>
-          <label htmlFor="cancel-reason">Please enter a reason the appointment was cancelled:</label>
-          <textarea
-            id="cancel-reason"
-            name="cancel-reason"
-            value={canceledReason}
-            onChange={(e) => setCanceledReason(e.target.value)}
-          />
-
-          {!canceledReason.length && <p>** Reason Required **</p>}
-
-          <p>* This message will appear in the client's canceled notification email *</p>
-        </>
+      {actionState.request.requestStatus === "deposit-received" && (
+        <ActionField.RejectText
+          title="CANCEL APPOINTMENT"
+          label="Please enter a reason why the appointment was canceled:"
+          stateText={actionState.canceledReason}
+          dispatchType="canceledReason"
+        />
       )}
 
       <GoButton
         type="button"
-        text={submitButtonText}
-        backgroundColor={
-          (denyRequest && !deniedReason.length) || (cancelRequest && !canceledReason.length) ? "var(--dark-gray-2)" : "green"
-        }
+        text="SUBMIT"
+        backgroundColor="green"
         onClick={onRejectRequest}
+        isDisabled={actionState.hasErrors}
       />
-      <GoButton type="button" text="CLOSE WINDOW" backgroundColor="red" onClick={() => setIsActive((current) => !current)} />
+      <GoButton type="button" text="CLOSE WINDOW" backgroundColor="red" onClick={onClose} />
 
       {isSubmitActive && (
         <AreYouSure
