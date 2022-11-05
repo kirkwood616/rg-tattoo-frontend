@@ -1,4 +1,5 @@
 import AdminPage from "admin/components/AdminPage";
+import ActionContextProvider from "admin/context/ActionContetProvider";
 import AddNote from "admin/features/AddNote/AddNote";
 import RequestActions from "admin/features/RequestActions/RequestActions";
 import useLocationRoute from "admin/hooks/useLocationRoute";
@@ -136,7 +137,9 @@ function AppointmentRequestById() {
           <AddNote request={request} note={note} setNote={setNote} />
         </section>
       </div>
-      <RequestActions request={request} />
+      <ActionContextProvider>
+        <RequestActions request={request} />
+      </ActionContextProvider>
     </AdminPage>
   );
 }
