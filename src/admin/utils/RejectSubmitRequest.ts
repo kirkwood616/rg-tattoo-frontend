@@ -1,33 +1,36 @@
-import { AppointmentRequest, HistoryAction, RejectType } from "models/AppointmentRequest";
+import { ActionReducer } from "admin/context/ActionReducer";
+import { AppointmentRequest } from "models/AppointmentRequest";
+import deepClone from "utils/DeepClone";
 
-export function rejectSubmitRequest(
-  request: AppointmentRequest,
-  rejectType: RejectType,
-  deniedReason: string,
-  canceledReason: string
-) {
-  function rejectAction(): HistoryAction {
-    if (rejectType === "denied") return "Request Denied.";
-    else return "Appointment Canceled.";
+export function rejectSubmitRequest(state: ActionReducer) {
+  if (!state.request) return {} as AppointmentRequest;
+
+  let request: AppointmentRequest = deepClone(state.request);
+
+  switch (request.requestStatus) {
+    case "new":
+    case "awaiting-deposit":
+      request.requestStatus = "denied";
+      request.historyLog = [
+        ...request.historyLog,
+        {
+          dateCreated: new Date(),
+          action: "Request Denied.",
+          note: state.deniedReason,
+        },
+      ];
+      break;
+    case "deposit-received":
+      request.requestStatus = "canceled";
+      request.historyLog = [
+        ...request.historyLog,
+        {
+          dateCreated: new Date(),
+          action: "Appointment Canceled.",
+          note: state.canceledReason,
+        },
+      ];
+      break;
   }
-
-  function rejectReason(): string {
-    if (deniedReason.length) return deniedReason;
-    if (canceledReason.length) return canceledReason;
-    else return "Appointment Request Denied";
-  }
-
-  let rejectedRequest: AppointmentRequest = {
-    ...request,
-    requestStatus: rejectType,
-    historyLog: [
-      ...request.historyLog,
-      {
-        dateCreated: new Date(),
-        action: rejectAction(),
-        note: rejectReason(),
-      },
-    ],
-  };
-  return rejectedRequest;
+  return request;
 }
