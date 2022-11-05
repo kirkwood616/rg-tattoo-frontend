@@ -241,3 +241,15 @@ export function formatPhotoPath(state: RequestReducer, photoType: PhotoType) {
       return `${prefix}-place-${formatFileName(state.placementPhoto.value.name)}`;
   }
 }
+
+/**
+ * Formats a string to lowercase and replaces any spaces, if present, with hyphens.
+ * @param input `string`
+ * @returns `string`
+ * @example 'i LiKe ThE wAy YoU WoRk iT' => 'i-like-the-way-you-work-it'
+ * 'NoDiGGITy' => 'nodiggity'
+ */
+export function formatLcHyphen(input: string) {
+  let format = input.replace(/\s+/g, "-").toLowerCase();
+  return format;
+}
