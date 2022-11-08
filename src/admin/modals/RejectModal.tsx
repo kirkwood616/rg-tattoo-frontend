@@ -60,7 +60,7 @@ function RejectModal() {
   if (!actionState.request) return <Error404 />;
   return (
     <ModalWindow isActive={actionState.isRejectActive} setIsActive={dispatchIsRejectActive} isDispatch>
-      {(actionState.request.requestStatus === "new" || "awaiting-deposit") && (
+      {actionState.request.requestStatus === ("new" || "awaiting-deposit") && (
         <ActionField.RejectText
           title="DENY REQUEST"
           label="Please enter a reason why the request was denied:"
