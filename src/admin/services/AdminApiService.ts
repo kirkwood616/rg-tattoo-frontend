@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getDownloadURL, ref, StorageReference } from "firebase/storage";
 import { storage } from "firebaseConfig";
-import { AppointmentRequest } from "models/AppointmentRequest";
+import { AppointmentRequest, PhotoUrls } from "models/AppointmentRequest";
 import AvailableAppointments from "models/AvailableAppointments";
 import admin from "./AdminInterceptor";
 
@@ -104,15 +104,12 @@ export async function fetchPhotoUrls(request: AppointmentRequest) {
   const placementPhotoRef: StorageReference = ref(storage, `images/${request.placementPhotoPath}`);
 
   try {
+    const referencePhotoURL = await getDownloadURL(referencePhotoRef);
+    let placementPhotoURL = undefined;
     if (request.placementPhotoPath.length) {
-      const referencePhotoURL = await getDownloadURL(referencePhotoRef);
-      const placementPhotoURL = await getDownloadURL(placementPhotoRef);
-      return { referencePhotoURL, placementPhotoURL };
-    } else {
-      const referencePhotoURL = await getDownloadURL(referencePhotoRef);
-      const placementPhotoURL = undefined;
-      return { referencePhotoURL, placementPhotoURL };
+      placementPhotoURL = await getDownloadURL(placementPhotoRef);
     }
+    return { referencePhotoURL: referencePhotoURL, placementPhotoURL: placementPhotoURL } as PhotoUrls;
   } catch (error) {
     console.error(error);
   }
