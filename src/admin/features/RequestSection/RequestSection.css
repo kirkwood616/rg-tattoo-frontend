@@ -1,0 +1,30 @@
+.RequestSection {
+  background-color: var(--black);
+  border-radius: 1.5rem;
+  border: 3px solid var(--black);
+  box-shadow: 0 3px 15px var(--black);
+  margin-bottom: 2rem;
+  overflow: hidden;
+  width: 100%;
+}
+
+.RequestSection > .request-section_title {
+  background-color: var(--light-gray-1);
+  color: var(--black);
+  cursor: pointer;
+  font-size: 1.25rem;
+  padding: 0.75rem;
+}
+
+.section_container.active {
+  display: block;
+  max-height: 1600px;
+  overflow: auto;
+  padding-bottom: 1rem;
+  transition: all 0.75s ease-in-out;
+}
+.section_container.inactive {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.25s ease-in-out;
+}
