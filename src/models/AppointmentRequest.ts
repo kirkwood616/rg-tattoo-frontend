@@ -43,6 +43,11 @@ export type HistoryAction =
 
 export type PhotoType = "reference" | "placement";
 
+export interface PhotoUrls {
+  referencePhotoURL: string;
+  placementPhotoURL: string | undefined;
+}
+
 export type OpenRequestStatus = "new" | "awaiting-deposit" | "deposit-received";
 
 export type RejectType = "denied" | "canceled";
