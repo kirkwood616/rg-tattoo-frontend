@@ -118,7 +118,7 @@ function SetAvailableAppointments() {
             <GoButton
               type="button"
               text="ADD ALL TIMES"
-              backgroundColor="#007bff"
+              backgroundColor="var(--blue)"
               onClick={() => setAppointmentTimes(timePickerValues!)}
             />
             <GoButton type="button" text="REMOVE ALL TIMES" backgroundColor="red" onClick={() => setAppointmentTimes([])} />
@@ -144,7 +144,7 @@ function SetAvailableAppointments() {
           <GoButton
             type="button"
             text="ADD TIME"
-            backgroundColor="#007bff"
+            backgroundColor="var(--blue)"
             onClick={() => setIsTimesActive((current) => !current)}
           />
         </div>
