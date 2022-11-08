@@ -17,25 +17,10 @@
   margin: 0;
 }
 
-.request-section_container {
-  background-color: var(--black);
-  border: 3px solid var(--black);
+.request-item_title,
+.request-item_info {
   border-radius: 1.5rem;
-  box-shadow: 0 3px 15px var(--black);
-  margin-bottom: 2rem;
-  overflow: hidden;
-  padding-bottom: 1rem;
-  width: 100%;
-}
-.AppointmentRequestById > section:last-child {
-  padding-bottom: 0;
-}
-
-.request-section_title {
-  background-color: var(--light-gray-1);
-  color: var(--black);
-  font-size: 1.25rem;
-  padding: 0.75rem;
+  padding: 0.5rem 0;
 }
 
 .request-item_title {
@@ -46,11 +31,6 @@
 .request-item_info {
   background-color: white;
   color: black;
-}
-.request-item_title,
-.request-item_info {
-  border-radius: 1.5rem;
-  padding: 0.5rem 0;
 }
 
 .AppointmentRequestById > button {
