@@ -1,5 +1,5 @@
 import { User } from "firebase/auth";
-import { ReactNode, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react";
 import AppContext from "./AppContext";
 
 interface Props {
@@ -9,6 +9,20 @@ interface Props {
 export default function AppContextProvider({ children }: Props) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [isModalOpen]);
+
+  function toggleModalOpen(setIsActive?: Dispatch<SetStateAction<boolean>>) {
+    if (setIsActive) setIsActive((current) => !current);
+    setIsModalOpen((current) => !current);
+  }
 
   function toggleLoading() {
     setIsLoading((current) => !current);
@@ -21,6 +35,8 @@ export default function AppContextProvider({ children }: Props) {
         isLoading,
         setUser,
         setIsLoading,
+        isModalOpen,
+        toggleModalOpen,
         toggleLoading,
       }}
     >
