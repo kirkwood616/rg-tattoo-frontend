@@ -6,6 +6,8 @@ interface ContextModel {
   isLoading: boolean;
   setUser: Dispatch<SetStateAction<User | null>>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
+  isModalOpen: boolean;
+  toggleModalOpen: (setIsActive?: Dispatch<SetStateAction<boolean>>) => void;
   toggleLoading: () => void;
 }
 
@@ -14,6 +16,8 @@ const defaultValue: ContextModel = {
   isLoading: false,
   setUser: () => {},
   setIsLoading: () => {},
+  isModalOpen: false,
+  toggleModalOpen: () => {},
   toggleLoading: () => {},
 };
 
