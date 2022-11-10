@@ -1,5 +1,5 @@
 .ModalWindow {
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(70.2, 70.2, 70.2, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,25 +16,52 @@
 }
 
 .ModalWindow > .modal_body {
-  background-color: whitesmoke;
+  animation: appear 0.25s ease-in-out;
+  background-color: var(--black);
+  border: 3px solid var(--white);
   border-radius: 1rem;
-  color: black;
-  max-height: 65%;
-  overflow: auto;
-  padding: 0.5rem;
+  box-shadow: 0 4px 25px 5px var(--black);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 75vh;
+  min-height: 25%;
+  position: relative;
   text-align: center;
   width: 90%;
 }
 
-.ModalWindow > .modal_body > label {
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.ModalWindow > .modal_body > .modal_content {
+  max-height: 65vh;
+  overflow: auto;
+  padding: 1rem;
+  width: 100%;
+}
+
+.ModalWindow > .modal_body > .modal_content > label {
   display: inline-block;
   font-weight: bold;
   margin-bottom: 1rem;
 }
 
-.modal_body > div > .go-button,
-.modal_body > .go-button {
+.modal_body > .modal_content > div > .go-button,
+.modal_body > .modal_content > .go-button {
   display: block;
   width: 100%;
   margin-top: 1rem;
+}
+
+.modal_body > .x_button {
+  top: -0.75rem;
+  right: -0.75rem;
 }
