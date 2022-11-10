@@ -37,11 +37,20 @@
 
 .no-times-set {
   background-color: var(--light-gray-1);
-  border-radius: 0.5rem;
+  border: 2px solid var(--black);
+  border-radius: var(--button_radius);
+  box-shadow: 0 0px 15px var(--black);
   color: var(--black);
   font-weight: bold;
+  margin-bottom: 1rem;
   padding: 1rem;
   width: 200px;
+}
+.no-times-set-enter-active {
+  transform: scale(0);
+}
+.no-times-set-enter-done {
+  animation: appear 1s ease-in-out;
 }
 
 .available-times_container {
@@ -52,34 +61,69 @@
   width: 85%;
 }
 
-.available-time_container {
+.time {
   align-items: center;
-  background-color: var(--light-gray-2);
-  border-radius: 0.5rem;
+  background-color: var(--dark-gray-3);
+  border: 3px solid var(--light-gray-1);
+  border-radius: 5rem;
   box-shadow: 0 3px 7px var(--black);
   display: flex;
   justify-content: center;
-  margin: 0.35rem 0;
+  margin: 0.5rem 0;
   padding: 1rem;
   position: relative;
   width: 100%;
 }
+.time-enter {
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.25s;
+}
+.time-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.25s;
+}
+.time-exit {
+  opacity: 0.75;
+  transition: all 0.25s;
+}
+.time-exit-active {
+  opacity: 0;
+  transform: scale(0.25);
+  transition: all 0.25s;
+}
 
 .available-time {
-  color: black;
-  font-size: 1.1rem;
+  color: white;
+  font-size: 1.25rem;
   font-weight: bold;
   text-align: center;
 }
 
-.SetAvailableAppointments > button {
+@keyframes appear {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.SetAvailableAppointments > button.go-button {
+  background-color: var(--blue);
+  position: sticky;
+  top: 3.5rem;
   width: 85%;
+  z-index: 1;
 }
 
 .save-changes {
-  background-color: var(--dark-gray-3);
+  background-color: var(--dark-gray-2);
   bottom: 0;
-  box-shadow: 0 0 7px var(--black);
+  box-shadow: 0px 0 20px var(--black);
   left: 0;
   right: 0;
   margin-top: 1rem;
@@ -89,12 +133,33 @@
   width: 100%;
   z-index: 1;
 }
+.save-changes > .go-button {
+  background-color: var(--green);
+  width: 100%;
+}
 
 .button-container {
   display: flex;
   flex-direction: column;
-  margin-top: 0.5rem;
+  margin: 1rem;
   width: 85%;
+}
+.button-container > .go-button {
+  margin: 0.5rem;
+}
+.button-container > .go-button:first-child {
+  border: 3px solid var(--blue);
+  color: var(--blue);
+}
+.button-container > .go-button:last-child {
+  border: 3px solid var(--red);
+  color: var(--red);
+}
+
+.SetAvailableAppointments .x_button {
+  height: 2rem;
+  margin-right: 0.75rem;
+  right: 0;
 }
 
 @media only screen and (min-width: 600px) {
@@ -104,15 +169,12 @@
   }
 
   .button-container {
-    /* display: flex; */
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 85%;
   }
   .button-container > .go-button {
     width: 100%;
-  }
-  .button-container > .go-button:last-child {
-    margin-left: 1rem;
   }
 }
