@@ -7,10 +7,9 @@
 }
 
 .select-option {
-  background-color: var(--dark-gray-2);
-  border-radius: 3rem;
-  border: none;
-  box-shadow: 0px 5px 7px var(--light-gray-1);
+  background-color: var(--dark-gray-3);
+  border: 3px solid var(--light-gray-1);
+  border-radius: var(--button_radius);
   color: white;
   font-size: 1.25rem;
   font-weight: bold;
@@ -21,8 +20,8 @@
 }
 
 .select-option:hover {
-  background-color: green;
-  box-shadow: 0px 5px 10px var(--black);
+  background-color: var(--dark-gray-1);
+  border: 3px solid var(--white);
   color: white;
   transform: scale(1.05);
   transition: all 0.1s ease;
