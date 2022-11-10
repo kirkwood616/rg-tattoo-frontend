@@ -4,7 +4,7 @@ import "./GoButton.css";
 interface Props {
   type: "submit" | "reset" | "button";
   text: string;
-  backgroundColor: string;
+  backgroundColor?: string;
   onClick?: () => void | Promise<void> | ((e: FormEvent<HTMLFormElement>) => void);
   isDisabled?: boolean;
 }
