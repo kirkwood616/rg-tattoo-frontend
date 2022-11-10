@@ -12,8 +12,8 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function RejectModal() {
+  const { toggleLoading, toggleModalOpen } = useContext(AppContext);
   const { actionState, dispatch, dispatchIsRejectActive } = useContext(ActionContext);
-  const { toggleLoading } = useContext(AppContext);
 
   const [isSubmitActive, setIsSubmitActive] = useState(false);
 
@@ -25,20 +25,21 @@ function RejectModal() {
   }, []);
 
   function onClose() {
+    toggleModalOpen();
     dispatch({ type: "resetWithState" });
   }
 
   function onRejectRequest(): void {
     if (!actionState.request) return;
 
-    if (actionState.request.requestStatus === "new" || "awaiting-deposit") {
+    if (actionState.request.requestStatus === ("new" || "awaiting-deposit")) {
       if (!actionState.deniedReason) return;
-      else setIsSubmitActive((current) => !current);
+      setIsSubmitActive((current) => !current);
     }
 
     if (actionState.request.requestStatus === "deposit-received") {
       if (!actionState.canceledReason) return;
-      else setIsSubmitActive((current) => !current);
+      setIsSubmitActive((current) => !current);
     }
   }
 
@@ -49,6 +50,7 @@ function RejectModal() {
       const updatedRequest: AppointmentRequest = rejectSubmitRequest(actionState);
       await requestApiCall(updatedRequest);
       dispatch({ type: "reset" });
+      toggleModalOpen();
       navigate(`/admin/appointment-requests/${updatedRequest.requestStatus}/${updatedRequest._id}`);
     } catch (error) {
       console.error(error);
@@ -92,6 +94,7 @@ function RejectModal() {
           setIsActive={setIsSubmitActive}
           yesFunction={handleRejectRequest}
           yesButtonText={"YES"}
+          subModal
         />
       )}
     </ModalWindow>

@@ -1,4 +1,6 @@
 import ActionContext from "admin/context/ActionContext";
+import RemoveButton from "components/buttons/RemoveButton";
+import AppContext from "context/AppContext";
 import { Dispatch, ReactNode, SetStateAction, useContext } from "react";
 import "./ModalWindow.css";
 
@@ -11,20 +13,23 @@ interface Props {
 }
 
 function ModalWindow({ isActive, setIsActive, isDispatch, className, children }: Props) {
+  const { toggleModalOpen } = useContext(AppContext);
   const { dispatch } = useContext(ActionContext);
 
-  function setOrDispatch() {
+  function closeClick() {
     if (isDispatch) {
-      return dispatch({ type: "resetWithState" });
+      dispatch({ type: "resetWithState" });
+      toggleModalOpen();
     } else {
-      return setIsActive((current) => !current);
+      toggleModalOpen(setIsActive);
     }
   }
 
   return (
-    <div className={isActive ? "ModalWindow" : "ModalWindow hide"} onClick={setOrDispatch}>
-      <div className="modal_body" onClick={(e) => e.stopPropagation()}>
-        {children}
+    <div className={isActive ? "ModalWindow" : "ModalWindow hide"} onClick={(e) => e.stopPropagation()}>
+      <div className="modal_body">
+        <RemoveButton onClick={closeClick} />
+        <div className="modal_content">{children}</div>
       </div>
     </div>
   );
