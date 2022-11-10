@@ -17,7 +17,7 @@ import { generateNewRequest } from "utils/Request";
 import "./RequestAppointment.css";
 
 function RequestAppointment() {
-  const { toggleLoading } = useContext(AppContext);
+  const { toggleLoading, toggleModalOpen } = useContext(AppContext);
   const { setAvailableAppointmentsTimes, state, dispatch } = useContext(RequestContext);
   const [isSubmitActive, setIsSubmitActive] = useState(false);
 
@@ -51,7 +51,7 @@ function RequestAppointment() {
       console.log("ERRORS");
       return;
     } else {
-      setIsSubmitActive((current) => !current);
+      toggleModalOpen(setIsSubmitActive);
     }
   }
 
@@ -64,6 +64,7 @@ function RequestAppointment() {
       if (state.placementPhoto.value) {
         await handlePhotoUpload(state, "placement");
       }
+      toggleModalOpen(setIsSubmitActive);
       navigate("/request-submitted");
     } catch (error) {
       console.error(error);

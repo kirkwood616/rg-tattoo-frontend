@@ -1,10 +1,12 @@
 import { budgetBrackets } from "admin/settings/AdminSettings";
 import FormErrorMessage from "components/errors/FormErrorMessage";
 import SelectList from "components/modals/SelectList";
+import AppContext from "context/AppContext";
 import RequestContext from "context/RequestContext";
 import { useContext, useState } from "react";
 
 function Budget() {
+  const { toggleModalOpen } = useContext(AppContext);
   const { state } = useContext(RequestContext);
   const [isBudgetActive, setIsBudgetActive] = useState(false);
 
@@ -18,7 +20,7 @@ function Budget() {
         id="budget"
         placeholder="--- Select Budget ---"
         value={state.budget.value}
-        onClick={() => setIsBudgetActive((current) => !current)}
+        onClick={() => toggleModalOpen(setIsBudgetActive)}
         readOnly
       />
 
