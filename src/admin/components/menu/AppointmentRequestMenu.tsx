@@ -7,7 +7,10 @@ function AppointmentRequestMenu() {
   const [isMenuActive, setIsMenuActive] = useState(false);
 
   return (
-    <div className={isMenuActive ? "menu-container" : "menu-container menu-container_hide"} onClick={() => setIsMenuActive(false)}>
+    <div
+      className={isMenuActive ? "menu-container" : "menu-container menu-container_hide"}
+      onClick={() => setIsMenuActive((current) => !current)}
+    >
       <div
         className={isMenuActive ? "requests-menu open" : "requests-menu"}
         onClick={(e) => {
