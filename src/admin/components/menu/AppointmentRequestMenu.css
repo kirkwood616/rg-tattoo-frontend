@@ -17,12 +17,13 @@
 }
 
 .requests-menu {
-  background-color: #007bff;
+  background-color: var(--dark-gray-1);
   border-radius: 2rem;
-  border: 2px solid black;
+  border: 3px solid var(--blue);
   box-shadow: 0 0 1rem black;
-  color: white;
+  color: var(--blue);
   cursor: pointer;
+  font-size: 1.25rem;
   font-weight: bold;
   overflow: hidden;
   padding: 1rem 0 0 0;
@@ -39,7 +40,7 @@
   transition: all 0.25s ease;
 }
 .requests-menu-list.active {
-  background-color: white;
+  background-color: var(--white);
   font-weight: bold;
   height: fit-content;
   margin: 1rem auto 0 auto;
