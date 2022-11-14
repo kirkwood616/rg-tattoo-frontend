@@ -14,12 +14,7 @@ function RequestSection({ title, children }: Props) {
       <div className="request-section_title" onClick={() => setIsSectionActive((current) => !current)}>
         {title}
       </div>
-      <div
-        className={isSectionActive ? "section_container active" : "section_container inactive"}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {children}
-      </div>
+      <div className={isSectionActive ? "section_container active" : "section_container inactive"}>{children}</div>
     </div>
   );
 }
