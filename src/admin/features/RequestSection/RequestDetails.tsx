@@ -10,33 +10,42 @@ interface Props {
 function RequestDetails({ request }: Props) {
   return (
     <RequestSection title="REQUEST DETAILS">
-      <div className="request-item_title">REQUEST STATUS</div>
-      <div className="request-item_info">{formatRouteTitle(request.requestStatus)}</div>
-      <div className="request-item_title">REQUESTED DATE</div>
-      <div className="request-item_info">{formatUsDate(request.requestDate)}</div>
-      <div className="request-item_title">REQUESTED TIME</div>
-      <div className="request-item_info">{formatTimeWithZone(request.requestTime, adminLocaleTZ)}</div>
-      <div className="request-item_title">DATE SUBMITTED</div>
-      <div className="request-item_info">{formatISODateTime(request.requestSubmittedDate, adminLocaleTZ)}</div>
+      <div className="items_container">
+        <div className="request-item_title">REQUEST STATUS</div>
+        <div className="request-item_info">{formatRouteTitle(request.requestStatus)}</div>
+      </div>
+      <div className="items_container">
+        <div className="request-item_title">REQUESTED DATE</div>
+        <div className="request-item_info">{formatUsDate(request.requestDate)}</div>
+      </div>
+      <div className="items_container">
+        <div className="request-item_title">REQUESTED TIME</div>
+        <div className="request-item_info">{formatTimeWithZone(request.requestTime, adminLocaleTZ)}</div>
+      </div>
+      <div className="items_container">
+        <div className="request-item_title">DATE SUBMITTED</div>
+        <div className="request-item_info">{formatISODateTime(request.requestSubmittedDate, adminLocaleTZ)}</div>
+      </div>
 
       {request.requestStatus !== "new" && (
-        <>
+        <div className="items_container">
           <div className="request-item_title">DEPOSIT REQUIRED</div>
           <div className="request-item_info">${request.depositRequired}</div>
-        </>
+        </div>
       )}
 
       {request.depositAmmountReceived > 0 && (
-        <>
+        <div className="items_container">
           <div className="request-item_title">DEPOSIT RECEIVED</div>
           <div className="request-item_info">${request.depositAmmountReceived}</div>
-        </>
+        </div>
       )}
+
       {request.priceCharged > 0 && (
-        <>
+        <div className="items_container">
           <div className="request-item_title">PRICE CHARGED</div>
           <div className="request-item_info">${request.priceCharged}</div>
-        </>
+        </div>
       )}
     </RequestSection>
   );
