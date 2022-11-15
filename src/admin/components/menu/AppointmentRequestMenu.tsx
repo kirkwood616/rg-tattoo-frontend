@@ -18,7 +18,7 @@ function AppointmentRequestMenu() {
           setIsMenuActive((prev) => !prev);
         }}
       >
-        REQUESTS MENU
+        <div className="requests-menu_title">REQUESTS MENU</div>
         <div className={isMenuActive ? "requests-menu-list active" : "requests-menu-list inactive"}>
           {requestTypes.map((request, index) => (
             <Link to={request.path} key={request.name + index}>

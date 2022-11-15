@@ -4,29 +4,27 @@
   height: 100%;
   justify-content: center;
   left: 0;
-  padding-top: 3.5rem;
   position: fixed;
-  top: 0;
+  top: 4rem;
   width: 100vw;
-  z-index: 2;
+  z-index: 4;
 }
 
 .menu-container_hide {
   height: auto;
-  z-index: 0;
+  z-index: 4;
 }
 
 .requests-menu {
-  background-color: var(--dark-gray-1);
+  background-color: var(--black);
   border-radius: 2rem;
-  border: 3px solid var(--blue);
+  border: 3px solid var(--white);
   box-shadow: 0 0 1rem black;
-  color: var(--blue);
+  color: var(--white);
   cursor: pointer;
   font-size: 1.25rem;
   font-weight: bold;
   overflow: hidden;
-  padding: 1rem 0 0 0;
   position: fixed;
   text-align: center;
   transition: all 0.25s ease;
@@ -34,34 +32,48 @@
 }
 
 .requests-menu-list.inactive {
-  height: 0;
+  background: linear-gradient(90deg, var(--black), var(--dark-gray-2), var(--black));
+  max-height: 0;
   overflow: hidden;
-  padding-top: 1rem;
   transition: all 0.25s ease;
 }
 .requests-menu-list.active {
-  background-color: var(--white);
+  background: linear-gradient(90deg, var(--black), var(--dark-gray-2), var(--black));
   font-weight: bold;
-  height: fit-content;
-  margin: 1rem auto 0 auto;
-  padding: 1rem 0;
+  max-height: 1200px;
   transition: all 0.25s ease;
   width: 100%;
 }
 
-.requests-menu-list.active a {
+.requests-menu_title {
+  box-shadow: 0 -10px 1.25rem var(--white);
+  padding: 1rem;
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.requests-menu-list a {
   text-decoration: none;
 }
 
 .menu-link {
   background-color: inherit;
-  border: none;
+  border-image: linear-gradient(90deg, var(--black), transparent, var(--white), transparent, var(--black)) 90;
+  border-style: solid;
+  border-bottom: 1px;
+  color: var(--white);
   display: block;
   font-size: inherit;
   font-weight: bold;
   margin: auto;
-  padding: 0.25rem;
+  padding: 1rem;
   width: 100%;
+}
+.menu-link:hover {
+  background: var(--white);
+  color: var(--black);
+  transform: scale(1.1);
+  transition: all 0.25s ease;
 }
 
 @media only screen and (min-width: 600px) {

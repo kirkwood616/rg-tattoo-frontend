@@ -15,7 +15,7 @@ function HistoryLog({ request }: Props) {
   return (
     <RequestSection title="HISTORY LOG">
       {request.historyLog.map((item, index) => (
-        <div className="request-log_container" key={String(item.dateCreated) + index}>
+        <div className="items_container" key={String(item.dateCreated) + index}>
           <div className="request-item_title">{formatISODateTime(item.dateCreated, adminLocaleTZ)}</div>
           <div className="request-item_info">
             {item.action && (
