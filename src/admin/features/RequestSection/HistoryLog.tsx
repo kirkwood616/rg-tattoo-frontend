@@ -19,18 +19,16 @@ function HistoryLog({ request }: Props) {
           <div className="request-item_title">{formatISODateTime(item.dateCreated, adminLocaleTZ)}</div>
           <div className="request-item_info">
             {item.action && (
-              <>
-                <p>Action:</p>
-                <p>{item.action}</p>
-                <p>Note to Client:</p>
-                <p>{item.note}</p>
-              </>
+              <div className="log_container action_container">
+                <div className="action_title">ACTION</div>
+                <div className="action_text">{item.action}</div>
+              </div>
             )}
-            {!item.action && item.note && (
-              <>
-                <p>Note:</p>
-                <p>{item.note}</p>
-              </>
+            {item.note && (
+              <div className="log_container note_container">
+                <div className="note_title">NOTE</div>
+                <div className="note_text">{item.note}</div>
+              </div>
             )}
           </div>
         </div>
