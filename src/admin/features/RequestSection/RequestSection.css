@@ -64,3 +64,36 @@
   color: black;
   padding: 1rem;
 }
+
+.log_container {
+  border-radius: 1rem;
+  box-shadow: 0 5px 10px var(--light-gray-1);
+  margin: 1rem 0;
+  overflow: hidden;
+}
+.action_container {
+  border: 2px solid var(--green);
+}
+.note_container {
+  border: 2px solid var(--blue);
+}
+
+.action_title,
+.note_title {
+  box-shadow: 0 0 10px var(--black);
+  color: var(--white);
+  margin: auto;
+  padding: 0.5rem;
+  position: relative;
+}
+.action_title {
+  background-color: var(--green);
+}
+.note_title {
+  background-color: var(--blue);
+}
+.action_text,
+.note_text {
+  background-color: var(--light-gray-2);
+  padding: 1rem;
+}
