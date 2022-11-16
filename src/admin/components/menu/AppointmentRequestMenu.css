@@ -16,7 +16,7 @@
 }
 
 .requests-menu {
-  background-color: var(--black);
+  background: linear-gradient(var(--black), var(--dark-gray-3)) 0;
   border-radius: 2rem;
   border: 3px solid var(--white);
   box-shadow: 0 0 1rem black;
@@ -57,8 +57,26 @@
 }
 
 .menu-link {
-  background-color: inherit;
-  border-image: linear-gradient(90deg, var(--black), transparent, var(--white), transparent, var(--black)) 90;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 10%,
+    var(--dark-gray-3) 50%,
+    transparent 90%,
+    transparent 100%
+  );
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  border-image: linear-gradient(
+      90deg,
+      var(--black) 0%,
+      var(--dark-gray-1) 25%,
+      var(--white) 50%,
+      var(--dark-gray-1) 75%,
+      var(--black) 100%
+    )
+    90;
   border-style: solid;
   border-bottom: 1px;
   color: var(--white);
@@ -70,9 +88,7 @@
   width: 100%;
 }
 .menu-link:hover {
-  background: var(--white);
-  color: var(--black);
-  transform: scale(1.1);
+  background-size: 100% 100%;
   transition: all 0.25s ease;
 }
 
