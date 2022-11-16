@@ -4,6 +4,7 @@
   border-radius: var(--button_radius);
   box-shadow: 0 0px 15px var(--black);
   color: var(--black);
+  cursor: pointer;
   font-weight: bold;
   margin-bottom: 1rem;
   padding: 1rem;
@@ -26,7 +27,8 @@
 
 .time {
   align-items: center;
-  background-color: var(--dark-gray-3);
+  background: linear-gradient(0deg, var(--dark-gray-2) 0%, var(--black) 100%);
+  background-size: 100% 100%;
   border: 3px solid var(--light-gray-1);
   border-radius: 5rem;
   box-shadow: 0 3px 7px var(--black);

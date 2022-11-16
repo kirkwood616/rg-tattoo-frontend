@@ -7,10 +7,12 @@
 }
 
 .select-option {
-  background-color: var(--dark-gray-3);
+  background: linear-gradient(180deg, var(--dark-gray-3) 0%, var(--black) 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 125%;
   border: 3px solid var(--light-gray-1);
   border-radius: var(--button_radius);
-  color: white;
+  color: var(--white);
   font-size: 1.25rem;
   font-weight: bold;
   margin: 0.5rem 0;
@@ -20,9 +22,10 @@
 }
 
 .select-option:hover {
-  background-color: var(--dark-gray-1);
+  background: linear-gradient(180deg, var(--white) 0%, var(--black) 100%);
+  background-size: 100% 200%;
   border: 3px solid var(--white);
-  color: white;
+  color: var(--black);
   transform: scale(1.05);
   transition: all 0.1s ease;
 }
