@@ -54,6 +54,27 @@
   margin-bottom: 1rem;
 }
 
+.modal_content > input {
+  text-align: center;
+}
+.modal_content > textarea {
+  max-height: 275px;
+}
+.modal_content > textarea,
+.modal_content > input {
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  outline: 2px solid var(--light-gray-1);
+  outline-offset: 0.25rem;
+  padding: 0.75rem;
+  width: 100%;
+}
+.modal_content > textarea:focus,
+.modal_content > input:focus {
+  outline: 2px solid var(--blue);
+}
+
 .modal_body > .modal_content > div > .go-button,
 .modal_body > .modal_content > .go-button {
   display: block;
@@ -64,4 +85,13 @@
 .modal_body > .x_button {
   top: -0.75rem;
   right: -0.75rem;
+}
+
+@media only screen and (min-width: 600px) {
+  .ModalWindow > .modal_body {
+    width: 420px;
+  }
+  .ModalWindow > .modal_body > .modal_content {
+    width: 85%;
+  }
 }
