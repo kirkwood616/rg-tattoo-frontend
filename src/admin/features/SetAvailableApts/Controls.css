@@ -37,6 +37,7 @@
   border: 3px solid var(--blue);
   background: linear-gradient(180deg, var(--blue) 0%, var(--black) 100%);
   background-size: 100% 150%;
+  margin: 0 0.5rem;
   transition: all 0.25s ease;
   width: 100%;
 }
