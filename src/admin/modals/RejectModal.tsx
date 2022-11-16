@@ -62,18 +62,13 @@ function RejectModal() {
   if (!actionState.request) return <Error404 />;
   return (
     <ModalWindow isActive={actionState.isRejectActive} setIsActive={dispatchIsRejectActive} isDispatch>
-      {actionState.request.requestStatus === ("new" || "awaiting-deposit") && (
-        <ActionField.RejectText
-          title="DENY REQUEST"
-          label="Please enter a reason why the request was denied:"
-          stateText={actionState.deniedReason}
-          dispatchType="deniedReason"
-        />
+      {(actionState.request.requestStatus === "new" || actionState.request.requestStatus === "awaiting-deposit") && (
+        <ActionField.RejectText title="DENY REQUEST" stateText={actionState.deniedReason} dispatchType="deniedReason" />
       )}
+
       {actionState.request.requestStatus === "deposit-received" && (
         <ActionField.RejectText
           title="CANCEL APPOINTMENT"
-          label="Please enter a reason why the appointment was canceled:"
           stateText={actionState.canceledReason}
           dispatchType="canceledReason"
         />

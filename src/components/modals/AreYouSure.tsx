@@ -21,7 +21,7 @@ function AreYouSure({ isActive, setIsActive, yesFunction, yesButtonText, subModa
   }
 
   return (
-    <ModalWindow isActive={isActive} setIsActive={setIsActive} className="yes-confirm">
+    <ModalWindow isActive={isActive} closeFunction={handleCancel} className="yes-confirm">
       <div className="are-you-sure">
         <h2>Are You Sure?</h2>
         <GoButton type="button" text={yesButtonText} backgroundColor="green" onClick={yesFunction} />

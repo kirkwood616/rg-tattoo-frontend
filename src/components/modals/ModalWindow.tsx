@@ -6,29 +6,31 @@ import "./ModalWindow.css";
 
 interface Props {
   isActive: boolean;
-  setIsActive: Dispatch<SetStateAction<boolean>>;
+  setIsActive?: Dispatch<SetStateAction<boolean>>;
+  closeFunction?: () => void;
   isDispatch?: boolean;
   className?: string;
   children: ReactNode;
 }
 
-function ModalWindow({ isActive, setIsActive, isDispatch, className, children }: Props) {
+function ModalWindow({ isActive, setIsActive, closeFunction, isDispatch, className, children }: Props) {
   const { toggleModalOpen } = useContext(AppContext);
   const { dispatch } = useContext(ActionContext);
 
   function closeClick() {
+    if (closeFunction) return closeFunction();
     if (isDispatch) {
       dispatch({ type: "resetWithState" });
       toggleModalOpen();
     } else {
-      toggleModalOpen(setIsActive);
+      return toggleModalOpen(setIsActive);
     }
   }
 
   return (
     <div className={isActive ? "ModalWindow" : "ModalWindow hide"} onClick={(e) => e.stopPropagation()}>
       <div className="modal_body">
-        <RemoveButton onClick={closeClick} />
+        <RemoveButton onClick={() => closeClick()} />
         <div className="modal_content">{children}</div>
       </div>
     </div>
