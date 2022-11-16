@@ -16,18 +16,8 @@ function Controls({ setAppointmentTimes, setIsTimesActive }: Props) {
     <>
       <div className="Controls">
         <div className="all-times_container">
-          <GoButton
-            type="button"
-            text="ADD ALL TIMES"
-            backgroundColor="var(--dark-gray-1)"
-            onClick={() => setAppointmentTimes(timePickerValues!)}
-          />
-          <GoButton
-            type="button"
-            text="REMOVE ALL TIMES"
-            backgroundColor="var(--dark-gray-1)"
-            onClick={() => setAppointmentTimes([])}
-          />
+          <GoButton type="button" text="ADD ALL TIMES" onClick={() => setAppointmentTimes(timePickerValues!)} />
+          <GoButton type="button" text="REMOVE ALL TIMES" onClick={() => setAppointmentTimes([])} />
         </div>
       </div>
       <div className="add-time">
