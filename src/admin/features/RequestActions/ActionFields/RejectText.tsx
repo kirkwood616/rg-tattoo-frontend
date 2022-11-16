@@ -5,22 +5,21 @@ import { formatLcHyphen } from "utils/Formatting";
 
 interface Props {
   title: string;
-  label: string;
   stateText: string | undefined;
   dispatchType: TextRejectType;
 }
 
-function RejectText({ title, label, stateText, dispatchType }: Props) {
+function RejectText({ title, stateText, dispatchType }: Props) {
   const { dispatch } = useContext(ActionContext);
 
   return (
     <>
       <h1>{title.toUpperCase()}</h1>
-      <label htmlFor={formatLcHyphen(title)}>{label}</label>
       <textarea
         name={formatLcHyphen(title)}
         id={formatLcHyphen(title)}
         value={stateText}
+        placeholder="Enter a reason..."
         onChange={(e) => dispatch({ type: dispatchType, value: e.target.value })}
       />
 
