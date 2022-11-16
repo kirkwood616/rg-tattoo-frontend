@@ -1,6 +1,8 @@
 import useLocationRoute from "admin/hooks/useLocationRoute";
 import { updateClosedRequest, updateOpenRequest } from "admin/services/AdminApiService";
 import GoButton from "components/buttons/GoButton";
+import AreYouSure from "components/modals/AreYouSure";
+import ModalWindow from "components/modals/ModalWindow";
 import AppContext from "context/AppContext";
 import { AppointmentRequest } from "models/AppointmentRequest";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
@@ -15,14 +17,15 @@ interface Props {
 
 function AddNote({ request, note, setNote }: Props) {
   const [isNoteActive, setIsNoteActive] = useState(false);
+  const [isSubmitActive, setIsSubmitActive] = useState(false);
 
-  const { toggleLoading } = useContext(AppContext);
+  const { toggleLoading, toggleModalOpen } = useContext(AppContext);
   const { route, id } = useLocationRoute();
   const { mutate } = useSWRConfig();
 
   function onToggleNote(): void {
-    setIsNoteActive((current) => !current);
-    if (note.length > 0) setNote("");
+    toggleModalOpen(setIsNoteActive);
+    setNote("");
   }
 
   function updateByRequestStatus(request: AppointmentRequest): Promise<any> {
@@ -34,6 +37,11 @@ function AddNote({ request, note, setNote }: Props) {
       default:
         return updateClosedRequest(request);
     }
+  }
+
+  function onSaveNote() {
+    if (note.length) setIsSubmitActive((current) => !current);
+    else return;
   }
 
   async function handleSaveNote(): Promise<void> {
@@ -51,8 +59,8 @@ function AddNote({ request, note, setNote }: Props) {
       };
 
       await mutate(`appointment-requests/${route}/${id}`, updateByRequestStatus(updatedRequest), options);
-      setNote("");
-      setIsNoteActive((current) => !current);
+      setIsSubmitActive((current) => !current);
+      onToggleNote();
     } catch (error) {
       console.error(error);
     } finally {
@@ -61,23 +69,48 @@ function AddNote({ request, note, setNote }: Props) {
   }
 
   return (
-    <div className="AddNote" onClick={onToggleNote}>
-      <div className="add-note">ADD NOTE</div>
-      <div className={isNoteActive ? "note-field active" : "note-field inactive"} onClick={(e) => e.stopPropagation()}>
-        <textarea name="note" id="note" className="note" value={note} onChange={(e) => setNote(e.target.value)} />
-
-        <p>* Notes are only visible to you. Clients will not see your notes *</p>
-
-        <GoButton
-          type={"button"}
-          text={"SAVE NOTE"}
-          backgroundColor={note.length ? "green" : "var(--dark-gray-3)"}
-          onClick={handleSaveNote}
-        />
-
-        <GoButton type={"button"} text={"CANCEL NOTE"} backgroundColor={"red"} onClick={onToggleNote} />
+    <>
+      <div className="AddNote">
+        <GoButton type={"button"} text={"ADD NOTE"} onClick={onToggleNote} />
       </div>
-    </div>
+
+      {isNoteActive && (
+        <ModalWindow isActive={isNoteActive} closeFunction={onToggleNote}>
+          <h1>ADD NOTE</h1>
+          <div className="note-field">
+            <textarea
+              name="note"
+              id="note"
+              className="note"
+              value={note}
+              placeholder="Enter a note for yourself..."
+              onChange={(e) => setNote(e.target.value)}
+            />
+
+            <p>* Notes are only visible to you. Clients will not see your notes *</p>
+
+            <GoButton
+              type={"button"}
+              text={"SAVE NOTE"}
+              backgroundColor={note.length ? "green" : "var(--dark-gray-3)"}
+              onClick={onSaveNote}
+            />
+
+            <GoButton type={"button"} text={"CANCEL NOTE"} backgroundColor={"red"} onClick={onToggleNote} />
+          </div>
+        </ModalWindow>
+      )}
+
+      {isSubmitActive && (
+        <AreYouSure
+          isActive={isSubmitActive}
+          setIsActive={setIsSubmitActive}
+          yesFunction={handleSaveNote}
+          yesButtonText="YES"
+          subModal
+        />
+      )}
+    </>
   );
 }
 
