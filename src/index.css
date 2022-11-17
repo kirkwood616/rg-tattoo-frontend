@@ -66,6 +66,18 @@ textarea {
   height: fit-content;
 }
 
+/* DATE PICKER INPUT */
+.react-datepicker__close-icon::after {
+  background-color: var(--red);
+  color: var(--white);
+  content: "X";
+  font-size: 1rem;
+  font-weight: bold;
+  height: 1.5rem;
+  text-align: center;
+  width: 1.5rem;
+}
+
 /* DATE PICKER */
 .react-datepicker__portal {
   animation: var(--fade-opacity_in);
