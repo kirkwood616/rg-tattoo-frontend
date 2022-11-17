@@ -146,23 +146,18 @@ textarea {
   margin: auto;
   transition: all 0.25s ease;
 }
-.react-datepicker__day:hover {
+.react-datepicker__day:hover,
+.react-datepicker__day--selected:hover,
+.react-datepicker__day--keyboard-selected:hover {
   background-color: var(--light-gray-2);
   border-radius: 3rem;
-  transform: scale(1.1);
+  color: var(--black);
   transition: all 0.25s ease;
 }
 .react-datepicker__day--selected,
 .react-datepicker__day--keyboard-selected {
   background-color: var(--blue);
   border-radius: 3rem;
-  transition: all 0.25s ease;
-}
-.react-datepicker__day--selected:hover,
-.react-datepicker__day--keyboard-selected:hover {
-  background-color: var(--blue);
-  border-radius: 3rem;
-  transform: scale(1.1);
   transition: all 0.25s ease;
 }
 

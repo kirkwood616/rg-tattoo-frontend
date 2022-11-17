@@ -28,20 +28,28 @@
   width: 90%;
 }
 
-.ModalWindow > .modal_body > .modal_content {
+.ModalWindow > .modal_body > .modal_content__container {
+  overflow: hidden;
+  border: 7px solid var(--black);
+  border-radius: 1rem;
+  width: 100%;
+}
+
+.ModalWindow > .modal_body > .modal_content__container > .modal_content {
   max-height: 65vh;
   overflow: auto;
   padding: 1rem;
   width: 100%;
 }
 
-.ModalWindow > .modal_body > .modal_content > label {
+.ModalWindow > .modal_body .ModalWindow > .modal_body > .modal_content > label {
   display: inline-block;
   font-weight: bold;
   margin-bottom: 1rem;
 }
 
 .modal_content > input {
+  margin: 1rem 0;
   text-align: center;
 }
 .modal_content > textarea {
@@ -62,8 +70,8 @@
   outline: 2px solid var(--blue);
 }
 
-.modal_body > .modal_content > div > .go-button,
-.modal_body > .modal_content > .go-button {
+.modal_body > .modal_content__container > .modal_content > div > .go-button,
+.modal_body > .modal_content__container > .modal_content > .go-button {
   display: block;
   width: 100%;
   margin-top: 1rem;
