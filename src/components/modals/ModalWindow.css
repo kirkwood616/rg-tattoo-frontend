@@ -1,4 +1,5 @@
 .ModalWindow {
+  animation: var(--fade-opacity_in);
   background-color: rgba(70.2, 70.2, 70.2, 0.95);
   display: flex;
   align-items: center;
@@ -11,34 +12,20 @@
   z-index: 5;
 }
 
-.hide {
-  display: none;
-}
-
 .ModalWindow > .modal_body {
-  animation: appear 0.25s ease-in-out;
+  align-items: center;
   background-color: var(--black);
-  border: 3px solid var(--white);
   border-radius: 1rem;
+  border: 3px solid var(--white);
   box-shadow: 0 4px 25px 5px var(--black);
   color: white;
   display: flex;
   justify-content: center;
-  align-items: center;
   max-height: 75vh;
   min-height: 25%;
   position: relative;
   text-align: center;
   width: 90%;
-}
-
-@keyframes appear {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 
 .ModalWindow > .modal_body > .modal_content {
