@@ -85,6 +85,7 @@
   font-weight: bold;
   margin: auto;
   padding: 1rem;
+  transition: all 0.25s ease;
   width: 100%;
 }
 .menu-link:hover {
