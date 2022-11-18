@@ -1,5 +1,6 @@
 .x_button {
-  border-radius: 2.5rem;
+  background: var(--black);
+  border-radius: 3.5rem;
   box-shadow: 0 0 0.35rem var(--black);
   cursor: pointer;
   overflow: visible;

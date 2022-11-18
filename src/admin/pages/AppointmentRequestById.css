@@ -13,10 +13,6 @@
   color: blue;
 }
 
-.AppointmentRequestById p {
-  margin: 0;
-}
-
 .AppointmentRequestById > button {
   width: 95%;
 }
