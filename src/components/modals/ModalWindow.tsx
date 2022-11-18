@@ -28,8 +28,8 @@ function ModalWindow({ isActive, setIsActive, closeFunction, isDispatch, classNa
   }
 
   return (
-    <div className={isActive ? "ModalWindow" : "ModalWindow hide"} onClick={(e) => e.stopPropagation()}>
-      <div className="modal_body">
+    <div className="ModalWindow" onClick={closeClick}>
+      <div className="modal_body" onClick={(e) => e.stopPropagation()}>
         <RemoveButton onClick={() => closeClick()} />
         <div className="modal_content">{children}</div>
       </div>
