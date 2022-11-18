@@ -8,18 +8,7 @@
   color: var(--white);
   width: 100%;
 }
-.note-field > textarea {
-  margin-bottom: 1rem;
-  max-height: 15rem;
-  min-height: 10rem;
-  min-width: 90%;
-  outline-offset: 0.25rem;
-  outline: 2px solid var(--light-gray-1);
-  resize: vertical;
-}
-.note-field > textarea:focus {
-  outline: 2px solid var(--blue);
-}
+
 .note-field > p {
   color: var(--light-gray-2);
   font-style: italic;
