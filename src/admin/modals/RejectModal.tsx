@@ -32,14 +32,16 @@ function RejectModal() {
   function onRejectRequest(): void {
     if (!actionState.request) return;
 
-    if (actionState.request.requestStatus === ("new" || "awaiting-deposit")) {
-      if (!actionState.deniedReason) return;
-      setIsSubmitActive((current) => !current);
-    }
-
-    if (actionState.request.requestStatus === "deposit-received") {
-      if (!actionState.canceledReason) return;
-      setIsSubmitActive((current) => !current);
+    switch (actionState.request.requestStatus) {
+      case "new":
+      case "awaiting-deposit":
+        setIsSubmitActive((current) => !current);
+        break;
+      case "deposit-received":
+        setIsSubmitActive((current) => !current);
+        break;
+      default:
+        break;
     }
   }
 
