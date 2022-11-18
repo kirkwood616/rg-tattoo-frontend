@@ -27,8 +27,8 @@
 }
 
 .SetAvailableAppointments .x_button {
-  height: 2rem;
-  margin-right: 0.75rem;
+  height: 36px;
+  margin-right: 0.5rem;
   right: 0;
 }
 

@@ -1,20 +1,30 @@
 .x_button {
-  background-color: var(--white);
-  border-radius: 50%;
-  box-shadow: 0 0 0 2.5px var(--white);
+  border-radius: 2.5rem;
+  box-shadow: 0 0 0.35rem var(--black);
   cursor: pointer;
-  fill: var(--red);
-  filter: drop-shadow(0px 0px 0.3rem var(--black));
-  height: 2.25rem;
+  overflow: visible;
   position: absolute;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.25s ease;
+  width: 44px;
+}
+.x_button:hover {
+  transform: scale(1.1);
+  transition: all 0.25s ease;
+}
+.x_button:hover > g > circle {
+  fill: var(--red);
+  transition: all 0.25s ease;
+}
+.x_button:hover > g > path {
+  fill: var(--dark-gray-1);
+  transition: all 0.25s ease;
 }
 
-.x_button:hover {
-  background-color: var(--red);
-  box-shadow: 0 0 0 3px var(--red);
-  fill: var(--dark-gray-1);
-  filter: drop-shadow(0px 0px 0.35rem var(--black));
-  transform: scale(1.1);
-  transition: all 0.1s ease-in-out;
+.x_button > g > circle {
+  fill: var(--white);
+  transition: all 0.25s ease;
+}
+.x_button > g > path {
+  fill: var(--red);
+  transition: all 0.25s ease;
 }
