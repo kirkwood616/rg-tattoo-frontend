@@ -84,7 +84,4 @@
   .ModalWindow > .modal_body {
     width: 500px;
   }
-  .ModalWindow > .modal_body > .modal_content {
-    width: 400px;
-  }
 }
