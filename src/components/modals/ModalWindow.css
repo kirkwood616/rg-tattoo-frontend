@@ -70,8 +70,8 @@
 }
 
 .modal_body > .x_button {
-  top: -0.75rem;
-  right: -0.75rem;
+  top: -1rem;
+  right: -1rem;
 }
 
 @media only screen and (min-width: 600px) {
