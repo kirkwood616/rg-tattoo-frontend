@@ -1,4 +1,5 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useRef, useState } from "react";
+import { CSSTransition } from "react-transition-group";
 import "./RequestSection.css";
 
 interface Props {
@@ -8,18 +9,16 @@ interface Props {
 
 function RequestSection({ title, children }: Props) {
   const [isSectionActive, setIsSectionActive] = useState(true);
+  const nodeRef = useRef(null);
 
   return (
     <div className="RequestSection">
       <div className="request-section_title" onClick={() => setIsSectionActive((current) => !current)}>
         {title}
       </div>
-      <div
-        className={isSectionActive ? "section_container active" : "section_container inactive"}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {children}
-      </div>
+      <CSSTransition in={isSectionActive} timeout={200} classNames="section_container" unmountOnExit nodeRef={nodeRef}>
+        <div ref={nodeRef}>{children}</div>
+      </CSSTransition>
     </div>
   );
 }

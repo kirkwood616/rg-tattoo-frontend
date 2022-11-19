@@ -1,10 +1,12 @@
 import { tattooStyles } from "admin/settings/AdminSettings";
 import FormErrorMessage from "components/errors/FormErrorMessage";
 import SelectList from "components/modals/SelectList";
+import AppContext from "context/AppContext";
 import RequestContext from "context/RequestContext";
 import { useContext, useState } from "react";
 
 function TattooStyle() {
+  const { toggleModalOpen } = useContext(AppContext);
   const { state } = useContext(RequestContext);
   const [isStyleActive, setIsStyleActive] = useState<boolean>(false);
 
@@ -20,7 +22,7 @@ function TattooStyle() {
         id="style-picker"
         placeholder="--- Select Style ---"
         value={state.tattooStyle.value}
-        onClick={() => setIsStyleActive(true)}
+        onClick={() => toggleModalOpen(setIsStyleActive)}
         readOnly
       />
       <FormErrorMessage message={"PLEASE SELECT A TATTOO STYLE"} name={"tattooStyle"} />

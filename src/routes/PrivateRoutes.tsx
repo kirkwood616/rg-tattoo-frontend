@@ -10,7 +10,7 @@ function PrivateRoutes({ component }: Props) {
 
   if (checkingAuth) return <LoadingDotsIcon />;
   if (user) return component;
-  return <Navigate to="/login" />;
+  return <Navigate to="/user/login" />;
 }
 
 export default PrivateRoutes;

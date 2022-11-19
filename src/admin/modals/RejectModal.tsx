@@ -12,8 +12,8 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function RejectModal() {
+  const { toggleLoading, toggleModalOpen } = useContext(AppContext);
   const { actionState, dispatch, dispatchIsRejectActive } = useContext(ActionContext);
-  const { toggleLoading } = useContext(AppContext);
 
   const [isSubmitActive, setIsSubmitActive] = useState(false);
 
@@ -25,20 +25,23 @@ function RejectModal() {
   }, []);
 
   function onClose() {
+    toggleModalOpen();
     dispatch({ type: "resetWithState" });
   }
 
   function onRejectRequest(): void {
     if (!actionState.request) return;
 
-    if (actionState.request.requestStatus === "new" || "awaiting-deposit") {
-      if (!actionState.deniedReason) return;
-      else setIsSubmitActive((current) => !current);
-    }
-
-    if (actionState.request.requestStatus === "deposit-received") {
-      if (!actionState.canceledReason) return;
-      else setIsSubmitActive((current) => !current);
+    switch (actionState.request.requestStatus) {
+      case "new":
+      case "awaiting-deposit":
+        setIsSubmitActive((current) => !current);
+        break;
+      case "deposit-received":
+        setIsSubmitActive((current) => !current);
+        break;
+      default:
+        break;
     }
   }
 
@@ -49,6 +52,7 @@ function RejectModal() {
       const updatedRequest: AppointmentRequest = rejectSubmitRequest(actionState);
       await requestApiCall(updatedRequest);
       dispatch({ type: "reset" });
+      toggleModalOpen();
       navigate(`/admin/appointment-requests/${updatedRequest.requestStatus}/${updatedRequest._id}`);
     } catch (error) {
       console.error(error);
@@ -60,18 +64,13 @@ function RejectModal() {
   if (!actionState.request) return <Error404 />;
   return (
     <ModalWindow isActive={actionState.isRejectActive} setIsActive={dispatchIsRejectActive} isDispatch>
-      {actionState.request.requestStatus === ("new" || "awaiting-deposit") && (
-        <ActionField.RejectText
-          title="DENY REQUEST"
-          label="Please enter a reason why the request was denied:"
-          stateText={actionState.deniedReason}
-          dispatchType="deniedReason"
-        />
+      {(actionState.request.requestStatus === "new" || actionState.request.requestStatus === "awaiting-deposit") && (
+        <ActionField.RejectText title="DENY REQUEST" stateText={actionState.deniedReason} dispatchType="deniedReason" />
       )}
+
       {actionState.request.requestStatus === "deposit-received" && (
         <ActionField.RejectText
           title="CANCEL APPOINTMENT"
-          label="Please enter a reason why the appointment was canceled:"
           stateText={actionState.canceledReason}
           dispatchType="canceledReason"
         />
@@ -92,6 +91,7 @@ function RejectModal() {
           setIsActive={setIsSubmitActive}
           yesFunction={handleRejectRequest}
           yesButtonText={"YES"}
+          subModal
         />
       )}
     </ModalWindow>

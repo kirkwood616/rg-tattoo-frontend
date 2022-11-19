@@ -1,51 +1,31 @@
 .AddNote {
-  background-color: blue;
-  border-radius: 3rem;
-  box-shadow: 0 3px 7px var(--black);
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-  margin: 1rem auto 0 auto;
-  overflow: hidden;
-  position: relative;
-  text-align: center;
+  margin: 1rem auto;
   transition: all 0.25s ease;
-  width: 100%;
+  width: 90%;
 }
 
-.add-note {
-  margin: 1rem;
-}
 .note-field {
-  background-color: white;
+  color: var(--white);
   width: 100%;
-}
-.note-field > textarea {
-  min-height: 10rem;
-  max-height: 15rem;
-  resize: vertical;
-  min-width: 90%;
-}
-.note-field.active > p {
-  margin: 1rem;
 }
 
-.note-field.inactive {
-  max-height: 0;
-  overflow: hidden;
-  transition: all 0.5s ease;
-  width: 100%;
+.note-field > p {
+  color: var(--light-gray-2);
+  font-style: italic;
+  margin: 1rem;
 }
-.note-field.active {
-  color: black;
-  max-height: 1000px;
-  display: block;
-  transition: all 0.5s ease;
-  width: 100%;
-  padding: 1rem;
-}
-.note-field > .go-button {
+.AddNote > .go-button {
+  border: 3px solid var(--blue);
+  background: linear-gradient(0deg, var(--black) 0%, var(--blue) 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 125%;
   display: block;
   margin: 0 auto 1rem auto;
+  transition: all 0.25s ease;
   width: 90%;
+}
+.AddNote > .go-button:hover {
+  background-size: 100% 200%;
+  transform: scale(1.05);
+  transition: all 0.25s ease;
 }

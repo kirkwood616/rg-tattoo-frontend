@@ -7,39 +7,35 @@ import "./NavMenu.css";
 import UserMenu from "./UserMenu";
 
 function NavMenu() {
-  // AUTH
   const { user, setUser } = useAuthCheck();
+  const { isAdmin, pathname } = useLocationRoute();
 
-  // LOCATION
-  const { isAdmin } = useLocationRoute();
+  const [isMenuActive, setIsMenuActive] = useState(false);
 
-  // STATE
-  const [isActive, setIsActive] = useState(false);
-
-  // REF
   const dropdownRef = useRef(null);
 
-  // ON-CLICK
-  const onClick = () => setIsActive((prev) => !prev);
+  const onTriggerClick = () => setIsMenuActive((current) => !current);
 
   useEffect(() => {
-    const pageClickEvent = (): void => {
-      if (dropdownRef.current !== null) setIsActive(!isActive);
+    function pageClickEvent(): void {
+      if (dropdownRef.current !== null) setIsMenuActive(!isMenuActive);
       else return;
-    };
+    }
 
-    if (isActive) window.addEventListener("click", pageClickEvent);
+    if (isMenuActive) window.addEventListener("click", pageClickEvent);
+
+    if (isMenuActive && pathname === "/user/login") setIsMenuActive((current) => !current);
 
     return () => window.removeEventListener("click", pageClickEvent);
-  }, [isActive]);
+  }, [isMenuActive, pathname]);
 
   return (
     <div className="NavMenu">
       <div className="nav-container">
-        <button onClick={onClick} className={isActive ? "menu-trigger active" : "menu-trigger"}>
-          <MenuHamburger isActive={isActive} />
+        <button onClick={onTriggerClick} className={isMenuActive ? "menu-trigger active" : "menu-trigger"}>
+          <MenuHamburger isActive={isMenuActive} />
         </button>
-        <nav ref={dropdownRef} className={`menu ${isActive ? "active" : "inactive"}`}>
+        <nav ref={dropdownRef} className={`menu ${isMenuActive ? "active" : "inactive"}`}>
           {user && isAdmin ? <AdminMenu setUser={setUser} /> : <UserMenu />}
         </nav>
       </div>

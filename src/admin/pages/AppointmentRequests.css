@@ -1,12 +1,15 @@
 .AppointmentRequests {
   display: flex;
   flex-direction: column;
-  padding: 3rem 1rem;
+  padding: 4rem 1rem;
 }
 
 .AppointmentRequests .request_container {
-  border-radius: 0.5rem;
-  box-shadow: 0 3px 7px var(--black);
+  display: flex;
+  flex-direction: column;
+  border: 3px solid var(--light-gray-1);
+  border-radius: 1.5rem;
+  box-shadow: 0 3px 15px var(--black);
   font-weight: bold;
   margin-bottom: 1rem;
   margin: 0 auto 1rem auto;
@@ -21,14 +24,17 @@
 }
 
 .request_container .request-date-time_container {
-  background-color: var(--black);
-  padding: 0.5rem 0;
+  background-color: var(--light-gray-1);
+  box-shadow: 0 0px 15px var(--black);
+  color: var(--black);
+  padding: 0.75rem 0;
+  position: relative;
 }
 
 .request_container .request-submitted_container {
-  background-color: white;
+  background-color: var(--white);
   color: black;
-  padding: 0.5rem;
+  padding: 1rem;
 }
 
 @media only screen and (min-width: 600px) {

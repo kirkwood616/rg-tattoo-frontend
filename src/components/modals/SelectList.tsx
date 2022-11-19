@@ -1,3 +1,4 @@
+import AppContext from "context/AppContext";
 import RequestContext from "context/RequestContext";
 import { Dispatch, SetStateAction, useContext } from "react";
 import ModalWindow from "./ModalWindow";
@@ -15,21 +16,28 @@ interface Props {
 }
 
 function SelectList({ isSelectActive, setIsSelectActive, selectList, actionType, selectFunction, formatter }: Props) {
+  const { toggleModalOpen } = useContext(AppContext);
   const { dispatch } = useContext(RequestContext);
 
   function onSelectClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     if (actionType) dispatch({ type: actionType, value: e.currentTarget.value });
     if (selectFunction) selectFunction(e.currentTarget.value);
-    setIsSelectActive((current) => !current);
+    toggleModalOpen(setIsSelectActive);
   }
   return (
     <ModalWindow isActive={isSelectActive} setIsActive={setIsSelectActive}>
       <div className="select_container">
-        {selectList.map((item, index) => (
-          <button value={item} key={item + index} className="select-option" onClick={(e) => onSelectClick(e)}>
-            {formatter ? formatter(item) : item}
+        {!selectList.length && (
+          <button className="select-option" onClick={() => toggleModalOpen(setIsSelectActive)}>
+            None Available
           </button>
-        ))}
+        )}
+        {selectList &&
+          selectList.map((item, index) => (
+            <button value={item} key={item + index} className="select-option" onClick={(e) => onSelectClick(e)}>
+              {formatter ? formatter(item) : item}
+            </button>
+          ))}
       </div>
     </ModalWindow>
   );
