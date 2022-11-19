@@ -11,10 +11,14 @@ interface Props {
 function AdminMenu({ setUser }: Props) {
   const [isLogOutActive, setIsLogOutActive] = useState(false);
 
-  const { toggleLoading } = useContext(AppContext);
+  const { toggleLoading, toggleModalOpen } = useContext(AppContext);
   const navigate = useNavigate();
 
-  async function logOut() {
+  function onLogOut() {
+    toggleModalOpen(setIsLogOutActive);
+  }
+
+  async function handleLogOut() {
     toggleLoading();
     try {
       await signOut(auth);
@@ -23,7 +27,7 @@ function AdminMenu({ setUser }: Props) {
     } finally {
       toggleLoading();
       setUser(null);
-      navigate("/login");
+      navigate("/user/login");
     }
   }
 
@@ -42,14 +46,19 @@ function AdminMenu({ setUser }: Props) {
         <li
           onClick={(e) => {
             e.stopPropagation();
-            setIsLogOutActive((current) => !current);
+            onLogOut();
           }}
         >
           <Link to={"#"}>LOG OUT</Link>
         </li>
       </ul>
       {isLogOutActive && (
-        <AreYouSure isActive={isLogOutActive} setIsActive={setIsLogOutActive} yesFunction={logOut} yesButtonText="YES" />
+        <AreYouSure
+          isActive={isLogOutActive}
+          setIsActive={setIsLogOutActive}
+          yesFunction={handleLogOut}
+          yesButtonText="YES"
+        />
       )}
     </div>
   );

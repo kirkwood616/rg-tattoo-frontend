@@ -1,5 +1,6 @@
 import FormErrorMessage from "components/errors/FormErrorMessage";
 import SelectList from "components/modals/SelectList";
+import AppContext from "context/AppContext";
 import RequestContext from "context/RequestContext";
 import { useContext, useState } from "react";
 import { formatTimeNoLeadingZero } from "utils/Formatting";
@@ -7,6 +8,7 @@ import { formatTimeNoLeadingZero } from "utils/Formatting";
 function AppointmentTimes() {
   const [isTimesActive, setIsTimesActive] = useState<boolean>(false);
 
+  const { toggleModalOpen } = useContext(AppContext);
   const { availableAppointmentTimes, state } = useContext(RequestContext);
 
   return (
@@ -23,7 +25,7 @@ function AppointmentTimes() {
               id="time-picker"
               placeholder="--- Select Time ---"
               value={formatTimeNoLeadingZero(state.appointmentTime.value)}
-              onClick={() => setIsTimesActive((current) => !current)}
+              onClick={() => toggleModalOpen(setIsTimesActive)}
               readOnly
             ></input>
             <FormErrorMessage message={"SELECT A TIME"} name={"appointmentTime"} />

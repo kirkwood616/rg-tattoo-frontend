@@ -15,15 +15,20 @@ function ActionModal() {
   const [isSubmitActive, setIsSubmitActive] = useState<boolean>(false);
 
   const { actionState, dispatch } = useContext(ActionContext);
-  const { toggleLoading } = useContext(AppContext);
+  const { toggleLoading, isModalOpen, toggleModalOpen } = useContext(AppContext);
   const navigate = useNavigate();
 
   function onClose(): void {
+    toggleModalOpen();
     dispatch({ type: "resetWithState" });
   }
 
   function onSubmit(): void {
-    setIsSubmitActive((current) => !current);
+    if (isModalOpen) {
+      setIsSubmitActive((current) => !current);
+    } else {
+      toggleModalOpen(setIsSubmitActive);
+    }
   }
 
   async function handleSubmit(): Promise<void> {
@@ -33,6 +38,7 @@ function ActionModal() {
       const updatedRequest: AppointmentRequest = actionSubmitRequest(actionState);
       await requestApiCall(updatedRequest);
       dispatch({ type: "reset" });
+      toggleModalOpen();
       navigate(`/admin/appointment-requests/${updatedRequest.requestStatus}/${updatedRequest._id}`);
     } catch (error) {
       console.error(error);
@@ -72,6 +78,7 @@ function ActionModal() {
       )}
 
       <GoButton type="button" text="SUBMIT" backgroundColor="green" onClick={onSubmit} isDisabled={actionState.hasErrors} />
+
       <GoButton type="button" text="CLOSE WINDOW" backgroundColor="red" onClick={onClose} />
 
       {isSubmitActive && (
@@ -80,6 +87,7 @@ function ActionModal() {
           setIsActive={setIsSubmitActive}
           yesFunction={handleSubmit}
           yesButtonText="YES"
+          subModal
         />
       )}
     </ModalWindow>

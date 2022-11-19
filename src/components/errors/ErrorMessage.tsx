@@ -10,10 +10,8 @@ interface Props {
 }
 
 function ErrorMessage({ loginError, name, message }: Props) {
-  // CONTEXT
   const { state } = useContext(RequestContext);
 
-  // CLASSNAMES
   let fieldClassName: string = "";
   let loginClassName: string = "";
 
@@ -29,13 +27,13 @@ function ErrorMessage({ loginError, name, message }: Props) {
     loginClassName = "hidden";
   }
 
-  // FUNCTIONS
   function getError(state: RequestReducer, key: keyof RequestReducer): boolean {
     const fieldValues: FieldValues = state[key] as FieldValues;
     return fieldValues.hasErrors;
   }
 
-  return <>{name ? <div className={fieldClassName}>{getError(state, name!) && message}</div> : <div className={loginClassName}>{loginError ? message : ""}</div>}</>;
+  if (name) return <div className={fieldClassName}>{getError(state, name!) && message}</div>;
+  else return <div className={loginClassName}>{loginError && message}</div>;
 }
 
 export default ErrorMessage;

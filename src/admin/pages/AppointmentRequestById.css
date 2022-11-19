@@ -13,26 +13,6 @@
   color: blue;
 }
 
-.AppointmentRequestById p {
-  margin: 0;
-}
-
-.request-item_title,
-.request-item_info {
-  border-radius: 1.5rem;
-  padding: 0.5rem 0;
-}
-
-.request-item_title {
-  background-color: var(--black);
-  color: white;
-}
-
-.request-item_info {
-  background-color: white;
-  color: black;
-}
-
 .AppointmentRequestById > button {
   width: 95%;
 }
