@@ -114,3 +114,8 @@ export async function fetchPhotoUrls(request: AppointmentRequest) {
     console.error(error);
   }
 }
+
+export async function searchRequests(keywords: string) {
+  const res = await admin.get("appointment-requests/search", { params: { keywords: keywords } });
+  return res.data;
+}
