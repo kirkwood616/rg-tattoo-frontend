@@ -1,4 +1,5 @@
 import { adminLocaleTZ } from "admin/settings/AdminSettings";
+import InfoSection from "components/InfoSection/InfoSection";
 import { AppointmentRequest } from "models/AppointmentRequest";
 import { formatISODateTime, formatRouteTitle, formatTimeWithZone, formatUsDate } from "utils/Formatting";
 import RequestSection from "./RequestSection";
@@ -10,43 +11,21 @@ interface Props {
 function RequestDetails({ request }: Props) {
   return (
     <RequestSection title="REQUEST DETAILS">
-      <div className="items_container">
-        <div className="request-item_title">REQUEST STATUS</div>
-        <div className="request-item_info">{formatRouteTitle(request.requestStatus)}</div>
-      </div>
-      <div className="items_container">
-        <div className="request-item_title">REQUESTED DATE</div>
-        <div className="request-item_info">{formatUsDate(request.requestDate)}</div>
-      </div>
-      <div className="items_container">
-        <div className="request-item_title">REQUESTED TIME</div>
-        <div className="request-item_info">{formatTimeWithZone(request.requestTime, adminLocaleTZ)}</div>
-      </div>
-      <div className="items_container">
-        <div className="request-item_title">DATE SUBMITTED</div>
-        <div className="request-item_info">{formatISODateTime(request.requestSubmittedDate, adminLocaleTZ)}</div>
-      </div>
+      <InfoSection title={"REQUEST STATUS"} body={formatRouteTitle(request.requestStatus)} />
 
-      {request.requestStatus !== "new" && (
-        <div className="items_container">
-          <div className="request-item_title">DEPOSIT REQUIRED</div>
-          <div className="request-item_info">${request.depositRequired}</div>
-        </div>
-      )}
+      <InfoSection title={"REQUESTED DATE"} body={formatUsDate(request.requestDate)} />
+
+      <InfoSection title={"REQUESTED TIME"} body={formatTimeWithZone(request.requestTime, adminLocaleTZ)} />
+
+      <InfoSection title={"DATE SUBMITTED"} body={formatISODateTime(request.requestSubmittedDate, adminLocaleTZ)} />
+
+      {request.requestStatus !== "new" && <InfoSection title="DEPOSIT REQUIRED" body={`$${request.depositRequired}`} />}
 
       {request.depositAmmountReceived > 0 && (
-        <div className="items_container">
-          <div className="request-item_title">DEPOSIT RECEIVED</div>
-          <div className="request-item_info">${request.depositAmmountReceived}</div>
-        </div>
+        <InfoSection title={"DEPOSIT RECEIVED"} body={`$${request.depositAmmountReceived}`} />
       )}
 
-      {request.priceCharged > 0 && (
-        <div className="items_container">
-          <div className="request-item_title">PRICE CHARGED</div>
-          <div className="request-item_info">${request.priceCharged}</div>
-        </div>
-      )}
+      {request.priceCharged > 0 && <InfoSection title={"PRICE CHARGED"} body={`$${request.priceCharged}`} />}
     </RequestSection>
   );
 }
