@@ -5,15 +5,17 @@ interface Props {
 }
 
 function SearchResults({ results }: Props) {
-  return (
-    <div className="SearchResults">
-      {results.map((result, index) => (
-        <div key={result.requestDate + index}>
-          {result.firstName} {result.lastName}
-        </div>
-      ))}
-    </div>
-  );
+  if (results)
+    return (
+      <div className="SearchResults">
+        {results.map((result, index) => (
+          <div key={result.requestDate + index}>
+            {result.firstName} {result.lastName}
+          </div>
+        ))}
+      </div>
+    );
+  else return <h2>No Results</h2>;
 }
 
 export default SearchResults;
