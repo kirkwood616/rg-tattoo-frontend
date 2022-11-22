@@ -12,14 +12,22 @@ function RequestSection({ title, children }: Props) {
   const nodeRef = useRef(null);
 
   return (
-    <div className="RequestSection">
+    <section className="RequestSection">
       <div className="request-section_title" onClick={() => setIsSectionActive((current) => !current)}>
         {title}
       </div>
-      <CSSTransition in={isSectionActive} timeout={200} classNames="section_container" unmountOnExit nodeRef={nodeRef}>
-        <div ref={nodeRef}>{children}</div>
+      <CSSTransition
+        in={isSectionActive}
+        timeout={200}
+        classNames="request-section_container"
+        unmountOnExit
+        nodeRef={nodeRef}
+      >
+        <div ref={nodeRef} className="request-section_container">
+          {children}
+        </div>
       </CSSTransition>
-    </div>
+    </section>
   );
 }
 

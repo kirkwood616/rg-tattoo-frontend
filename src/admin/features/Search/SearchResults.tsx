@@ -1,4 +1,7 @@
+import InfoSection from "components/InfoSection/InfoSection";
 import { AppointmentRequest } from "models/AppointmentRequest";
+import { Link } from "react-router-dom";
+import { formatUsDate } from "utils/Formatting";
 
 interface Props {
   results: AppointmentRequest[];
@@ -8,10 +11,11 @@ function SearchResults({ results }: Props) {
   if (results)
     return (
       <div className="SearchResults">
+        <h2>{results.length} Results</h2>
         {results.map((result, index) => (
-          <div key={result.requestDate + index}>
-            {result.firstName} {result.lastName}
-          </div>
+          <Link to={`../${result.requestStatus}/${result._id}`} key={result._id! + index} style={{ textDecoration: "none" }}>
+            <InfoSection title={`${result.firstName} ${result.lastName}`} body={formatUsDate(result.requestDate)} />
+          </Link>
         ))}
       </div>
     );
