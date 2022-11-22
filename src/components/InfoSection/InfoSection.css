@@ -1,0 +1,30 @@
+.InfoSection {
+  border: 3px solid var(--light-gray-1);
+  border-radius: 1.25rem;
+  margin: 1rem auto;
+  overflow: hidden;
+  text-align: center;
+  transition: all 0.25s ease;
+  width: 100%;
+}
+
+.info-section_title,
+.info-section_body {
+  font-weight: bold;
+  padding: 0.75rem 0;
+}
+
+.info-section_title {
+  border-radius: 1rem 1rem 0 0;
+  box-shadow: 0 0px 15px var(--black);
+  background-color: var(--light-gray-1);
+  color: var(--black);
+  position: relative;
+}
+
+.info-section_body {
+  border-radius: 0 0 1rem 1rem;
+  background-color: var(--white);
+  color: black;
+  padding: 1rem;
+}
