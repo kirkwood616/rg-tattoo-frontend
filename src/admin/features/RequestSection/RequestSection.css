@@ -18,8 +18,6 @@
 }
 
 .request-section_container {
-  display: flex;
-  flex-direction: column;
   margin: auto;
   width: 95%;
 }
