@@ -5,7 +5,7 @@ import "./SearchBar.css";
 interface Props {
   searchInput: string;
   setSearchInput: React.Dispatch<React.SetStateAction<string>>;
-  onSearch: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  onSearch: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 function SearchBar({ searchInput, setSearchInput, onSearch }: Props) {
