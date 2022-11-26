@@ -115,7 +115,7 @@ export async function fetchPhotoUrls(request: AppointmentRequest) {
   }
 }
 
-export async function searchRequests(keywords: string) {
-  const res = await admin.get("appointment-requests/search", { params: { keywords: keywords } });
+export async function getSearch(url: string, keywords: string) {
+  const res = await admin.get(url, { params: { keywords: keywords } });
   return res.data;
 }
