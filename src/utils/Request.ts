@@ -19,7 +19,6 @@ export function generateNewRequest(state: RequestReducer): AppointmentRequest {
     referencePhotoPath: formatPhotoPath(state, "reference"),
     placementPhotoPath: formatPhotoPath(state, "placement"),
     tattooDescription: state.tattooDescription.value,
-    requestConfirm: state.requestConfirm.value,
     requestStatus: "new",
     depositRequired: 0,
     depositAmmountReceived: 0,
