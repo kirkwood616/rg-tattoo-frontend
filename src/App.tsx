@@ -3,6 +3,7 @@ import RequestList from "admin/components/RequestList";
 import AdminHome from "admin/pages/AdminHome";
 import AppointmentRequestById from "admin/pages/AppointmentRequestById";
 import AppointmentRequests from "admin/pages/AppointmentRequests";
+import Search from "admin/pages/Search";
 import SetAvailableAppointments from "admin/pages/SetAvailableAppointments";
 import { requestTypes } from "admin/settings/AdminSettings";
 import Header from "components/Header";
@@ -37,6 +38,7 @@ function App() {
               <Route index element={<AdminHome />} />
               <Route path="home" element={<AdminHome />} />
               <Route path="appointment-requests" element={<AppointmentRequests />}>
+                <Route path="search" element={<Search />} />
                 {requestTypes.map((request, index) => (
                   <Route path={":route"} element={<RequestList />} key={request.name + request.path}>
                     <Route path=":id" element={<AppointmentRequestById />} key={request.name + request.path + index} />

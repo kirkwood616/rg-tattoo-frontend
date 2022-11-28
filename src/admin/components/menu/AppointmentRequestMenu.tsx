@@ -20,6 +20,12 @@ function AppointmentRequestMenu() {
       >
         <div className="requests-menu_title">REQUESTS MENU</div>
         <div className={isMenuActive ? "requests-menu-list active" : "requests-menu-list inactive"}>
+          <Link to={"./"}>
+            <button className="menu-link">MAIN</button>
+          </Link>
+          <Link to={"search"}>
+            <button className="menu-link">SEARCH</button>
+          </Link>
           {requestTypes.map((request, index) => (
             <Link to={request.path} key={request.name + index}>
               <button className="menu-link" value={request.name}>
