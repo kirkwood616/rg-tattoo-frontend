@@ -5,17 +5,17 @@ import "./SearchBar.css";
 interface Props {
   searchInput: string;
   setSearchInput: React.Dispatch<React.SetStateAction<string>>;
-  onSearch: (e: React.FormEvent<HTMLFormElement>) => void;
+  onSearchSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-function SearchBar({ searchInput, setSearchInput, onSearch }: Props) {
+function SearchBar({ searchInput, setSearchInput, onSearchSubmit }: Props) {
   function onSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     setSearchInput(e.target.value);
   }
   return (
     <div className="SearchBar">
-      <form onSubmit={(e) => onSearch(e)}>
+      <form onSubmit={(e) => onSearchSubmit(e)}>
         <input
           type="text"
           name="search-bar"
