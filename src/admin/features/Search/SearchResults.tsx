@@ -12,7 +12,7 @@ function SearchResults({ results }: Props) {
     return (
       <div className="SearchResults">
         <h2>
-          {results.length} Result{results.length > 1 && "s"}
+          {results.length} Result{(results.length > 1 || !results.length) && "s"}
         </h2>
         {results.map((result, index) => (
           <Link to={`../${result.requestStatus}/${result._id}`} key={result._id! + index} style={{ textDecoration: "none" }}>
