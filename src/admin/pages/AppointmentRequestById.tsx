@@ -3,6 +3,7 @@ import ActionContextProvider from "admin/context/ActionContetProvider";
 import RequestActions from "admin/features/RequestActions/RequestActions";
 import useLocationRoute from "admin/hooks/useLocationRoute";
 import { fetchPhotoUrls, getRequest } from "admin/services/AdminApiService";
+import FetchError from "components/errors/FetchError";
 import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
 import useSWR from "swr";
 import * as RequestSection from "../features/RequestSection";
@@ -16,7 +17,7 @@ function AppointmentRequestById() {
   });
   const { data: photos } = useSWR(() => request, fetchPhotoUrls, { revalidateOnFocus: false });
 
-  if (requestError) return <h1>Loading Failed.</h1>;
+  if (requestError) return <FetchError fetchError={requestError} />;
   if (!request) return <LoadingDotsIcon />;
   return (
     <AdminPage title={`${title} Request`}>
