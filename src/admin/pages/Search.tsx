@@ -1,3 +1,4 @@
+import AdminPage from "admin/components/AdminPage";
 import SearchBar from "admin/features/Search/SearchBar";
 import SearchResults from "admin/features/Search/SearchResults";
 import useLocationRoute from "admin/hooks/useLocationRoute";
@@ -43,13 +44,15 @@ function Search() {
   }
 
   return (
-    <div className="Search">
-      <h1>Search Requests</h1>
-      <SearchBar searchInput={searchInput} setSearchInput={setSearchInput} onSearchSubmit={onSearchSubmit} />
-      {searchError && <FetchError fetchError={searchError} />}
-      {isSearching && <h2>Searching...</h2>}
-      {results && <SearchResults results={results} />}
-    </div>
+    <AdminPage title="Search Requests">
+      <div className="Search">
+        <h1>Search Requests</h1>
+        <SearchBar searchInput={searchInput} setSearchInput={setSearchInput} onSearchSubmit={onSearchSubmit} />
+        {searchError && <FetchError fetchError={searchError} />}
+        {isSearching && <h2>Searching...</h2>}
+        {results && <SearchResults results={results} />}
+      </div>
+    </AdminPage>
   );
 }
 
