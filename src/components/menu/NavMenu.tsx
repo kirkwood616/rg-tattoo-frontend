@@ -33,6 +33,7 @@ function NavMenu() {
     <div className="NavMenu">
       <div className="nav-container">
         <button onClick={onTriggerClick} className={isMenuActive ? "menu-trigger active" : "menu-trigger"}>
+          <span>MENU</span>
           <MenuHamburger isActive={isMenuActive} />
         </button>
         <nav ref={dropdownRef} className={`menu ${isMenuActive ? "active" : "inactive"}`}>
