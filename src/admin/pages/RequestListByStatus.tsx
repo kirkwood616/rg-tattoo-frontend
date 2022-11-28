@@ -2,6 +2,7 @@ import AdminPage from "admin/components/AdminPage";
 import useLocationRoute from "admin/hooks/useLocationRoute";
 import { getRequests } from "admin/services/AdminApiService";
 import { adminLocaleTZ } from "admin/settings/AdminSettings";
+import FetchError from "components/errors/FetchError";
 import InfoSection from "components/InfoSection/InfoSection";
 import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
 import { Link } from "react-router-dom";
@@ -15,7 +16,7 @@ function RequestListByStatus() {
     revalidateOnFocus: false,
   });
 
-  if (requestsError) return <h1>Something went wrong!</h1>;
+  if (requestsError) return <FetchError fetchError={requestsError} />;
   if (!requests) return <LoadingDotsIcon />;
   return (
     <AdminPage title={`${title} Requests`}>

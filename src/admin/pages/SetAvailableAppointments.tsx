@@ -3,6 +3,7 @@ import * as SetAvailable from "admin/features/SetAvailableApts";
 import { postAvailableAppointment, updateAvailableAppointment } from "admin/services/AdminApiService";
 import { timePickerValues } from "admin/settings/AdminSettings";
 import GoButton from "components/buttons/GoButton";
+import FetchError from "components/errors/FetchError";
 import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
 import AreYouSure from "components/modals/AreYouSure";
 import SelectList from "components/modals/SelectList";
@@ -98,7 +99,7 @@ function SetAvailableAppointments() {
     }
   }
 
-  if (availableError) return <h1>Something went wrong!</h1>;
+  if (availableError) return <FetchError fetchError={availableError} />;
   if (!available) return <LoadingDotsIcon />;
   return (
     <>

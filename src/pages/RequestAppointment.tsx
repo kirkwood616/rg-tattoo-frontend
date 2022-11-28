@@ -1,4 +1,5 @@
 import GoButton from "components/buttons/GoButton";
+import FetchError from "components/errors/FetchError";
 import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
 import AreYouSure from "components/modals/AreYouSure";
 import Page from "components/Page";
@@ -74,7 +75,7 @@ function RequestAppointment() {
     }
   }
 
-  if (error) return <h1>Something went wrong!</h1>;
+  if (error) return <FetchError fetchError={error} />;
   if (!available) return <LoadingDotsIcon />;
   return (
     <Page title="Request Appointment">
