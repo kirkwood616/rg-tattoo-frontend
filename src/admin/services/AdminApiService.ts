@@ -119,3 +119,8 @@ export async function getSearch(url: string, keywords: string) {
   const res = await admin.get(url, { params: { keywords: keywords } });
   return res.data;
 }
+
+export async function getRequestStatusCounts(url: string) {
+  const res = await admin.get(url);
+  return res.data;
+}
