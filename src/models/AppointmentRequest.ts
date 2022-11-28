@@ -14,7 +14,6 @@ export interface AppointmentRequest {
   referencePhotoPath: string;
   placementPhotoPath: string;
   tattooDescription: string;
-  requestConfirm: boolean;
   requestStatus: RequestStatus;
   depositRequired: number;
   depositAmmountReceived: number;
