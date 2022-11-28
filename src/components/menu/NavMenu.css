@@ -9,18 +9,26 @@
 .NavMenu .menu-trigger {
   align-items: center;
   background: linear-gradient(var(--black), var(--black) 50%, white 50%, white);
-  background-size: 100% 0%;
   background-repeat: no-repeat;
-  display: flex;
-  transition: background 0.5s;
+  background-size: 100% 0%;
   border: 2px solid white;
   border-radius: 0.5rem;
+  color: white;
+  display: flex;
+  font-size: 1.25rem;
+  font-weight: bold;
   margin-right: 0.5rem;
+  transition: background 0.5s ease;
 }
 
 .NavMenu .menu-trigger.active {
   background-position: 100% 100%;
   background-size: 100% 200%;
+  color: black;
+}
+
+.NavMenu .menu-trigger > span {
+  margin: 0.5rem;
 }
 
 .NavMenu .menu {
