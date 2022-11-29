@@ -11,7 +11,7 @@ function Budget() {
   const [isBudgetActive, setIsBudgetActive] = useState(false);
 
   return (
-    <>
+    <section className="field_container">
       <label htmlFor="budget">Budget:</label>
 
       <input
@@ -34,7 +34,7 @@ function Budget() {
           actionType="budget"
         />
       )}
-    </>
+    </section>
   );
 }
 

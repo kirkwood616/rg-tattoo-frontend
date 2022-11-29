@@ -19,29 +19,25 @@ function SelectDate() {
   }
 
   return (
-    <>
-      <span className="label">
-        <label htmlFor="datePicker">Select Date:</label>
-      </span>
-      <div className="calendarContainer">
-        <DatePicker
-          name="datePicker"
-          id="datePicker"
-          placeholderText="Select Date"
-          selected={state.startDate.value}
-          onChange={handleDateChange}
-          minDate={new Date()}
-          maxDate={maxAppointmentDate}
-          filterDate={disabledDates}
-          excludeDates={excludedDates}
-          autoComplete="off"
-          isClearable
-          withPortal
-          required
-        />
-      </div>
+    <section className="field_container">
+      <label htmlFor="datePicker">Select Date:</label>
+      <DatePicker
+        name="datePicker"
+        id="datePicker"
+        placeholderText="Select Date"
+        selected={state.startDate.value}
+        onChange={handleDateChange}
+        minDate={new Date()}
+        maxDate={maxAppointmentDate}
+        filterDate={disabledDates}
+        excludeDates={excludedDates}
+        autoComplete="off"
+        isClearable
+        withPortal
+        required
+      />
       <FormErrorMessage message={"SELECT DATE"} name={"startDate"} />
-    </>
+    </section>
   );
 }
 

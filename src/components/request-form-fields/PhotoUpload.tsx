@@ -10,10 +10,8 @@ interface Props {
 }
 
 function PhotoUpload({ name }: Props) {
-  // CONTEXT
   const { state, dispatch } = useContext(RequestContext);
 
-  // FUNCTIONS
   function handlePhotoChange(e: ChangeEvent<HTMLInputElement>): void {
     if (!e.currentTarget.files) {
       resetPhoto();
@@ -37,10 +35,8 @@ function PhotoUpload({ name }: Props) {
   }
 
   return (
-    <>
-      <label htmlFor={name} className={state.appointmentTime.value ? "label" : "label disabled"}>
-        {labelTitle()}
-      </label>
+    <section className="field_container">
+      <label htmlFor={name}>{labelTitle()}</label>
       <div className="photo-upload">
         <label className="file-label">
           <input
@@ -58,7 +54,7 @@ function PhotoUpload({ name }: Props) {
         {state[name].value && <RemoveFileButton onClick={resetPhoto} />}
       </div>
       <FormErrorMessage message={"REFERENCE PHOTO REQUIRED"} name={name} />
-    </>
+    </section>
   );
 }
 

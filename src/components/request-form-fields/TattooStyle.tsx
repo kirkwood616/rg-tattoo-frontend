@@ -11,7 +11,7 @@ function TattooStyle() {
   const [isStyleActive, setIsStyleActive] = useState<boolean>(false);
 
   return (
-    <>
+    <section className="field_container">
       <label htmlFor="tattooStyle" className={state.appointmentTime.value ? "label" : "label disabled"}>
         Tattoo Style:
       </label>
@@ -34,7 +34,7 @@ function TattooStyle() {
           actionType="tattooStyle"
         />
       )}
-    </>
+    </section>
   );
 }
 

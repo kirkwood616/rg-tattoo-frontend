@@ -3,11 +3,10 @@ import RequestContext from "context/RequestContext";
 import { useContext } from "react";
 
 function TattooPlacement() {
-  // CONTEXT
   const { state, dispatch } = useContext(RequestContext);
 
   return (
-    <>
+    <section className="field_container">
       <label htmlFor="tattooPlacement" className={state.appointmentTime.value ? "label" : "label disabled"}>
         Tattoo Placement:
       </label>
@@ -20,7 +19,7 @@ function TattooPlacement() {
         value={state.tattooPlacement.value}
       />
       <FormErrorMessage message={"PLEASE ENTER A TATTOO PLACEMENT"} name={"tattooPlacement"} />
-    </>
+    </section>
   );
 }
 
