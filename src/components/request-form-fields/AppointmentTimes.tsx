@@ -11,41 +11,32 @@ function AppointmentTimes() {
   const { toggleModalOpen } = useContext(AppContext);
   const { availableAppointmentTimes, state } = useContext(RequestContext);
 
+  if (!availableAppointmentTimes.length)
+    return <FormErrorMessage message={`NO AVAILABLE TIMES. PLEASE SELECT ANOTHER DATE`} name={"appointmentTime"} />;
   return (
-    <>
-      <div className="apt-times-container">
-        {availableAppointmentTimes.length > 0 && (
-          <>
-            <span className="label">
-              <label htmlFor="aptTimes">Available Times:</label>
-            </span>
-            <input
-              type="text"
-              name="time-picker"
-              id="time-picker"
-              placeholder="--- Select Time ---"
-              value={formatTimeNoLeadingZero(state.appointmentTime.value)}
-              onClick={() => toggleModalOpen(setIsTimesActive)}
-              readOnly
-            ></input>
-            <FormErrorMessage message={"SELECT A TIME"} name={"appointmentTime"} />
-          </>
-        )}
-        {!availableAppointmentTimes.length && (
-          <FormErrorMessage message={`NO AVAILABLE TIMES. PLEASE SELECT ANOTHER DATE`} name={"appointmentTime"} />
-        )}
+    <section className="field_container">
+      <label htmlFor="time-picker">Available Times:</label>
+      <input
+        type="text"
+        name="time-picker"
+        id="time-picker"
+        placeholder="--- Select Time ---"
+        value={formatTimeNoLeadingZero(state.appointmentTime.value)}
+        onClick={() => toggleModalOpen(setIsTimesActive)}
+        readOnly
+      ></input>
+      <FormErrorMessage message={"SELECT A TIME"} name={"appointmentTime"} />
 
-        {isTimesActive && (
-          <SelectList
-            isSelectActive={isTimesActive}
-            setIsSelectActive={setIsTimesActive}
-            selectList={availableAppointmentTimes}
-            actionType="appointmentTime"
-            formatter={formatTimeNoLeadingZero}
-          />
-        )}
-      </div>
-    </>
+      {isTimesActive && (
+        <SelectList
+          isSelectActive={isTimesActive}
+          setIsSelectActive={setIsTimesActive}
+          selectList={availableAppointmentTimes}
+          actionType="appointmentTime"
+          formatter={formatTimeNoLeadingZero}
+        />
+      )}
+    </section>
   );
 }
 
