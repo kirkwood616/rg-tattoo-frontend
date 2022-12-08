@@ -1,48 +1,15 @@
-import axios from "axios";
 import { getDownloadURL, ref, StorageReference } from "firebase/storage";
 import { storage } from "firebaseConfig";
 import { AppointmentRequest, PhotoUrls } from "models/AppointmentRequest";
 import AvailableAppointments from "models/AvailableAppointments";
 import admin from "./AdminInterceptor";
 
-const apiRequestAppointment = process.env.REACT_APP_API_REQUEST_ROUTE_LOCAL || "";
-const apiDeniedAppointments = process.env.REACT_APP_API_DENIED_ROUTE_LOCAL || "";
-
-//// 1. APPOINTMENT REQUESTS
-// GET ALL REQUESTS
-export function fetchAppointmentRequests(): Promise<AppointmentRequest[]> {
-  return axios.get(apiRequestAppointment).then((res) => res.data);
-}
-
-// PUT
-export function updateAppointmentRequest(
-  id: string,
-  appointmentRequest: AppointmentRequest
-): Promise<AvailableAppointments> {
-  return axios.put(`${apiRequestAppointment}/${id}`, appointmentRequest).then((res) => res.data);
-}
-
-// REJECT
-export async function denyAppointmentRequest(request: AppointmentRequest): Promise<AvailableAppointments> {
-  const res = await axios.put(`${apiRequestAppointment}/denied/${request._id}`, request);
-  return res.data;
-}
-
-// GET ALL REJECTED REQUESTS
-export function fetchDeniedRequests(): Promise<AppointmentRequest[]> {
-  return axios.get(apiDeniedAppointments).then((res) => res.data);
-}
-
-// SWR
-
 //// 1. AVAILABLE APPOINTMENTS
-// POST
 export async function postAvailableAppointment(appointment: AvailableAppointments): Promise<AvailableAppointments> {
   const res = await admin.post("/available-appointments/create", appointment);
   return res.data;
 }
 
-// PUT
 export async function updateAvailableAppointment(
   id: string,
   appointmentDateTimes: AvailableAppointments
@@ -67,7 +34,6 @@ export async function sendApprovedRequest(request: AppointmentRequest) {
   return res.data;
 }
 
-// HERE
 export async function sendDeniedRequest(request: AppointmentRequest) {
   const res = await admin.put(`appointment-requests/deny-request/${request._id}`, request);
   return res.data;
@@ -88,7 +54,6 @@ export async function sendCanceledRequest(request: AppointmentRequest) {
   return res.data;
 }
 
-// HERE
 export async function updateOpenRequest(request: AppointmentRequest) {
   const res = await admin.put(`appointment-requests/update/${request._id}`, request);
   return res.data;
