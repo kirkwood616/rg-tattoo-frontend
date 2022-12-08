@@ -1,10 +1,10 @@
 import AdminPage from "admin/components/AdminPage";
 import ActionContextProvider from "admin/context/ActionContetProvider";
 import RequestActions from "admin/features/RequestActions/RequestActions";
-import useLocationRoute from "admin/hooks/useLocationRoute";
 import { fetchPhotoUrls, getRequest } from "admin/services/AdminApiService";
 import FetchError from "components/errors/FetchError";
 import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
+import useLocationRoute from "hooks/useLocationRoute";
 import useSWR from "swr";
 import * as RequestSection from "../features/RequestSection";
 import "./AppointmentRequestById.css";

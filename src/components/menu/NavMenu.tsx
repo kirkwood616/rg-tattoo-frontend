@@ -1,6 +1,6 @@
 import AdminMenu from "admin/components/menu/AdminMenu";
-import useLocationRoute from "admin/hooks/useLocationRoute";
 import useAuthCheck from "hooks/useAuthCheck";
+import useLocationRoute from "hooks/useLocationRoute";
 import { useEffect, useRef, useState } from "react";
 import MenuHamburger from "./MenuHamburger";
 import "./NavMenu.css";

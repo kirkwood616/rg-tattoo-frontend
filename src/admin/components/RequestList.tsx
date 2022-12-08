@@ -1,5 +1,5 @@
-import useLocationRoute from "admin/hooks/useLocationRoute";
 import RequestListByStatus from "admin/pages/RequestListByStatus";
+import useLocationRoute from "hooks/useLocationRoute";
 import { Outlet } from "react-router-dom";
 
 function RequestList() {

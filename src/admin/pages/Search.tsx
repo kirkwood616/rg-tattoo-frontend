@@ -1,9 +1,9 @@
 import AdminPage from "admin/components/AdminPage";
 import SearchBar from "admin/features/Search/SearchBar";
 import SearchResults from "admin/features/Search/SearchResults";
-import useLocationRoute from "admin/hooks/useLocationRoute";
 import { getSearch } from "admin/services/AdminApiService";
 import FetchError from "components/errors/FetchError";
+import useLocationRoute from "hooks/useLocationRoute";
 import { useEffect, useState } from "react";
 import { createSearchParams } from "react-router-dom";
 import useSWR from "swr";
