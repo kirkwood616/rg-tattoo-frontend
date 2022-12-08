@@ -1,10 +1,10 @@
 import AdminPage from "admin/components/AdminPage";
-import useLocationRoute from "admin/hooks/useLocationRoute";
 import { getRequests } from "admin/services/AdminApiService";
 import { adminLocaleTZ } from "admin/settings/AdminSettings";
 import FetchError from "components/errors/FetchError";
 import InfoSection from "components/InfoSection/InfoSection";
 import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
+import useLocationRoute from "hooks/useLocationRoute";
 import { Link } from "react-router-dom";
 import useSWR from "swr";
 import { formatISODateTime, formatTimeWithZone, formatUsDate } from "utils/Formatting";

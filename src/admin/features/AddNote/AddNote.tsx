@@ -1,9 +1,9 @@
-import useLocationRoute from "admin/hooks/useLocationRoute";
 import { updateClosedRequest, updateOpenRequest } from "admin/services/AdminApiService";
 import GoButton from "components/buttons/GoButton";
 import AreYouSure from "components/modals/AreYouSure";
 import ModalWindow from "components/modals/ModalWindow";
 import AppContext from "context/AppContext";
+import useLocationRoute from "hooks/useLocationRoute";
 import { AppointmentRequest } from "models/AppointmentRequest";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { useSWRConfig } from "swr";
