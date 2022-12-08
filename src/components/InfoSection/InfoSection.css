@@ -1,4 +1,5 @@
 .InfoSection {
+  background-color: var(--light-gray-1);
   border: 3px solid var(--light-gray-1);
   border-radius: 1.25rem;
   box-shadow: 0 5px 10px var(--black);
@@ -16,9 +17,7 @@
 }
 
 .info-section_title {
-  border-radius: 1rem 1rem 0 0;
   box-shadow: 0 0px 15px var(--black);
-  background-color: var(--light-gray-1);
   color: var(--black);
   position: relative;
 }
