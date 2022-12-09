@@ -23,22 +23,17 @@ function SetAvailableAppointments() {
   const [dateId, setDateId] = useState<string>("");
   const [isTimesActive, setIsTimesActive] = useState<boolean>(false);
   const [isSaveActive, setIsSaveActive] = useState<boolean>(false);
-
   const { toggleLoading, toggleModalOpen } = useContext(AppContext);
-
   const { data: available, error: availableError } = useSWR("/available-appointments", getAvailableAppointments, {
     revalidateOnFocus: false,
   });
-
   const { mutate } = useSWRConfig();
 
-  // CHECK FOR DATE IN DATABASE
   useEffect(() => {
     if (!available) return;
     const dateInDatabase: AvailableAppointments | undefined = available.find(
-      (date) => date.date === format(startDate!, "yyyy-MM-dd")
+      (date) => date.date === format(startDate!, "yyyy/MM/dd")
     );
-
     if (dateInDatabase) {
       setDateId(dateInDatabase._id!);
       setAppointmentTimes(dateInDatabase.availableTimes);
@@ -80,7 +75,7 @@ function SetAvailableAppointments() {
     toggleLoading();
 
     const appointmentDateTimes: AvailableAppointments = {
-      date: format(startDate, "yyyy-MM-dd"),
+      date: format(startDate, "yyyy/MM/dd"),
       availableTimes: appointmentTimes,
     };
 
@@ -107,7 +102,7 @@ function SetAvailableAppointments() {
         <div className="SetAvailableAppointments">
           <h1>Set Available Appointments</h1>
 
-          <SetAvailable.DateSelect startDate={startDate} setStartDate={setStartDate} />
+          <SetAvailable.DateSelect available={available} startDate={startDate} setStartDate={setStartDate} />
 
           <SetAvailable.Controls setAppointmentTimes={setAppointmentTimes} setIsTimesActive={setIsTimesActive} />
 
