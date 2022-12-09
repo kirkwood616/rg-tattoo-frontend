@@ -1,67 +1,40 @@
 import FormErrorMessage from "components/errors/FormErrorMessage";
 import RequestContext from "context/RequestContext";
-import { subDays } from "date-fns";
 import AvailableAppointments from "models/AvailableAppointments";
-import { ReactNode, useContext, useState } from "react";
-import DatePicker, { CalendarContainer } from "react-datepicker";
+import { useContext } from "react";
+import DatePicker from "react-datepicker";
+import { populateHighlights } from "utils/DatePicker";
 
 interface Props {
   available: AvailableAppointments[] | undefined;
 }
 
-function CalendarLegend(props: { children: ReactNode }) {
-  return (
-    <>
-      <CalendarContainer>
-        <>X = Available Date</>
-        <div>{props.children}</div>
-      </CalendarContainer>
-    </>
-  );
-}
-
 function SelectDate({ available }: Props) {
-  const [maxAppointmentDate, setMaxAppointmentDate] = useState<Date>();
-  const [excludedDates, setExcludedDates] = useState<Date[]>([]);
-
-  const { state, dispatch } = useContext(RequestContext);
-
-  function disabledDates(date: Date): boolean {
-    return date.getDay() !== 0 && date.getDay() !== 1;
-  }
+  const { dispatch } = useContext(RequestContext);
 
   function handleDateChange(date: Date) {
     dispatch({ type: "startDate", value: date });
     dispatch({ type: "appointmentTime", value: "" });
   }
 
-  function populateAvailableHighlights() {
+  function maxDate() {
     if (!available) return;
-    let highlightDates: Date[] = [];
-    available.forEach((item) => {
-      if (item.availableTimes.length) {
-        highlightDates.push(subDays(new Date(item.date), 0));
-      }
-    });
-    return highlightDates;
+    const maxDate = available[available.length - 1].date;
+    return new Date(maxDate);
   }
-
-  const highlights = populateAvailableHighlights();
 
   return (
     <section className="field_container">
       <label htmlFor="datePicker">Select Date:</label>
       <DatePicker
+        autoComplete="off"
         name="datePicker"
         id="datePicker"
         placeholderText="Select Date"
-        onChange={handleDateChange}
+        highlightDates={populateHighlights(available)}
         minDate={new Date()}
-        maxDate={maxAppointmentDate}
-        filterDate={disabledDates}
-        excludeDates={excludedDates}
-        highlightDates={highlights}
-        autoComplete="off"
+        maxDate={maxDate()}
+        onChange={(date: Date) => handleDateChange(date)}
         isClearable
         withPortal
         required
