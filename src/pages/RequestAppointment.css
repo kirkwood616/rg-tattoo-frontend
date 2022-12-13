@@ -1,9 +1,9 @@
 .RequestAppointment {
+  align-items: center;
+  color: white;
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding: 1rem;
-  color: white;
 }
 
 .field_container {
@@ -12,12 +12,13 @@
   width: 100%;
 }
 
-.field_container > label {
-  background: linear-gradient(90deg, var(--dark-gray-2), var(--blue), var(--dark-gray-2));
-  cursor: pointer;
-  display: inline-block;
+.field_container__label_container {
+  align-items: center;
+  background: linear-gradient(90deg, var(--dark-gray-2), var(--dark-gray-4), var(--dark-gray-2));
+  display: flex;
   font-weight: bold;
-  padding: 0.5rem 0;
+  justify-content: center;
+  min-height: 2.5rem;
   width: 100%;
 }
 
