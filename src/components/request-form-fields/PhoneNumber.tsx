@@ -7,9 +7,9 @@ function PhoneNumber() {
 
   return (
     <section className="field_container">
-      <label htmlFor="phoneNumber" className={state.appointmentTime.value ? "label" : "label disabled"}>
-        Phone:
-      </label>
+      <div className="field_container__label_container">
+        <label htmlFor="phoneNumber">Phone:</label>
+      </div>
       <input
         type="tel"
         name="phoneNumber"

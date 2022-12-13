@@ -7,9 +7,9 @@ function Age() {
 
   return (
     <section className="field_container">
-      <label htmlFor="age" className={state.appointmentTime.value ? "label" : "label disabled"}>
-        Age:
-      </label>
+      <div className="field_container__label_container">
+        <label htmlFor="age">Age:</label>
+      </div>
       <input
         type="number"
         name="age"

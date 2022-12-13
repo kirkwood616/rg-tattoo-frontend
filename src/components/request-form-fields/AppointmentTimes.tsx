@@ -15,7 +15,9 @@ function AppointmentTimes() {
     return <FormErrorMessage message={`NO AVAILABLE TIMES. PLEASE SELECT ANOTHER DATE`} name={"appointmentTime"} />;
   return (
     <section className="field_container">
-      <label htmlFor="time-picker">Available Times:</label>
+      <div className="field_container__label_container">
+        <label htmlFor="time-picker">Available Times:</label>
+      </div>
       <input
         type="text"
         name="time-picker"

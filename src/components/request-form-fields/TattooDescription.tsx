@@ -7,9 +7,9 @@ function TattooDescription() {
 
   return (
     <section className="field_container">
-      <label htmlFor="tattooDescription" className={state.appointmentTime.value ? "label" : "label disabled"}>
-        Tattoo Description:
-      </label>
+      <div className="field_container__label_container">
+        <label htmlFor="tattooDescription">Tattoo Description:</label>
+      </div>
       <textarea
         name="tattooDescription"
         id="tattooDescription"

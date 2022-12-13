@@ -36,7 +36,9 @@ function PhotoUpload({ name }: Props) {
 
   return (
     <section className="field_container">
-      <label htmlFor={name}>{labelTitle()}</label>
+      <div className="field_container__label_container">
+        <label htmlFor={name}>{labelTitle()}</label>
+      </div>
       <div className="photo-upload">
         <label className="file-label">
           <input
