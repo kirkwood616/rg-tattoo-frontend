@@ -14,6 +14,7 @@ function RequestConfirm() {
             name="requestConfirmBox"
             id="requestConfirmBox"
             className="request-confirm-box"
+            checked={state.requestConfirm.value}
             onChange={() => dispatch({ type: "requestConfirm", value: !state.requestConfirm.value })}
           />
         </div>
