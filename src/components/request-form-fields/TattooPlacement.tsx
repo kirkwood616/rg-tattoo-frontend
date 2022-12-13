@@ -7,9 +7,9 @@ function TattooPlacement() {
 
   return (
     <section className="field_container">
-      <label htmlFor="tattooPlacement" className={state.appointmentTime.value ? "label" : "label disabled"}>
-        Tattoo Placement:
-      </label>
+      <div className="field_container__label_container">
+        <label htmlFor="tattooPlacement">Tattoo Placement:</label>
+      </div>
       <input
         type="text"
         name="tattooPlacement"

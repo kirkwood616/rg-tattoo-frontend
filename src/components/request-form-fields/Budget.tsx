@@ -12,7 +12,9 @@ function Budget() {
 
   return (
     <section className="field_container">
-      <label htmlFor="budget">Budget:</label>
+      <div className="field_container__label_container">
+        <label htmlFor="budget">Budget:</label>
+      </div>
 
       <input
         type="text"

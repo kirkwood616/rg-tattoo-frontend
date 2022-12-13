@@ -7,9 +7,9 @@ function Email() {
 
   return (
     <section className="field_container">
-      <label htmlFor="email" className={state.appointmentTime.value ? "label" : "label disabled"}>
-        Email:
-      </label>
+      <div className="field_container__label_container">
+        <label htmlFor="email">Email:</label>
+      </div>
       <input
         type="email"
         name="email"

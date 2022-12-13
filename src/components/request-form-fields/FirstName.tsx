@@ -7,9 +7,9 @@ function FirstName() {
 
   return (
     <section className="field_container">
-      <label htmlFor="firstName" className={state.appointmentTime.value ? "label" : "label disabled"}>
-        First Name:
-      </label>
+      <div className="field_container__label_container">
+        <label htmlFor="firstName">First Name:</label>
+      </div>
       <input
         type="text"
         name="firstName"

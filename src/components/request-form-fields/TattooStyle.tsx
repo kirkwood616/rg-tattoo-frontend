@@ -6,15 +6,15 @@ import RequestContext from "context/RequestContext";
 import { useContext, useState } from "react";
 
 function TattooStyle() {
+  const [isStyleActive, setIsStyleActive] = useState<boolean>(false);
   const { toggleModalOpen } = useContext(AppContext);
   const { state } = useContext(RequestContext);
-  const [isStyleActive, setIsStyleActive] = useState<boolean>(false);
 
   return (
     <section className="field_container">
-      <label htmlFor="tattooStyle" className={state.appointmentTime.value ? "label" : "label disabled"}>
-        Tattoo Style:
-      </label>
+      <div className="field_container__label_container">
+        <label htmlFor="style-picker">Tattoo Style:</label>
+      </div>
 
       <input
         type="text"
