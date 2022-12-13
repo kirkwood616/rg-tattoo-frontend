@@ -10,7 +10,7 @@ interface Props {
 }
 
 function SelectDate({ available }: Props) {
-  const { dispatch } = useContext(RequestContext);
+  const { state, dispatch } = useContext(RequestContext);
 
   function handleDateChange(date: Date) {
     dispatch({ type: "startDate", value: date });
@@ -25,12 +25,15 @@ function SelectDate({ available }: Props) {
 
   return (
     <section className="field_container">
-      <label htmlFor="datePicker">Select Date:</label>
+      <div className="field_container__label_container">
+        <label htmlFor="datePicker">Select Date:</label>
+      </div>
       <DatePicker
         autoComplete="off"
         name="datePicker"
         id="datePicker"
         placeholderText="Select Date"
+        selected={state.startDate.value}
         highlightDates={populateHighlights(available)}
         minDate={new Date()}
         maxDate={maxDate()}
