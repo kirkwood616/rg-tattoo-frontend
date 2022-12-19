@@ -1,9 +1,11 @@
 import { tattooStyles } from "admin/settings/AdminSettings";
 import FormErrorMessage from "components/errors/FormErrorMessage";
+import InfoExplain from "components/features/Explain/Explain";
 import SelectList from "components/modals/SelectList";
 import AppContext from "context/AppContext";
 import RequestContext from "context/RequestContext";
 import { useContext, useState } from "react";
+import * as Explain from "../features/Explain";
 
 function TattooStyle() {
   const [isStyleActive, setIsStyleActive] = useState<boolean>(false);
@@ -14,6 +16,7 @@ function TattooStyle() {
     <section className="field_container">
       <div className="field_container__label_container">
         <label htmlFor="style-picker">Tattoo Style:</label>
+        <InfoExplain children={<Explain.Style />} />
       </div>
 
       <input
