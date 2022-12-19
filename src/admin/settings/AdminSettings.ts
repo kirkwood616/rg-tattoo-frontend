@@ -19,7 +19,7 @@ function adminTimePickerValues(startTime: string, endTime: string, interval: num
 export const timePickerValues: string[] | void = adminTimePickerValues("12:00 PM", "8:00 PM", 15);
 
 // TATTOO STYLES
-export const tattooStyles = ["Linework", "Black & White", "Full Color", "Lettering"];
+export const tattooStyles = ["Linework", "Black and Gray", "Color", "Lettering"];
 
 // BUDGET
 export const budgetBrackets = ["$80 - $120", "$130 - $220", "$230 - $320", "$330 - $420", "$430+"];
