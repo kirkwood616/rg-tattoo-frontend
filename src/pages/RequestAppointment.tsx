@@ -94,8 +94,8 @@ function RequestAppointment() {
               <Field.TattooStyle />
               <Field.TattooPlacement />
               <Field.Budget />
-              <Field.PhotoUpload name="referencePhoto" />
-              {state.referencePhoto.value && <Field.PhotoUpload name="placementPhoto" />}
+              <Field.PhotoUpload photoName="referencePhoto" />
+              <Field.PhotoUpload photoName="placementPhoto" />
               <Field.TattooDescription />
               <Field.RequestConfirm />
               {state.appointmentTime.value && (
