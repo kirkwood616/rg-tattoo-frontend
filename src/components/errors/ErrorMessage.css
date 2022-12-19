@@ -46,7 +46,6 @@
   transform: translateY(0);
   transform-origin: left top;
   transition: all 0.75s ease-out;
-  width: 100%;
 }
 
 .ErrorMessage:after,
