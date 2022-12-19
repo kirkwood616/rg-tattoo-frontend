@@ -42,6 +42,8 @@ export type HistoryAction =
 
 export type PhotoType = "reference" | "placement";
 
+export type PhotoName = "referencePhoto" | "placementPhoto";
+
 export interface PhotoUrls {
   referencePhotoURL: string;
   placementPhotoURL: string | undefined;
