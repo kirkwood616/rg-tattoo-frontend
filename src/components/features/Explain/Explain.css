@@ -1,0 +1,16 @@
+.info-explain_button {
+  background-color: transparent;
+  border: 1px solid black;
+  border-radius: 5rem;
+  height: 1.9rem;
+  margin-left: 0.25rem;
+  padding: 0;
+}
+
+.info-explain_button > svg {
+  background-color: black;
+  border-radius: 5rem;
+  fill: var(--blue);
+  height: 1.75rem;
+  width: 1.75rem;
+}

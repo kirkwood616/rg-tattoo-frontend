@@ -19,8 +19,12 @@ function SelectDate({ available }: Props) {
 
   function maxDate() {
     if (!available) return;
-    const maxDate = available[available.length - 1].date;
-    return new Date(maxDate);
+    const maxDate = available[available.length - 1]?.date;
+    if (maxDate) {
+      return new Date(maxDate);
+    } else {
+      return new Date();
+    }
   }
 
   return (
