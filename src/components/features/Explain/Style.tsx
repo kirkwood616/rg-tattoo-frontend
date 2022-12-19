@@ -14,18 +14,18 @@ function Style() {
         be delicate or bold depending on preference.
       </p>
 
-      <h1>Black & White</h1>
+      <h1>Black and Gray</h1>
       <span>IMAGE REFERENCE HERE</span>
       <p>
-        Black & White or Black & Gray tattoo styles are the oldest body art types. The style uses black ink to create a
-        tattoo, with areas of skin used for highlights as well as white ink for shading or contrast.
+        Black & Gray tattoo styles are the oldest body art types. The style uses black ink to create a tattoo, with areas of
+        skin used for highlights as well as gray ink for shading or contrast.
       </p>
 
-      <h1>Full Color</h1>
+      <h1>Color</h1>
       <span>IMAGE REFERENCE HERE</span>
       <p>
-        Full Color is for a tattoo containing at least 1 color other than black ink. A Full Color can include black and/or
-        gray ink and up to several colored inks, or colored ink(s) only as part of the design.
+        Color is a tattoo containing at least 1 color other than black and/or gray ink. A color tattoo can include black
+        and/or gray ink and up to several colored inks, or only colored ink(s) as part of the design.
       </p>
 
       <h1>Lettering</h1>
