@@ -253,3 +253,16 @@ export function formatLcHyphen(input: string) {
   let format = input.replace(/\s+/g, "-").toLowerCase();
   return format;
 }
+
+/**
+ * Formats a string in camelCase to a string in Title Case.
+ * @param input `string`
+ * @returns `string`
+ * @example 'camelCase' => 'Camel Case'
+ */
+export function formatCamelToTitle(input: string) {
+  const text = input;
+  const result = text.replace(/([A-Z])/g, " $1");
+  const finalResult = result.charAt(0).toUpperCase() + result.slice(1);
+  return finalResult;
+}
