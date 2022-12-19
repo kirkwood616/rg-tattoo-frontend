@@ -8,13 +8,10 @@ interface Props {
 function Images({ imageName }: Props) {
   switch (imageName) {
     case "placementPhoto":
-      <PlacementImage />;
-      break;
+      return <PlacementImage />;
     case "referencePhoto":
-      <ReferenceImage />;
-      break;
+      return <ReferenceImage />;
   }
-  return <div className="Images"></div>;
 }
 
 export default Images;
