@@ -2,11 +2,10 @@ import RemoveFileButton from "components/buttons/RemoveFileButton";
 import FormErrorMessage from "components/errors/FormErrorMessage";
 import InfoExplain from "components/features/Explain/Explain";
 import RequestContext from "context/RequestContext";
+import { PhotoName } from "models/AppointmentRequest";
 import { ChangeEvent, useContext } from "react";
 import { formatCamelToTitle } from "utils/Formatting";
 import * as Explain from "../features/Explain";
-
-type PhotoName = "referencePhoto" | "placementPhoto";
 
 interface Props {
   photoName: PhotoName;
@@ -33,7 +32,7 @@ function PhotoUpload({ photoName }: Props) {
     <section className="field_container">
       <div className="field_container__label_container">
         <label htmlFor={photoName}>{formatCamelToTitle(photoName)}:</label>
-        <InfoExplain children={photoName === "referencePhoto" ? <Explain.ReferenceImage /> : <Explain.PlacementImage />} />
+        <InfoExplain children={<Explain.Images imageName={photoName} />} />
       </div>
       <div className="photo-upload">
         <label className="file-label">
