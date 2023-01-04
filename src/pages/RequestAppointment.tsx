@@ -1,7 +1,7 @@
 import GoButton from "components/buttons/GoButton";
 import FetchError from "components/errors/FetchError";
 import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
-import AreYouSure from "components/modals/AreYouSure";
+import ReviewRequest from "components/modals/ReviewRequest";
 import Page from "components/Page";
 import * as Field from "components/request-form-fields";
 import AppContext from "context/AppContext";
@@ -10,23 +10,18 @@ import { format } from "date-fns";
 import AvailableAppointments from "models/AvailableAppointments";
 import { FormEvent, useContext, useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { useNavigate } from "react-router-dom";
-import { getAvailableAppointments, postAppointmentRequest } from "services/ApiService";
+import { getAvailableAppointments } from "services/ApiService";
 import useSWR from "swr";
-import { handlePhotoUpload } from "utils/PhotoUpload";
-import { generateNewRequest } from "utils/Request";
 import "./RequestAppointment.css";
 
 function RequestAppointment() {
-  const { toggleLoading, toggleModalOpen } = useContext(AppContext);
+  const { toggleModalOpen } = useContext(AppContext);
   const { setAvailableAppointmentsTimes, state, dispatch } = useContext(RequestContext);
   const [isSubmitActive, setIsSubmitActive] = useState(false);
 
   const { data: available, error } = useSWR("available-appointments", getAvailableAppointments, {
     revalidateOnFocus: false,
   });
-
-  const navigate = useNavigate();
 
   // CHECK FOR DATE IN DATABASE
   useEffect(() => {
@@ -53,25 +48,6 @@ function RequestAppointment() {
       return;
     } else {
       toggleModalOpen(setIsSubmitActive);
-    }
-  }
-
-  async function handleSubmit(): Promise<void> {
-    toggleLoading();
-    const newRequest = generateNewRequest(state);
-    try {
-      await postAppointmentRequest(newRequest);
-      await handlePhotoUpload(state, "reference");
-      if (state.placementPhoto.value) {
-        await handlePhotoUpload(state, "placement");
-      }
-      toggleModalOpen(setIsSubmitActive);
-      navigate("/request-submitted");
-    } catch (error) {
-      console.error(error);
-      navigate("/aftercare");
-    } finally {
-      toggleLoading();
     }
   }
 
@@ -105,14 +81,7 @@ function RequestAppointment() {
                   backgroundColor={state.hasErrors ? "var(--dark-gray-3)" : "green"}
                 />
               )}
-              {isSubmitActive && (
-                <AreYouSure
-                  isActive={isSubmitActive}
-                  setIsActive={setIsSubmitActive}
-                  yesFunction={handleSubmit}
-                  yesButtonText="YES"
-                />
-              )}
+              {isSubmitActive && <ReviewRequest isActive={isSubmitActive} setIsActive={setIsSubmitActive} />}
             </>
           )}
         </form>
