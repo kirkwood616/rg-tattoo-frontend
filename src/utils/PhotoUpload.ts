@@ -13,7 +13,7 @@ export async function handlePhotoUpload(state: RequestReducer, photoType: PhotoT
       if (!state.referencePhoto.value) break;
       file = state.referencePhoto.value;
       fileName = formatPhotoPath(state, "reference");
-      if (!fileName) return;
+      if (!fileName) break;
       storageRef = ref(storage, `/images/${fileName}`);
       try {
         await uploadBytesResumable(storageRef, file);
@@ -27,7 +27,7 @@ export async function handlePhotoUpload(state: RequestReducer, photoType: PhotoT
       if (!state.placementPhoto.value) break;
       file = state.placementPhoto.value;
       fileName = formatPhotoPath(state, "reference");
-      if (!fileName) return;
+      if (!fileName) break;
       storageRef = ref(storage, `/images/${fileName}`);
       try {
         await uploadBytesResumable(storageRef, file);
@@ -57,4 +57,14 @@ function handlePlacementPhotoUpload(state: RequestReducer): void {
   uploadBytesResumable(storageRef, state.placementPhoto.value);
 }
 
-export { handleReferencePhotoUpload, handlePlacementPhotoUpload };
+function readFileSetState(file: File | null, setState: React.Dispatch<React.SetStateAction<string | ArrayBuffer | null>>) {
+  if (file) {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      setState(reader.result);
+    });
+    reader.readAsDataURL(file);
+  }
+}
+
+export { handleReferencePhotoUpload, handlePlacementPhotoUpload, readFileSetState };

@@ -21,7 +21,7 @@
   color: white;
   display: flex;
   justify-content: center;
-  max-height: 85vh;
+  max-height: 95vh;
   min-height: 25%;
   position: relative;
   text-align: center;
@@ -29,7 +29,7 @@
 }
 
 .ModalWindow > .modal_body > .modal_content {
-  max-height: 75vh;
+  max-height: 85vh;
   overflow: auto;
   padding: 1rem;
   width: 100%;
@@ -78,10 +78,11 @@
 .modal_body > .x_button {
   top: -1rem;
   right: -1rem;
+  z-index: 10;
 }
 
 @media only screen and (min-width: 600px) {
   .ModalWindow > .modal_body {
-    width: 500px;
+    width: 550px;
   }
 }
