@@ -33,18 +33,17 @@
 
 .NavMenu .menu {
   background-color: var(--black);
-  opacity: 0;
+  max-height: 0px;
+  overflow: hidden;
   position: absolute;
   right: 0;
-  transition: all 0.5s ease, transform 0.4s ease, visibility 0.5s ease-in;
-  visibility: hidden;
+  transition: all 0.5s ease;
   width: 100vw;
   z-index: 1;
 }
 
 .NavMenu .menu.active {
-  opacity: 1;
-  visibility: visible;
+  max-height: 25rem;
 }
 
 .NavMenu .menu ul {
