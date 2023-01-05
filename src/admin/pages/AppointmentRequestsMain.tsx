@@ -1,7 +1,7 @@
 import AdminPage from "admin/components/AdminPage";
 import { getRequestStatusCounts } from "admin/services/AdminApiService";
 import FetchError from "components/errors/FetchError";
-import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
+import Loading from "components/loading/Loading";
 import { RequestStatus } from "models/AppointmentRequest";
 import { Link } from "react-router-dom";
 import useSWR from "swr";
@@ -23,7 +23,7 @@ function AppointmentRequestsMain() {
   );
 
   if (countsError) return <FetchError fetchError={countsError} />;
-  if (!counts) return <LoadingDotsIcon />;
+  if (!counts) return <Loading />;
   return (
     <AdminPage title={"Appointment Requests"}>
       <div className="AppointmentRequestsMain">

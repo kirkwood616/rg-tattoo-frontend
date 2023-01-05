@@ -1,6 +1,6 @@
 import GoButton from "components/buttons/GoButton";
 import ErrorMessage from "components/errors/ErrorMessage";
-import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
+import Loading from "components/loading/Loading";
 import AppContext from "context/AppContext";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "firebaseConfig";
@@ -30,7 +30,7 @@ function LogIn() {
     }
   }
 
-  if (checkingAuth) return <LoadingDotsIcon />;
+  if (checkingAuth) return <Loading />;
   if (user) return <Navigate to="/admin/home" />;
   return (
     <div className="LogIn">

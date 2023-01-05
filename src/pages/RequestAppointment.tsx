@@ -1,6 +1,6 @@
 import GoButton from "components/buttons/GoButton";
 import FetchError from "components/errors/FetchError";
-import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
+import Loading from "components/loading/Loading";
 import ReviewRequest from "components/modals/ReviewRequest";
 import Page from "components/Page";
 import * as Field from "components/request-form-fields";
@@ -18,12 +18,10 @@ function RequestAppointment() {
   const { toggleModalOpen } = useContext(AppContext);
   const { setAvailableAppointmentsTimes, state, dispatch } = useContext(RequestContext);
   const [isSubmitActive, setIsSubmitActive] = useState(false);
-
   const { data: available, error } = useSWR("available-appointments", getAvailableAppointments, {
     revalidateOnFocus: false,
   });
 
-  // CHECK FOR DATE IN DATABASE
   useEffect(() => {
     if (!state.startDate.value || !available) return;
     const dateInDatabase: AvailableAppointments | undefined = available.find((appointment) => {
@@ -44,7 +42,6 @@ function RequestAppointment() {
     e.preventDefault();
     dispatch({ type: "submitCount" });
     if (state.hasErrors) {
-      console.log("ERRORS");
       return;
     } else {
       toggleModalOpen(setIsSubmitActive);
@@ -52,7 +49,7 @@ function RequestAppointment() {
   }
 
   if (error) return <FetchError fetchError={error} />;
-  if (!available) return <LoadingDotsIcon />;
+  if (!available) return <Loading />;
   return (
     <Page title="Request Appointment">
       <div className="RequestAppointment">
