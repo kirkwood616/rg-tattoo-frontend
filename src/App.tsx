@@ -8,7 +8,7 @@ import Search from "admin/pages/Search";
 import SetAvailableAppointments from "admin/pages/SetAvailableAppointments";
 import { requestTypes } from "admin/settings/AdminSettings";
 import Header from "components/Header";
-import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
+import Loading from "components/loading/Loading";
 import RequestPage from "components/RequestPage";
 import AppContext from "context/AppContext";
 import Aftercare from "pages/Aftercare";
@@ -26,7 +26,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        {isLoading && <LoadingDotsIcon />}
+        {isLoading && <Loading />}
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />

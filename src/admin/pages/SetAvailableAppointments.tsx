@@ -4,7 +4,7 @@ import { postAvailableAppointment, updateAvailableAppointment } from "admin/serv
 import { timePickerValues } from "admin/settings/AdminSettings";
 import GoButton from "components/buttons/GoButton";
 import FetchError from "components/errors/FetchError";
-import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
+import Loading from "components/loading/Loading";
 import AreYouSure from "components/modals/AreYouSure";
 import SelectList from "components/modals/SelectList";
 import AppContext from "context/AppContext";
@@ -95,7 +95,7 @@ function SetAvailableAppointments() {
   }
 
   if (availableError) return <FetchError fetchError={availableError} />;
-  if (!available) return <LoadingDotsIcon />;
+  if (!available) return <Loading />;
   return (
     <>
       <AdminPage title="Set Available Appointments">

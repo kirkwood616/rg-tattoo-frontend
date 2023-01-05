@@ -3,7 +3,7 @@ import { getRequests } from "admin/services/AdminApiService";
 import { adminLocaleTZ } from "admin/settings/AdminSettings";
 import FetchError from "components/errors/FetchError";
 import InfoSection from "components/InfoSection/InfoSection";
-import LoadingDotsIcon from "components/loading/LoadingDotsIcon";
+import Loading from "components/loading/Loading";
 import useLocationRoute from "hooks/useLocationRoute";
 import { Link } from "react-router-dom";
 import useSWR from "swr";
@@ -17,7 +17,7 @@ function RequestListByStatus() {
   });
 
   if (requestsError) return <FetchError fetchError={requestsError} />;
-  if (!requests) return <LoadingDotsIcon />;
+  if (!requests) return <Loading />;
   return (
     <AdminPage title={`${title} Requests`}>
       <div className="requests-list_container">
