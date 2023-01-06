@@ -7,6 +7,7 @@ import useLocationRoute from "hooks/useLocationRoute";
 import { AppointmentRequest } from "models/AppointmentRequest";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { useSWRConfig } from "swr";
+import { toggleBooleanState } from "utils/Toggle";
 import "./AddNote.css";
 
 interface Props {
@@ -25,7 +26,7 @@ function AddNote({ request, note, setNote }: Props) {
 
   function onToggleNote(): void {
     toggleModalOpen(setIsNoteActive);
-    setNote("");
+    if (note.length > 0) setNote("");
   }
 
   function updateByRequestStatus(request: AppointmentRequest): Promise<any> {
@@ -59,8 +60,8 @@ function AddNote({ request, note, setNote }: Props) {
       };
 
       await mutate(`appointment-requests/${route}/${id}`, updateByRequestStatus(updatedRequest), options);
-      setIsSubmitActive((current) => !current);
-      onToggleNote();
+      toggleBooleanState(setIsSubmitActive);
+      setNote("");
     } catch (error) {
       console.error(error);
     } finally {
