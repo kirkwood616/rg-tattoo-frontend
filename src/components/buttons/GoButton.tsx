@@ -15,8 +15,7 @@ function GoButton({ type, text, backgroundColor, onClick, isDisabled }: Props): 
       type={type}
       onClick={onClick}
       className="go-button"
-      style={{ backgroundColor: isDisabled ? "var(--dark-gray-2)" : backgroundColor }}
-      disabled={isDisabled}
+      style={{ backgroundColor: isDisabled ? "var(--button_disabled)" : backgroundColor }}
     >
       {text}
     </button>
