@@ -104,7 +104,7 @@
 }
 
 .RequestAppointment .choose-file {
-  background-color: var(--green);
+  background-color: var(--blue);
   border: none;
   border-radius: var(--button_radius);
   box-shadow: 1px 1px 3px var(--black);
