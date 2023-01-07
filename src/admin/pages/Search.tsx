@@ -3,6 +3,7 @@ import SearchBar from "admin/features/Search/SearchBar";
 import SearchResults from "admin/features/Search/SearchResults";
 import { getSearch } from "admin/services/AdminApiService";
 import FetchError from "components/errors/FetchError";
+import LoadingDots from "components/loading/LoadingDots";
 import useLocationRoute from "hooks/useLocationRoute";
 import { useEffect, useState } from "react";
 import { createSearchParams } from "react-router-dom";
@@ -49,7 +50,7 @@ function Search() {
         <h1>Search Requests</h1>
         <SearchBar searchInput={searchInput} setSearchInput={setSearchInput} onSearchSubmit={onSearchSubmit} />
         {searchError && <FetchError fetchError={searchError} />}
-        {isSearching && <h2>Searching...</h2>}
+        {isSearching && <LoadingDots />}
         {results && <SearchResults results={results} />}
       </div>
     </AdminPage>
