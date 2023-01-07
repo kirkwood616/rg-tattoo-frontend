@@ -14,9 +14,7 @@ import { useNavigate } from "react-router-dom";
 function RejectModal() {
   const { toggleLoading, toggleModalOpen } = useContext(AppContext);
   const { actionState, dispatch, dispatchIsRejectActive } = useContext(ActionContext);
-
   const [isSubmitActive, setIsSubmitActive] = useState(false);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,13 +29,14 @@ function RejectModal() {
 
   function onRejectRequest(): void {
     if (!actionState.request) return;
-
     switch (actionState.request.requestStatus) {
       case "new":
       case "awaiting-deposit":
+        if (!actionState.deniedReason) break;
         setIsSubmitActive((current) => !current);
         break;
       case "deposit-received":
+        if (!actionState.canceledReason) break;
         setIsSubmitActive((current) => !current);
         break;
       default:
