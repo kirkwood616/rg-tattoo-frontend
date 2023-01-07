@@ -12,10 +12,9 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function ActionModal() {
-  const [isSubmitActive, setIsSubmitActive] = useState<boolean>(false);
-
   const { actionState, dispatch } = useContext(ActionContext);
   const { toggleLoading, isModalOpen, toggleModalOpen } = useContext(AppContext);
+  const [isSubmitActive, setIsSubmitActive] = useState<boolean>(false);
   const navigate = useNavigate();
 
   function onClose(): void {
@@ -61,7 +60,7 @@ function ActionModal() {
 
       {actionState.request.requestStatus === "awaiting-deposit" && (
         <ActionField.SubmitPrice
-          title="DEPOSIT-RECEIVED"
+          title="DEPOSIT RECEIVED"
           label="Deposit Ammount Received"
           statePrice={actionState.depositReceived}
           dispatchType="depositReceived"
