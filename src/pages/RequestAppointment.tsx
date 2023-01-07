@@ -75,7 +75,8 @@ function RequestAppointment() {
                 <GoButton
                   type="submit"
                   text="SUBMIT REQUEST"
-                  backgroundColor={state.hasErrors ? "var(--dark-gray-3)" : "green"}
+                  backgroundColor="var(--button_enabled__primary"
+                  isDisabled={state.hasErrors}
                 />
               )}
               {isSubmitActive && <ReviewRequest isActive={isSubmitActive} setIsActive={setIsSubmitActive} />}
