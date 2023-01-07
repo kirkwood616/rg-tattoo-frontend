@@ -3,7 +3,7 @@ import ActionModal from "admin/modals/ActionModal";
 import RejectModal from "admin/modals/RejectModal";
 import { actionButtonsText, defaultButtonsText } from "admin/utils/ActionHelpers";
 import GoButton from "components/buttons/GoButton";
-import Error404 from "pages/Error404";
+import Error404 from "components/errors/Error404";
 import { useContext, useEffect, useState } from "react";
 
 function OpenRequestActions() {

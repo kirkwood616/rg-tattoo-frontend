@@ -3,11 +3,11 @@ import * as ActionField from "admin/features/RequestActions/ActionFields";
 import { rejectSubmitRequest } from "admin/utils/RejectSubmitRequest";
 import requestApiCall from "admin/utils/RequestApiCall";
 import GoButton from "components/buttons/GoButton";
+import Error404 from "components/errors/Error404";
 import AreYouSure from "components/modals/AreYouSure";
 import ModalWindow from "components/modals/ModalWindow";
 import AppContext from "context/AppContext";
 import { AppointmentRequest } from "models/AppointmentRequest";
-import Error404 from "pages/Error404";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
