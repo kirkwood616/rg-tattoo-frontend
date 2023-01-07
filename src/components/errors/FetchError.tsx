@@ -1,3 +1,4 @@
+import { ReactComponent as ErrorImage } from "assets/errors/rackxruin_error.svg";
 import "./FetchError.css";
 
 interface Props {
@@ -7,8 +8,8 @@ interface Props {
 function FetchError({ fetchError }: Props) {
   return (
     <div className="FetchError">
-      <h1>Failed To Load Data</h1>
-      <h2>{fetchError.message}</h2>
+      <ErrorImage />
+      <h1>{fetchError.message}</h1>
     </div>
   );
 }
