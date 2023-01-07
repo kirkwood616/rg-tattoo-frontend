@@ -14,8 +14,7 @@
 
 .Loading svg {
   animation: rotate 1.5s infinite;
-  fill: white;
-  opacity: 0.5;
+  fill: var(--light-gray-1);
   width: 215px;
 }
 
@@ -29,10 +28,10 @@
 }
 
 .Loading h1 > span {
+  color: var(--light-gray-1);
   display: inline-block;
   animation: bounce 1.75s infinite;
   font-size: 1.5rem;
-  opacity: 0.5;
   padding: 10px;
 }
 .Loading h1 > span:nth-child(1) {
