@@ -23,8 +23,8 @@ function OpenRequestActions() {
   if (!actionState.request) return <Error404 />;
   return (
     <div className="ReqActions" style={{ display: "flex", flexDirection: "column" }}>
-      <GoButton type="button" text={buttonsText.actionText} backgroundColor="green" onClick={dispatchIsActionActive} />
-      <GoButton type="button" text={buttonsText.rejectText} backgroundColor="red" onClick={dispatchIsRejectActive} />
+      <GoButton text={buttonsText.actionText} cssClass="button_primary" onClick={dispatchIsActionActive} />
+      <GoButton text={buttonsText.rejectText} cssClass="button_cancel" onClick={dispatchIsRejectActive} />
       {actionState.isActionActive && <ActionModal />}
       {actionState.isRejectActive && <RejectModal />}
     </div>

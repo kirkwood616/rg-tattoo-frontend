@@ -72,7 +72,7 @@ function AddNote({ request, note, setNote }: Props) {
   return (
     <>
       <div className="AddNote">
-        <GoButton type={"button"} text={"ADD NOTE"} onClick={onToggleNote} />
+        <GoButton text="ADD NOTE" onClick={onToggleNote} />
       </div>
 
       {isNoteActive && (
@@ -90,14 +90,9 @@ function AddNote({ request, note, setNote }: Props) {
 
             <p>* Notes are only visible to you. Clients will not see your notes *</p>
 
-            <GoButton
-              type={"button"}
-              text={"SAVE NOTE"}
-              backgroundColor={note.length ? "green" : "var(--dark-gray-3)"}
-              onClick={onSaveNote}
-            />
+            <GoButton text="SAVE NOTE" cssClass="button_primary" isDisabled={note.length < 1} onClick={onSaveNote} />
 
-            <GoButton type={"button"} text={"CANCEL NOTE"} backgroundColor={"red"} onClick={onToggleNote} />
+            <GoButton text={"CANCEL NOTE"} cssClass="button_cancel" onClick={onToggleNote} />
           </div>
         </ModalWindow>
       )}

@@ -77,9 +77,8 @@ function ActionModal() {
         />
       )}
 
-      <GoButton type="button" text="SUBMIT" backgroundColor="green" onClick={onSubmit} isDisabled={actionState.hasErrors} />
-
-      <GoButton type="button" text="CLOSE WINDOW" backgroundColor="red" onClick={onClose} />
+      <GoButton text="SUBMIT" cssClass="button_primary" isDisabled={actionState.hasErrors} onClick={onSubmit} />
+      <GoButton text="CLOSE WINDOW" cssClass="button_cancel" onClick={onClose} />
 
       {isSubmitActive && (
         <AreYouSure

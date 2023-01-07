@@ -72,12 +72,7 @@ function RequestAppointment() {
               <Field.TattooDescription />
               <Field.RequestConfirm />
               {state.appointmentTime.value && (
-                <GoButton
-                  type="submit"
-                  text="SUBMIT REQUEST"
-                  backgroundColor="var(--button_enabled__primary"
-                  isDisabled={state.hasErrors}
-                />
+                <GoButton type="submit" text="SUBMIT REQUEST" cssClass="button_primary" isDisabled={state.hasErrors} />
               )}
               {isSubmitActive && <ReviewRequest isActive={isSubmitActive} setIsActive={setIsSubmitActive} />}
             </>

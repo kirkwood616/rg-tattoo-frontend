@@ -92,13 +92,8 @@ function ReviewRequest({ isActive, setIsActive }: Props) {
             onChange={() => setIsCaptchaChecked((current) => !current)}
           />
         </div>
-        <GoButton
-          type="button"
-          text="SUBMIT"
-          backgroundColor={isCaptchaChecked ? "green" : "var(--dark-gray-3"}
-          onClick={handleSubmit}
-        />
-        <GoButton type="button" text="CANCEL" backgroundColor="red" onClick={handleClose} />
+        <GoButton text="SUBMIT" cssClass="button_primary" isDisabled={!isCaptchaChecked} onClick={handleSubmit} />
+        <GoButton text="CANCEL" cssClass="button_cancel" onClick={handleClose} />
       </div>
     </ModalWindow>
   );

@@ -76,14 +76,8 @@ function RejectModal() {
         />
       )}
 
-      <GoButton
-        type="button"
-        text="SUBMIT"
-        backgroundColor="green"
-        onClick={onRejectRequest}
-        isDisabled={actionState.hasErrors}
-      />
-      <GoButton type="button" text="CLOSE WINDOW" backgroundColor="red" onClick={onClose} />
+      <GoButton text="SUBMIT" cssClass="button_primary" isDisabled={actionState.hasErrors} onClick={onRejectRequest} />
+      <GoButton text="CLOSE WINDOW" cssClass="button_cancel" onClick={onClose} />
 
       {isSubmitActive && (
         <AreYouSure

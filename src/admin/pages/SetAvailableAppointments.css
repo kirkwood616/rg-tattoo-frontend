@@ -22,7 +22,6 @@
   z-index: 1;
 }
 .save-changes > .go-button {
-  background-color: var(--green);
   width: 100%;
 }
 

@@ -16,12 +16,12 @@ function Controls({ setAppointmentTimes, setIsTimesActive }: Props) {
     <>
       <div className="Controls">
         <div className="all-times_container">
-          <GoButton type="button" text="ADD ALL TIMES" onClick={() => setAppointmentTimes(timePickerValues!)} />
-          <GoButton type="button" text="REMOVE ALL TIMES" onClick={() => setAppointmentTimes([])} />
+          <GoButton text="ADD ALL TIMES" onClick={() => setAppointmentTimes(timePickerValues!)} />
+          <GoButton text="REMOVE ALL TIMES" onClick={() => setAppointmentTimes([])} />
         </div>
       </div>
       <div className="add-time">
-        <GoButton type="button" text="ADD TIME" onClick={() => toggleModalOpen(setIsTimesActive)} />
+        <GoButton text="ADD TIME" onClick={() => toggleModalOpen(setIsTimesActive)} />
       </div>
     </>
   );
