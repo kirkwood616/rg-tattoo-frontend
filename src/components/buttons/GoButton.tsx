@@ -1,21 +1,21 @@
+import { ButtonClassCSS } from "models/Buttons";
 import { FormEvent } from "react";
 import "./GoButton.css";
 
 interface Props {
-  type: "submit" | "reset" | "button";
   text: string;
-  backgroundColor?: string;
-  onClick?: () => void | Promise<void> | ((e: FormEvent<HTMLFormElement>) => void);
+  cssClass?: ButtonClassCSS;
+  type?: "submit" | "reset" | "button";
   isDisabled?: boolean;
+  onClick?: () => void | Promise<void> | ((e: FormEvent<HTMLFormElement>) => void);
 }
 
-function GoButton({ type, text, backgroundColor, onClick, isDisabled }: Props): JSX.Element {
+function GoButton({ type, text, onClick, isDisabled, cssClass }: Props): JSX.Element {
   return (
     <button
-      type={type}
+      type={type ? type : "button"}
       onClick={onClick}
-      className="go-button"
-      style={{ backgroundColor: isDisabled ? "var(--button_disabled)" : backgroundColor }}
+      className={`go-button ${isDisabled ? "button_disabled" : cssClass}`}
     >
       {text}
     </button>

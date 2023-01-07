@@ -7,3 +7,19 @@
   font-weight: bold;
   padding: 1rem;
 }
+
+.button_primary {
+  background-color: var(--button_primary);
+}
+
+.button_secondary {
+  background-color: var(--button_secondary);
+}
+
+.button_disabled {
+  background-color: var(--button_disabled);
+}
+
+.button_cancel {
+  background-color: var(--button_cancel);
+}

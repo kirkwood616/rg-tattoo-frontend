@@ -129,7 +129,7 @@ function SetAvailableAppointments() {
       </AdminPage>
 
       <div className="save-changes">
-        <GoButton type="button" text="SAVE CHANGES" onClick={onSave} />
+        <GoButton text="SAVE CHANGES" cssClass="button_primary" onClick={onSave} />
       </div>
     </>
   );
