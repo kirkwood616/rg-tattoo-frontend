@@ -9,7 +9,10 @@
   --light-gray-2: #d8d8d8;
   --white: whitesmoke;
   --red: red;
-  --green: #3dcc4a;
+  --green: #089908;
+  --button_disabled: var(--dark-gray-3);
+  --button_enabled__primary: var(--green);
+  --button_enabled__secondary: var(--blue);
   --button_radius: 3rem;
   --fade-opacity_in: fadeOpacity 0.25s ease;
 }
