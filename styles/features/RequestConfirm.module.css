@@ -1,0 +1,13 @@
+.RequestConfirm {
+  color: var(--light-gray-2);
+  display: flex;
+  font-size: 0.75rem;
+  font-style: italic;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: justify;
+}
+
+.checkbox__container {
+  margin-right: 0.75rem;
+}

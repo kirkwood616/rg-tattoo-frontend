@@ -1,0 +1,9 @@
+.Label {
+  align-items: center;
+  background: linear-gradient(90deg, var(--dark-gray-2), var(--dark-gray-4), var(--dark-gray-2));
+  display: flex;
+  font-weight: bold;
+  justify-content: center;
+  min-height: 2.5rem;
+  width: 100%;
+}

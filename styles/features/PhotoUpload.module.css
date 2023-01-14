@@ -1,0 +1,41 @@
+.PhotoUpload {
+  align-items: center;
+  background-color: var(--light-gray-1);
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  margin: 0;
+  padding: 0.75rem;
+}
+
+.PhotoUpload img {
+  box-shadow: 0 0 15px black;
+  margin: 1rem;
+  max-height: 200px;
+  max-width: 200px;
+}
+
+.PhotoUpload label {
+  width: 100%;
+}
+
+.choose_file {
+  background-color: var(--blue);
+  border: none;
+  border-radius: var(--button_radius);
+  box-shadow: 1px 1px 3px var(--black);
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  margin: auto;
+  padding: 0.75rem;
+  width: 75%;
+}
+
+.photo_file_name {
+  color: var(--black);
+  font-style: italic;
+  margin-bottom: 1rem;
+}

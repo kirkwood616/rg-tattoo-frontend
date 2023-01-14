@@ -1,0 +1,20 @@
+.FetchError {
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+}
+
+.image__container {
+  width: 100%;
+}
+
+.image {
+  height: 100%;
+  width: 100%;
+}
+
+@media only screen and (min-width: 601px) {
+  .FetchError {
+    width: 600px;
+  }
+}
