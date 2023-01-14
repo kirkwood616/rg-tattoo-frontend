@@ -1,0 +1,88 @@
+.RequestAppointment {
+  align-items: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.RequestAppointment > form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  width: 100%;
+}
+
+.RequestAppointment .no-available-appointments {
+  background-color: red;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  padding: 0.75rem;
+}
+
+.RequestAppointment input[type="text"],
+.RequestAppointment input[type="email"],
+.RequestAppointment input[type="number"],
+.RequestAppointment input[type="tel"],
+.RequestAppointment textarea,
+.RequestAppointment select,
+.RequestAppointment .photo-upload,
+.RequestAppointment .photo-upload_disabled,
+.RequestAppointment .request_textarea {
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  box-shadow: 0 3px 7px var(--black);
+  font-size: 1rem;
+  margin: 0;
+  padding: 0.75rem;
+  text-align: center;
+  width: 100%;
+}
+
+.RequestAppointment input[type="text"]:focus,
+.RequestAppointment input[type="email"]:focus,
+.RequestAppointment input[type="number"]:focus,
+.RequestAppointment input[type="tel"]:focus,
+.RequestAppointment textarea:focus,
+.RequestAppointment select:focus {
+  box-shadow: 0 0 7px white;
+}
+
+.RequestAppointment input[type="checkbox"] {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.RequestAppointment input[type="file"] {
+  display: none;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  width: 0;
+}
+
+.RequestAppointment textarea {
+  font-family: Arial, Helvetica, sans-serif;
+  max-width: 100%;
+  min-height: 150px;
+  resize: vertical;
+  text-align: left;
+}
+
+.RequestAppointment .request-confirm {
+  display: flex;
+  font-size: 0.75rem;
+  margin: 0.5rem 0 0.5rem;
+  text-align: center;
+}
+
+.RequestAppointment .request-confirm-text {
+  font-weight: bold;
+  margin-left: 0.5rem;
+  text-align: justify;
+}
+
+.RequestAppointment > form > button {
+  width: 100%;
+}

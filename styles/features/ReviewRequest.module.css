@@ -1,0 +1,14 @@
+.ReviewRequest {
+  width: 100%;
+}
+
+.ReviewRequest img {
+  box-shadow: 0 0 10px black;
+  max-height: 200px;
+  max-width: 200px;
+}
+
+.recaptcha__container {
+  display: flex;
+  justify-content: center;
+}

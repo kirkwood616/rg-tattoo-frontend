@@ -66,7 +66,7 @@ export interface RequestReducer extends ReducerModel {
   };
   placementPhoto: {
     value: File | null;
-    hasErrors: boolean;
+    readonly hasErrors: boolean;
     checkCount: number;
   };
   tattooDescription: {

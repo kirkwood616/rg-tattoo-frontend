@@ -90,10 +90,12 @@ textarea {
 }
 .react-datepicker {
   background-color: var(--white);
+  border: 8px solid black;
   border-radius: 1rem;
   box-shadow: 0 0 10px var(--black);
   font-size: 1rem;
   font-weight: bold;
+  outline: 4px solid var(--white);
   transition: all 0.25s ease;
 }
 
