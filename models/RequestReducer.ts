@@ -102,4 +102,5 @@ export type RequestAction =
   | { type: "tattooDescription"; value: string }
   | { type: "requestConfirm"; value: boolean }
   | { type: "submitCount" }
-  | { type: "submitErrorCheck" };
+  | { type: "submitErrorCheck" }
+  | { type: "dev" };
