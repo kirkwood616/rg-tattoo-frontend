@@ -94,6 +94,10 @@ export function requestReducer(state: RequestReducer, action: RequestAction) {
         state.referencePhoto.checkCount++;
         state.referencePhoto.hasErrors = true;
       }
+      if (state.startDate.checkCount > 0 && state.placementPhoto.value) {
+        state.placementPhoto.value = null;
+        state.placementPhoto.checkCount++;
+      }
       state.startDate.value = action.value;
       state.startDate.checkCount++;
       if (state.startDate.checkCount > 0 && !state.startDate.value) {
@@ -262,6 +266,28 @@ export function requestReducer(state: RequestReducer, action: RequestAction) {
         state.requestConfirm.checkCount++;
         state.requestConfirm.hasErrors = true;
       }
+      return;
+    case "dev":
+      state.firstName.value = "Tommy";
+      state.firstName.hasErrors = false;
+      state.lastName.value = "Tester";
+      state.lastName.hasErrors = false;
+      state.age.value = 18;
+      state.age.hasErrors = false;
+      state.email.value = "tt@tt.io";
+      state.email.hasErrors = false;
+      state.phoneNumber.value = "(616) 555-5555";
+      state.phoneNumber.hasErrors = false;
+      state.tattooStyle.value = "Color";
+      state.tattooStyle.hasErrors = false;
+      state.tattooPlacement.value = "face";
+      state.tattooPlacement.hasErrors = false;
+      state.budget.value = "$80 - $120";
+      state.budget.hasErrors = false;
+      state.tattooDescription.value = "test \ntest \ntest test TEST";
+      state.tattooDescription.hasErrors = false;
+      state.requestConfirm.value = true;
+      state.requestConfirm.hasErrors = false;
       return;
     default:
       return;

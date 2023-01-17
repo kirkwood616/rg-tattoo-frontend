@@ -1,3 +1,4 @@
+import ErrorBubble from "components/ui/errors/ErrorBubble";
 import FormError from "components/ui/errors/FormError";
 import * as Form from "components/ui/form";
 import RequestContext from "context/RequestContext";
@@ -41,6 +42,7 @@ export default function SelectDate({ available }: SelectDateProps) {
         withPortal
         required
       />
+      {!!available && available.length === 0 && <ErrorBubble errorMessage="NO AVAILABLE APPOINTMENTS" />}
       {state.startDate.hasErrors && state.startDate.checkCount > 0 && (
         <FormError errorMessage={"SELECT DATE"} name={"startDate"} />
       )}

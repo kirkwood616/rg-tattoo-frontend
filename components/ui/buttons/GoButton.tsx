@@ -7,7 +7,7 @@ interface GoButtonProps {
   cssClass?: ButtonClassCSS;
   type?: "submit" | "reset" | "button";
   isDisabled?: boolean;
-  onClick?: () => void | Promise<void> | ((e: FormEvent<HTMLFormElement>) => void);
+  onClick?: () => void | Promise<void | boolean> | ((e: FormEvent<HTMLFormElement>) => void);
 }
 
 function GoButton({ type, text, onClick, isDisabled, cssClass }: GoButtonProps): JSX.Element {

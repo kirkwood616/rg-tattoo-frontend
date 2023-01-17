@@ -1,8 +1,9 @@
 .InfoSection {
-  background-color: var(--light-gray-1);
-  border: 3px solid var(--light-gray-1);
-  border-radius: 1.25rem;
-  box-shadow: 0 5px 10px var(--black);
+  background: linear-gradient(90deg, var(--dark-gray-2), var(--dark-gray-4), var(--dark-gray-2)) padding-box,
+    linear-gradient(to bottom, white, var(--dark-gray-4)) border-box;
+  border: 2px solid transparent;
+  border-radius: 0.5rem;
+  box-shadow: 0 0px 10px var(--dark-gray-4);
   margin: 1.5rem auto;
   overflow: hidden;
   text-align: center;
@@ -18,13 +19,13 @@
 
 .info_section__title {
   box-shadow: 0 0px 15px var(--black);
-  color: var(--black);
+  color: var(--white);
   position: relative;
 }
 
 .info_section__body {
-  border-radius: 0 0 1rem 1rem;
   background-color: var(--white);
   color: black;
   padding: 1rem;
+  white-space: pre-line;
 }

@@ -1,0 +1,17 @@
+.Error404 {
+  max-width: 600px;
+  width: 100%;
+}
+
+.st0 {
+  fill: var(--black);
+}
+.st1 {
+  fill: var(--red);
+}
+.st2 {
+  fill: var(--light-gray-1);
+}
+.st3 {
+  fill: var(--white);
+}

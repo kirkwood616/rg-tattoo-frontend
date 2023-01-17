@@ -49,11 +49,6 @@
   box-shadow: 0 0 7px white;
 }
 
-.RequestAppointment input[type="checkbox"] {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
 .RequestAppointment input[type="file"] {
   display: none;
   height: 0;
