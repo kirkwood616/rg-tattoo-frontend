@@ -26,7 +26,7 @@
   font-size: 1.25rem;
   font-weight: bold;
   margin-right: 0.5rem;
-  transition: background 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 .menu_trigger {
@@ -42,49 +42,4 @@
 
 .menu_trigger > span {
   margin: 0.5rem;
-}
-
-.nav,
-.nav__active {
-  background-color: var(--black);
-  box-shadow: 0px 10px 15px var(--black);
-  overflow: hidden;
-  position: absolute;
-  right: 0;
-  transition: all 0.5s ease;
-  width: 100vw;
-  z-index: 1;
-}
-
-.nav {
-  max-height: 0px;
-}
-
-.nav__active {
-  max-height: 25rem;
-}
-
-.nav li {
-  background: linear-gradient(90deg, var(--black) 0%, rgba(255, 255, 255, 1) 50%, var(--black) 100%);
-  background-size: 100% 2px;
-  background-position: bottom 0 left 0, bottom;
-  background-repeat: no-repeat;
-}
-
-.nav li > a {
-  background: linear-gradient(90deg, transparent 0%, transparent 10%, var(--white) 50%, transparent 90%, transparent 100%);
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  background-size: 0% 100%;
-  color: white;
-  display: block;
-  font-weight: bold;
-  padding: 1rem 0;
-  text-decoration: none;
-  transition: all 0.25s ease;
-}
-
-.nav li > a:hover {
-  background-size: 100% 100%;
-  color: var(--black);
 }

@@ -50,6 +50,7 @@ export default function RequestAppointment() {
     <div className={styles.RequestAppointment}>
       <h1>Request Appointment</h1>
       <form onSubmit={(e) => onSubmit(e)}>
+        <GoButton text={"DEV FILL"} onClick={() => dispatch({ type: "dev" })} />
         <Field.SelectDate available={available} />
         {state.startDate.value && <Field.AppointmentTimes />}
         {state.appointmentTime.value && (

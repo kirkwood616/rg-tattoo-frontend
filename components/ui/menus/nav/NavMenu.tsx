@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import styles from "styles/ui/NavMenu.module.css";
 import { toggleBooleanState } from "utils/Toggle";
 import MenuHamburger from "./MenuHamburger";
-import MenuList from "./MenuList";
 
-export default function NavMenu() {
-  const [isMenuActive, setIsMenuActive] = useState<boolean>(false);
+interface NavMenuProps {
+  isMenuActive: boolean;
+  setIsMenuActive: Dispatch<SetStateAction<boolean>>;
+}
 
+export default function NavMenu({ isMenuActive, setIsMenuActive }: NavMenuProps) {
   return (
     <div className={styles.NavMenu}>
       <div
@@ -20,12 +22,6 @@ export default function NavMenu() {
         >
           <MenuHamburger isActive={isMenuActive} />
         </button>
-        <nav
-          onClick={() => toggleBooleanState(setIsMenuActive)}
-          className={isMenuActive ? `${styles.nav} ${styles.nav__active}` : styles.nav}
-        >
-          <MenuList />
-        </nav>
       </div>
     </div>
   );
