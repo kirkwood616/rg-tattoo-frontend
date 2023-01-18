@@ -1,11 +1,8 @@
 .Header {
   align-items: center;
-  background-color: var(--black);
-  box-shadow: 0px -5px 20px black;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-  padding: 0.5rem 0;
+  background-color: var(--dark-gray-2);
+  box-shadow: 0px 10px 20px 5px black;
+  margin-bottom: 2rem;
   position: sticky;
   top: 0;
   width: 100%;
@@ -13,7 +10,39 @@
 }
 
 .site_title {
+  align-items: center;
+  display: flex;
   font-size: 1.5rem;
   font-weight: bold;
-  margin-left: 8px;
+  margin-left: 0.5rem;
+}
+
+.header_items__container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  width: 100%;
+}
+
+.nav,
+.nav__active {
+  background: linear-gradient(90deg, black, var(--dark-gray-2), black);
+  background-color: var(--black);
+  border-bottom: 1px solid white;
+  border-top: 1px solid white;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 3.45rem;
+  transition: all 0.5s ease;
+  width: 100vw;
+}
+
+.nav {
+  max-height: 0px;
+}
+
+.nav__active {
+  box-shadow: 0px 10px 15px black;
+  max-height: 25rem;
 }

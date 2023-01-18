@@ -6,14 +6,29 @@
 }
 
 .MenuList li {
-  background: linear-gradient(90deg, var(--black) 0%, rgba(255, 255, 255, 1) 50%, var(--black) 100%);
-  background-size: 100% 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 15%,
+    rgba(255, 255, 255, 1) 50%,
+    transparent 85%,
+    transparent 100%
+  );
+  background-size: 100% 1px;
   background-position: bottom 0 left 0, bottom;
   background-repeat: no-repeat;
+  margin: auto;
 }
 
 .MenuList li > a {
-  background: linear-gradient(90deg, transparent 0%, transparent 10%, var(--white) 50%, transparent 90%, transparent 100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 15%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 85%,
+    transparent 100%
+  );
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: 0% 100%;
@@ -24,8 +39,17 @@
   text-decoration: none;
   transition: all 0.25s ease;
 }
+.MenuList li:last-child {
+  color: yellow;
+  background-size: 100% 0;
+}
 
 .MenuList li > a:hover {
   background-size: 100% 100%;
-  color: var(--black);
+}
+
+@media only screen and (min-width: 600px) {
+  .MenuList > li {
+    width: 75%;
+  }
 }

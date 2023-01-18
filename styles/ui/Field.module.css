@@ -6,7 +6,7 @@
 
 .label__container {
   align-items: center;
-  background: linear-gradient(90deg, var(--dark-gray-2), var(--dark-gray-4), var(--dark-gray-2));
+  background: linear-gradient(90deg, var(--black), var(--dark-gray-4), var(--black));
   display: flex;
   font-weight: bold;
   justify-content: center;

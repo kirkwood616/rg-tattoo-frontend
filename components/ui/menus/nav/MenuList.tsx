@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "styles/ui/MenuList.module.css";
 
-export default function UserMenu() {
+export default function MenuList() {
   return (
     <menu className={styles.MenuList}>
       <li>

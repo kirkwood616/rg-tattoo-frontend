@@ -16,6 +16,9 @@
   --button_secondary: var(--blue);
   --button_radius: 3rem;
   --fade-opacity_in: fadeOpacity 0.25s ease;
+  --bg_border_gradient_90__BG: linear-gradient(90deg, var(--black), var(--dark-gray-4), var(--black)) padding-box,
+    linear-gradient(90deg, var(--black), var(--white), var(--black)) border-box;
+  --bg_border_gradient_90__BORDER: 1px solid transparent;
 }
 
 * {
@@ -32,7 +35,7 @@ body {
     "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--dark-gray-2);
+  background-color: var(--black);
   color: white;
   height: fit-content;
 }
