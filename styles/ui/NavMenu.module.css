@@ -1,0 +1,45 @@
+.NavMenu {
+  width: fit-content;
+}
+
+.menu_click_background {
+  height: 100vh;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.nav__container {
+  position: relative;
+}
+
+.menu_trigger,
+.menu_trigger__active {
+  align-items: center;
+  background: linear-gradient(var(--black), var(--black) 50%, white 50%, white);
+  background-repeat: no-repeat;
+  background-size: 100% 0%;
+  border: 2px solid white;
+  border-radius: 0.5rem;
+  display: flex;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-right: 0.5rem;
+  transition: all 0.5s ease;
+}
+
+.menu_trigger {
+  background-size: 100% 0%;
+  color: white;
+}
+
+.menu_trigger__active {
+  background-position: 100% 100%;
+  background-size: 100% 200%;
+  color: black;
+}
+
+.menu_trigger > span {
+  margin: 0.5rem;
+}

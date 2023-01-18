@@ -1,0 +1,8 @@
+.RequestSubmitted {
+  font-weight: bold;
+  text-align: center;
+}
+
+.RequestSubmitted button {
+  width: 100%;
+}

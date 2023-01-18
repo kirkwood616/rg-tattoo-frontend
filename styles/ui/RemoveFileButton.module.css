@@ -1,0 +1,13 @@
+.RemoveFileButton {
+  background-color: red;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 0px 5px var(--black);
+  color: white;
+  display: block;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: auto;
+  padding: 0.5rem;
+  width: 50%;
+}

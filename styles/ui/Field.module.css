@@ -1,0 +1,53 @@
+.Field {
+  margin: 0.75rem 0;
+  text-align: center;
+  width: 100%;
+}
+
+.label__container {
+  align-items: center;
+  background: linear-gradient(90deg, var(--black), var(--dark-gray-4), var(--black));
+  display: flex;
+  font-weight: bold;
+  justify-content: center;
+  min-height: 2.5rem;
+  width: 100%;
+}
+
+.Field input[type="text"],
+.Field input[type="email"],
+.Field input[type="number"],
+.Field input[type="tel"],
+.Field select {
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  box-shadow: 0 3px 7px var(--black);
+  font-size: 1rem;
+  margin: 0;
+  padding: 0.75rem;
+  text-align: center;
+  transition: all 0.1s ease-in-out;
+  width: 100%;
+}
+
+.Field input[type="text"]:focus,
+.Field input[type="email"]:focus,
+.Field input[type="number"]:focus,
+.Field input[type="tel"]:focus,
+.Field select:focus {
+  box-shadow: 0 0 7px white;
+  transition: all 0.1s ease-in-out;
+}
+
+.Field textarea {
+  font-family: Arial, Helvetica, sans-serif;
+  max-width: 100%;
+  min-height: 150px;
+  resize: vertical;
+  text-align: left;
+}
+
+.Field input[type="checkbox"] {
+  height: 1.5rem;
+  width: 1.5rem;
+}

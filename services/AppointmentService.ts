@@ -1,0 +1,18 @@
+import axios from "axios";
+import { AppointmentRequest } from "models/AppointmentRequest";
+import AvailableAppointments from "models/AvailableAppointments";
+
+const apiAvailableAppointments = process.env.NEXT_PUBLIC_API_AVAILABLE_ROUTE_LOCAL || "";
+const apiBaseRoute = process.env.NEXT_PUBLIC_API_BASE_ROUTE || "";
+
+export async function postAppointmentRequest(request: AppointmentRequest, token: string): Promise<AppointmentRequest> {
+  const res = await axios.post<AppointmentRequest>(`${apiAvailableAppointments}/new-request`, request, {
+    headers: { key: token },
+  });
+  return res.data;
+}
+
+export async function getAvailableAppointments(url: string): Promise<AvailableAppointments[]> {
+  const res = await axios.get(`${apiBaseRoute}/${url}`);
+  return res.data;
+}

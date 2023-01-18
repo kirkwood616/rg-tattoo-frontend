@@ -1,0 +1,31 @@
+.InfoSection {
+  background: linear-gradient(90deg, var(--dark-gray-2), var(--dark-gray-4), var(--dark-gray-2)) padding-box,
+    linear-gradient(to bottom, white, var(--dark-gray-4)) border-box;
+  border: 2px solid transparent;
+  border-radius: 0.5rem;
+  box-shadow: 0 0px 10px var(--dark-gray-4);
+  margin: 1.5rem auto;
+  overflow: hidden;
+  text-align: center;
+  transition: all 0.25s ease;
+  width: 100%;
+}
+
+.info_section__title,
+.info_section__body {
+  font-weight: bold;
+  padding: 0.75rem 0;
+}
+
+.info_section__title {
+  box-shadow: 0 0px 15px var(--black);
+  color: var(--white);
+  position: relative;
+}
+
+.info_section__body {
+  background-color: var(--white);
+  color: black;
+  padding: 1rem;
+  white-space: pre-line;
+}

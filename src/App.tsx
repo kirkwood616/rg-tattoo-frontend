@@ -12,7 +12,7 @@ import Header from "components/Header";
 import Loading from "components/loading/Loading";
 import RequestPage from "components/RequestPage";
 import AppContext from "context/AppContext";
-import Aftercare from "pages/Aftercare";
+import Aftercare from "pages/aftercare";
 import Home from "pages/Home";
 import LogIn from "pages/LogIn";
 import RequestSubmitted from "pages/RequestSubmitted";
