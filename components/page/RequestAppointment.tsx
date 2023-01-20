@@ -48,7 +48,7 @@ export default function RequestAppointment() {
   if (!available) return <Loading />;
   return (
     <div className={styles.RequestAppointment}>
-      <h1>Request Appointment</h1>
+      <h1>REQUEST APPOINTMENT</h1>
       <form onSubmit={(e) => onSubmit(e)}>
         <GoButton text={"DEV FILL"} onClick={() => dispatch({ type: "dev" })} />
         <Field.SelectDate available={available} />

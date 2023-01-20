@@ -46,7 +46,15 @@ code {
 
 h1,
 h2 {
+  background: linear-gradient(90deg, var(--black), var(--dark-gray-3), var(--black)) padding-box,
+    linear-gradient(90deg, var(--black), var(--white), var(--black)) border-box;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  margin: 0.75rem auto;
+  padding: 0.5rem 0;
   text-align: center;
+  text-shadow: 0px 2px 10px black;
+  width: 100%;
 }
 
 button {
@@ -209,6 +217,13 @@ textarea {
   }
   .react-datepicker__navigation--next {
     right: 75px;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  h1,
+  h2 {
+    width: 85%;
   }
 }
 

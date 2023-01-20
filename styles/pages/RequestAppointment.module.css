@@ -20,34 +20,6 @@
   padding: 0.75rem;
 }
 
-.RequestAppointment input[type="text"],
-.RequestAppointment input[type="email"],
-.RequestAppointment input[type="number"],
-.RequestAppointment input[type="tel"],
-.RequestAppointment textarea,
-.RequestAppointment select,
-.RequestAppointment .photo-upload,
-.RequestAppointment .photo-upload_disabled,
-.RequestAppointment .request_textarea {
-  border: 1px solid black;
-  border-radius: 0.5rem;
-  box-shadow: 0 3px 7px var(--black);
-  font-size: 1rem;
-  margin: 0;
-  padding: 0.75rem;
-  text-align: center;
-  width: 100%;
-}
-
-.RequestAppointment input[type="text"]:focus,
-.RequestAppointment input[type="email"]:focus,
-.RequestAppointment input[type="number"]:focus,
-.RequestAppointment input[type="tel"]:focus,
-.RequestAppointment textarea:focus,
-.RequestAppointment select:focus {
-  box-shadow: 0 0 7px white;
-}
-
 .RequestAppointment input[type="file"] {
   display: none;
   height: 0;

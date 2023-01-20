@@ -1,7 +1,7 @@
-function Placement() {
+export default function Placement() {
   return (
     <div className="Explain">
-      <h1>Placement</h1>
+      <h2>PLACEMENT</h2>
       <p>Examples: Bicep, Chest, Stomach, Shoulder, Hand, etc.</p>
       <p>
         If you have a very specific placement, enter a general area and provide additional information in the Tattoo
@@ -14,5 +14,3 @@ function Placement() {
     </div>
   );
 }
-
-export default Placement;

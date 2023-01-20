@@ -1,7 +1,7 @@
-function Budget() {
+export default function Budget() {
   return (
     <div className="Budget">
-      <h1>Budget</h1>
+      <h2>BUDGET</h2>
       <p>
         Select a budget range that best represents the ammount you would like to spend on the tattoo you&apos;re requesting.
       </p>
@@ -12,5 +12,3 @@ function Budget() {
     </div>
   );
 }
-
-export default Budget;
