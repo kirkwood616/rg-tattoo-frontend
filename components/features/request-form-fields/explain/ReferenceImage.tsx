@@ -1,7 +1,11 @@
+import TitleHeading from "components/ui/title-heading/TitleHeading";
+
 function ReferenceImage() {
   return (
     <div className="Explain">
-      <h2>REFERENCE PHOTO</h2>
+      <TitleHeading>
+        <h2>REFERENCE PHOTO</h2>
+      </TitleHeading>
       <p>An image for reference of the design you would like to have as your tattoo.</p>
       <p>
         The reference photo doesn&apos;t need to be the exact image of how the final tattoo should look, but should convey

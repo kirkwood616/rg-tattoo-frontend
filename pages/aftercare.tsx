@@ -1,3 +1,4 @@
+import TitleHeading from "components/ui/title-heading/TitleHeading";
 import Head from "next/head";
 
 function Aftercare() {
@@ -10,7 +11,9 @@ function Aftercare() {
         <link rel="icon" href="/rackxruin_favicon.ico" />
       </Head>
       <div className="Aftercare">
-        <h1>AFTERCARE</h1>
+        <TitleHeading>
+          <h1>AFTERCARE</h1>
+        </TitleHeading>
       </div>
     </>
   );

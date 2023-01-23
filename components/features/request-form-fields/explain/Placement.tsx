@@ -1,7 +1,11 @@
+import TitleHeading from "components/ui/title-heading/TitleHeading";
+
 export default function Placement() {
   return (
     <div className="Explain">
-      <h2>PLACEMENT</h2>
+      <TitleHeading>
+        <h2>PLACEMENT</h2>
+      </TitleHeading>
       <p>Examples: Bicep, Chest, Stomach, Shoulder, Hand, etc.</p>
       <p>
         If you have a very specific placement, enter a general area and provide additional information in the Tattoo

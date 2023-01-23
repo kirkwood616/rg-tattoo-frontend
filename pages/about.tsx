@@ -1,3 +1,4 @@
+import TitleHeading from "components/ui/title-heading/TitleHeading";
 import Head from "next/head";
 
 export default function About() {
@@ -10,7 +11,9 @@ export default function About() {
         <link rel="icon" href="/rackxruin_favicon.ico" />
       </Head>
       <div className="About">
-        <h1>ABOUT</h1>
+        <TitleHeading>
+          <h1>ABOUT</h1>
+        </TitleHeading>
       </div>
     </>
   );

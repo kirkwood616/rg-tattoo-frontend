@@ -3,6 +3,7 @@ import ReviewRequest from "components/features/review-request/ReviewRequest";
 import GoButton from "components/ui/buttons/GoButton";
 import FetchError from "components/ui/errors/FetchError";
 import Loading from "components/ui/loading/Loading";
+import TitleHeading from "components/ui/title-heading/TitleHeading";
 import RequestContext from "context/RequestContext";
 import RequestContextProvider from "context/RequestContextProvider";
 import { format } from "date-fns";
@@ -49,7 +50,9 @@ function RequestAppointment() {
   if (!available) return <Loading />;
   return (
     <div className={styles.RequestAppointment}>
-      <h1>REQUEST APPOINTMENT</h1>
+      <TitleHeading>
+        <h1>REQUEST APPOINTMENT</h1>
+      </TitleHeading>
       <form onSubmit={(e) => onSubmit(e)}>
         <GoButton text={"DEV FILL"} onClick={() => dispatch({ type: "dev" })} />
         <Field.SelectDate available={available} />
