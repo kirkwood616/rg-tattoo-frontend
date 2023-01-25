@@ -3,7 +3,7 @@
     linear-gradient(90deg, var(--black), var(--white), var(--black)) border-box;
   border-radius: 0.25rem;
   border: 1px solid transparent;
-  margin: 0.75rem auto;
+  margin: 1rem auto 2rem auto;
   max-width: 600px;
   padding: 0.5rem 0;
   text-align: center;

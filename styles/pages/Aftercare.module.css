@@ -1,0 +1,102 @@
+.Aftercare {
+  margin: auto;
+}
+
+.Aftercare svg {
+  fill: var(--light-gray-2);
+  filter: drop-shadow(0px 0px 5px var(--light-gray-1));
+  height: 200px;
+}
+
+.instructions__container {
+  background: linear-gradient(90deg, var(--black), var(--black)) padding-box,
+    linear-gradient(90deg, white, var(--dark-gray-4), white) border-box;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  box-shadow: 0 0 10px var(--dark-gray-4);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  margin: 0 auto 2rem auto;
+  max-width: 900px;
+  overflow: hidden;
+}
+
+.instructions__container:last-child {
+  background: var(--red);
+  box-shadow: 0 0 10px var(--red);
+}
+
+.instructions__container:last-child .instructions_title {
+  background: linear-gradient(90deg, var(--red), var(--black), var(--black), var(--red)) padding-box,
+    linear-gradient(90deg, var(--red), var(--red)) border-box;
+  box-shadow: 0 0 10px var(--red);
+}
+
+.instructions__container:last-child svg {
+  fill: var(--red);
+  filter: drop-shadow(0 0 10px var(--red));
+}
+
+.instructions_image {
+  background: linear-gradient(180deg, black, var(--dark-gray-2)) padding-box,
+    linear-gradient(90deg, white, var(--black), white) border-box;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 250px;
+}
+
+.instructions_title {
+  background: linear-gradient(90deg, var(--white), var(--black), var(--black), var(--white)) padding-box,
+    linear-gradient(90deg, white, var(--light-gray-1), white) border-box;
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  box-shadow: 0 0 10px var(--dark-gray-4);
+  padding: 0.25rem;
+  text-align: center;
+  text-shadow: 0px 0px 6px black;
+  width: 100%;
+}
+
+.instructions_description {
+  background: linear-gradient(180deg, var(--dark-gray-2), black);
+  font-weight: bold;
+  height: 100%;
+  padding: 1rem 1.5rem;
+}
+
+@media only screen and (min-width: 768px) {
+  .instructions__container {
+    background: linear-gradient(90deg, var(--black), var(--black)) padding-box,
+      linear-gradient(0deg, white, var(--dark-gray-3), white) border-box;
+    flex-direction: row;
+  }
+
+  .instructions__container:nth-child(odd) {
+    flex-direction: row-reverse;
+  }
+  .instructions__container:nth-child(odd) > .instructions_image {
+    border-left: 1px solid transparent;
+    border-right: 0;
+    flex-direction: row-reverse;
+  }
+  .instructions__container:last-child > .instructions_image {
+    border-left: 1px solid var(--red);
+  }
+
+  .instructions_image {
+    border-bottom: 0;
+    border-right: 1px solid transparent;
+    min-width: 300px;
+  }
+
+  .instructions_title {
+    background: linear-gradient(90deg, var(--white), var(--black), var(--black), var(--white)) padding-box,
+      linear-gradient(90deg, white, white) border-box;
+    border-top: 0;
+  }
+  .instructions__container:last-child .instructions_title {
+    border-top: 0;
+  }
+}
