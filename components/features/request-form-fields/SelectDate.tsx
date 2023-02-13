@@ -43,7 +43,7 @@ export default function SelectDate({ available }: SelectDateProps) {
         required
       />
       {!!available && available.length === 0 && <ErrorBubble errorMessage="NO AVAILABLE APPOINTMENTS" />}
-      {state.startDate.hasErrors && state.startDate.checkCount > 0 && (
+      {state.startDate.hasErrors && !!available && available.length > 0 && state.startDate.checkCount > 0 && (
         <FormError errorMessage={"SELECT DATE"} name={"startDate"} />
       )}
     </Form.Field>

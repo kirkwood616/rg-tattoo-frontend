@@ -56,7 +56,7 @@ function RequestAppointment() {
       <form onSubmit={(e) => onSubmit(e)}>
         <GoButton text={"DEV FILL"} onClick={() => dispatch({ type: "dev" })} />
         <Field.SelectDate available={available} />
-        {state.startDate.value && <Field.AppointmentTimes />}
+        {available.length > 0 && state.startDate.value && <Field.AppointmentTimes />}
         {state.appointmentTime.value && (
           <>
             <Field.FirstName />
